@@ -50,7 +50,7 @@ commandObj.onTrigger = function(player, target, famezone)
     if famezone == nil then
         player:printToPlayer(string.format('Fame Report for player: %s', targ:getName()), xi.msg.channel.SYSTEM_3)
         for i = 0, 15 do
-            player:printToPlayer(string.format('Area %s (%s): %s (Level: %s)', i, fameZoneNames[i], player:getFame(i), player:getFameLevel(i)), xi.msg.channel.SYSTEM_3)
+            player:printToPlayer(string.format('Area %s (%s): %s (Level: %s)', i, fameZoneNames[i], targ:getFame(i), targ:getFameLevel(i)), xi.msg.channel.SYSTEM_3)
         end
 
         return
@@ -60,8 +60,8 @@ commandObj.onTrigger = function(player, target, famezone)
     end
 
     local fameBaseValues = xi.data.fame.rankPoints
-    local fame = player:getFame(famezone)
-    local level = player:getFameLevel(famezone)
+    local fame = targ:getFame(famezone)
+    local level = targ:getFameLevel(famezone)
 
     if level < 9 then
         player:printToPlayer(string.format('%s\'s reputation in fame area %i (%s) is %i (Level %i). Next level at %i (%i points to go).', targ:getName(), famezone, fameZoneNames[famezone], fame, level, fameBaseValues[level + 1], fameBaseValues[level + 1]-fame), xi.msg.channel.SYSTEM_3)

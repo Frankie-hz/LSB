@@ -228,6 +228,16 @@ void CTradeContainer::setType(uint8 type)
     m_type = type;
 }
 
+uint8 CTradeContainer::getShopFameArea() const
+{
+    return m_shopFameArea;
+}
+
+void CTradeContainer::setShopFameArea(uint8 fameArea)
+{
+    m_shopFameArea = fameArea;
+}
+
 void CTradeContainer::unreserveUnconfirmed()
 {
     for (uint8 slotID = 0; slotID < CONTAINER_SIZE; ++slotID)
@@ -251,9 +261,10 @@ void CTradeContainer::unreserveUnconfirmed()
 
 void CTradeContainer::Clean()
 {
-    m_type       = 0;
-    m_ItemsCount = 0;
-    m_exSize     = 0;
+    m_type         = 0;
+    m_shopFameArea = 0xFF; // 0-2 are nation fame areas, so "no fame area" must be a value outside that range
+    m_ItemsCount   = 0;
+    m_exSize       = 0;
 
     m_PItem.clear();
     m_PItem.resize(CONTAINER_SIZE, nullptr);
