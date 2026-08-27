@@ -8,7 +8,7 @@ xi.fishing = xi.fishing or {}
 -- TODO: Remove unnecesary data. For instance, if brokenRodId is 0, then the rod is obviously unbreakable.
 xi.fishing.rodData =
 {
-    -- [rod Id] = { material, size, flags, minRank, maxRank, attack, bonusAttack, recovery, time, timeBonus, delay, move, delay2, move2, isBreakable, brokenRodId, isMMM, isLegendary, rating }
+    -- [rodId] = { material, sizeType, flags, minRank, maxRank, fishAttack, legendaryBonusAttack, fishRecovery, fishTime, legendaryBonusTime, smallDelayBonus, smallMoveBonus, largeDelayBonus, largeMoveBonus, multiplier, isBreakable, brokenRodId, isMMM, isLegendary, rating }
     [xi.item.BAMBOO_FISHING_ROD      ] = { 0, 0, 0,  1,  8, 140,   0,  60, 30,  0, 2, 1, 1,  0, 2, true,  xi.item.BROKEN_BAMBOO_FISHING_ROD,       false, false,  3 },
     [xi.item.CARBON_FISHING_ROD      ] = { 1, 0, 0,  1, 13, 100,   0,  75, 43,  0, 2, 1, 1,  0, 4, true,  xi.item.BROKEN_CARBON_FISHING_ROD,       false, false,  7 },
     [xi.item.CLOTHESPOLE             ] = { 0, 1, 1, 12, 16, 170,   0,  50, 30,  0, 0, 0, 1,  0, 3, true,  xi.item.BROKEN_CLOTHESPOLE,              false, false, 10 },
@@ -33,7 +33,7 @@ xi.fishing.rodData =
 
 xi.fishing.baitData =
 {
-    -- [bait Id] = { isConsumable, maxHook, isLosable, flags, isMMM, rankMod }
+    -- [baitId] = { baitType, maxHook, isLosable, flags, isMMM, rankMod }
     [xi.item.BALL_OF_CRAYFISH_PASTE  ] = { 0, 1, true,   0, false, 0 },
     [xi.item.BALL_OF_INSECT_PASTE    ] = { 0, 1, true,   0, false, 0 },
     [xi.item.BALL_OF_SARDINE_PASTE   ] = { 0, 1, true,   0, false, 0 },
@@ -45,9 +45,9 @@ xi.fishing.baitData =
     [xi.item.FROG_LURE               ] = { 1, 1, true,   0, false, 0 },
     [xi.item.GIANT_SHELL_BUG         ] = { 0, 1, true,   0, false, 0 },
     [xi.item.GOLIATH_WORM            ] = { 0, 1, true,   0, false, 0 },
-    [xi.item.JUDGE_FLY               ] = { 1, 1, false,  0, false, 0 },
-    [xi.item.JUDGE_MINNOW            ] = { 1, 1, false,  0, false, 0 },
-    [xi.item.JUDGES_LURE             ] = { 1, 1, false,  0, false, 0 },
+    [xi.item.JUDGE_FLY               ] = { 1, 1, true,   0, false, 0 },
+    [xi.item.JUDGE_MINNOW            ] = { 1, 1, true,   0, false, 0 },
+    [xi.item.JUDGES_LURE             ] = { 1, 1, true,   0, false, 0 },
     [xi.item.LARGE_MAZE_MONGER_BALL  ] = { 1, 1, true,   0, true,  0 },
     [xi.item.LITTLE_WORM             ] = { 0, 1, true,   0, false, 0 },
     [xi.item.LIZARD_LURE             ] = { 1, 1, true,   0, false, 0 },
@@ -78,9 +78,9 @@ xi.fishing.baitData =
 -- TODO: unnecesary data -> ranking is always 0, waterType is unused in the code???, requiredCatches is always '', family is always 0, isQuestOnly is probably unneeded, isDisabled doesnt need to exist.
 xi.fishing.catchData =
 {
-    -- [item Id] = { skillLvl, difficulty, delay, move, minLength, maxLength, ranking, isBig, waterType, questLog, questId, questStatus, flags, hourPattern, moonPattern, monthPattern, isLegendary, legendFlags, isDebris, maxHookAmount, rarity, ki, requiredCatches, family, isQuestOnly, isContested, isDisabled }
+    -- [itemId] = { skillLevel, difficulty, baseDelay, baseMove, minLength, maxLength, ranking, isLarge, waterType, questLog, questId, questStatus, flags, hourPattern, moonPattern, monthPattern, isLegendary, legendaryFlags, isItem, maxHook, rarity, requiredKeyItem, requiredCatches, family, isQuestOnly, contest, isDisabled }
     -- Fish
-    [xi.item.ABAIA                   ] = { 150, 37,  7, 13, 269, 317, 34, true,  0, xi.questLog.NONE,       255, 0,  0, 0, 0,  0, true,  0, false, 1,  500, xi.ki.NONE,           '', 0, false, 0, false },
+    [xi.item.ABAIA                   ] = { 150, 37,  7, 13, 269, 317, 34, true,  0, xi.questLog.NONE,       255, 0,  0, 0, 0,  0, true,  0, false, 1,  500, xi.ki.NONE,           '', 0, false, 0, true  },
     [xi.item.AHTAPOT                 ] = {  90, 31,  8,  7,  55, 145, 25, true,  0, xi.questLog.NONE,       255, 0,  0, 3, 1,  4, false, 0, false, 1,  500, xi.ki.NONE,           '', 0, false, 0, false },
     [xi.item.ALABALIGI               ] = {  37, 16,  5, 11,   1,   1, 15, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 1, 10, false, 0, false, 1, 1000, xi.ki.NONE,           '', 0, false, 0, false },
     [xi.item.ARMORED_PISCES          ] = { 108, 22,  9, 12,  50, 125, 19, true,  0, xi.questLog.NONE,       255, 0,  0, 3, 1,  0, false, 0, false, 1,  350, xi.ki.NONE,           '', 0, false, 1, false },
@@ -107,7 +107,7 @@ xi.fishing.catchData =
     [xi.item.CAEDARVA_FROG           ] = {  30, 17,  6, 13,   1,   1,  5, false, 0, xi.questLog.NONE,       255, 0,  0, 4, 2,  0, false, 0, false, 1, 1000, xi.ki.NONE,           '', 0, false, 0, false },
     [xi.item.CAVE_CHERAX             ] = { 130, 36,  7,  4, 115, 235, 32, true,  0, xi.questLog.NONE,       255, 0,  0, 3, 1,  0, true,  0, false, 1,  500, xi.ki.NONE,           '', 0, false, 1, false },
     [xi.item.CHEVAL_SALMON           ] = {  21, 21,  7,  7,   1,   1, 17, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 1,  0, false, 0, false, 1, 1000, xi.ki.NONE,           '', 0, false, 0, false },
-    [xi.item.COBALT_JELLYFISH        ] = {   5, 28, 13,  0,   1,   1, 14, false, 0, xi.questLog.NONE,       255, 0,  0, 1, 1,  0, false, 0, false, 1,  700, xi.ki.NONE,           '', 0, false, 0, false },
+    [xi.item.COBALT_JELLYFISH        ] = {   5, 28, 13,  0,   1,   1, 14, false, 0, xi.questLog.NONE,       255, 0,  0, 1, 1,  0, false, 0, true,  1,  700, xi.ki.NONE,           '', 0, false, 0, false },
     [xi.item.CONE_CALAMARY           ] = {  48, 40, 10,  5,   1,   1, 10, false, 0, xi.questLog.NONE,       255, 0,  1, 3, 1,  3, false, 0, false, 3,  850, xi.ki.NONE,           '', 0, false, 0, false },
     [xi.item.COPPER_FROG_1           ] = {  16, 22,  8,  4,   1,   1,  9, false, 0, xi.questLog.NONE,       255, 0,  0, 4, 1,  0, false, 0, false, 1, 1000, xi.ki.NONE,           '', 0, false, 0, false },
     [xi.item.COPPER_FROG_2           ] = {  16, 22,  8,  4,   1,   1,  9, false, 0, xi.questLog.NONE,       255, 0,  0, 4, 1,  0, false, 0, false, 1, 1000, xi.ki.NONE,           '', 0, false, 0, false }, -- Has 2 different item Ids
@@ -118,7 +118,7 @@ xi.fishing.catchData =
     [xi.item.CRYSTAL_BASS            ] = {  35, 24,  7, 12,   1,   1, 17, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 2,  7, false, 0, false, 1, 1000, xi.ki.NONE,           '', 0, false, 0, false },
     [xi.item.DARK_BASS_1             ] = {  33, 23,  7,  8,   1,   1, 13, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 1,  9, false, 0, false, 1, 1000, xi.ki.NONE,           '', 0, false, 0, false },
     [xi.item.DARK_BASS_2             ] = {  33, 23,  7,  8,   1,   1, 13, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 1,  9, false, 0, false, 1, 1000, xi.ki.NONE,           '', 0, false, 0, false }, -- Has 2 different item Ids
-    [xi.item.DENIZANASI              ] = {   5, 28, 13,  0,   1,   1, 14, false, 0, xi.questLog.NONE,       255, 0,  0, 1, 1,  0, false, 0, false, 1,  700, xi.ki.NONE,           '', 0, false, 0, false },
+    [xi.item.DENIZANASI              ] = {   5, 28, 13,  0,   1,   1, 14, false, 0, xi.questLog.NONE,       255, 0,  0, 1, 1,  0, false, 0, true,  1,  700, xi.ki.NONE,           '', 0, false, 0, false },
     [xi.item.DIL                     ] = {  96, 33,  5, 11,   1,   1, 23, false, 0, xi.questLog.NONE,       255, 0,  0, 4, 1,  0, false, 0, false, 1,  150, xi.ki.NONE,           '', 0, false, 0, false },
     [xi.item.ELSHIMO_FROG            ] = {  30, 25,  6, 13,   1,   1,  5, false, 0, xi.questLog.NONE,       255, 0,  0, 4, 1,  4, false, 0, false, 1, 1000, xi.ki.NONE,           '', 0, false, 0, false },
     [xi.item.ELSHIMO_NEWT            ] = {  60, 26,  8, 11,   1,   1, 19, false, 0, xi.questLog.NONE,       255, 0,  0, 0, 1,  1, false, 0, false, 1,  900, xi.ki.NONE,           '', 0, false, 0, false },
@@ -246,3 +246,47 @@ xi.fishing.catchData =
     [xi.item.SILVER_RING             ] = {  34, 40, 13,  2,   1,   1,  5, false, 0, xi.questLog.NONE,       255, 0,  1, 0, 0,  0, false, 0, true,  1,  300, xi.ki.NONE,           '', 0, false, 0, false },
     [xi.item.TARUTARU_SNARE          ] = {  30, 22, 13,  2,   1,   1,  1, false, 0, xi.questLog.NONE,       255, 0,  0, 0, 0,  0, false, 0, true,  1, 1000, xi.ki.NONE,           '', 0, true,  0, false },
 }
+
+local rodFieldNames =
+{
+    'material', 'sizeType', 'flags', 'minRank', 'maxRank',
+    'fishAttack', 'legendaryBonusAttack', 'fishRecovery', 'fishTime', 'legendaryBonusTime',
+    'smallDelayBonus', 'smallMoveBonus', 'largeDelayBonus', 'largeMoveBonus', 'multiplier',
+    'isBreakable', 'brokenRodId', 'isMMM', 'isLegendary', 'rating',
+}
+
+local baitFieldNames =
+{
+    'baitType', 'maxHook', 'isLosable', 'flags', 'isMMM', 'rankMod',
+}
+
+local catchFieldNames =
+{
+    'skillLevel', 'difficulty', 'baseDelay', 'baseMove', 'minLength', 'maxLength',
+    'ranking', 'isLarge', 'waterType', 'questLog', 'questId', 'questStatus', 'flags',
+    'hourPattern', 'moonPattern', 'monthPattern', 'isLegendary', 'legendaryFlags', 'isItem',
+    'maxHook', 'rarity', 'requiredKeyItem', 'requiredCatches', 'family', 'isQuestOnly',
+    'contest', 'isDisabled',
+}
+
+local function toNamedRecords(positionalRows, fieldNames)
+    local records = {}
+
+    for entryId, row in pairs(positionalRows) do
+        local record = {}
+
+        for fieldIndex, fieldName in ipairs(fieldNames) do
+            record[fieldName] = row[fieldIndex]
+        end
+
+        records[entryId] = record
+    end
+
+    return records
+end
+
+-- Named-record views of the positional tables above. All fishing logic reads
+-- these; the positional tables are only the storage format.
+xi.fishing.rods    = toNamedRecords(xi.fishing.rodData, rodFieldNames)
+xi.fishing.baits   = toNamedRecords(xi.fishing.baitData, baitFieldNames)
+xi.fishing.catches = toNamedRecords(xi.fishing.catchData, catchFieldNames)
