@@ -2249,11 +2249,6 @@ fishresponse_t* FishingCheck(CCharEntity* PChar, uint8 fishingSkill, rod_t* rod,
 
     FishPoolWeight = (uint16)std::floor(FishPoolWeight * GetWeatherModifier(PChar));
 
-    if (area->difficulty > 0)
-    {
-        NoCatchWeight += (area->difficulty * xirand::GetRandomNumber<uint16>(20, 30));
-    }
-
     // Modify weights based on various factors
 
     /* @todo: UPDATE MOGHANCEMENT SYSTEM
@@ -2903,10 +2898,8 @@ void LoadFishingAreas()
 {
     const auto rset = db::preparedStmt("SELECT fa.areaid, fa.bound_type, fa.bound_height, fa.bounds, "
                                        "fa.center_x, fa.center_y, fa.center_z, fa.bound_radius, "
-                                       "fa.name, fa.zoneid, fz.difficulty "
-                                       "FROM `fishing_area` fa "
-                                       "LEFT JOIN fishing_zone fz "
-                                       "ON fz.zoneid = fa.zoneid");
+                                       "fa.name, fa.zoneid "
+                                       "FROM `fishing_area` fa");
     FOR_DB_MULTIPLE_RESULTS(rset)
     {
         auto* fishingArea = new fishingarea_t();
@@ -2942,13 +2935,12 @@ void LoadFishingAreas()
             }
         }
 
-        fishingArea->center.x   = rset->get<float>("center_x");
-        fishingArea->center.y   = rset->get<float>("center_y");
-        fishingArea->center.z   = rset->get<float>("center_z");
-        fishingArea->radius     = rset->get<uint8>("bound_radius");
-        fishingArea->areaName   = rset->get<std::string>("name");
-        fishingArea->zoneId     = rset->get<xi::ZoneId>("zoneid");
-        fishingArea->difficulty = rset->get<uint8>("difficulty");
+        fishingArea->center.x = rset->get<float>("center_x");
+        fishingArea->center.y = rset->get<float>("center_y");
+        fishingArea->center.z = rset->get<float>("center_z");
+        fishingArea->radius   = rset->get<uint8>("bound_radius");
+        fishingArea->areaName = rset->get<std::string>("name");
+        fishingArea->zoneId   = rset->get<xi::ZoneId>("zoneid");
 
         FishingAreaList[fishingArea->zoneId][fishingArea->areaId] = fishingArea;
     }

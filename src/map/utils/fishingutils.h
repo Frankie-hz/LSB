@@ -374,7 +374,6 @@ struct fishingarea_t
     uint8         height;     // Height of bounds
     areavector_t  center;     // Center point for radius bound type
     uint8         radius;     // Radius for radial boundary type
-    uint8         difficulty; // Difficulty of area to fish in
 
     fishingarea_t()
     : zoneId(xi::ZoneId::Unknown)
@@ -384,7 +383,6 @@ struct fishingarea_t
     , numBounds(0)
     , height(0)
     , radius(0)
-    , difficulty(0)
     {
     }
 };
