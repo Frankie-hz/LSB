@@ -1,19 +1,25 @@
 -----------------------------------
--- Generic jug pet skill
--- TODO: verify functionality with regards to jug pet differences from regular mobs
+-- Blaster
+--
+-- Description: Paralyzes enemy.
+-- Type: Enfeebling
+-- Utsusemi/Blink absorb: Ignores shadows.
+-- Range: Melee?
+-- Notes: Very potent paralysis xi.effect. Is NOT a Gaze Attack, unlike Chaotic Eye.
+-- Note: Values copied 1:1 from the mob version (scripts/actions/mobskills/blaster.lua)
+--       and not yet verified against retail jug pet data. Adjust here, not in mobskills/.
 -----------------------------------
 ---@type TAbilityPet
 local abilityObject = {}
-local skillName = 'blaster'
 
 abilityObject.onAbilityCheck = function(player, target, ability)
     return 0
 end
 
 abilityObject.onPetAbility = function(target, pet, petskill, owner, action)
-    local result = xi.actions.mobskills[skillName].onMobWeaponSkill(pet, target, petskill, action)
+    petskill:setMsg(xi.mobskills.mobStatusEffectMove(pet, target, xi.effect.PARALYSIS, 70, 0, 60))
 
-    return result
+    return xi.effect.PARALYSIS
 end
 
 return abilityObject

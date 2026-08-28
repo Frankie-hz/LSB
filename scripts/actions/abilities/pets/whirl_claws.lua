@@ -1,19 +1,34 @@
 -----------------------------------
--- Generic jug pet skill
--- TODO: verify functionality with regards to jug pet differences from regular mobs
+-- Whirl Claws
+-- Family: Rabbit
+-- Description: Deals damage in an area of effect.
+-- Note: Values copied 1:1 from the mob version (scripts/actions/mobskills/whirl_claws.lua)
+--       and not yet verified against retail jug pet data. Adjust here, not in mobskills/.
 -----------------------------------
 ---@type TAbilityPet
 local abilityObject = {}
-local skillName = 'whirl_claws'
 
 abilityObject.onAbilityCheck = function(player, target, ability)
     return 0
 end
 
 abilityObject.onPetAbility = function(target, pet, petskill, owner, action)
-    local result = xi.actions.mobskills[skillName].onMobWeaponSkill(pet, target, petskill, action)
+    local params = {}
 
-    return result
+    params.baseDamage     = pet:getWeaponDmg()
+    params.numHits        = 1
+    params.fTP            = { 2.0, 2.0, 2.0 }
+    params.attackType     = xi.attackType.PHYSICAL
+    params.damageType     = xi.damageType.SLASHING
+    params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_3
+
+    local info = xi.mobskills.mobPhysicalMove(pet, target, petskill, action, params)
+
+    if xi.mobskills.processDamage(pet, target, petskill, action, info) then
+        target:takeDamage(info.damage, pet, info.attackType, info.damageType)
+    end
+
+    return info.damage
 end
 
 return abilityObject

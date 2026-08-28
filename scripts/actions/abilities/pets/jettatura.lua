@@ -1,19 +1,24 @@
 -----------------------------------
--- Generic jug pet skill
--- TODO: verify functionality with regards to jug pet differences from regular mobs
+-- Jettatura
+-- Family: Hippogryph
+-- Description: Enemies within a fan-shaped area originating from the caster are frozen with fear.
+-- Type: Enfeebling
+-- Utsusemi/Blink absorb: Ignores shadows
+-- Range: Cone gaze
+-- Note: Values copied 1:1 from the mob version (scripts/actions/mobskills/jettatura.lua)
+--       and not yet verified against retail jug pet data. Adjust here, not in mobskills/.
 -----------------------------------
 ---@type TAbilityPet
 local abilityObject = {}
-local skillName = 'jettatura'
 
 abilityObject.onAbilityCheck = function(player, target, ability)
     return 0
 end
 
 abilityObject.onPetAbility = function(target, pet, petskill, owner, action)
-    local result = xi.actions.mobskills[skillName].onMobWeaponSkill(pet, target, petskill, action)
+    petskill:setMsg(xi.mobskills.mobGazeMove(pet, target, xi.effect.TERROR, 1, 0, 10))
 
-    return result
+    return xi.effect.TERROR
 end
 
 return abilityObject

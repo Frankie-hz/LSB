@@ -1,19 +1,25 @@
 -----------------------------------
--- Generic jug pet skill
--- TODO: verify functionality with regards to jug pet differences from regular mobs
+-- Secretion
+--
+-- Description: Enhances evasion.
+-- Type: Enhancing
+-- Utsusemi/Blink absorb: N/A
+-- Range: Self
+-- Notes: evasion increase.
+-- Note: Values copied 1:1 from the mob version (scripts/actions/mobskills/secretion.lua)
+--       and not yet verified against retail jug pet data. Adjust here, not in mobskills/.
 -----------------------------------
 ---@type TAbilityPet
 local abilityObject = {}
-local skillName = 'secretion'
 
 abilityObject.onAbilityCheck = function(player, target, ability)
     return 0
 end
 
 abilityObject.onPetAbility = function(target, pet, petskill, owner, action)
-    local result = xi.actions.mobskills[skillName].onMobWeaponSkill(pet, target, petskill, action)
+    petskill:setMsg(xi.mobskills.mobBuffMove(pet, xi.effect.EVASION_BOOST, 25, 0, 60))
 
-    return result
+    return xi.effect.EVASION_BOOST
 end
 
 return abilityObject

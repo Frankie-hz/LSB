@@ -1,19 +1,39 @@
 -----------------------------------
--- Generic jug pet skill
--- TODO: verify functionality with regards to jug pet differences from regular mobs
+-- Big Scissors
+-- Family: Crab
+-- Description: Deals damage to a single target.
+-- Note: Nightmare Crabs ignore shadows
+-- Note: Values copied 1:1 from the mob version (scripts/actions/mobskills/big_scissors.lua)
+--       and not yet verified against retail jug pet data. Adjust here, not in mobskills/.
 -----------------------------------
 ---@type TAbilityPet
 local abilityObject = {}
-local skillName = 'big_scissors'
 
 abilityObject.onAbilityCheck = function(player, target, ability)
     return 0
 end
 
 abilityObject.onPetAbility = function(target, pet, petskill, owner, action)
-    local result = xi.actions.mobskills[skillName].onMobWeaponSkill(pet, target, petskill, action)
+    local params = {}
 
-    return result
+    params.baseDamage     = pet:getWeaponDmg()
+    params.numHits        = 1
+    params.fTP            = { 1.0, 1.0, 1.0 }
+    params.attackType     = xi.attackType.PHYSICAL
+    params.damageType     = xi.damageType.SLASHING
+    params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_1
+    params.canCrit        = true
+    params.criticalChance = { 1.00, 1.00, 1.00 }
+
+    -- TODO: Nightmare Crab - Ignores shadows
+
+    local info = xi.mobskills.mobPhysicalMove(pet, target, petskill, action, params)
+
+    if xi.mobskills.processDamage(pet, target, petskill, action, info) then
+        target:takeDamage(info.damage, pet, info.attackType, info.damageType)
+    end
+
+    return info.damage
 end
 
 return abilityObject
