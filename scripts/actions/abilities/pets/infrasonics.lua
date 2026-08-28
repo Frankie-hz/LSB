@@ -1,19 +1,20 @@
 -----------------------------------
--- Generic jug pet skill
--- TODO: verify functionality with regards to jug pet differences from regular mobs
+-- Infrasonics
+-- Reduces evasion of targets in area of effect.
+-- Note: Values copied 1:1 from the mob version (scripts/actions/mobskills/infrasonics.lua)
+--       and not yet verified against retail jug pet data. Adjust here, not in mobskills/.
 -----------------------------------
 ---@type TAbilityPet
 local abilityObject = {}
-local skillName = 'infrasonics'
 
 abilityObject.onAbilityCheck = function(player, target, ability)
     return 0
 end
 
 abilityObject.onPetAbility = function(target, pet, petskill, owner, action)
-    local result = xi.actions.mobskills[skillName].onMobWeaponSkill(pet, target, petskill, action)
+    petskill:setMsg(xi.mobskills.mobStatusEffectMove(pet, target, xi.effect.EVASION_DOWN, 40, 0, 180))
 
-    return result
+    return xi.effect.EVASION_DOWN
 end
 
 return abilityObject

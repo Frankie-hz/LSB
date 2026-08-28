@@ -1,19 +1,20 @@
 -----------------------------------
--- Generic jug pet skill
--- TODO: verify functionality with regards to jug pet differences from regular mobs
+-- Scissor Guard
+-- Enhances defense 100%.
+-- Note: Values copied 1:1 from the mob version (scripts/actions/mobskills/scissor_guard.lua)
+--       and not yet verified against retail jug pet data. Adjust here, not in mobskills/.
 -----------------------------------
 ---@type TAbilityPet
 local abilityObject = {}
-local skillName = 'scissor_guard'
 
 abilityObject.onAbilityCheck = function(player, target, ability)
     return 0
 end
 
 abilityObject.onPetAbility = function(target, pet, petskill, owner, action)
-    local result = xi.actions.mobskills[skillName].onMobWeaponSkill(pet, target, petskill, action)
+    petskill:setMsg(xi.mobskills.mobBuffMove(pet, xi.effect.DEFENSE_BOOST, 100, 0, 60))
 
-    return result
+    return xi.effect.DEFENSE_BOOST
 end
 
 return abilityObject

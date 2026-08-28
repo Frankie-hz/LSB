@@ -1,19 +1,20 @@
 -----------------------------------
--- Generic jug pet skill
--- TODO: verify functionality with regards to jug pet differences from regular mobs
+-- Intimidate
+-- Inflicts slow on targets in a fan-shaped area of effect.
+-- Note: Values copied 1:1 from the mob version (scripts/actions/mobskills/intimidate.lua)
+--       and not yet verified against retail jug pet data. Adjust here, not in mobskills/.
 -----------------------------------
 ---@type TAbilityPet
 local abilityObject = {}
-local skillName = 'intimidate'
 
 abilityObject.onAbilityCheck = function(player, target, ability)
     return 0
 end
 
 abilityObject.onPetAbility = function(target, pet, petskill, owner, action)
-    local result = xi.actions.mobskills[skillName].onMobWeaponSkill(pet, target, petskill, action)
+    petskill:setMsg(xi.mobskills.mobGazeMove(pet, target, xi.effect.SLOW, 1250, 0, 120))
 
-    return result
+    return xi.effect.SLOW
 end
 
 return abilityObject
