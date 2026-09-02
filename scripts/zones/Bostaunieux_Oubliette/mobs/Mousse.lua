@@ -9,7 +9,7 @@ local ID = zones[xi.zone.BOSTAUNIEUX_OUBLIETTE]
 local entity = {}
 
 entity.onMobDespawn = function(mob)
-    xi.mob.phOnDespawn(mob, ID.mob.SEWER_SYRUP, 10, 7200) -- 2 hour minimum
+    xi.mob.phOnDespawn(mob, ID.mob.SEWER_SYRUP, 15, 7200) -- 2 hour minimum
 end
 
 return entity

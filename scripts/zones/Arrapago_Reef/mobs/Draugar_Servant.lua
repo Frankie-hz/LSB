@@ -15,7 +15,7 @@ entity.onMobInitialize = function(mob)
 end
 
 entity.onMobDespawn = function(mob)
-    xi.mob.phOnDespawn(mob, ID.mob.BLOODY_BONES, 5, 75600) -- 21 hours
+    xi.mob.phOnDespawn(mob, ID.mob.BLOODY_BONES, 15, 75600) -- 21 hours
 end
 
 return entity
