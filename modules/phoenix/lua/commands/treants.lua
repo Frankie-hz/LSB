@@ -29,14 +29,16 @@ local function printStatus(player)
     for _, zoneId in ipairs(zoneIds) do
         local entry = xi.treantEvent.zones[zoneId]
         local dead  = GetServerVariable('[TreantEvent]Dead_' .. zoneId)
-        local state = 'ALIVE'
+        local spots = xi.treantEvent.spots(entry)
+        local _, spotIndex = xi.treantEvent.currentSpot(zoneId, entry)
+        local state = string.format('ALIVE (spot %i/%i)', spotIndex, #spots)
 
         if dead ~= 0 then
             state = string.format('DEAD @ %i', dead)
         else
             local savedHP = GetServerVariable('[TreantEvent]HP_' .. zoneId)
             if savedHP > 0 then
-                state = string.format('ALIVE (hp %i/%i)', savedHP, entry.hp)
+                state = string.format('ALIVE (spot %i/%i, hp %i/%i)', spotIndex, #spots, savedHP, entry.hp)
             end
         end
 
@@ -121,6 +123,7 @@ local function resetEvent(player)
     for zoneId in pairs(xi.treantEvent.zones) do
         SetServerVariable('[TreantEvent]Dead_' .. zoneId, 0)
         SetServerVariable('[TreantEvent]HP_' .. zoneId, 0)
+        SetServerVariable('[TreantEvent]Spot_' .. zoneId, 0)
         SendLuaFuncStringToZone(player:getZoneID(), zoneId, string.format('xi.treantEvent.resetZone(%i)', zoneId))
     end
 

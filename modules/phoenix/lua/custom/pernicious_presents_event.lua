@@ -13,6 +13,7 @@ xi.treantEvent = {}
 
 xi.treantEvent.capSubType = 0x1EAF -- Pick a random treant subtype for the event
 xi.treantEvent.capDuration = 3600
+local swapInterval = 3660 -- Move once an hour. Setting here for testing
 
 xi.treantEvent.zones =
 {
@@ -22,11 +23,17 @@ xi.treantEvent.zones =
         cap     = 20,
         level   = 25,
         hp      = 1000000,
-        treant  = { x = -205.957, y = -29.763, z = -78.954, rot = 140 },
+        treant  =
+        {
+            { x = -205.957, y = -29.763, z = -78.954,  rot = 140 }, -- 1
+            { x = -651.218, y = -27.000, z = 19.501,   rot = 249 }, -- 2
+            { x = -63.5152, y = -0.439,  z = -451.992, rot = 116 }, -- 3
+        },
         moogles =
         {
-            { x = -159.469, y = -60.000, z = 287.445, rot = 95 },
-            { x = -444.657, y = -19.717, z = -229.431, rot = 249 },
+            { x = -228.045, y = -34.087, z = -47.449, rot = 26 }, -- 1
+            { x = -605.174, y = -30.271, z = 44.911,   rot = 71 }, -- 2
+            { x = -159.469, y = -60.000, z = 287.445,  rot = 95 }, -- 3
         },
     },
 
@@ -36,10 +43,17 @@ xi.treantEvent.zones =
         cap     = 20,
         level   = 25,
         hp      = 1000000,
-        treant  = { x = 233.153, y = -39.673, z = -36.117, rot = 50 },
+        treant  =
+        {
+            { x = 348.8329, y = -49.2264, z =  104.0485, rot =   0 }, -- 1
+            { x = 510.9347, y =  -9.4044, z = -410.2809, rot =   0 }, -- 2
+            { x = 210.6801, y =  -10.015, z = -388.7771, rot =   0 }, -- 3
+        },
         moogles =
         {
-            { x = 90.215, y = -59.628, z = 244.967, rot = 32 },
+            { x = 336.1743, y = -49.9909, z =  124.0939, rot = 156 }, -- 1
+            { x = 503.1357, y =  -8.1068, z = -384.1399, rot = 217 }, -- 2
+            { x = 231.1312, y =  -9.4103, z = -409.1042, rot =  54 }, -- 3
         },
     },
 
@@ -49,10 +63,17 @@ xi.treantEvent.zones =
         cap     = 20,
         level   = 25,
         hp      = 1000000,
-        treant  = { x = 126.169, y = -0.398, z = 275.801, rot = 158 },
+        treant  =
+        {
+            { x =  -45.3841, y =    0.25, z = 72.8555, rot =   0 }, -- 1
+            { x = -152.6474, y = -0.4538, z = 395.392, rot =   0 }, -- 2
+            { x = -468.3202, y = 50.1887, z = 37.7089, rot =   0 }, -- 3
+        },
         moogles =
         {
-            { x = 650.115, y = 0.791, z = 313.710, rot = 190 },
+            { x =  -78.7028, y =       0, z =  57.9805, rot =  69 }, -- 1
+            { x = -115.5085, y =  -0.325, z = 382.3555, rot =  33 }, -- 2
+            { x = -453.1328, y = 49.3021, z =  -7.3679, rot =  34 }, -- 3
         },
     },
 
@@ -62,11 +83,17 @@ xi.treantEvent.zones =
         cap     = 20,
         level   = 25,
         hp      = 1000000,
-        treant  = { x = 648.038, y = -0.097, z = -629.929, rot = 145 },
+        treant  =
+        {
+            { x =  90.8989, y =  0.1961, z = -244.5567, rot =   0 }, -- 1
+            { x = 519.6724, y =  -0.011, z = -554.0604, rot =   0 }, -- 2
+            { x = 412.5963, y = -0.8352, z = -290.2584, rot =   0 }, -- 3
+        },
         moogles =
         {
-            { x = 569.953, y = 0.750, z = -313.742, rot = 59 },
-            { x = 269.926, y = 0.786, z = -193.579, rot = 66 },
+            { x = 118.4951, y = 0.6231, z = -230.9585, rot = 207 }, -- 1
+            { x = 525.4673, y = 0.1763, z = -519.8473, rot = 238 }, -- 2
+            { x = 396.0378, y = 0.0355, z = -315.3413, rot = 144 }, -- 3
         },
     },
 
@@ -76,12 +103,17 @@ xi.treantEvent.zones =
         cap     = 20,
         level   = 25,
         hp      = 1000000,
-        treant  = { x = 161.778, y = -40.296, z = 351.301, rot = 165 },
+        treant  =
+        {
+            { x = 319.9714, y = -11.6672, z = 193.2803, rot =   0 }, -- 1
+            { x =  28.3662, y =  -16.044, z = 292.6938, rot =   0 }, -- 2
+            { x = -85.7474, y =  -4.1501, z = 364.6013, rot =   0 }, -- 3
+        },
         moogles =
         {
-            { x = 328.826, y = -5.102, z = -24.946, rot = 193 },
-            { x = 146.534, y = -1.215, z = -310.803, rot = 125 },
-            { x = -13.744, y = -13.239, z = 304.462, rot = 133 },
+            { x = 314.6287, y =  -6.6926, z =  144.1943, rot =  10 }, -- 1
+            { x =   6.1309, y = -13.0928, z =  294.4963, rot = 124 }, -- 2
+            { x =  59.5851, y =  -5.3952, z = -380.7835, rot =  64 }, -- 3
         },
     },
 
@@ -91,10 +123,17 @@ xi.treantEvent.zones =
         cap     = 20,
         level   = 25,
         hp      = 1000000,
-        treant  = { x = -82.263, y = -12.000, z = 239.083, rot = 27 },
+        treant  =
+        {
+            { x =    89.411, y =  -4.7825, z = -414.9001, rot =   0 }, -- 1
+            { x = -330.8143, y =  -1.7949, z =  -66.5058, rot =   0 }, -- 2
+            { x =  163.5024, y = -12.1748, z =  193.2294, rot =   0 }, -- 3
+        },
         moogles =
         {
-            { x = -107.710, y = -4.617, z = -514.857, rot = 32 },
+            { x =   62.1872, y =  -5.1149, z = -414.7411, rot = 184 }, -- 1
+            { x = -284.9077, y =   -4.851, z =  -64.6169, rot = 255 }, -- 2
+            { x =    174.25, y = -13.0394, z =  165.5737, rot =  80 }, -- 3
         },
     },
 
@@ -104,10 +143,17 @@ xi.treantEvent.zones =
         cap     = 30,
         level   = 35,
         hp      = 2000000,
-        treant  = { x = 44.825, y = 0.040, z = 319.385, rot = 81 },
+        treant  =
+        {
+            { x = -122.952, y =      0, z = -164.9595, rot =   0 }, -- 1
+            { x =  78.4619, y =      0, z =  -78.1213, rot =   0 }, -- 2
+            { x = 401.1706, y = 0.6885, z =    94.929, rot =   0 }, -- 3
+        },
         moogles =
         {
-            { x = 71.307, y = 0.371, z = -6.767, rot = 194 },
+            { x = 151.3835, y = 0.0958, z = -166.062, rot = 123 }, -- 1
+            { x =  80.3824, y =      0, z =  -41.223, rot = 199 }, -- 2
+            { x = 379.2048, y = 0.2721, z = 101.5312, rot = 137 }, -- 3
         },
     },
 
@@ -117,10 +163,17 @@ xi.treantEvent.zones =
         cap     = 30,
         level   = 35,
         hp      = 2000000,
-        treant  = { x = 28.153, y = 25.000, z = 269.762, rot = 229 },
+        treant  =
+        {
+            { x =  396.2914, y =      25, z = 387.4296, rot =   0 }, -- 1
+            { x = -387.1429, y = 24.8061, z = 483.6978, rot =   0 }, -- 2
+            { x =  151.6733, y =      25, z =  31.2594, rot =   0 }, -- 3
+        },
         moogles =
         {
-            { x = 459.875, y = 23.900, z = 416.001, rot = 230 },
+            { x =  383.9823, y =      25, z = 409.7735, rot = 186 }, -- 1
+            { x = -350.4578, y =      25, z = 461.5094, rot =   2 }, -- 2
+            { x =  183.5526, y = 24.0119, z =  57.9245, rot = 114 }, -- 3
         },
     },
 
@@ -130,10 +183,17 @@ xi.treantEvent.zones =
         cap     = 30,
         level   = 35,
         hp      = 2000000,
-        treant  = { x = -73.930, y = 7.981, z = -48.123, rot = 36 },
+        treant  =
+        {
+            { x =  463.9538, y = -24.051, z = 187.5342, rot =   0 }, -- 1
+            { x =   33.7662, y = -7.7388, z =  90.5541, rot =   0 }, -- 2
+            { x = -168.2296, y = 24.2104, z = -196.443, rot =   0 }, -- 3
+        },
         moogles =
         {
-            { x = -284.334, y = 16.016, z = 404.335, rot = 121 },
+            { x =  456.0388, y = -23.7437, z =  145.6183, rot =  83 }, -- 1
+            { x =   28.5316, y =  -5.9451, z =  134.5061, rot = 166 }, -- 2
+            { x = -216.2384, y =  13.9647, z = -176.0528, rot = 140 }, -- 3
         },
     },
 
@@ -143,10 +203,17 @@ xi.treantEvent.zones =
         cap     = 50,
         level   = 55,
         hp      = 3500000,
-        treant  = { x = 117.315, y = -40.000, z = 43.556, rot = 131 },
+        treant  =
+        {
+            { x = 179.8336, y = -19.0094, z =  203.0641, rot =   0 }, -- 1
+            { x = 215.8067, y = -19.8066, z = -128.6225, rot =   0 }, -- 2
+            { x = 273.0769, y =  20.1451, z =  401.1451, rot =   0 }, -- 3
+        },
         moogles =
         {
-            { x = -25.714, y = -59.376, z = -119.901, rot = 241 },
+            { x = 168.8212, y = -19.9241, z =  168.1093, rot = 104 }, -- 1
+            { x = 186.9835, y =  -19.936, z = -107.3674, rot = 150 }, -- 2
+            { x = 300.8779, y =   20.495, z =  414.1097, rot =   0 }, -- 3
         },
     },
 
@@ -156,11 +223,17 @@ xi.treantEvent.zones =
         cap     = 50,
         level   = 55,
         hp      = 3500000,
-        treant  = { x = 51.956, y = -7.638, z = -92.371, rot = 14 },
+        treant  =
+        {
+            { x = 124.9664, y = -7.7153, z =  309.2755, rot =   0 }, -- 1
+            { x = -11.4912, y = -15.628, z =   42.5899, rot =   0 }, -- 2
+            { x =  87.4273, y =  8.1992, z = -326.9167, rot =   0 }, -- 3
+        },
         moogles =
         {
-            { x = -268.815, y = 8.372, z = -244.628, rot = 192 },
-            { x = -67.786, y = 3.949, z = 215.968, rot = 189 },
+            { x = 143.6906, y = -15.4587, z =  295.6949, rot =  25 }, -- 1
+            { x = -40.3955, y =      -16, z =   35.8946, rot =  96 }, -- 2
+            { x = 116.6125, y =        8, z = -322.4949, rot = 251 }, -- 3
         },
     },
 
@@ -170,11 +243,17 @@ xi.treantEvent.zones =
         cap     = 50,
         level   = 55,
         hp      = 3500000,
-        treant  = { x = -602.209, y = 0.000, z = -38.758, rot = 10 },
+        treant  =
+        {
+            { x =  329.8498, y = 4.3914, z =  201.4311, rot =   0 }, -- 1
+            { x = -160.8417, y =      0, z = -398.1059, rot =   0 }, -- 2
+            { x = -602.3797, y =      0, z =  -38.5479, rot =   0 }, -- 3
+        },
         moogles =
         {
-            { x = -249.483, y = 0.373, z = -397.918, rot = 185 },
-            { x = -232.701, y = 0.000, z = 517.715, rot = 60 },
+            { x =  301.9791, y = 4.1053, z =  189.7003, rot = 136 }, -- 1
+            { x = -206.7464, y = 0.2805, z = -405.5575, rot = 188 }, -- 2
+            { x = -608.1036, y = 0.0721, z =  -70.9248, rot =  37 }, -- 3
         },
     },
 }
@@ -199,6 +278,62 @@ local function getRestrictionCap(entity)
     return nil
 end
 
+-- A zone lists either one treant position or several; the moogles stay put beside every spot
+xi.treantEvent.spots = function(entry)
+    if entry.treant.x then
+        return { entry.treant }
+    end
+
+    return entry.treant
+end
+
+xi.treantEvent.currentSpot = function(zoneId, entry)
+    local spots = xi.treantEvent.spots(entry)
+    local index = GetServerVariable('[TreantEvent]Spot_' .. zoneId)
+
+    if
+        index < 1 or
+        index > #spots
+    then
+        index = 1
+    end
+
+    return spots[index], index
+end
+
+local function moveToNextSpot(mob, zoneId, entry)
+    local spots = xi.treantEvent.spots(entry)
+    if #spots < 2 then
+        return
+    end
+
+    local _, index = xi.treantEvent.currentSpot(zoneId, entry)
+    local nextIndex = index % #spots + 1
+    local pos       = spots[nextIndex]
+
+    SetServerVariable('[TreantEvent]Spot_' .. zoneId, nextIndex)
+
+    mob:setSpawn(pos.x, pos.y, pos.z, pos.rot)
+    mob:setPos(pos.x, pos.y, pos.z, pos.rot)
+
+    for _, member in pairs(mob:getZone():getPlayers()) do
+        member:printToPlayer(string.format('The Twinkling Treant of %s has uprooted itself and wandered elsewhere, kupo!', entry.zone), xi.msg.channel.SYSTEM_3)
+    end
+end
+
+-- Runs from the roam and disengage hooks only, so a fight always finishes before the treant moves
+local function swapWhenDue(mob, zoneId, entry)
+    if
+        mob:getLocalVar('[TreantEvent]NextSwap') > GetSystemTime() or
+        mob:getZone():getLocalVar('[TreantEvent]MobId') ~= mob:getID()
+    then
+        return
+    end
+
+    mob:setLocalVar('[TreantEvent]NextSwap', GetSystemTime() + swapInterval)
+    moveToNextSpot(mob, zoneId, entry)
+end
+
 xi.treantEvent.onGateRejected = function(player)
     if player:getLocalVar('[TreantEvent]GateNotice') > GetSystemTime() then
         return
@@ -208,7 +343,7 @@ xi.treantEvent.onGateRejected = function(player)
     player:printToPlayer('Only those who hold the right may face the Twinkling Treant. Speak with a Festive Moogle to join the fight, kupo!', xi.msg.channel.SYSTEM_3)
 end
 
-xi.treantEvent.countRemaining = function()
+local function countRemaining()
     local remaining = 0
 
     for zoneId, _ in pairs(xi.treantEvent.zones) do
@@ -330,7 +465,7 @@ xi.treantEvent.spawnMoogles = function(zone, zoneId, entry)
     end
 end
 
-xi.treantEvent.clearZone = function(zone, entry)
+local function clearZone(zone, entry)
     for i = 1, #entry.moogles do
         local moogleId = zone:getLocalVar('[TreantEvent]MoogleId' .. i)
         if moogleId ~= 0 then
@@ -358,14 +493,16 @@ xi.treantEvent.clearZone = function(zone, entry)
 end
 
 xi.treantEvent.spawnTreant = function(zone, zoneId, entry)
+    local spot = xi.treantEvent.currentSpot(zoneId, entry)
+
     local mob = zone:insertDynamicEntity({
         objtype     = xi.objType.MOB,
         name        = 'Twinkling_Treant',
         packetName  = 'TwinklingTreant',
-        x           = entry.treant.x,
-        y           = entry.treant.y,
-        z           = entry.treant.z,
-        rotation    = entry.treant.rot,
+        x           = spot.x,
+        y           = spot.y,
+        z           = spot.z,
+        rotation    = spot.rot,
         groupId     = 200,
         groupZoneId = 100,
         minLevel    = entry.level,
@@ -397,6 +534,7 @@ xi.treantEvent.spawnTreant = function(zone, zoneId, entry)
 
             -- Read by the treant_gate C++ module to refuse actions from players without this cap
             mob:setLocalVar('[TreantEvent]CapSubType', xi.treantEvent.capSubType)
+            mob:setLocalVar('[TreantEvent]NextSwap', GetSystemTime() + swapInterval)
         end,
 
         onMobMobskillChoose = function(mob, target)
@@ -429,6 +567,11 @@ xi.treantEvent.spawnTreant = function(zone, zoneId, entry)
 
         onMobDisengage = function(mob)
             SetServerVariable('[TreantEvent]HP_' .. zoneId, mob:getHP())
+            swapWhenDue(mob, zoneId, entry)
+        end,
+
+        onMobRoam = function(mob)
+            swapWhenDue(mob, zoneId, entry)
         end,
 
         -- On death: Hide moogles, wipe level restriction, announce death
@@ -449,11 +592,11 @@ xi.treantEvent.spawnTreant = function(zone, zoneId, entry)
 
             local treantZone = mob:getZone()
 
-            xi.treantEvent.clearZone(treantZone, entry)
+            clearZone(treantZone, entry)
 
             local announcer = player or treantZone:getPlayers()[1]
 
-            local remaining = xi.treantEvent.countRemaining()
+            local remaining = countRemaining()
 
             if remaining > 0 then
                 if announcer then
@@ -485,7 +628,7 @@ xi.treantEvent.spawnTreant = function(zone, zoneId, entry)
         return
     end
 
-    mob:setSpawn(entry.treant.x, entry.treant.y, entry.treant.z, entry.treant.rot)
+    mob:setSpawn(spot.x, spot.y, spot.z, spot.rot)
     mob:spawn()
     zone:setLocalVar('[TreantEvent]MobId', mob:getID())
 end
@@ -539,7 +682,7 @@ xi.treantEvent.resetZone = function(zoneId)
         end
     end
 
-    xi.treantEvent.clearZone(zone, entry)
+    clearZone(zone, entry)
 end
 
 m:addOverride('xi.server.onServerStart', function()
