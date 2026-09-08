@@ -40,7 +40,6 @@
 
 # Sql things first
 phoenix/sql
-phoenix/dynamis/sql
 era/sql/abyssea
 era/sql/rov
 era/sql/soa
@@ -56,6 +55,7 @@ phoenix/data/bazaar_tax
 phoenix/data/npc_lists
 phoenix/data/dynazones
 phoenix/data/limbus/common
+phoenix/data/limbus/retail_wipe
 phoenix/data/limbus/temenos_north_tower
 phoenix/data/limbus/temenos_east_tower
 phoenix/data/limbus/temenos_west_tower

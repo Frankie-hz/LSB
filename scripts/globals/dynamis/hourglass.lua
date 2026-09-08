@@ -45,28 +45,40 @@ xi.dynamis.decypherGlass = function(glassObj)
     return { startTime = exData.startTime, endTime = exData.endTime, zoneId = exData.zoneId }
 end
 
-local function validateHourglass(glassObj, expectedStartTime, expectedZoneId, expectedEndTime)
-    local glassData   = xi.dynamis.decypherGlass(glassObj)
-    local currentTime = GetSystemTime()
+-- A glass belongs to the run whose start time and zone it was minted with. The server's
+-- expiration is the truth for how long that run has left, so a glass that missed a time
+-- extension (its owner was outside the zone) is refreshed here rather than rejected.
+local function validateHourglass(glassObj, runStartTime, runZoneId, runEndTime)
+    local exData = glassObj and glassObj:getExData()
 
     if
-        not glassData or
-        glassData.startTime ~= expectedStartTime or
-        glassData.zoneId ~= expectedZoneId or
-        glassData.endTime <= currentTime
+        not exData or
+        runStartTime == 0 or
+        exData.startTime ~= runStartTime or
+        exData.zoneId ~= runZoneId or
+        runEndTime <= GetSystemTime()
     then
         return false
     end
 
-    if
-        expectedEndTime and
-        expectedEndTime > 0 and
-        (expectedEndTime <= currentTime or glassData.endTime > expectedEndTime)
-    then
-        return false
+    if exData.endTime ~= runEndTime then
+        exData.endTime = runEndTime
+        glassObj:setExData(exData)
     end
 
     return true
+end
+
+-- Pull the run's current expiration onto a glass so item checks see extensions made while its owner was away
+local function refreshGlass(glassObj)
+    local exData = glassObj and glassObj:getExData()
+    if not exData or not exData.zoneId or not exData.startTime then
+        return
+    end
+
+    local runStartTime = GetServerVariable(string.format('[DYNA]StartTime_%s', exData.zoneId))
+    local runEndTime   = GetServerVariable(string.format('[DYNA]ExpirationTime_%s', exData.zoneId))
+    validateHourglass(glassObj, runStartTime, exData.zoneId, runEndTime)
 end
 
 -- Verify hourglass trade and determine if NEW or REGISTERED
@@ -196,10 +208,11 @@ xi.dynamis.getMatchingGlasses = function(player, zoneId, startTime)
     local matchingGlasses = { }
 
     for _, item in ipairs(player:findItems(xi.item.PERPETUAL_HOURGLASS)) do
-        local glassData = xi.dynamis.decypherGlass(item)
+        local exData = item:getExData()
         if
-            glassData.zoneId == zoneId and
-            glassData.startTime == startTime
+            exData and
+            exData.zoneId == zoneId and
+            exData.startTime == startTime
         then
             table.insert(matchingGlasses, item)
         end
@@ -225,6 +238,7 @@ xi.dynamis.onGlassCheck = function(player, glassObj)
     end
 
     xi.dynamis.debugPrint('Glass object found, checking validity')
+    refreshGlass(glassObj)
     if xi.dynamis.isGlassExpired(glassObj) then
         xi.dynamis.voidGlass(player, glassObj)
         return xi.msg.basic.ITEM_UNABLE_TO_USE
@@ -271,8 +285,12 @@ xi.dynamis.onGlassDrop = function(player, glassObj)
     end
 
     -- If they are in dynamis and dont have another glass they need to be ejected
-    local glassData = xi.dynamis.decypherGlass(glassObj)
-    if #xi.dynamis.getMatchingGlasses(player, glassData.zoneId, glassData.startTime) == 0 then
+    local exData = glassObj and glassObj:getExData()
+    if not exData then
+        return
+    end
+
+    if #xi.dynamis.getMatchingGlasses(player, exData.zoneId, exData.startTime) == 0 then
         xi.dynamis.debugPrint('------------onGlassDrop------------')
         xi.dynamis.debugPrint('Ejecting Player: ' .. player:getName())
         xi.dynamis.ejectPlayer(player)

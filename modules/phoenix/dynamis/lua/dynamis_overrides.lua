@@ -831,7 +831,7 @@ local function registerDynamisZoneOverrides(zoneID, zoneName, zoneNumber)
 
     m:addOverride(string.format('xi.zones.%s.Zone.onZoneIn', zoneName),
     function(player, prevZone)
-        xi.dynamis.zoneOnZoneInEra(player, prevZone)
+        return xi.dynamis.zoneOnZoneInEra(player, prevZone)
     end)
 
     m:addOverride(string.format('xi.zones.%s.Zone.onZoneTick', zoneName),
@@ -1297,6 +1297,16 @@ local function registerMobOverrides(zoneName, mobName, overrideMobType, modelSiz
                 handler = function(mob)
                     xi.dynamis.onMobSpawn(mob, overrideMobType, modelSize)
                 end
+            end
+
+            -- Base mob scripts attach scripts/mixins/dynamis_beastmen at zone load, outside addOverride's reach.
+            local spawnHandler = handler
+            handler = function(mob)
+                mob:removeListener('DYNAMIS_ITEM_DISTRIBUTION')
+                mob:removeListener('DYNAMIS_MAGIC_PROC_CHECK')
+                mob:removeListener('DYNAMIS_WS_PROC_CHECK')
+                mob:removeListener('DYNAMIS_ABILITY_PROC_CHECK')
+                spawnHandler(mob)
             end
         end
 

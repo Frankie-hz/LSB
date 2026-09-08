@@ -22,7 +22,7 @@ xi.dynamis.mobType = xi.dynamis.mobType or
 
 -- Debug control
 xi.mobinfo = xi.mobinfo or {}
-xi.mobinfo.DEBUG = true
+xi.mobinfo.DEBUG = false
 
 local function debugPrint(message)
     if xi.mobinfo.DEBUG then
@@ -187,6 +187,7 @@ xi.dynamis.generalInfo = function(mob, modelSize)
     mob:setMobMod(xi.mobMod.DETECTION, bit.bor(xi.detects.SIGHT, xi.detects.HEARING))
     mob:setMobMod(xi.mobMod.SIGHT_RANGE, 12)
     mob:setMobMod(xi.mobMod.SOUND_RANGE, 4)
+    mob:setMobMod(xi.mobMod.AOE_HIT_ALL, 1)
 
     mob:setModelSize(modelSize)
 end
@@ -411,14 +412,17 @@ xi.dynamis.onStatueDeath = function(mob, player, optParams)
     end
 
     -- If the mob is one shotted we need to force spawn configured adds.
-    local zoneId   = mob:getZoneID()
-    local statueId = mob:getID()
+    local zoneId         = mob:getZoneID()
+    local statueId       = mob:getID()
+    local zoneSpawnTable = xi.dynamis.spawnTable and xi.dynamis.spawnTable[zoneId]
+    local spawnEntry     = zoneSpawnTable and zoneSpawnTable[statueId]
 
-    if mob:getLocalVar('engageCheck') == 0 then
-        local count    = xi.dynamis.spawnTable[zoneId][statueId][1]
-        if count > 0 then
-            xi.dynamis.spawnNextMobsOnce(mob, count, nil) -- Spawn the next X amount of IDs from that statue
-        end
+    if
+        mob:getLocalVar('engageCheck') == 0 and
+        spawnEntry and
+        spawnEntry[1] > 0
+    then
+        xi.dynamis.spawnNextMobsOnce(mob, spawnEntry[1], nil) -- Spawn the next X amount of IDs from that statue
     end
 
     mob:setLocalVar('statueDeathCheck', 1)
@@ -968,7 +972,8 @@ xi.dynamis.spawnNextMobsOnce = function(statue, count, target)
     local spawnedCount    = 0
     local i               = 1
 
-    while spawnedCount < count do
+    -- i <= 20 is a safeguard
+    while spawnedCount < count and i <= 20 do
         local mobId = statueId + i
 
         if zoneSpawnTable and zoneSpawnTable[mobId] then

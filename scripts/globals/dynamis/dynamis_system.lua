@@ -465,7 +465,7 @@ xi.dynamis.dynamisTimeWarning = function(zone, zoneExpiration)
     end
 end
 
--- First zone-in of a run records the lockout; re-entry applies weakness
+-- First zone-in stamps the run on the player; coming back to the same run applies weakness
 local onRunEntry = function(player, zoneId)
     -- Ignore GMs
     if xi.dynamis.isGM(player) then
@@ -485,9 +485,6 @@ local onRunEntry = function(player, zoneId)
     else
         -- On first zone in set the charvar and set expiry
         player:setCharVar(playerEntered, startTime, startTime + 86400)
-
-        -- The 72h lockout starts on actual entry, never at registration
-        xi.dynamis.recordLockout(player)
     end
 end
 
@@ -630,6 +627,12 @@ xi.dynamis.registerPlayer = function(player)
 
     -- Mark player as registered in this dynamis session.
     xi.dynamis.addParticipant(instanceId, player:getID(), player:getName())
+
+    -- Registering starts the three day restriction whether or not the player then enters
+    -- (July 25 2006 version update: trading a timeless hourglass and failing to enter still incurs it)
+    if not xi.dynamis.isGM(player) then
+        xi.dynamis.recordLockout(player)
+    end
 
     local dynaCapacity = GetServerVariable(string.format('[DYNA]#OfRegisteredPlayers_%s', dynaInfo.dynaZone))
     SetServerVariable(string.format('[DYNA]#OfRegisteredPlayers_%s', dynaInfo.dynaZone), dynaCapacity + 1)

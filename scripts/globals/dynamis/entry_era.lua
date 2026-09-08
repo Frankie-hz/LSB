@@ -15,6 +15,7 @@ end
 -- This includes level requirements, mission progress, and key items
 xi.dynamis.checkEntryRequirements = function(player, entryZoneID)
     local entryInfo = xi.dynamis.entryInfoEra[entryZoneID]
+    local ID        = zones[entryZoneID]
 
     -- Verify entry configuration exists
     if not entryInfo then
@@ -32,7 +33,7 @@ xi.dynamis.checkEntryRequirements = function(player, entryZoneID)
     -- 2. Player must be at least level 65 to enter Dynamis
     -- Checked on EVERY entry - players can leave, change jobs and try to come back
     if player:getMainLvl() < xi.dynamis.settings.MIN_LEVEL then
-        player:printToPlayer('Players who have not reached 65 are prohibited from entering Dynamis.', xi.msg.channel.NS_SAY)
+        player:messageSpecial(ID.text.PLAYERS_HAVE_NOT_REACHED_LEVEL, xi.dynamis.settings.MIN_LEVEL)
         return false
     end
 

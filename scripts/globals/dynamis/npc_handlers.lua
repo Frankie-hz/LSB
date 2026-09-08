@@ -21,6 +21,24 @@ local function tradeItemCheck(trade, itemId)
         trade:getItemQty(itemId) > 0
 end
 
+-- Lockout and capacity gate a first registration
+local function canRegisterNewPlayer(player, zoneId, entryInfo)
+    local lockout = xi.dynamis.isPlayerLockedOut(player)
+    if lockout > 0 then
+        xi.dynamis.debugPrint('Player is locked out, lockout time remaining (seconds): ' .. tostring(lockout))
+        player:messageSpecial(zones[zoneId].text.YOU_CANNOT_ENTER_DYNAMIS, xi.dynamis.isPlayerLockedOut(player, true), entryInfo.csBit)
+        return false
+    end
+
+    local registered = GetServerVariable(string.format('[DYNA]#OfRegisteredPlayers_%s', entryInfo.dynaZone))
+    if registered >= entryInfo.maxCapacity then
+        player:printToPlayer(string.format('The Dynamis instance has reached its maximum capacity of %d registrants.', entryInfo.maxCapacity), xi.msg.channel.SYSTEM_3)
+        return false
+    end
+
+    return true
+end
+
 -- ----------------
 -- Entry NPC Logic
 -- ----------------
@@ -69,7 +87,15 @@ xi.dynamis.entryNpcOnTrade = function(player, npc, trade)
 
     xi.dynamis.debugPrint('Lockout: ' .. tostring(lockout) .. ' | zoneCooldownEnter: ' .. tostring(zoneCooldownEnter) .. ' | cleanupScript: ' .. tostring(cleanupScript) .. ' | timeRemaining: ' .. tostring(dynamisTimeRemaining))
 
-    local playerEntered = player:getCharVar(entryInfo.enteredVar) or 0
+    local playerEntered   = player:getCharVar(entryInfo.enteredVar) or 0
+    local tradedTimeless  = tradeItemCheck(trade, dynamisTimelessHourglass)
+    local tradedPerpetual = tradeItemCheck(trade, dynamisPerpetual)
+    local tradedHourglass = tradedTimeless or tradedPerpetual
+
+    -- Early return: the marker only reacts to the two hourglasses.
+    if not tradedHourglass then
+        return
+    end
 
     -- Check that player meets all entry requirements (level, CJ status, etc)
     if not xi.dynamis.checkEntryRequirements(player, zoneId) then
@@ -78,7 +104,7 @@ xi.dynamis.entryNpcOnTrade = function(player, npc, trade)
     end
 
     -- Player trades a Timeless Hourglass
-    if tradeItemCheck(trade, dynamisTimelessHourglass) then
+    if tradedTimeless then
         xi.dynamis.debugPrint('Timeless hourglass trade detected')
 
         -- 1. Check if another group is currently in Dynamis
@@ -114,7 +140,7 @@ xi.dynamis.entryNpcOnTrade = function(player, npc, trade)
 
         player:startEvent(entryInfo.csRegisterGlass, entryInfo.csBit, playerEntered == 1 and 0 or 1, xi.dynamis.settings.RESERVATION_TIMEOUT, xi.dynamis.settings.REENTRY_DAYS, entryInfo.maxCapacity, xi.ki.VIAL_OF_SHROUDED_SAND, dynamisTimelessHourglass, dynamisPerpetual)
     -- Player trades a Perpetual Hourglass
-    elseif tradeItemCheck(trade, dynamisPerpetual) then
+    else
         xi.dynamis.debugPrint('Perpetual hourglass trade detected')
 
         -- 1. GM bypass - allow direct entry and registration
@@ -138,26 +164,13 @@ xi.dynamis.entryNpcOnTrade = function(player, npc, trade)
             return
         end
 
-        -- 4. Player cannot be locked out (only matters for new registrations)
-        xi.dynamis.debugPrint('Checking player lockout')
-        xi.dynamis.debugPrint('Player lockout (seconds): ' .. tostring(lockout))
-        if lockout > 0 then
-            player:messageSpecial(zones[zoneId].text.YOU_CANNOT_ENTER_DYNAMIS, xi.dynamis.isPlayerLockedOut(player, true), entryInfo.csBit)
-            return
-        end
-
-        -- 5. Process new player registration (if hourglass is NEW/valid)
+        -- 4. A first registration needs the player free of lockout and the run below capacity
+        -- Registration, and with it the three day restriction, happens in entryNpcOnEventFinishEra once the player confirms
         if glassValid == xi.dynamis.hourglassTradeResult.NEW then
-            -- 6. Verify instance has not reached max capacity
-            local dynaCapacity = GetServerVariable(string.format('[DYNA]#OfRegisteredPlayers_%s', dynaZoneId))
-
-            if dynaCapacity >= entryInfo.maxCapacity then
-                -- Instance is full
-                player:printToPlayer('The Dynamis instance has reached its maximum capacity of ' .. entryInfo.maxCapacity .. ' registrants.', 29)
+            if not canRegisterNewPlayer(player, zoneId, entryInfo) then
                 return
             end
 
-            -- Registration happens in entryNpcOnEventFinishEra once the player confirms with !Ready; the 72h lockout is recorded on zone-in
             player:startEvent(entryInfo.csDyna, entryInfo.csBit, playerEntered == 1 and 0 or 1, xi.dynamis.settings.RESERVATION_TIMEOUT, xi.dynamis.settings.REENTRY_DAYS, entryInfo.maxCapacity, xi.ki.VIAL_OF_SHROUDED_SAND, dynamisTimelessHourglass, dynamisPerpetual)
             return
         end
@@ -167,7 +180,7 @@ xi.dynamis.entryNpcOnTrade = function(player, npc, trade)
             xi.dynamis.debugPrint('Invalid hourglass trade, another group is currently in Dynamis, time remaining: ' .. tostring(dynamisTimeRemaining))
             player:messageSpecial(xi.dynamis.getZoneMessageID('ANOTHER_GROUP', zoneId), entryInfo.csBit)
         else
-            player:printToPlayer('The Perpetual Hourglass\'s time has run out.', 29)
+            player:printToPlayer('The Perpetual Hourglass\'s time has run out.', xi.msg.channel.SYSTEM_3)
         end
     end
 end
@@ -363,19 +376,25 @@ xi.dynamis.entryNpcOnEventFinishEra = function(player, csid, option)
             return
         end
 
-        -- Register the player now that they have confirmed entry.
-        -- Capacity was not reserved at trade time, so re-check it here
-        local dynaZoneId   = entryInfo.dynaZone
-        local instanceId   = GetServerVariable(string.format('[DYNA]InstanceID_%s', dynaZoneId))
-        local dynaCapacity = GetServerVariable(string.format('[DYNA]#OfRegisteredPlayers_%s', dynaZoneId))
+        -- The trade that opened this cutscene is still held, and this is where entry actually happens,
+        -- so the glass, lockout and capacity are checked again rather than trusted from the trade step
+        if not xi.dynamis.isGM(player) then
+            local trade = player:getTrade()
+            if not tradeItemCheck(trade, dynamisPerpetual) then
+                return
+            end
 
-        if
-            not xi.dynamis.isGM(player) and
-            not xi.dynamis.isParticipant(instanceId, player:getID()) and
-            dynaCapacity >= entryInfo.maxCapacity
-        then
-            player:printToPlayer('The Dynamis instance has reached its maximum capacity of ' .. entryInfo.maxCapacity .. ' registrants.', 29)
-            return
+            local glassValid = xi.dynamis.verifyTradeHourglass(player, zoneId, trade:getItem())
+            if glassValid == xi.dynamis.hourglassTradeResult.INVALID then
+                return
+            end
+
+            if
+                glassValid == xi.dynamis.hourglassTradeResult.NEW and
+                not canRegisterNewPlayer(player, zoneId, entryInfo)
+            then
+                return
+            end
         end
 
         xi.dynamis.registerPlayer(player)
