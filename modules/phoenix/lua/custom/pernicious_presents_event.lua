@@ -11,6 +11,9 @@ local m = Module:new('pernicious_presents_event')
 
 xi.treantEvent = {}
 
+xi.treantEvent.capSubType = 0x1EAF -- Pick a random treant subtype for the event
+xi.treantEvent.capDuration = 3600
+
 xi.treantEvent.zones =
 {
     [xi.zone.WEST_RONFAURE] =
@@ -183,6 +186,28 @@ xi.treantEvent.cityTeleporters =
     [xi.zone.PORT_WINDURST     ] = 17760439, -- Rottata
 }
 
+local function getRestrictionCap(entity)
+    local restriction = entity:getStatusEffect(xi.effect.LEVEL_RESTRICTION)
+
+    if
+        restriction and
+        restriction:getSubType() == xi.treantEvent.capSubType
+    then
+        return restriction
+    end
+
+    return nil
+end
+
+xi.treantEvent.onGateRejected = function(player)
+    if player:getLocalVar('[TreantEvent]GateNotice') > GetSystemTime() then
+        return
+    end
+
+    player:setLocalVar('[TreantEvent]GateNotice', GetSystemTime() + 10)
+    player:printToPlayer('Only those who hold the right may face the Twinkling Treant. Speak with a Festive Moogle to join the fight, kupo!', xi.msg.channel.SYSTEM_3)
+end
+
 xi.treantEvent.countRemaining = function()
     local remaining = 0
 
@@ -231,7 +256,7 @@ xi.treantEvent.spawnMoogles = function(zone, zoneId, entry)
 
                 if
                     restriction and
-                    restriction:getPower() ~= entry.cap
+                    restriction:getSubType() ~= xi.treantEvent.capSubType
                 then
                     player:printToPlayer('You are already bound by another engagement, kupo. Settle that business first!', xi.msg.channel.SAY, npc:getPacketName())
                     return
@@ -268,8 +293,10 @@ xi.treantEvent.spawnMoogles = function(zone, zoneId, entry)
                                 playerArg:addStatusEffect(xi.effect.LEVEL_RESTRICTION, {
                                     power    = entry.cap,
                                     subPower = 1, -- exp for other kills uses real level
+                                    subType  = xi.treantEvent.capSubType,
+                                    duration = xi.treantEvent.capDuration,
                                     origin   = playerArg,
-                                    flag     = xi.effectFlag.ON_ZONE + xi.effectFlag.CONFRONTATION,
+                                    flag     = xi.effectFlag.ON_ZONE,
                                 })
 
                                 -- pets summoned after the grant inherit the effect,
@@ -277,13 +304,13 @@ xi.treantEvent.spawnMoogles = function(zone, zoneId, entry)
                                 local pet = playerArg:getPet()
                                 if pet then
                                     pet:addStatusEffect(xi.effect.LEVEL_RESTRICTION, {
-                                        power  = entry.cap,
-                                        origin = pet,
-                                        flag   = xi.effectFlag.CONFRONTATION,
+                                        power    = entry.cap,
+                                        duration = xi.treantEvent.capDuration,
+                                        origin   = pet,
                                     })
                                 end
 
-                                playerArg:printToPlayer(string.format('You now hold the right to face the Twinkling Treant, kupo! Your level is restricted to %i until you speak with me again or leave the zone.', entry.cap), xi.msg.channel.SAY, speaker)
+                                playerArg:printToPlayer(string.format('You now hold the right to face the Twinkling Treant, kupo! Your level is restricted to %i for the next %i minutes, or until you speak with me again, leave the zone, or fall in battle.', entry.cap, math.floor(xi.treantEvent.capDuration / 60)), xi.msg.channel.SAY, speaker)
                             end,
                         },
                         {
@@ -299,6 +326,33 @@ xi.treantEvent.spawnMoogles = function(zone, zoneId, entry)
 
         if npc then
             zone:setLocalVar('[TreantEvent]MoogleId' .. i, npc:getID())
+        end
+    end
+end
+
+xi.treantEvent.clearZone = function(zone, entry)
+    for i = 1, #entry.moogles do
+        local moogleId = zone:getLocalVar('[TreantEvent]MoogleId' .. i)
+        if moogleId ~= 0 then
+            local moogle = GetNPCByID(moogleId)
+            if moogle then
+                moogle:setStatus(xi.status.DISAPPEAR)
+            end
+        end
+
+        zone:setLocalVar('[TreantEvent]MoogleId' .. i, 0)
+    end
+
+    zone:setLocalVar('[TreantEvent]MobId', 0)
+
+    for _, member in pairs(zone:getPlayers()) do
+        if getRestrictionCap(member) then
+            local pet = member:getPet()
+            if pet then
+                pet:delStatusEffect(xi.effect.LEVEL_RESTRICTION)
+            end
+
+            member:delStatusEffect(xi.effect.LEVEL_RESTRICTION)
         end
     end
 end
@@ -341,11 +395,8 @@ xi.treantEvent.spawnTreant = function(zone, zoneId, entry)
             mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, 150)
             mob:setCallForHelpBlocked(true)
 
-            mob:addStatusEffect(xi.effect.LEVEL_RESTRICTION, {
-                power  = entry.cap,
-                origin = mob,
-                flag   = xi.effectFlag.CONFRONTATION,
-            })
+            -- Read by the treant_gate C++ module to refuse actions from players without this cap
+            mob:setLocalVar('[TreantEvent]CapSubType', xi.treantEvent.capSubType)
         end,
 
         onMobMobskillChoose = function(mob, target)
@@ -398,31 +449,7 @@ xi.treantEvent.spawnTreant = function(zone, zoneId, entry)
 
             local treantZone = mob:getZone()
 
-            for i = 1, #entry.moogles do
-                local moogle = GetNPCByID(treantZone:getLocalVar('[TreantEvent]MoogleId' .. i))
-                if moogle then
-                    moogle:setStatus(xi.status.DISAPPEAR)
-                end
-
-                treantZone:setLocalVar('[TreantEvent]MoogleId' .. i, 0)
-            end
-
-            treantZone:setLocalVar('[TreantEvent]MobId', 0)
-
-            for _, member in pairs(treantZone:getPlayers()) do
-                local restriction = member:getStatusEffect(xi.effect.LEVEL_RESTRICTION)
-                if
-                    restriction and
-                    restriction:getPower() == entry.cap
-                then
-                    local pet = member:getPet()
-                    if pet then
-                        pet:delStatusEffect(xi.effect.LEVEL_RESTRICTION)
-                    end
-
-                    member:delStatusEffect(xi.effect.LEVEL_RESTRICTION)
-                end
-            end
+            xi.treantEvent.clearZone(treantZone, entry)
 
             local announcer = player or treantZone:getPlayers()[1]
 
@@ -493,6 +520,28 @@ xi.treantEvent.startZone = function(zoneId)
     xi.treantEvent.spawnTreant(zone, zoneId, entry)
 end
 
+xi.treantEvent.resetZone = function(zoneId)
+    local zone  = GetZone(zoneId)
+    local entry = xi.treantEvent.zones[zoneId]
+
+    if
+        not zone or
+        not entry
+    then
+        return
+    end
+
+    local mobId = zone:getLocalVar('[TreantEvent]MobId')
+    if mobId ~= 0 then
+        local mob = GetMobByID(mobId)
+        if mob then
+            DespawnMob(mobId, zone)
+        end
+    end
+
+    xi.treantEvent.clearZone(zone, entry)
+end
+
 m:addOverride('xi.server.onServerStart', function()
     super()
 
@@ -511,6 +560,94 @@ m:addOverride('xi.server.onServerStart', function()
             xi.treantEvent.setTeleporterStatus(zoneId, xi.status.DISAPPEAR)
         end
     end
+end)
+
+-- Effects restored on login rerun this, so the exemption and its listeners survive a relog
+m:addOverride('xi.effects.level_restriction.onEffectGain', function(target, effect)
+    super(target, effect)
+
+    if
+        target:getObjType() ~= xi.objType.PC or
+        effect:getSubType() ~= xi.treantEvent.capSubType
+    then
+        return
+    end
+
+    effect:delEffectFlag(xi.effectFlag.HIDE_TIMER)
+    effect:addMod(xi.mod.EXPERIENCE_RETAINED, 100)
+    target:setLocalVar('[TreantEvent]LastHitByTreant', 0)
+
+    target:addListener('TAKE_DAMAGE', '[TreantEvent]TAKE_DAMAGE', function(player, amount, attacker)
+        local byTreant = 0
+
+        if
+            attacker and
+            attacker:getID() == player:getZone():getLocalVar('[TreantEvent]MobId')
+        then
+            byTreant = 1
+        end
+
+        player:setLocalVar('[TreantEvent]LastHitByTreant', byTreant)
+    end)
+
+    -- Core charges EXP for the death right after this fires, so a kill by anything but the treant forfeits the exemption here
+    target:addListener('DEATH', '[TreantEvent]DEATH', function(player)
+        if player:getLocalVar('[TreantEvent]LastHitByTreant') == 1 then
+            return
+        end
+
+        local cap = getRestrictionCap(player)
+        if cap then
+            cap:addMod(xi.mod.EXPERIENCE_RETAINED, -100)
+        end
+    end)
+end)
+
+m:addOverride('xi.effects.level_restriction.onEffectLose', function(target, effect)
+    super(target, effect)
+
+    if
+        target:getObjType() ~= xi.objType.PC or
+        effect:getSubType() ~= xi.treantEvent.capSubType
+    then
+        return
+    end
+
+    target:removeListener('[TreantEvent]TAKE_DAMAGE')
+    target:removeListener('[TreantEvent]DEATH')
+
+    -- An engaged player keeps swinging without new action packets, so the gate cannot catch a lapse mid-fight
+    local zone = target:getZone()
+    if not zone then
+        return
+    end
+
+    local treantId = zone:getLocalVar('[TreantEvent]MobId')
+
+    for _, fighter in pairs({ target, target:getPet() }) do
+        local battleTarget = fighter:getTarget()
+        if
+            battleTarget and
+            battleTarget:getID() == treantId
+        then
+            fighter:disengage()
+        end
+    end
+
+    if effect:getTimeRemaining() == 0 then
+        target:printToPlayer('Your right to face the Twinkling Treant has lapsed, kupo. Speak with a Festive Moogle to rejoin the fight!', xi.msg.channel.SYSTEM_3)
+    end
+end)
+
+m:addOverride('xi.player.onPlayerDeath', function(player)
+    super(player)
+
+    if not getRestrictionCap(player) then
+        return
+    end
+
+    player:delStatusEffect(xi.effect.LEVEL_RESTRICTION)
+    player:printToPlayer('Your right to face the Twinkling Treant ends with your defeat, kupo. Speak with a Festive Moogle to rejoin the fight!', xi.msg.channel.SYSTEM_3)
 end)
 
 -- Forcibly only show the vendor menu while outposts are disabled
