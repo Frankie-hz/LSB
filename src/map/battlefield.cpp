@@ -513,6 +513,18 @@ bool CBattlefield::IsRegistered(CCharEntity* PChar)
     return PChar && m_RegisteredPlayers.find(PChar->id) != m_RegisteredPlayers.end();
 }
 
+// The Battlefield effect is the player's clearance and names the battlefield it was granted for
+bool CBattlefield::HasClearance(CCharEntity* PChar) const
+{
+    const auto* PEffect = PChar->StatusEffectContainer->GetStatusEffect(xi::StatusEffect::Battlefield);
+    return PEffect != nullptr && PEffect->GetPower() == GetID() && PEffect->GetSubPower() == GetArea();
+}
+
+void CBattlefield::RemoveRegistration(CCharEntity* PChar)
+{
+    m_RegisteredPlayers.erase(PChar->id);
+}
+
 bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
 {
     // player's already zoned, we don't need to do anything
@@ -823,11 +835,11 @@ bool CBattlefield::Cleanup(timer::time_point time, bool force)
         }
     }
 
-    // Remove all registered players as long as they're in the zone
+    // Remove all registered players as long as they're in the zone and still hold clearance for this battlefield
     for (auto id : m_RegisteredPlayers)
     {
         auto* PChar = GetZone()->GetCharByID(id);
-        if (PChar)
+        if (PChar && HasClearance(PChar))
         {
             PChar->StatusEffectContainer->DelStatusEffectsByFlag(xi::StatusEffectFlag::Confrontation, EffectNotice::Silent);
             m_Zone->updateCharLevelRestriction(PChar);

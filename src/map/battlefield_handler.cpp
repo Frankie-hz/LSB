@@ -161,9 +161,10 @@ CBattlefield* CBattlefieldHandler::GetBattlefield(CBaseEntity* PEntity, bool che
 
     if (checkRegistered && entity && entity->objtype == TYPE_PC)
     {
+        auto* PChar = static_cast<CCharEntity*>(entity);
         for (auto& [area, battlefield] : m_Battlefields)
         {
-            if (battlefield->IsRegistered(static_cast<CCharEntity*>(entity)))
+            if (battlefield->IsRegistered(PChar) && battlefield->HasClearance(PChar))
             {
                 return battlefield.get();
             }
@@ -209,12 +210,22 @@ uint8 CBattlefieldHandler::RegisterBattlefield(CCharEntity* PChar, const Battlef
     // attempt to add to an existing battlefield
     auto* PBattlefield = GetBattlefield(PChar, true);
 
-    // Could not find this character registered, try find by id and initiator
+    // A registration the clearance effect does not name is left over from an earlier party
+    for (auto& [area, battlefield] : m_Battlefields)
+    {
+        if (battlefield.get() != PBattlefield)
+        {
+            battlefield->RemoveRegistration(PChar);
+        }
+    }
+
+    // Could not find this character registered, try find by id and initiator. This is how party
+    // members get registered, after the initiator copied their clearance effect onto them.
     if (!PBattlefield)
     {
         for (const auto& [area, battlefield] : m_Battlefields)
         {
-            if (battlefield->GetInitiator().id == registration.initiator && battlefield->GetID() == registration.id)
+            if (battlefield->GetInitiator().id == registration.initiator && battlefield->GetID() == registration.id && battlefield->HasClearance(PChar))
             {
                 PBattlefield = battlefield.get();
                 break;
@@ -238,8 +249,8 @@ uint8 CBattlefieldHandler::RegisterBattlefield(CCharEntity* PChar, const Battlef
             }
         }
     }
-    // If they have a Registered Battlefield -AND- they have the Battlefield Status Effect
-    if (PBattlefield && PChar->StatusEffectContainer->HasStatusEffect(xi::StatusEffect::Battlefield))
+    // Registered battlefields are only found through the Battlefield Status Effect that names them
+    if (PBattlefield)
     {
         // Reset their progress var to 0 and proceed to attempt to enter them into the BCNM
         PChar->SetLocalVar("[BCNM]EnterExisting", 0);
