@@ -776,7 +776,10 @@ Maybe<SpellID> CMobSpellContainer::GetSpell()
 
     if (HasBuffSpells() && xirand::GetRandomNumber(100) < m_PMob->getMobMod(xi::MobMod::BuffChance))
     {
-        return GetBuffSpell();
+        if (const auto buffSpell = GetBuffSpell(); buffSpell.has_value())
+        {
+            return buffSpell;
+        }
     }
 
     // Grab whatever spell can be found
@@ -794,7 +797,10 @@ Maybe<SpellID> CMobSpellContainer::GetSpell()
 
     if (HasBuffSpells())
     {
-        return GetBuffSpell();
+        if (const auto buffSpell = GetBuffSpell(); buffSpell.has_value())
+        {
+            return buffSpell;
+        }
     }
 
     if (HasGaSpells())
@@ -859,12 +865,24 @@ Maybe<SpellID> CMobSpellContainer::GetDamageSpell()
 
 Maybe<SpellID> CMobSpellContainer::GetBuffSpell()
 {
-    if (m_buffList.empty())
+    // Buffs still active on the mob are skipped so they aren't refreshed before they wear off.
+    std::vector<SpellID> candidates;
+    candidates.reserve(m_buffList.size());
+    for (const auto spellId : m_buffList)
+    {
+        const auto statusEffect = spell::GetSpell(spellId)->statusEffect();
+        if (!statusEffect.has_value() || !m_PMob->StatusEffectContainer->HasStatusEffect(statusEffect.value()))
+        {
+            candidates.emplace_back(spellId);
+        }
+    }
+
+    if (candidates.empty())
     {
         return {};
     }
 
-    return m_buffList[xirand::GetRandomNumber(m_buffList.size())];
+    return candidates[xirand::GetRandomNumber(candidates.size())];
 }
 
 Maybe<SpellID> CMobSpellContainer::GetDebuffSpell()

@@ -140,6 +140,16 @@ bool CSpell::isBuff() const
     return (getValidTarget() & TARGET_SELF) && !(getValidTarget() & TARGET_ENEMY);
 }
 
+auto CSpell::statusEffect() const -> Maybe<xi::StatusEffect>
+{
+    return statusEffect_;
+}
+
+void CSpell::setStatusEffect(const Maybe<xi::StatusEffect> statusEffect)
+{
+    statusEffect_ = statusEffect;
+}
+
 bool CSpell::tookEffect() const
 {
     return !(m_message == MsgBasic::MagicNoEffect || m_message == MsgBasic::MagicResistedTarget || m_message == MsgBasic::TargetNoEffect || m_message == MsgBasic::MagicResisted || m_message == MsgBasic::MagicCompleteResist || m_message == MsgBasic::MagicFail);
@@ -457,7 +467,7 @@ std::map<uint16, uint16>          PMobSkillToBlueSpell; // maps the skill id (ke
 void LoadSpellList()
 {
     auto rset = db::preparedStmt("SELECT spellid, name, jobs, `group`, family, validTargets, skill, castTime, recastTime, animation, animationTime, mpCost, "
-                                 "AOE, base, element, zonemisc, multiplier, message, magicBurstMessage, CE, VE, requirements, content_tag, spell_range, radius "
+                                 "AOE, base, element, zonemisc, multiplier, message, magicBurstMessage, CE, VE, requirements, content_tag, spell_range, radius, status_effect "
                                  "FROM spell_list");
     FOR_DB_MULTIPLE_RESULTS(rset)
     {
@@ -506,6 +516,11 @@ void LoadSpellList()
 
         PSpell->setRange(rset->get<float>("spell_range") / 10);
         PSpell->setRadius(rset->get<float>("radius") / 10);
+
+        if (!rset->isNull("status_effect"))
+        {
+            PSpell->setStatusEffect(rset->get<xi::StatusEffect>("status_effect"));
+        }
 
         PSpellList[static_cast<uint16>(PSpell->getID())] = PSpell;
 
