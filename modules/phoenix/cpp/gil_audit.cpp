@@ -722,7 +722,7 @@ public:
                 publishReason({
                     .source       = GilSource::PlayerTrade,
                     .actor        = PChar->id,
-                    .counterparty = PChar->TradePending.UniqueNo,
+                    .counterparty = PChar->TradePending.entity.UniqueNo,
                     .detail       = "trade_res",
                 });
                 break;
