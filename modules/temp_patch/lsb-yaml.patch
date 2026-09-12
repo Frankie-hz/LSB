@@ -52,7 +52,7 @@ index 00000000000..1c6060398aa
 +                      ++pos;
 +                      if (pos != end) ++pos;
 diff --git a/modules/README.md b/modules/README.md
-index 875e93d68a5..884f47de2b1 100644
+index 875e93d68a5..4c61b6d7656 100644
 --- a/modules/README.md
 +++ b/modules/README.md
 @@ -29,6 +29,16 @@ Command modules register with `xi.module.registerCommand('name', commandTable)`
@@ -65,114 +65,13 @@ index 875e93d68a5..884f47de2b1 100644
 +`modules/example/data/zones/west_ronfaure/mobs.yaml` patches `data/zones/west_ronfaure/mobs.yaml`.
 +
 +Nested data components may be selected directly. For example, an `init.txt` entry for
-+`era/data/abyssea/advanced_job_quest` loads patches relative to that directory.
++`era/data/abyssea/advanced_job_quest_mob_stats` loads patches relative to that directory.
 +
 +Patches use RFC 7396 semantics and are applied in `init.txt` order. Objects merge by key, lists are replaced whole, and `null` removes a key.
 +
  ## Era Accuracy Modules
  
  Lua era-accuracy modules live under `era/lua/` and mirror the main `scripts/` tree where practical.
-diff --git a/modules/era/data/abyssea/advanced_job_quest/zones/ghelsba_outpost/mobs.yaml b/modules/era/data/abyssea/advanced_job_quest/zones/ghelsba_outpost/mobs.yaml
-new file mode 100644
-index 00000000000..1138d983dc0
---- /dev/null
-+++ b/modules/era/data/abyssea/advanced_job_quest/zones/ghelsba_outpost/mobs.yaml
-@@ -0,0 +1,12 @@
-+# DRG quest mob before the May 10, 2011 version update.
-+# Source: https://forum.square-enix.com/ffxi/threads/7257
-+
-+templates:
-+  Cyranuce_M_Cutauleon:
-+    attributes:
-+      stats:
-+        hp: 2700
-+
-+spawns:
-+  17350928:
-+    level: [32, 32]
-diff --git a/modules/era/data/abyssea/advanced_job_quest/zones/konschtat_highlands/mobs.yaml b/modules/era/data/abyssea/advanced_job_quest/zones/konschtat_highlands/mobs.yaml
-new file mode 100644
-index 00000000000..78b1013a806
---- /dev/null
-+++ b/modules/era/data/abyssea/advanced_job_quest/zones/konschtat_highlands/mobs.yaml
-@@ -0,0 +1,12 @@
-+# SAM quest mob before the May 10, 2011 version update.
-+# Source: https://forum.square-enix.com/ffxi/threads/7257
-+
-+templates:
-+  Forger:
-+    attributes:
-+      stats:
-+        hp: 2000
-+
-+spawns:
-+  17219999:
-+    level: [32, 32]
-diff --git a/modules/era/data/abyssea/advanced_job_quest/zones/korroloka_tunnel/mobs.yaml b/modules/era/data/abyssea/advanced_job_quest/zones/korroloka_tunnel/mobs.yaml
-new file mode 100644
-index 00000000000..cd4866ecf4c
---- /dev/null
-+++ b/modules/era/data/abyssea/advanced_job_quest/zones/korroloka_tunnel/mobs.yaml
-@@ -0,0 +1,16 @@
-+# NIN quest mobs before the May 10, 2011 version update.
-+# Source: https://forum.square-enix.com/ffxi/threads/7257
-+
-+templates:
-+  Korroloka_Leech:
-+    attributes:
-+      stats:
-+        hp: 900
-+
-+spawns:
-+  17486187:
-+    level: [32, 32]
-+  17486188:
-+    level: [32, 32]
-+  17486189:
-+    level: [32, 32]
-diff --git a/modules/era/data/abyssea/advanced_job_quest/zones/the_sanctuary_of_zitah/mobs.yaml b/modules/era/data/abyssea/advanced_job_quest/zones/the_sanctuary_of_zitah/mobs.yaml
-new file mode 100644
-index 00000000000..b560897bb95
---- /dev/null
-+++ b/modules/era/data/abyssea/advanced_job_quest/zones/the_sanctuary_of_zitah/mobs.yaml
-@@ -0,0 +1,12 @@
-+# SAM quest mob before the May 10, 2011 version update.
-+# Source: https://forum.square-enix.com/ffxi/threads/7257
-+
-+templates:
-+  Guardian_Treant:
-+    attributes:
-+      stats:
-+        hp: 2000
-+
-+spawns:
-+  17272838:
-+    level: [32, 32]
-diff --git a/modules/era/sql/abyssea/advanced_job_quest_mob_stats.sql b/modules/era/sql/abyssea/advanced_job_quest_mob_stats.sql
-deleted file mode 100644
-index b28da8a95d0..00000000000
---- a/modules/era/sql/abyssea/advanced_job_quest_mob_stats.sql
-+++ /dev/null
-@@ -1,19 +0,0 @@
-------------------------------------
---- NIN/DRG/SAM Quest Mobs Original Difficulty Module
---- Reverts the nerfs to the NIN/DRG/SAM quest mobs in the May 10, 2011 version update
---- Source: https://forum.square-enix.com/ffxi/threads/7257
-------------------------------------
--
---- Level: set all six spawns to level 32 (min == max => fixed level)
--UPDATE mob_spawn_points SET minLevel = 32, maxLevel = 32 WHERE mobid = 17486187; -- Korroloka Leech (Korroloka Tunnel)
--UPDATE mob_spawn_points SET minLevel = 32, maxLevel = 32 WHERE mobid = 17486188; -- Korroloka Leech (Korroloka Tunnel)
--UPDATE mob_spawn_points SET minLevel = 32, maxLevel = 32 WHERE mobid = 17486189; -- Korroloka Leech (Korroloka Tunnel)
--UPDATE mob_spawn_points SET minLevel = 32, maxLevel = 32 WHERE mobid = 17350928; -- Cyranuce M Cutauleon (Ghelsba Outpost)
--UPDATE mob_spawn_points SET minLevel = 32, maxLevel = 32 WHERE mobid = 17219999; -- Forger (Konschtat Highlands)
--UPDATE mob_spawn_points SET minLevel = 32, maxLevel = 32 WHERE mobid = 17272838; -- Guardian Treant (The Sanctuary of Zi'Tah)
--
---- HP: per-group override, keyed by (groupid, zoneid)
--UPDATE mob_groups SET HP =  900 WHERE groupid = 28 AND zoneid = 173; -- Korroloka Leech x3 (Korroloka Tunnel)
--UPDATE mob_groups SET HP = 2700 WHERE groupid = 26 AND zoneid = 140; -- Cyranuce M Cutauleon (Ghelsba Outpost)
--UPDATE mob_groups SET HP = 2000 WHERE groupid = 33 AND zoneid = 108; -- Forger (Konschtat Highlands)
--UPDATE mob_groups SET HP = 2000 WHERE groupid =  5 AND zoneid = 121; -- Guardian Treant (The Sanctuary of Zi'Tah)
 diff --git a/src/map/data/loader.h b/src/map/data/loader.h
 index 0307cf54363..6ea8e169ead 100644
 --- a/src/map/data/loader.h
@@ -630,3 +529,16 @@ index 558f34de7c2..ad29ee34284 100644
  TEST_CASE("data binding: runtime decoding is strict", "[data][binding]")
  {
      CHECK_THROWS(StatusEffectDataset::decode(R"(
+diff --git a/tools/ci/startup_checks.py b/tools/ci/startup_checks.py
+index d1d5388546d..1a0811dbd3f 100644
+--- a/tools/ci/startup_checks.py
++++ b/tools/ci/startup_checks.py
+@@ -157,6 +157,8 @@ def close(code):
+ 
+ 
+ def main():
++    global processes
++
+     print("Running exe startup checks...({})".format(platform.system()))
+ 
+     # --ci flag only on non-Linux systems. Option exits server as soon as it starts, Linux wants to keep it open to test HXIClient.
