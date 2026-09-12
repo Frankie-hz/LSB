@@ -475,6 +475,21 @@ void CParty::PopMember(CBattleEntity* PEntity)
         members.erase(memberToDelete);
     }
 
+    if (m_PLeader == PEntity)
+    {
+        m_PLeader = nullptr;
+    }
+
+    if (m_PQuarterMaster == PEntity)
+    {
+        m_PQuarterMaster = nullptr;
+    }
+
+    if (m_PSyncTarget == PEntity)
+    {
+        m_PSyncTarget = nullptr;
+    }
+
     // free memory, party will re reinsatiated when they zone back in
     if (members.empty())
     {
@@ -494,6 +509,11 @@ void CParty::PopMember(CBattleEntity* PEntity)
                     continue;
                 }
                 it++;
+            }
+
+            if (m_PAlliance->partyList.empty())
+            {
+                delete m_PAlliance; // cpp.sh allow
             }
         }
         delete this; // cpp.sh allow
@@ -1122,7 +1142,7 @@ void CParty::SetSyncTarget(const std::string& MemberName, MsgStd message)
 
     if (settings::get<bool>("map.LEVEL_SYNC_ENABLE"))
     {
-        if (PEntity && PEntity->objtype == TYPE_PC)
+        if (PEntity && PEntity->objtype == TYPE_PC && GetLeader() != nullptr)
         {
             CCharEntity* PChar = (CCharEntity*)PEntity;
             // enable level sync

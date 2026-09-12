@@ -201,6 +201,12 @@ void auth_session::read_func()
         {
             DebugSockets(fmt::format("LOGIN_ATTEMPT from {}", ipAddress));
 
+            if (loginHelpers::isLoginLockedOut(ipAddress))
+            {
+                sendLoginResult(login_result::LOGIN_ERROR);
+                return;
+            }
+
             uint32 accountID = 0;
             uint32 status    = 0;
 
@@ -213,6 +219,7 @@ void auth_session::read_func()
                 auto launchInfo = otpHelpers::validateAndConsumeLaunchToken(login_token);
                 if (!launchInfo)
                 {
+                    loginHelpers::recordLoginFailure(ipAddress);
                     sendLoginResult(login_result::LOGIN_ERROR_LAUNCH_TOKEN_INVALID);
                     return;
                 }
@@ -224,6 +231,7 @@ void auth_session::read_func()
                 auto accountInfo = validatePassword(username, password);
                 if (!accountInfo)
                 {
+                    loginHelpers::recordLoginFailure(ipAddress);
                     sendLoginResult(login_result::LOGIN_ERROR);
                     return;
                 }
@@ -355,6 +363,8 @@ void auth_session::read_func()
             }
 
             sendJsonAsBuffer(loginSuccessReply);
+
+            loginHelpers::clearLoginFailures(ipAddress);
 
             auto& session          = loginHelpers::get_authenticated_session(ipAddress, asStringFromUntrustedSource(hash, sizeof(hash)));
             session.accountID      = accountID;

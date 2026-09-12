@@ -246,8 +246,8 @@ templates:
     attributes:
       combat:
         skill: scythe
-        delay: 360
-      jobs: [mnk, mnk]
+        delay: 200
+      jobs: [war, war]
       render:
         look:
           type:  standard
@@ -286,6 +286,7 @@ templates:
     attributes:
       combat:
         skill: axe
+        delay: 200
       render:
         look:
           type:  standard
@@ -614,7 +615,7 @@ templates:
     attributes:
       combat:
         skill: scythe
-        delay: 220
+        delay: 210
       render:
         look:
           type:  standard
@@ -1041,8 +1042,8 @@ templates:
     attributes:
       combat:
         skill: scythe
-        delay: 360
-      jobs: [mnk, mnk]
+        delay: 200
+      jobs: [war, war]
       render:
         look:
           type:  standard
@@ -1117,6 +1118,7 @@ templates:
     attributes:
       combat:
         skill: axe
+        delay: 200
       render:
         look:
           type:  standard
@@ -1707,7 +1709,7 @@ templates:
     attributes:
       combat:
         skill: axe
-        delay: 265
+        delay: 240
       jobs: [bst, bst]
       render:
         look:
@@ -1743,7 +1745,7 @@ templates:
     attributes:
       combat:
         skill: axe
-        delay: 265
+        delay: 240
       jobs: [bst, bst]
       render:
         look:
@@ -1779,7 +1781,7 @@ templates:
     attributes:
       combat:
         skill: axe
-        delay: 265
+        delay: 240
       jobs: [bst, bst]
       render:
         look:
@@ -2023,7 +2025,7 @@ templates:
     attributes:
       combat:
         skill: club
-        delay: 265
+        delay: 240
       jobs: [whm, whm]
       render:
         look:
@@ -2058,7 +2060,7 @@ templates:
     attributes:
       combat:
         skill: club
-        delay: 265
+        delay: 240
       jobs: [whm, whm]
       render:
         look:
@@ -2093,7 +2095,7 @@ templates:
     attributes:
       combat:
         skill: club
-        delay: 265
+        delay: 240
       jobs: [whm, whm]
       render:
         look:
@@ -2127,7 +2129,7 @@ templates:
     attributes:
       combat:
         skill: great_sword
-        delay: 265
+        delay: 240
       jobs: [pld, pld]
       render:
         look:
@@ -2164,7 +2166,7 @@ templates:
     attributes:
       combat:
         skill: great_sword
-        delay: 265
+        delay: 240
       jobs: [pld, pld]
       render:
         look:
@@ -2201,7 +2203,7 @@ templates:
     attributes:
       combat:
         skill: great_sword
-        delay: 265
+        delay: 240
       jobs: [pld, pld]
       render:
         look:
@@ -2331,7 +2333,7 @@ templates:
   Vanguard_Dragontamer:
     id:            4649
     species:       goblin
-    skill_list_id: 360
+    skill_list_id: 2108
     attributes:
       combat:
         skill: sword
@@ -2366,7 +2368,7 @@ templates:
     id:            4649
     display_name:  Vanguard_Dragontamer
     species:       goblin
-    skill_list_id: 360
+    skill_list_id: 2108
     attributes:
       combat:
         skill: sword
@@ -2780,7 +2782,7 @@ templates:
     attributes:
       combat:
         skill: hand_to_hand
-        delay: 480
+        delay: 240
       jobs: [mnk, mnk]
       render:
         look:
@@ -2814,7 +2816,7 @@ templates:
     attributes:
       combat:
         skill: hand_to_hand
-        delay: 480
+        delay: 240
       jobs: [mnk, mnk]
       render:
         look:
@@ -2848,7 +2850,7 @@ templates:
     attributes:
       combat:
         skill: hand_to_hand
-        delay: 480
+        delay: 240
       jobs: [mnk, mnk]
       render:
         look:
@@ -2983,7 +2985,7 @@ templates:
     attributes:
       combat:
         skill: scythe
-        delay: 265
+        delay: 240
       jobs: [sam, sam]
       render:
         look:
@@ -3019,7 +3021,7 @@ templates:
     attributes:
       combat:
         skill: scythe
-        delay: 265
+        delay: 240
       jobs: [sam, sam]
       render:
         look:
@@ -3055,7 +3057,7 @@ templates:
     attributes:
       combat:
         skill: scythe
-        delay: 265
+        delay: 240
       jobs: [sam, sam]
       render:
         look:
@@ -3295,7 +3297,7 @@ templates:
     attributes:
       combat:
         skill: polearm
-        delay: 290
+        delay: 240
       jobs: [drg, drg]
       render:
         look:
@@ -3331,7 +3333,7 @@ templates:
     attributes:
       combat:
         skill: polearm
-        delay: 290
+        delay: 240
       jobs: [drg, drg]
       render:
         look:
@@ -3367,7 +3369,7 @@ templates:
     attributes:
       combat:
         skill: polearm
-        delay: 290
+        delay: 240
       jobs: [drg, drg]
       render:
         look:
@@ -3472,7 +3474,7 @@ templates:
     attributes:
       combat:
         skill: great_axe
-        delay: 265
+        delay: 240
       jobs: [nin, nin]
       render:
         look:
@@ -3509,7 +3511,7 @@ templates:
     attributes:
       combat:
         skill: great_axe
-        delay: 265
+        delay: 240
       jobs: [nin, nin]
       render:
         look:
@@ -3546,7 +3548,7 @@ templates:
     attributes:
       combat:
         skill: great_axe
-        delay: 265
+        delay: 240
       jobs: [nin, nin]
       render:
         look:
@@ -3786,7 +3788,7 @@ templates:
     attributes:
       combat:
         skill: club
-        delay: 220
+        delay: 240
       jobs: [rng, rng]
       render:
         look:
@@ -3820,7 +3822,7 @@ templates:
     attributes:
       combat:
         skill: club
-        delay: 220
+        delay: 240
       jobs: [rng, rng]
       render:
         look:
@@ -3854,7 +3856,7 @@ templates:
     attributes:
       combat:
         skill: club
-        delay: 220
+        delay: 240
       jobs: [rng, rng]
       render:
         look:
@@ -4087,7 +4089,7 @@ templates:
     attributes:
       combat:
         skill: club
-        delay: 265
+        delay: 240
       jobs: [brd, brd]
       render:
         look:
@@ -4124,7 +4126,7 @@ templates:
     attributes:
       combat:
         skill: club
-        delay: 265
+        delay: 240
       jobs: [brd, brd]
       render:
         look:
@@ -4161,7 +4163,7 @@ templates:
     attributes:
       combat:
         skill: club
-        delay: 265
+        delay: 240
       jobs: [brd, brd]
       render:
         look:
@@ -5413,7 +5415,7 @@ templates:
     attributes:
       combat:
         skill: great_sword
-        delay: 265
+        delay: 240
       jobs: [rdm, rdm]
       render:
         look:
@@ -5450,7 +5452,7 @@ templates:
     attributes:
       combat:
         skill: great_sword
-        delay: 265
+        delay: 240
       jobs: [rdm, rdm]
       render:
         look:
@@ -5487,7 +5489,7 @@ templates:
     attributes:
       combat:
         skill: great_sword
-        delay: 265
+        delay: 240
       jobs: [rdm, rdm]
       render:
         look:
@@ -5822,7 +5824,7 @@ templates:
     attributes:
       combat:
         skill: hand_to_hand
-        delay: 480
+        delay: 240
       jobs: [mnk, mnk]
       render:
         look:
@@ -5856,7 +5858,7 @@ templates:
     attributes:
       combat:
         skill: hand_to_hand
-        delay: 480
+        delay: 240
       jobs: [mnk, mnk]
       render:
         look:
@@ -6640,7 +6642,7 @@ templates:
     attributes:
       combat:
         skill: great_sword
-        delay: 265
+        delay: 240
       jobs: [drk, drk]
       render:
         look:
@@ -6677,7 +6679,7 @@ templates:
     attributes:
       combat:
         skill: great_sword
-        delay: 265
+        delay: 240
       jobs: [drk, drk]
       render:
         look:
@@ -6714,7 +6716,7 @@ templates:
     attributes:
       combat:
         skill: great_sword
-        delay: 265
+        delay: 240
       jobs: [drk, drk]
       render:
         look:
@@ -6747,7 +6749,7 @@ templates:
     attributes:
       combat:
         skill: scythe
-        delay: 260
+        delay: 240
       render:
         look:
           type:  standard
@@ -6782,7 +6784,7 @@ templates:
     attributes:
       combat:
         skill: scythe
-        delay: 260
+        delay: 240
       render:
         look:
           type:  standard
@@ -6817,7 +6819,7 @@ templates:
     attributes:
       combat:
         skill: scythe
-        delay: 260
+        delay: 240
       render:
         look:
           type:  standard
@@ -7166,7 +7168,7 @@ templates:
     attributes:
       combat:
         skill: sword
-        delay: 200
+        delay: 240
       jobs: [drg, drg]
       render:
         look:
