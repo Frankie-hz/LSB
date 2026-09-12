@@ -2011,6 +2011,8 @@ templates:
       behaviors:
         aggressive: true
         links:      true
+      mob_mods:
+        magic_cool: 26 # 31 standing gaps 14 to 28 s, Sep 2026 capture
       spawn:
         respawn: 300
       stats:

@@ -588,6 +588,8 @@ templates:
         hitbox:         6
       behaviors:
         aggressive: true
+      mob_mods:
+        magic_cool: 26 # 897 standing gaps 14 to 30 s, Sep 2026 captures
       spawn:
         respawn: 960
 

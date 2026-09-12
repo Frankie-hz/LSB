@@ -868,6 +868,8 @@ templates:
           model: 668
         entity_flags: 1153
         hitbox:         12
+      mob_mods:
+        magic_cool: 42 # 30 standing gaps 24 to 41 s, Sep 2026 capture
       spawn:
         type: [scripted]
 
@@ -954,6 +956,8 @@ templates:
         entity_flags: 153
         name_prefix:   32
         hitbox:        12
+      mob_mods:
+        magic_cool: 42 # 23 standing gaps 24 to 42 s, Sep 2026 capture
       spawn:
         type: [scripted]
 

@@ -33,6 +33,7 @@ enum class FollowType : uint8
     RunAway,
 };
 
+class CBattleEntity;
 class CMobEntity;
 
 class CMobController : public CController
@@ -105,6 +106,26 @@ protected:
 
 private:
     CMobEntity* const PMob;
+
+    struct IdleBuff
+    {
+        CBattleEntity* PTarget;
+        SpellID        spellId;
+    };
+
+    // Retail ally buffs stop at 3.5 x the summed hitboxes: 8.4 y for Sahagin (1.2 each), 10.5 y for Orcs (1.5 each), 8.4 y for Temenos Quadav.
+    static constexpr float kBuffAllyHitboxScale{ 3.5f };
+
+    auto TryCastIdleBuff() -> bool;
+
+    struct BuffAllies
+    {
+        CBattleEntity* PNearest;
+        uint32         lacking;
+    };
+
+    auto PickIdleBuff() -> Maybe<IdleBuff>;
+    auto FindBuffAllies() -> BuffAllies;
 
     EntityId target_{};
     EntityId followTarget_{};
