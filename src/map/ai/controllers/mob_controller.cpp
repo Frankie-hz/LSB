@@ -445,6 +445,49 @@ auto CMobController::TryCastSpell() -> bool
     return true;
 }
 
+auto CMobController::TryCastIdleBuff() -> bool
+{
+    TracyZoneScoped;
+
+    if (!CanCastSpells(IgnoreRecastsAndCosts::No))
+    {
+        return false;
+    }
+
+    // Every buff is still up on everyone in range so we wait for one to wear off
+    const auto idleBuff = PickIdleBuff();
+    if (!idleBuff.has_value())
+    {
+        return false;
+    }
+
+    // Since the OnMobSpellChoose can override the spell list we need to check for it just in case
+    const auto [maybeSpellOverride, maybeTargetOverride] = luautils::OnMobSpellChoose(PMob, idleBuff->PTarget, idleBuff->spellId);
+
+    const auto  spellId = maybeSpellOverride.value_or(idleBuff->spellId);
+    auto* const PSpell  = spell::GetSpell(spellId);
+    if (!PSpell || PMob->PRecastContainer->Has(RECAST_MAGIC, static_cast<Recast>(spellId)) || !battleutils::CanAffordSpell(PMob, PSpell, PSpell->getFlag()))
+    {
+        return false;
+    }
+
+    // If the lua script has chosen a spell but not a target, we cast the spell normally
+    if (maybeSpellOverride.has_value() && !maybeTargetOverride.has_value())
+    {
+        CastSpell(spellId);
+        return true;
+    }
+
+    auto* const PCastTarget = maybeTargetOverride.value_or(idleBuff->PTarget);
+    if (distance(PMob->loc.p, PCastTarget->loc.p) > PSpell->getRange() + PMob->modelHitboxSize + PCastTarget->modelHitboxSize)
+    {
+        return false; // Target out of range.
+    }
+
+    Cast(PCastTarget->entityId(), spellId);
+    return true;
+}
+
 auto CMobController::TrySpecialSkill() -> bool
 {
     TracyZoneScoped;
@@ -1464,12 +1507,107 @@ auto CMobController::DoBuffTick() -> bool
         return true;
     }
 
+    // Mobs finish roaming before trying to buff something
+    if (PMob->PAI->PathFind->IsFollowingPath())
+    {
+        return false;
+    }
+
     if (!IsSpellReady(0, 0) || !PMob->SpellContainer->HasBuffSpells())
     {
         return false;
     }
 
-    return TryCastSpell();
+    return TryCastIdleBuff();
+}
+
+auto CMobController::PickIdleBuff() -> Maybe<IdleBuff>
+{
+    TracyZoneScoped;
+
+    const auto buffFor = [&](CBattleEntity* PTarget) -> Maybe<IdleBuff>
+    {
+        if (PTarget == nullptr)
+        {
+            return {};
+        }
+
+        const auto spellId = PMob->SpellContainer->GetBuffSpellFor(PTarget);
+        if (!spellId.has_value())
+        {
+            return {};
+        }
+
+        return IdleBuff{ PTarget, spellId.value() };
+    };
+
+    const auto allies = [&]() -> BuffAllies
+    {
+        if (PMob->PMaster == nullptr)
+        {
+            return FindBuffAllies();
+        }
+
+        if (PMob->SpellContainer->GetBuffSpellsFor(PMob->PMaster).empty())
+        {
+            return { nullptr, 0 };
+        }
+
+        return { PMob->PMaster, 1 };
+    }();
+
+    // Retail gives every lacking entity in range an equal share of the cast, the caster included; the ally share goes to the nearest.
+    if (xirand::GetRandomNumber(1u + allies.lacking) == 0)
+    {
+        if (const auto selfBuff = buffFor(PMob); selfBuff.has_value())
+        {
+            return selfBuff;
+        }
+
+        return buffFor(allies.PNearest);
+    }
+
+    if (const auto allyBuff = buffFor(allies.PNearest); allyBuff.has_value())
+    {
+        return allyBuff;
+    }
+
+    return buffFor(PMob);
+}
+
+auto CMobController::FindBuffAllies() -> BuffAllies
+{
+    TracyZoneScoped;
+
+    CMobEntity* PNearest          = nullptr;
+    float       nearestDistanceSq = 0.0f;
+    uint32      lacking           = 0;
+
+    PMob->loc.zone->ForEachMobInstance(PMob, [&](CMobEntity* PCandidate)
+                                       {
+                                           if (PCandidate == PMob || PCandidate->PMaster != nullptr || PCandidate->m_Family != PMob->m_Family ||
+                                               PCandidate->allegiance != PMob->allegiance || PCandidate->PBattlefield != PMob->PBattlefield ||
+                                               !PCandidate->isAlive() || !PCandidate->PAI->IsRoaming())
+                                           {
+                                               return;
+                                           }
+
+                                           const auto range      = kBuffAllyHitboxScale * (PMob->modelHitboxSize + PCandidate->modelHitboxSize);
+                                           const auto distanceSq = distanceSquared(PMob->loc.p, PCandidate->loc.p);
+                                           if (distanceSq > square(range) || PMob->SpellContainer->GetBuffSpellsFor(PCandidate).empty())
+                                           {
+                                               return;
+                                           }
+
+                                           lacking++;
+                                           if (PNearest == nullptr || distanceSq < nearestDistanceSq)
+                                           {
+                                               PNearest          = PCandidate;
+                                               nearestDistanceSq = distanceSq;
+                                           }
+                                       });
+
+    return { PNearest, lacking };
 }
 
 void CMobController::FaceTarget(const EntityId& target) const
@@ -1776,13 +1914,6 @@ auto CMobController::DoRoamTick(timer::time_point tick) -> Task<void>
                        PMob->SpellContainer->HasBuffSpells();
             };
 
-            const auto wantsRandomBuff = [&]
-            {
-                return CanCastSpells(IgnoreRecastsAndCosts::No) &&
-                       xirand::GetRandomNumber(10) < 3 &&
-                       PMob->SpellContainer->HasBuffSpells();
-            };
-
             if (IsSpecialSkillReady(0) && TrySpecialSkill())
             {
                 // (Probably) spawned a pet via special skill.
@@ -1790,10 +1921,6 @@ auto CMobController::DoRoamTick(timer::time_point tick) -> Task<void>
             else if (wantsSummon())
             {
                 // battlefield.lua summons the first pet so the first player sees it; later summons come through here.
-                TryCastSpell();
-            }
-            else if (wantsRandomBuff())
-            {
                 TryCastSpell();
             }
             else if ((PMob->m_roamFlags & xi::RoamFlag::Scripted) != xi::RoamFlag::None)
