@@ -4616,13 +4616,15 @@ bool CLuaBaseEntity::delItem(uint16 itemID, int32 quantity, const sol::object& c
 
     uint8 location = containerID.get_type() == sol::type::number ? containerID.as<uint8>() : 0;
 
-    if (location >= CONTAINER_ID::MAX_CONTAINER_ID)
+    auto* PChar    = static_cast<CCharEntity*>(m_PBaseEntity);
+    auto* PStorage = PChar->getStorage(location);
+    if (!PStorage)
     {
-        ShowWarning("Lua::delItem: Attempting to delete an item from an invalid slot. Defaulting to main inventory.");
+        ShowWarning("Attempting to delete an item from an invalid container.");
+        return false;
     }
 
-    auto* PChar  = static_cast<CCharEntity*>(m_PBaseEntity);
-    auto  SlotID = PChar->getStorage(location)->SearchItem(itemID);
+    auto SlotID = PStorage->SearchItem(itemID);
 
     if (SlotID != ERROR_SLOTID)
     {
@@ -4704,7 +4706,14 @@ bool CLuaBaseEntity::delContainerItems(const sol::object& containerID)
 
     auto* PChar          = static_cast<CCharEntity*>(m_PBaseEntity);
     auto* PItemContainer = PChar->getStorage(location);
-    uint8 containerSize  = PItemContainer->GetSize();
+
+    if (!PItemContainer)
+    {
+        ShowWarning("Attempting to delete items from an invalid container.");
+        return false;
+    }
+
+    uint8 containerSize = PItemContainer->GetSize();
 
     // ensure we unequip equipped items before deletion
     for (uint8 equipmentSlot = 0; equipmentSlot <= 15; equipmentSlot++)
@@ -5244,7 +5253,9 @@ uint8 CLuaBaseEntity::getContainerSize(uint8 locationID)
     }
 
     auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
-    return PChar->getStorage(locationID)->GetSize();
+
+    const auto* PStorage = PChar->getStorage(locationID);
+    return PStorage ? PStorage->GetSize() : 0;
 }
 
 /************************************************************************
@@ -5292,7 +5303,9 @@ uint8 CLuaBaseEntity::getFreeSlotsCount(const sol::object& locID)
     }
 
     uint8 locationID = (locID != sol::lua_nil) ? locID.as<CONTAINER_ID>() : LOC_INVENTORY;
-    return static_cast<CCharEntity*>(m_PBaseEntity)->getStorage(locationID)->GetFreeSlotsCount();
+
+    const auto* PStorage = static_cast<CCharEntity*>(m_PBaseEntity)->getStorage(locationID);
+    return PStorage ? PStorage->GetFreeSlotsCount() : 0;
 }
 
 /************************************************************************
@@ -5696,7 +5709,10 @@ auto CLuaBaseEntity::getStorageItem(uint8 container, uint8 slotID, uint8 equipID
 
     if (equipID == 255)
     {
-        PItem = PChar->getStorage(container)->GetItem(slotID);
+        if (auto* PStorage = PChar->getStorage(container))
+        {
+            PItem = PStorage->GetItem(slotID);
+        }
     }
     else
     {
@@ -9406,11 +9422,12 @@ void CLuaBaseEntity::unseenKeyItem(const KeyItem keyItemID) const
 /************************************************************************
  *  Function: addExp()
  *  Purpose : Adds a set amount of XP to the player
- *  Example : player:addExp(math.randomInt(500, 1000))
- *  Notes   : Used in Dynamis Pages, etc
+ *  Example : player:addExp(math.randomInt(500, 1000), false)
+ *  Notes   : allowLimitPoints defaults to true. Set false for EXP only.
+ *            The script must send the gain message when false.
  ************************************************************************/
 
-void CLuaBaseEntity::addExp(uint32 exp)
+void CLuaBaseEntity::addExp(uint32 exp, const sol::object& allowLimitPointsObj)
 {
     if (m_PBaseEntity->objtype != TYPE_PC)
     {
@@ -9418,9 +9435,10 @@ void CLuaBaseEntity::addExp(uint32 exp)
         return;
     }
 
-    auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
+    auto*      PChar            = static_cast<CCharEntity*>(m_PBaseEntity);
+    const bool allowLimitPoints = allowLimitPointsObj.is<bool>() ? allowLimitPointsObj.as<bool>() : true;
 
-    charutils::AddExperiencePoints(false, false, true, PChar, m_PBaseEntity, exp);
+    charutils::AddExperiencePoints(false, false, true, PChar, m_PBaseEntity, exp, EMobDifficulty::TooWeak, false, allowLimitPoints);
 }
 
 /************************************************************************
@@ -12446,6 +12464,23 @@ auto CLuaBaseEntity::getBattlefield() const -> CBattlefield*
 }
 
 /************************************************************************
+ *  Function: getRegisteredBattlefield()
+ *  Purpose : Returns the battlefield the player is registered for, whether or not they still hold clearance
+ *  Example : local battlefield = player:getRegisteredBattlefield()
+ *  Notes   : Tells a member whose fight locked apart from someone who never had clearance
+ ************************************************************************/
+
+auto CLuaBaseEntity::getRegisteredBattlefield() const -> CBattlefield*
+{
+    if (m_PBaseEntity->objtype != TYPE_PC || m_PBaseEntity->loc.zone == nullptr || m_PBaseEntity->loc.zone->battlefieldHandler() == nullptr)
+    {
+        return nullptr;
+    }
+
+    return m_PBaseEntity->loc.zone->battlefieldHandler()->GetRegisteredBattlefield(static_cast<CCharEntity*>(m_PBaseEntity));
+}
+
+/************************************************************************
  *  Function: getBattlefieldID()
  *  Purpose : Returns the integer ID for the battlefield, -1 if not found
  *  Example : local battlefieldId = player:getBattlefieldID()
@@ -14188,11 +14223,11 @@ auto CLuaBaseEntity::addStatusEffect(const xi::StatusEffect effectId, sol::table
 
     // Optional parameters
     const auto duration        = params["duration"].get_or(0.0);
-    const auto power           = static_cast<uint16>(params["power"].get_or(0.0));
-    const auto tick            = static_cast<uint32>(params["tick"].get_or(0.0));
+    const auto power           = static_cast<uint16>(static_cast<int64>(params["power"].get_or(0.0)));
+    const auto tick            = static_cast<uint32>(static_cast<int64>(params["tick"].get_or(0.0)));
     const auto icon            = params["icon"].get_or(static_cast<uint16>(effectId));
     const auto subType         = params["subType"].get_or(0u);
-    const auto subPower        = static_cast<uint16>(params["subPower"].get_or(0.0));
+    const auto subPower        = static_cast<uint16>(static_cast<int64>(params["subPower"].get_or(0.0)));
     const auto subIcon         = params["subIcon"].get_or(0u);
     const auto tier            = params["tier"].get_or<uint16>(0);
     const auto flag            = params["flag"].get_or(0u);
@@ -16175,6 +16210,28 @@ void CLuaBaseEntity::spawnPet(const sol::object& arg0)
         // setup AI
         PPet->Spawn();
     }
+}
+
+/************************************************************************
+ *  Function: setPetStats()
+ *  Purpose : Applies the chosen spirit's model, jobs, spells and stats without changing the pet's name
+ *  Example : mob:setPetStats(xi.petId.ICE_SPIRIT)
+ *  Notes   : Called from the pet's onMobSpawn
+ ************************************************************************/
+
+void CLuaBaseEntity::setPetStats(uint8 petId)
+{
+    auto* PMob = dynamic_cast<CMobEntity*>(m_PBaseEntity);
+    if (!PMob || !PMob->PMaster || PMob->PMaster->PPet != PMob || petId > PETID_DARKSPIRIT)
+    {
+        ShowError("setPetStats: expected a linked mob pet and a spirit ID.");
+        return;
+    }
+
+    petutils::SpawnMobPet(PMob->PMaster, petId, true);
+    PMob->TraitList.clear();
+    mobutils::CalculateMobStats(PMob);
+    mobutils::GetAvailableSpells(PMob);
 }
 
 /************************************************************************
@@ -21010,6 +21067,7 @@ void CLuaBaseEntity::Register()
 
     // Battlefields
     SOL_REGISTER("getBattlefield", CLuaBaseEntity::getBattlefield);
+    SOL_REGISTER("getRegisteredBattlefield", CLuaBaseEntity::getRegisteredBattlefield);
     SOL_REGISTER("getBattlefieldID", CLuaBaseEntity::getBattlefieldID);
     SOL_REGISTER("registerBattlefield", CLuaBaseEntity::registerBattlefield);
     SOL_REGISTER("battlefieldAtCapacity", CLuaBaseEntity::battlefieldAtCapacity);
@@ -21196,6 +21254,7 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("isJugPet", CLuaBaseEntity::isJugPet);
     SOL_REGISTER("getPetElement", CLuaBaseEntity::getPetElement);
     SOL_REGISTER("setPet", CLuaBaseEntity::setPet);
+    SOL_REGISTER("setPetStats", CLuaBaseEntity::setPetStats);
     SOL_REGISTER("getMinimumPetLevel", CLuaBaseEntity::getMinimumPetLevel);
     SOL_REGISTER("getMaster", CLuaBaseEntity::getMaster);
 
