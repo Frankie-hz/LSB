@@ -37,16 +37,99 @@
 xi = xi or {}
 xi.instance = {}
 
+-----------------------------------
+-- Entrance protocols
+-----------------------------------
+-- Every entrance event ends with the client asking the server to register the party, but the
+-- client waits for the answer in one of three ways:
+--
+-- REGISTRATION: the client sends one event update with the choices it made and blocks until a
+--   0x0BF registration packet arrives. Result 4 plays the transport animation and finishes the
+--   event with option 4, any other result ends the event with that value and no message.
+--   ToAU staging points, Salvage gates, the WOTG doors, Moblin Maze Mongers.
+--
+-- POLL_NYZUL: the client polls through event updates and reads the answer from the eighth
+--   event parameter. Bits 22-25 of the option carry its state: 0 is the initial request,
+--   1 means it is waiting for the instance. The update reply must echo the start parameters
+--   and only set the eighth one. Nyzul Isle.
+--
+-- POLL_SOA: same loop with the state in bits 12-15 and different codes. Rala Waterways [U].
+xi.instance.protocol =
+{
+    REGISTRATION = 1,
+    POLL_NYZUL   = 2,
+    POLL_SOA     = 3,
+}
+
+-- 0x0BF results. Only ACCEPTED is the client's contract, anything else ends the event silently.
+xi.instance.registration =
+{
+    DENIED      = 1,
+    LOAD_FAILED = 3,
+    ACCEPTED    = 4,
+}
+
+-- Eighth event parameter of the update reply, by protocol
+xi.instance.pollCode =
+{
+    [xi.instance.protocol.POLL_NYZUL] =
+    {
+        REGISTERED = 1,  -- request accepted, the client moves on to waiting
+        BUSY       = 2,  -- "You cannot enter at this time", retried up to 5 times
+        CANCEL     = 3,  -- silent cancel (3 to 10, 12 and 13 all cancel)
+        READY      = 11, -- transport animation, event finishes with option 4
+        RETRY      = 14, -- "You cannot enter at this time", retried up to 15 times
+    },
+
+    [xi.instance.protocol.POLL_SOA] =
+    {
+        REGISTERED = 1,
+        BUSY       = 2,
+        CANCEL     = 3,  -- 3 to 7, 9 and 10 all cancel
+        READY      = 8,  -- transport animation, event finishes with option 8
+        RETRY      = 11,
+    },
+}
+
+local pollState =
+{
+    REQUEST = 0,
+    WAITING = 1,
+}
+
+-- Bit of the update option the polling protocols keep their state in
+local pollStateShift =
+{
+    [xi.instance.protocol.POLL_NYZUL] = 22,
+    [xi.instance.protocol.POLL_SOA]   = 12,
+}
+
+xi.instance.vars =
+{
+    INSTANCE_ID = 'INSTANCE_ID',
+    READY       = 'INSTANCE_READY',
+    POLLING     = 'INSTANCE_POLLING',
+}
+
+-----------------------------------
+-- Entrances
+-----------------------------------
 --[[
-    [zoneId] =
+    [instance zone id] =
     {
         {
-            instanceIdInDatabase,
-            onTrigger startEvent args (to be unpacked),
-            onEventFinish valid entry args for registrant (to be unpacked),
-            event args for joining party members (to be unpacked)
-        }
+            instanceId  = instance_list id,
+            entryEvent  = { csid, p0, ... } for the registrant, unpacked into player:startEvent
+            confirm     = { csid, option } the client finishes the entry event with on success
+            memberEvent = { csid, p0, ... } for party members joining
+            protocol    = xi.instance.protocol, REGISTRATION when omitted
+            menuIndex   = objective the client must have picked (bits 18-21 of the update), unchecked when omitted
+        },
     },
+
+    The ToAU events pick the zone name shown by the client from p4:
+    Leujaoam 0, Mamool Ja 1, Lebros 2, Periqia 3, Ilrusi 4, Nyzul 5, Ashu Talif 6,
+    Zhayolm 7, Arrapago 8, Bhaflau 9, Silver Sea 10.
 --]]
 
 xi.instance.lookup =
@@ -67,7 +150,14 @@ xi.instance.lookup =
 
     [xi.zone.PERIQIA] =
     {
-        { 5600, { 143, 79, -6, 0, 99, 3, 0 }, { 143, 4 }, { 147, 3 } }, -- Shades of Vengeance (TOAU31)
+        -- Shades of Vengeance (TOAU31)
+        {
+            instanceId  = 5600,
+            entryEvent  = { 143, 79, -6, 0, 99, 3, 0 },
+            confirm     = { 143, 4 },
+            memberEvent = { 147, 3 },
+            menuIndex   = 2,
+        },
         -- Assault: Seagull Grounded (scripts/assaults/Periqia/seagull_grounded.lua)
         -- Assault: Requiem (scripts/assaults/Periqia/requiem.lua)
         -- Assault: Saving Private Ryaaf
@@ -81,8 +171,22 @@ xi.instance.lookup =
 
     [xi.zone.THE_ASHU_TALIF] =
     {
-        { 6000, { 221, 53, -6, 0, 99, 6, 0 }, { 221, 4 }, { 222, 6 } }, -- The Black Coffin (TOAU 15)
-        { 6001, { 221, 54, -9, 0, 99, 6, 0 }, { 221, 4 }, { 222, 6 } }, -- Against All Odds
+        -- The Black Coffin (TOAU 15)
+        {
+            instanceId  = 6000,
+            entryEvent  = { 221, 53, -6, 0, 99, 6, 0 },
+            confirm     = { 221, 4 },
+            memberEvent = { 222, 6 },
+            menuIndex   = 2,
+        },
+        -- Against All Odds
+        {
+            instanceId  = 6001,
+            entryEvent  = { 221, 54, -9, 0, 99, 6, 0 },
+            confirm     = { 221, 4 },
+            memberEvent = { 222, 6 },
+            menuIndex   = 3,
+        },
         -- Testing the Waters (TOAU 34)
         -- Legacy of the Lost (TOAU 35)
         -- Assault: Royal Painter Escort
@@ -92,7 +196,14 @@ xi.instance.lookup =
 
     [xi.zone.LEBROS_CAVERN] =
     {
-        { 6300, { 203, 21, -4, 0, 50, 0, 1 }, { 203, 4 }, { 208, 0 } }, -- Assault: Excavation Duty
+        -- Assault: Excavation Duty
+        {
+            instanceId  = 6300,
+            entryEvent  = { 203, 21, -4, 0, 50, 0, 1 },
+            confirm     = { 203, 4 },
+            memberEvent = { 208, 0 },
+            menuIndex   = 1,
+        },
         -- Assault: Lebros Supplies
         -- Assault: Troll Fugitives
         -- Assault: Evade and Escape
@@ -106,7 +217,14 @@ xi.instance.lookup =
 
     [xi.zone.MAMOOL_JA_TRAINING_GROUNDS] =
     {
-        { 6600, { 505, 11, -4, 0, 60, 0, 1 }, { 505, 4 }, { 511, 0 } }, -- Assault: Imperial Agent Rescue
+        -- Assault: Imperial Agent Rescue
+        {
+            instanceId  = 6600,
+            entryEvent  = { 505, 11, -4, 0, 60, 0, 1 },
+            confirm     = { 505, 4 },
+            memberEvent = { 511, 0 },
+            menuIndex   = 1,
+        },
         -- Assault: Preemptive Strike
         -- Assault: Sagelord Elimination
         -- Assault: Breaking Morale
@@ -120,7 +238,14 @@ xi.instance.lookup =
 
     [xi.zone.LEUJAOAM_SANCTUM] =
     {
-        { 6900, { 140, 1, -4, 0, 50, 0, 1 }, { 140, 4 }, { 147, 0 } }, -- Assault: Leujaoam Cleansing
+        -- Assault: Leujaoam Cleansing
+        {
+            instanceId  = 6900,
+            entryEvent  = { 140, 1, -4, 0, 50, 0, 1 },
+            confirm     = { 140, 4 },
+            memberEvent = { 147, 0 },
+            menuIndex   = 1,
+        },
         -- Assault: Orichalcum Survey
         -- Assault: Escort Professor Chanoix
         -- Assault: Shanarha Grass Conservation
@@ -134,31 +259,96 @@ xi.instance.lookup =
 
     [xi.zone.ZHAYOLM_REMNANTS] =
     {
-        { 7300, { 407, 0, -6, 0, 0, 7 }, { 407, 4 }, { 411, 7 } }, -- Salvage I, Zhayolm Remnants
+        -- Salvage I, Zhayolm Remnants
+        {
+            instanceId  = 7300,
+            entryEvent  = { 407, 0, -6, 0, 0, 7 },
+            confirm     = { 407, 4 },
+            memberEvent = { 411, 7 },
+            menuIndex   = 2,
+        },
     },
 
     [xi.zone.ARRAPAGO_REMNANTS] =
     {
-        { 7400, { 408, 0, -6, 0, 0, 8 }, { 408, 4 }, { 411, 8 } }, -- Salvage I, Arrapago Remnants
+        -- Salvage I, Arrapago Remnants
+        {
+            instanceId  = 7400,
+            entryEvent  = { 408, 0, -6, 0, 0, 8 },
+            confirm     = { 408, 4 },
+            memberEvent = { 411, 8 },
+            menuIndex   = 2,
+        },
     },
 
     [xi.zone.BHAFLAU_REMNANTS] =
     {
-        { 7500, { 409, 0, -6, 0, 0, 9 }, { 409, 4 }, { 411, 9 } }, -- Salvage I, Bhaflau Remnants
+        -- Salvage I, Bhaflau Remnants
+        {
+            instanceId  = 7500,
+            entryEvent  = { 409, 0, -6, 0, 0, 9 },
+            confirm     = { 409, 4 },
+            memberEvent = { 411, 9 },
+            menuIndex   = 2,
+        },
     },
 
     [xi.zone.SILVER_SEA_REMNANTS] =
     {
-        { 7600, { 410, 0, -6, 0, 0, 10 }, { 410, 4 }, { 411, 10 } }, -- Salvage I, Silver Sea Remnants
+        -- Salvage I, Silver Sea Remnants
+        {
+            instanceId  = 7600,
+            entryEvent  = { 410, 0, -6, 0, 0, 10 },
+            confirm     = { 410, 4 },
+            memberEvent = { 411, 10 },
+            menuIndex   = 2,
+        },
     },
 
     [xi.zone.NYZUL_ISLE] =
     {
-        { 7700, { 405, 58,  -6, 0, 99, 5, 0 }, { 116, 1 }, { 411, 5 } },        -- Path of Darkness
-        { 7701, { 405, 59, -10, 0, 99, 5, 0 }, { 116, 1 }, { 411, 5 } },        -- Nashmeira's Plea
-        { 7702, { 405, 60, -34, 0, 99, 5, 1, 0, 14 }, { 116, 1 }, { 411, 5 } }, -- Waking the Colossus/Divine Interference
+        -- Path of Darkness
+        {
+            instanceId  = 7700,
+            entryEvent  = { 405, 58, -6, 0, 99, 5, 0 },
+            confirm     = { 405, 4 },
+            memberEvent = { 411, 5 },
+            protocol    = xi.instance.protocol.POLL_NYZUL,
+            menuIndex   = 2,
+        },
+        -- Nashmeira's Plea
+        {
+            instanceId  = 7701,
+            entryEvent  = { 405, 59, -10, 0, 99, 5, 0 },
+            confirm     = { 405, 4 },
+            memberEvent = { 411, 5 },
+            protocol    = xi.instance.protocol.POLL_NYZUL,
+            menuIndex   = 3,
+        },
+        -- Waking the Colossus/Divine Interference, p6 picks the objective name
+        {
+            instanceId  = 7702,
+            entryEvent  = { 405, 60, -34, 0, 99, 5, 1, 0, 14 },
+            confirm     = { 405, 4 },
+            memberEvent = { 411, 5 },
+            protocol    = xi.instance.protocol.POLL_NYZUL,
+            menuIndex   = 5,
+            entryParams = function(player, entryEvent)
+                if player:getQuestStatus(xi.questLog.AHT_URHGAN, xi.quest.id.ahtUrhgan.DIVINE_INTERFERENCE) >= xi.questStatus.QUEST_ACCEPTED then
+                    entryEvent[8] = 1
+                end
+            end,
+        },
         -- Forging a New Myth
-        { 7704, { 405, 51,  -4, 0, 75, 5, 1 }, { 116, 2 }, { 411, 5 } },        -- Nyzul Isle Investigation
+        -- Nyzul Isle Investigation
+        {
+            instanceId  = 7704,
+            entryEvent  = { 405, 51, -4, 0, 75, 5, 1 },
+            confirm     = { 405, 4 },
+            memberEvent = { 411, 5 },
+            protocol    = xi.instance.protocol.POLL_NYZUL,
+            menuIndex   = 1,
+        },
     },
 
     [xi.zone.EVERBLOOM_HOLLOW] =
@@ -184,8 +374,22 @@ xi.instance.lookup =
 
     [xi.zone.RUHOTZ_SILVERMINES] =
     {
-        { 9300, {   3, 0, 0, 19 }, {   3, 4 }, {   4, 1 } }, -- Light in the Darkness (WOTG Bastok Quest 3)
-        { 9301, { 203, 0, 0, 36 }, { 203, 4 }, { 201, 1 } }, -- Fire in the Hole (WOTG Bastok Quest 6)
+        -- The WOTG doors take the objective id in the update (512 + quest id) and pick the
+        -- zone name from it client-side.
+        -- Light in the Darkness (WOTG Bastok Quest 3)
+        {
+            instanceId  = 9300,
+            entryEvent  = { 3, 0, 0, 19 },
+            confirm     = { 3, 4 },
+            memberEvent = { 4, 1 },
+        },
+        -- Fire in the Hole (WOTG Bastok Quest 6)
+        {
+            instanceId  = 9301,
+            entryEvent  = { 203, 0, 0, 36 },
+            confirm     = { 203, 4 },
+            memberEvent = { 201, 1 },
+        },
         -- { 0, { 0,  0, 34 } }, -- Seeing Blood-red (SCH AF3)
         -- { 0, { 0, 23,  0 } }, -- Distorter of Time
         -- Campaign Ops:
@@ -235,7 +439,14 @@ xi.instance.lookup =
         -- {  0, 0 }, -- Endeavoring to Awaken
         -- {  1, 0 }, -- Endeavoring to Awaken
         -- -- Blank
-        { 25900, { 5511, 258, 8 }, { 5511, 8 }, { 258, 8 } }, -- Behind the Sluices
+        -- Behind the Sluices
+        {
+            instanceId  = 25900,
+            entryEvent  = { 5511, 258, 8 },
+            confirm     = { 5511, 8 },
+            memberEvent = { 258, 8 },
+            protocol    = xi.instance.protocol.POLL_SOA,
+        },
         -- {  4, 0 }, -- Stonewalled
         -- {  5, 0 }, -- The Gates
         -- {  6, 0 }, -- Saved by the Bell
@@ -291,18 +502,26 @@ xi.instance.lookup =
     },
 }
 
-local getInstanceName = function(player, instanceId)
-    return switch (instanceId) : caseof
-    {
-        [7702] = function()
-            if player:getQuestStatus(xi.questLog.AHT_URHGAN, xi.quest.id.ahtUrhgan.DIVINE_INTERFERENCE) >= xi.questStatus.QUEST_ACCEPTED then
-                return 1 -- Divine Interference
-            else
-                return 0 -- Waking the Colossus
-            end
-        end,
-    }
+-- Entrances by instance id, filled from the lookup table and by the assault containers
+xi.instance.entries = {}
+
+xi.instance.registerEntry = function(entry)
+    entry.protocol = entry.protocol or xi.instance.protocol.REGISTRATION
+
+    xi.instance.entries[entry.instanceId] = entry
+
+    return entry
 end
+
+for _, zoneEntries in pairs(xi.instance.lookup) do
+    for _, entry in ipairs(zoneEntries) do
+        xi.instance.registerEntry(entry)
+    end
+end
+
+-----------------------------------
+-- Requirements
+-----------------------------------
 
 -- Party leader registering
 local checkRegistryReqs = function(player, instanceId)
@@ -326,9 +545,63 @@ local checkEntryReqs = function(player, instanceId)
     end
 end
 
+-----------------------------------
+-- Replies to the client
+-----------------------------------
+
+-- Update reply for the polling protocols: the start parameters again, with the code in the eighth slot
+local replyPoll = function(player, entry, code)
+    local params = { unpack(entry.entryEvent, 2, 8) }
+    for i = 1, 7 do
+        params[i] = params[i] or 0
+    end
+
+    params[8] = code
+
+    player:updateEvent(unpack(params))
+end
+
+local deny = function(player, npc, entry)
+    if entry.protocol == xi.instance.protocol.REGISTRATION then
+        player:instanceEntry(npc, xi.instance.registration.DENIED)
+    else
+        replyPoll(player, entry, xi.instance.pollCode[entry.protocol].CANCEL)
+    end
+end
+
+local accept = function(player, npc, entry)
+    if entry.protocol == xi.instance.protocol.REGISTRATION then
+        player:instanceEntry(npc, xi.instance.registration.ACCEPTED)
+    else
+        replyPoll(player, entry, xi.instance.pollCode[entry.protocol].READY)
+    end
+end
+
+local clearEntryVars = function(player)
+    player:setLocalVar(xi.instance.vars.INSTANCE_ID, 0)
+    player:setLocalVar(xi.instance.vars.READY, 0)
+    player:setLocalVar(xi.instance.vars.POLLING, 0)
+end
+
+-- Moves the party members standing with the player into the instance zone
+local enterParty = function(player, instance)
+    local playerZoneId = player:getZoneID()
+
+    for _, member in ipairs(player:getParty()) do
+        if member:getZoneID() == playerZoneId then
+            member:setPos(0, 0, 0, 0, instance:getZone():getID())
+        end
+    end
+end
+
+-----------------------------------
+-- Entry flow
+-----------------------------------
+
 -- Clear up after possible failed loads
 xi.instance.clearInstance = function(player)
-    player:setLocalVar('INSTANCE_REQUESTED', 0)
+    clearEntryVars(player)
+
     local existingInstance = player:getInstance()
     if existingInstance then
         existingInstance:fail()
@@ -347,198 +620,206 @@ xi.instance.onTrigger = function(player, npc, instanceZoneID)
     -- TODO: Handle being valid for multiple instances from the same entrance
     local chosenEntry
     for _, entry in ipairs(zoneLookup) do
-        local instanceId    = entry[1]
-        local hasValidEntry = checkRegistryReqs(player, instanceId)
-
-        if hasValidEntry then
+        if checkRegistryReqs(player, entry.instanceId) then
             chosenEntry = entry
             break
         end
     end
 
-    if chosenEntry == nil then
+    if not chosenEntry then
         return false
     end
 
-    -- Play the cs + args for that instance
-    local instanceId          = chosenEntry[1]
-    local instanceTriggerArgs = chosenEntry[2]
-    local hasValidEntry       = checkRegistryReqs(player, instanceId)
+    player:setLocalVar(xi.instance.vars.INSTANCE_ID, chosenEntry.instanceId)
 
-    if hasValidEntry then
-        player:setLocalVar('INSTANCE_ID', instanceId)
-        if instanceTriggerArgs[8] ~= nil then
-            instanceTriggerArgs[8] = getInstanceName(player, instanceId)
-        end
-
-        player:startEvent(unpack(instanceTriggerArgs))
-
-        return true
-    else
-        return false
+    local entryEvent = { unpack(chosenEntry.entryEvent) }
+    if chosenEntry.entryParams then
+        chosenEntry.entryParams(player, entryEvent)
     end
+
+    player:startEvent(unpack(entryEvent))
+
+    return true
 end
 
-xi.instance.onEventUpdate = function(player, csid, option, npc)
-    local instanceId = player:getLocalVar('INSTANCE_ID')
-    local party      = player:getParty()
-    local ID         = zones[player:getZoneID()]
+-- Everyone who will be pulled in has to qualify and stand nearby
+local checkParty = function(player, npc, entry)
+    local playerId     = player:getID()
+    local playerZoneId = player:getZoneID()
+    local ID           = zones[playerZoneId]
 
-    if party ~= nil then
-        for _, v in pairs(party) do
-            if
-                v:getID() ~= player:getID() and
-                v:getZoneID() == player:getZoneID()
-            then
-                -- Check entry requirements for party
-                if not checkEntryReqs(v, instanceId) then
-                    player:messageText(npc, ID.text.MEMBER_NO_REQS, false)
-                    player:instanceEntry(npc, 1)
+    for _, member in ipairs(player:getParty()) do
+        if
+            member:getID() ~= playerId and
+            member:getZoneID() == playerZoneId
+        then
+            if not checkEntryReqs(member, entry.instanceId) then
+                player:messageText(npc, ID.text.MEMBER_NO_REQS, false)
+                return false
+            end
 
-                    return false
-                end
-
-                -- Check everyone is in range
-                if v:checkDistance(player) > 50 then
-                    player:messageText(npc, ID.text.MEMBER_TOO_FAR, false)
-                    player:instanceEntry(npc, 1)
-
-                    return false
-                end
+            if member:checkDistance(player) > 50 then
+                player:messageText(npc, ID.text.MEMBER_TOO_FAR, false)
+                return false
             end
         end
     end
 
-    if player:getLocalVar('INSTANCE_REQUESTED') == 0 then
-        player:createInstance(instanceId)
-        player:setLocalVar('INSTANCE_REQUESTED', 1)
-    end
+    return true
+end
 
-    if
-        player:getInstance() ~= nil or
-        (player:getLocalVar('INSTANCE_REQUESTED') > 0 and
-        player:getLocalVar('INSTANCE_REQUESTED') < 10)
-    then
-        -- return true so we don't immediately call the cancel event update (since instances don't immediately load), but
-        -- increment variable to eventually return false if instance fails to load and trigger onInstanceCreatedCallback
-        player:setLocalVar('INSTANCE_REQUESTED', player:getLocalVar('INSTANCE_REQUESTED') + 1)
-        return true
-    else
+-- Registration request from the entrance event. Returns true when the request was taken.
+xi.instance.onEventUpdate = function(player, csid, option, npc)
+    local entry = xi.instance.entries[player:getLocalVar(xi.instance.vars.INSTANCE_ID)]
+    if not entry or csid ~= entry.entryEvent[1] then
         return false
     end
+
+    if entry.protocol ~= xi.instance.protocol.REGISTRATION then
+        local state = bit.band(bit.rshift(option, pollStateShift[entry.protocol]), 0xF)
+
+        if state == pollState.WAITING then
+            -- The client blocks on this update until the instance is ready
+            if player:getLocalVar(xi.instance.vars.READY) == 1 then
+                accept(player, npc, entry)
+            else
+                player:setLocalVar(xi.instance.vars.POLLING, 1)
+            end
+
+            return true
+        elseif state ~= pollState.REQUEST then
+            deny(player, npc, entry)
+            return false
+        end
+    end
+
+    -- The menu choice sits in bits 18-21 of the update
+    if entry.menuIndex and bit.band(bit.rshift(option, 18), 0xF) ~= entry.menuIndex then
+        deny(player, npc, entry)
+        return false
+    end
+
+    if not checkParty(player, npc, entry) then
+        deny(player, npc, entry)
+        return false
+    end
+
+    player:setLocalVar(xi.instance.vars.READY, 0)
+    player:setLocalVar(xi.instance.vars.POLLING, 0)
+    player:createInstance(entry.instanceId)
+
+    if entry.protocol ~= xi.instance.protocol.REGISTRATION then
+        replyPoll(player, entry, xi.instance.pollCode[entry.protocol].REGISTERED)
+    end
+
+    return true
 end
 
 -- 'Default' behavior. It's up to each instance whether or not they want to use this logic
--- Can pass instance cutscene information directly if accessible from container, otherwise will try and find it from the player's instance
+-- Can pass instance entrance information directly if accessible from container, otherwise
+-- will try and find it from the instance id
 xi.instance.onInstanceCreatedCallback = function(player, instance, entryInfo)
+    local npc = player:getEventTarget()
+
     -- The instance failed to load: release the requester from the entrance event
     if not instance then
-        player:setLocalVar('INSTANCE_REQUESTED', 0)
-        player:setLocalVar('INSTANCE_ID', 0)
+        local entry = entryInfo or xi.instance.entries[player:getLocalVar(xi.instance.vars.INSTANCE_ID)]
 
-        local npc = player:getEventTarget()
-        if npc ~= nil then
-            player:instanceEntry(npc, 3)
+        if entry and npc then
+            if entry.protocol == xi.instance.protocol.REGISTRATION then
+                player:instanceEntry(npc, xi.instance.registration.LOAD_FAILED)
+            else
+                replyPoll(player, entry, xi.instance.pollCode[entry.protocol].CANCEL)
+            end
         end
 
-        player:updateEvent(0, 0, 0, 0, 0, 0, 0, 3)
+        clearEntryVars(player)
 
         return
     end
 
-    local instanceId = instance:getID()
-
-    if entryInfo == nil then
-        -- Collect cs for party members
-        for _, entry in ipairs(xi.instance.lookup[instance:getZone():getID()]) do
-            local entryInstanceId = entry[1]
-            if instanceId == entryInstanceId then
-                entryInfo = entry
-
-                break
-            end
-        end
-    end
+    local entry        = entryInfo or xi.instance.entries[instance:getID()]
+    local playerId     = player:getID()
+    local playerZoneId = player:getZoneID()
 
     -- If you're in the official entrance zone, try and playout the
     -- entrance animation. Otherwise: go straight to the instance
-    if player:getZoneID() == instance:getEntranceZoneID() then
+    if playerZoneId == instance:getEntranceZoneID() and entry then
         -- join initiating player as commander
         player:setInstance(instance)
 
-        -- This packet will trigger the end of the blocking
-        -- cutscene and xi.instance.onEventFinish will handle
-        -- the transportation
-        for _, v in ipairs(player:getParty()) do
-            if v:getZoneID() == player:getZoneID() then
-                if v:getID() ~= player:getID() then
-                    -- player will be brought into instance either way
-                    -- this makes the animation trigger reliably
-                    v:release()
-                    v:startEvent(unpack(entryInfo.memberEvent or entryInfo[4]))
-
-                    v:setInstance(instance)
-                    local npc = player:getEventTarget()
-                    if npc ~= nil then
-                        v:instanceEntry(npc, 4)
-                    end
-                end
-
-                v:timer(35000, function(playerArg)
-                    -- failsafe to bring all players into instance
-                    -- if a player doesn't receive the event packet, the whole party will be stuck in blackscreen
-                    -- timer is destroyed if onEventFinish works properly and player gets zoned
-                    -- a properly-functioning event loop will take 20s to zoning into the instance
-                    -- this _should_ be completely unnecessary due to the looping logic with INSTANCE_REQUESTED, but just in case
-                    local instanceArg = playerArg:getInstance()
-                    if instanceArg then
-                        print(fmt('Player {} failed to cleanly transition into instance event, forcing entry via setPos.', playerArg:getName()))
-                        playerArg:setPos(0, 0, 0, 0, instanceArg:getZone():getID())
-                    end
-                end)
+        for _, member in ipairs(player:getParty()) do
+            if
+                member:getID() ~= playerId and
+                member:getZoneID() == playerZoneId
+            then
+                member:release()
+                member:startEvent(unpack(entry.memberEvent))
+                member:setInstance(instance)
             end
         end
 
-        -- finally, send commander in
-        local npc = player:getEventTarget()
-        if npc ~= nil then
-            player:instanceEntry(npc, 4)
+        -- Failsafe: a lost event packet would leave the party in the entrance zone
+        -- with an instance waiting. A clean entry zones everyone well before this.
+        player:timer(35000, function(playerArg)
+            local pending = playerArg:getInstance()
+            if pending and playerArg:getZoneID() == pending:getEntranceZoneID() then
+                enterParty(playerArg, pending)
+            end
+        end)
+
+        -- The registrant is released once the client's entry event reports back
+        if not npc then
+            return
+        end
+
+        if entry.protocol == xi.instance.protocol.REGISTRATION then
+            accept(player, npc, entry)
+        else
+            player:setLocalVar(xi.instance.vars.READY, 1)
+
+            if player:getLocalVar(xi.instance.vars.POLLING) == 1 then
+                accept(player, npc, entry)
+            end
         end
     else
-        for _, v in ipairs(player:getParty()) do
-            v:setInstance(instance)
-            v:setPos(0, 0, 0, 0, instance:getZone():getID())
+        for _, member in ipairs(player:getParty()) do
+            member:setInstance(instance)
+            member:setPos(0, 0, 0, 0, instance:getZone():getID())
         end
     end
 end
 
--- Default instance behavior. Unpacks the csid and option from the lookup table.
--- Can pass instance custcene information directly if accessible from container,
--- otherwise will try and find it from the player's instance and a table lookup.
-xi.instance.onEventFinish = function(player, csid, option, npc, instanceInfo)
+-- The client finishes the entry event with the confirm option once the transport animation
+-- played. Can pass the confirm pair directly if accessible from a container.
+xi.instance.onEventFinish = function(player, csid, option, npc, confirm)
     local instance = player:getInstance()
-
-    if instance then
-        if not instanceInfo then
-            instanceInfo = xi.instance.lookup[instance:getZone():getID()][1][3]
-        end
-
-        local csidEntry, optionEntry = unpack(instanceInfo)
-
-        if csid == csidEntry and option == optionEntry then
-            local playerZone = player:getZoneID()
-            for _, v in ipairs(player:getParty()) do
-                if v:getZoneID() == playerZone then
-                    v:setPos(0, 0, 0, 0, instance:getZone():getID())
-                end
-            end
-
-            return true
-        end
+    if not instance then
+        return false
     end
 
-    return false
+    if not confirm then
+        local entry = xi.instance.entries[instance:getID()]
+        if not entry then
+            return false
+        end
+
+        confirm = entry.confirm
+    end
+
+    if csid ~= confirm[1] or option ~= confirm[2] then
+        return false
+    end
+
+    clearEntryVars(player)
+    enterParty(player, instance)
+
+    return true
 end
+
+-----------------------------------
+-- Instance time
+-----------------------------------
 
 local function setInstanceLastTimeUpdateMessage(instance, players, remainingTimeLimit, text)
     local message        = 0

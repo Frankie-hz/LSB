@@ -104,18 +104,6 @@ mission.sections =
                 [7] = function(player, csid, option, npc)
                     mission:complete(player)
                 end,
-
-                -- TODO: This is a workaround for _20m (Runic Seal) NPC onEventFinish not being
-                -- called during event 116.  This will finish things up and send the player to the
-                -- instance.
-                [116] = function(player, csid, option, npc)
-                    if
-                        option == 1 and
-                        player:getLocalVar('INSTANCE_ID') == 7700
-                    then
-                        xi.instance.onEventFinish(player, csid, option, npc)
-                    end
-                end,
             },
         },
     },

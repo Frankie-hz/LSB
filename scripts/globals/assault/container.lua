@@ -12,6 +12,7 @@ xi.assault.contentsByZone = xi.assault.contentsByZone or {}
 ---@field assaultID                integer
 ---@field instanceID               integer
 ---@field zoneID                   integer
+---@field entry                    table
 ---@field suggestedLevel           integer
 ---@field loot                     table
 ---@field releasePos               table
@@ -153,6 +154,16 @@ function InstanceAssault:register()
     xi.assault.contentsByZone[content.zoneID] = xi.assault.contentsByZone[content.zoneID] or {}
     table.insert(xi.assault.contentsByZone[content.zoneID], content)
 
+    -- The runic portal menu lists the current assault right after "None"
+    content.entry = xi.instance.registerEntry(
+    {
+        instanceId  = content.instanceID,
+        entryEvent  = content.entranceParams.entryEvent,
+        confirm     = content.entranceParams.confirmEvent,
+        memberEvent = content.entranceParams.memberEvent,
+        menuIndex   = 1,
+    })
+
     -- Create a dynamic instance object
     local instanceObject = {}
 
@@ -257,7 +268,7 @@ xi.assault.onRunicTrigger = function(player, npc, zone)
         end
     else
         xi.instance.clearInstance(player)
-        player:setLocalVar('INSTANCE_ID', chosenAssault.instanceID)
+        player:setLocalVar(xi.instance.vars.INSTANCE_ID, chosenAssault.instanceID)
         player:startEvent(unpack(chosenAssault.entranceParams.entryEvent))
     end
 end
@@ -273,11 +284,11 @@ xi.assault.onAssaultUpdate = function(player, csid, option, npc)
         player:getPartySize() < xi.settings.main.ASSAULT_MINIMUM
     then
         player:messageSpecial(ID.text.MEMBER_TOO_FAR - 1, xi.settings.main.ASSAULT_MINIMUM)
-        player:instanceEntry(npc, 1)
+        player:instanceEntry(npc, xi.instance.registration.DENIED)
         return
     elseif player:checkSoloPartyAlliance() == 2 then
         player:messageText(player, ID.text.MEMBER_NO_REQS + 1, false)
-        player:instanceEntry(npc, 1)
+        player:instanceEntry(npc, xi.instance.registration.DENIED)
         return
     end
 
@@ -299,9 +310,8 @@ end
 
 xi.assault.onInstanceCreatedCallback = function(player, instance, content)
     if not instance then
-        local npc = player:getEventTarget()
         player:messageText(player, zones[player:getZoneID()].text.CANNOT_ENTER, false)
-        player:instanceEntry(npc, 3)
+        xi.instance.onInstanceCreatedCallback(player, nil)
         return
     end
 
@@ -311,7 +321,7 @@ xi.assault.onInstanceCreatedCallback = function(player, instance, content)
     player:delKeyItem(xi.keyItem.ASSAULT_ARMBAND)
 
     if content then
-        xi.instance.onInstanceCreatedCallback(player, instance, content.entranceParams)
+        xi.instance.onInstanceCreatedCallback(player, instance, content.entry)
     end
 end
 

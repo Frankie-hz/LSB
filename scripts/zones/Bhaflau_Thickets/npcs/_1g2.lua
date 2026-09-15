@@ -16,7 +16,6 @@ end
 
 entity.onEventUpdate = function(player, csid, option, npc)
     xi.assault.onAssaultUpdate(player, csid, option, npc)
-    xi.instance.onEventUpdate(player, csid, option, npc)
 end
 
 entity.onEventFinish = function(player, csid, option, npc)

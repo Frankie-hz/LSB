@@ -23,7 +23,7 @@ entity.onEventUpdate = function(player, csid, option, npc)
                 player:messageText(player, ID.text.MEMBER_IMBUED_ITEM, false)
             end
 
-            player:instanceEntry(npc, 1)
+            player:instanceEntry(npc, xi.instance.registration.DENIED)
             return
         end
     end
