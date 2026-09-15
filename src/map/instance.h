@@ -50,6 +50,7 @@ public:
     ~CInstance();
 
     void RegisterChar(CCharEntity*);
+    void DetachRegisteredChars();
 
     uint16 GetID() const;
     auto   runId() const -> uint32;

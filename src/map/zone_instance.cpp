@@ -423,6 +423,7 @@ auto CZoneInstance::ZoneServer(timer::time_point tick) -> Task<void>
     {
         ShowDebug("[CZoneInstance] ZoneServer cleaned up Instance %s", PInstance->GetName());
 
+        PInstance->DetachRegisteredChars();
         instancesByRun_.erase(PInstance->runId());
 
         m_InstanceList.erase(

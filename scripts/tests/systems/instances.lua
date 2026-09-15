@@ -17,6 +17,46 @@ describe('Instances', function()
         assert(false, 'Alexander_WTC not spawned')
     end)
 
+    it('drops a registered player pointer when the instance is reaped', function()
+        local player = xi.test.world:spawnPlayer({ zone = xi.zone.ALZADAAL_UNDERSEA_RUINS })
+
+        player:createInstance(7702)
+        xi.test.world:tick(xi.tick.TIME)
+
+        local instance = player:getInstance()
+        assert(instance, 'instance was not created')
+
+        -- Registered from the entrance zone, never zoned in
+        player:setInstance(instance)
+        instance:fail()
+        xi.test.world:tick(xi.tick.TIME)
+
+        assert(not player:getInstance(), 'a reaped instance must not stay attached to the player')
+    end)
+
+    it('drops the pointer of a player who left the instance before it was reaped', function()
+        local player = xi.test.world:spawnPlayer({ zone = xi.zone.ALZADAAL_UNDERSEA_RUINS })
+
+        player:createInstance(7702)
+        xi.test.world:tick(xi.tick.TIME)
+
+        local instance = player:getInstance()
+        assert(instance, 'instance was not created')
+
+        player:setInstance(instance)
+        player:setPos(0, 0, 0, 0, xi.zone.NYZUL_ISLE)
+        player.assert:inZone(xi.zone.NYZUL_ISLE)
+        assert(player:getInstance(), 'player should be inside the instance')
+
+        player:setPos(0, 0, 0, 0, xi.zone.ALZADAAL_UNDERSEA_RUINS)
+        player.assert:inZone(xi.zone.ALZADAAL_UNDERSEA_RUINS)
+        assert(not player:getInstance(), 'leaving the instance zone should detach the player')
+
+        instance:fail()
+        xi.test.world:tick(xi.tick.TIME)
+        assert(not player:getInstance(), 'player must stay detached after the reap')
+    end)
+
     it('respawns an instanced mob after its timer expires', function()
         local player = xi.test.world:spawnPlayer({ zone = xi.zone.ALZADAAL_UNDERSEA_RUINS })
 
