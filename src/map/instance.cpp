@@ -19,6 +19,7 @@
 ===========================================================================
 */
 
+#include <algorithm>
 #include <atomic>
 #include <filesystem>
 #include <thread>
@@ -28,6 +29,7 @@
 #include "ai/ai_container.h"
 #include "entities/char_entity.h"
 #include "lua/luautils.h"
+#include "utils/zoneutils.h"
 #include "zone.h"
 
 #include "common/timer.h"
@@ -148,11 +150,29 @@ void CInstance::LoadInstance()
 
 void CInstance::RegisterChar(CCharEntity* PChar)
 {
+    if (std::ranges::find(m_registeredChars, PChar->id) != m_registeredChars.end())
+    {
+        return;
+    }
+
     if (m_registeredChars.empty())
     {
         m_commander = PChar->id;
     }
     m_registeredChars.emplace_back(PChar->id);
+}
+
+// Runs once per reaped instance, so the zone-wide char lookup is affordable here
+void CInstance::DetachRegisteredChars()
+{
+    for (const auto charId : m_registeredChars)
+    {
+        auto* PChar = zoneutils::GetChar(charId);
+        if (PChar && PChar->PInstance == this)
+        {
+            PChar->PInstance = nullptr;
+        }
+    }
 }
 
 uint8 CInstance::GetLevelCap() const
