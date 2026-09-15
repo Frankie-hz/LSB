@@ -27,9 +27,9 @@ local content = InstanceAssault:new(
     entranceParams   =
     {
         instanceID   = xi.assault.instance.REQUIEM,
-        entryEvent   = { 143, 32, -4, 0, 70, 0, 1 },
+        entryEvent   = { 143, 32, -4, 0, 70, 3, 1 },
         confirmEvent = { 143, 4 },
-        memberEvent  = { 147, 0 },
+        memberEvent  = { 147, 3 },
     },
 })
 

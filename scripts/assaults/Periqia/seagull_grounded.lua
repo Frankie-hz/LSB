@@ -25,9 +25,9 @@ local content = InstanceAssault:new(
     entranceParams   =
     {
         instanceID   = xi.assault.instance.SEAGULL_GROUNDED,
-        entryEvent   = { 143, 31, -4, 0, 70, 0, 1 },
+        entryEvent   = { 143, 31, -4, 0, 70, 3, 1 },
         confirmEvent = { 143, 4 },
-        memberEvent  = { 147, 0 },
+        memberEvent  = { 147, 3 },
     },
 })
 

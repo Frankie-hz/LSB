@@ -174,15 +174,15 @@ xi.instance.lookup =
         -- The Black Coffin (TOAU 15)
         {
             instanceId  = 6000,
-            entryEvent  = { 221, 53, -6, 0, 99, 6, 0 },
+            entryEvent  = { 221, 0, -6, 0, 0, 6, 0 }, -- Capture needed
             confirm     = { 221, 4 },
             memberEvent = { 222, 6 },
             menuIndex   = 2,
         },
-        -- Against All Odds
+        -- Against All Odds, start params from a retail capture (COR AF 3-2)
         {
             instanceId  = 6001,
-            entryEvent  = { 221, 54, -9, 0, 99, 6, 0 },
+            entryEvent  = { 221, 0, -10, 0, 0, 6, 0 },
             confirm     = { 221, 4 },
             memberEvent = { 222, 6 },
             menuIndex   = 3,
@@ -199,9 +199,9 @@ xi.instance.lookup =
         -- Assault: Excavation Duty
         {
             instanceId  = 6300,
-            entryEvent  = { 203, 21, -4, 0, 50, 0, 1 },
+            entryEvent  = { 203, 21, -4, 0, 50, 2, 1 },
             confirm     = { 203, 4 },
-            memberEvent = { 208, 0 },
+            memberEvent = { 208, 2 },
             menuIndex   = 1,
         },
         -- Assault: Lebros Supplies
@@ -220,9 +220,9 @@ xi.instance.lookup =
         -- Assault: Imperial Agent Rescue
         {
             instanceId  = 6600,
-            entryEvent  = { 505, 11, -4, 0, 60, 0, 1 },
+            entryEvent  = { 505, 11, -4, 0, 60, 1, 1 },
             confirm     = { 505, 4 },
-            memberEvent = { 511, 0 },
+            memberEvent = { 511, 1 },
             menuIndex   = 1,
         },
         -- Assault: Preemptive Strike
