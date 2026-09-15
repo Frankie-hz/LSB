@@ -34,7 +34,7 @@ public:
 
     DISALLOW_COPY_AND_MOVE(CZoneInstance);
 
-    CInstance* CreateInstance(uint32 instanceid);
+    CInstance* CreateInstance(uint32 instanceId);
 
     virtual CCharEntity* GetCharByName(const std::string& name) override; // finds the player if exists in zone
     virtual CCharEntity* GetCharByID(uint32 id) override;

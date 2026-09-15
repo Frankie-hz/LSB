@@ -30,13 +30,12 @@ class CZone;
 class CInstanceLoader
 {
 public:
-    CInstanceLoader(uint32 instanceid, CCharEntity* PRequester);
-    ~CInstanceLoader();
+    CInstanceLoader(uint32 instanceId, CCharEntity* PRequester);
 
     auto LoadInstance() const -> CInstance*;
 
 private:
-    CInstance*   m_PInstance;
-    CZone*       m_PZone;
-    CCharEntity* m_PRequester;
+    CInstance*   m_PInstance{ nullptr };
+    CZone*       m_PZone{ nullptr };
+    CCharEntity* m_PRequester{ nullptr };
 };
