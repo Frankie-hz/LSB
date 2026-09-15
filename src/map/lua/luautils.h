@@ -485,7 +485,7 @@ void AfterInstanceRegister(CBaseEntity* PChar);                                /
 auto OnInstanceLoadFailed(CZone* PZone) -> xi::ZoneId;                         // triggers when an instance load is failed (ie. instance no longer exists)
 void OnInstanceTimeUpdate(CZone* PZone, CInstance* PInstance, uint32 seconds); // triggers every second for an instance, with the elapsed seconds
 void OnInstanceFailure(CInstance* PInstance);                                  // triggers when an instance is failed
-void OnInstanceCreatedCallback(CCharEntity* PChar, CInstance* PInstance);      // triggers when an instance is created (per character - waiting outside for entry)
+void OnInstanceCreatedCallback(CCharEntity* PChar, uint32 instanceId, CInstance* PInstance); // triggers when an instance is created or failed to load (per character - waiting outside for entry)
 void OnInstanceCreated(CInstance* PInstance);                                  // triggers when an instance is created (instance setup)
 void OnInstanceProgressUpdate(CInstance* PInstance);
 void OnInstanceStageChange(CInstance* PInstance);

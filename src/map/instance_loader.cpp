@@ -37,7 +37,8 @@
 #include "utils/zoneutils.h"
 
 CInstanceLoader::CInstanceLoader(const uint32 instanceId, CCharEntity* PRequester)
-: m_PRequester(PRequester)
+: instanceId_(instanceId)
+, m_PRequester(PRequester)
 {
     TracyZoneScoped;
 
@@ -59,6 +60,7 @@ auto CInstanceLoader::LoadInstance() const -> CInstance*
 
     if (!m_PInstance)
     {
+        luautils::OnInstanceCreatedCallback(m_PRequester, instanceId_, nullptr);
         return nullptr;
     }
 
@@ -290,7 +292,7 @@ auto CInstanceLoader::LoadInstance() const -> CInstance*
     luautils::LoadLuaObjectFromFile(instanceutils::GetInstanceData(m_PInstance->GetID()).filename);
 
     // Finish setup
-    luautils::OnInstanceCreatedCallback(m_PRequester, m_PInstance);
+    luautils::OnInstanceCreatedCallback(m_PRequester, instanceId_, m_PInstance);
     luautils::OnInstanceCreated(m_PInstance);
 
     return m_PInstance;

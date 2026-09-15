@@ -35,6 +35,7 @@ public:
     auto LoadInstance() const -> CInstance*;
 
 private:
+    uint32       instanceId_{ 0 };
     CInstance*   m_PInstance{ nullptr };
     CZone*       m_PZone{ nullptr };
     CCharEntity* m_PRequester{ nullptr };

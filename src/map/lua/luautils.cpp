@@ -5097,20 +5097,29 @@ void OnInstanceFailure(CInstance* PInstance)
  *                                                                       *
  ************************************************************************/
 
-void OnInstanceCreatedCallback(CCharEntity* PChar, CInstance* PInstance)
+void OnInstanceCreatedCallback(CCharEntity* PChar, const uint32 instanceId, CInstance* PInstance)
 {
     TracyZoneScoped;
 
-    auto instanceData = instanceutils::GetInstanceData(PInstance->GetID());
-
-    auto onInstanceCreatedCallback = getCachedFileFunction(instanceData.filename, "onInstanceCreatedCallback");
+    const auto instanceData              = instanceutils::GetInstanceData(instanceId);
+    auto       onInstanceCreatedCallback = getCachedFileFunction(instanceData.filename, "onInstanceCreatedCallback");
     if (!onInstanceCreatedCallback.valid())
     {
         ShowError("luautils::OnInstanceCreatedCallback: undefined procedure onInstanceCreatedCallback");
         return;
     }
 
-    auto result = onInstanceCreatedCallback(PChar, PInstance);
+    // A null CInstance* would still become a userdata, so hand Lua an explicit nil
+    auto result = [&]()
+    {
+        if (!PInstance)
+        {
+            return onInstanceCreatedCallback(PChar, sol::lua_nil);
+        }
+
+        return onInstanceCreatedCallback(PChar, PInstance);
+    }();
+
     if (!result.valid())
     {
         sol::error err = result;
