@@ -333,6 +333,11 @@ void CInstance::ClearEntities()
 
 void CInstance::Fail()
 {
+    if (m_status != INSTANCE_NORMAL)
+    {
+        return;
+    }
+
     Cancel();
 
     ClearEntities();
@@ -340,13 +345,18 @@ void CInstance::Fail()
     luautils::OnInstanceFailure(this);
 }
 
-bool CInstance::Failed()
+bool CInstance::Failed() const noexcept
 {
     return m_status == INSTANCE_FAILED;
 }
 
 void CInstance::Complete()
 {
+    if (m_status != INSTANCE_NORMAL)
+    {
+        return;
+    }
+
     m_status = INSTANCE_COMPLETE;
 
     ClearEntities();
@@ -354,7 +364,7 @@ void CInstance::Complete()
     luautils::OnInstanceComplete(this);
 }
 
-bool CInstance::Completed()
+bool CInstance::Completed() const noexcept
 {
     return m_status == INSTANCE_COMPLETE;
 }
