@@ -25,9 +25,9 @@ local content = InstanceAssault:new(
     entranceParams   =
     {
         instanceID   = xi.assault.instance.EXCAVATION_DUTY,
-        entryEvent   = { 203, 21, -4, 0, 50, 0, 1 },
+        entryEvent   = { 203, 21, -4, 0, 50, 2, 1 },
         confirmEvent = { 203, 4 },
-        memberEvent  = { 208, 0 },
+        memberEvent  = { 208, 2 },
     },
 })
 
