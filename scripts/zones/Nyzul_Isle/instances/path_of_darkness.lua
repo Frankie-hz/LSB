@@ -28,6 +28,10 @@ end
 instanceObject.onInstanceCreatedCallback = function(player, instance)
     xi.instance.onInstanceCreatedCallback(player, instance)
 
+    if not instance then
+        return
+    end
+
     -- Kill the Nyzul Isle update spam
     for _, v in ipairs(player:getParty()) do
         if v:getZoneID() == instance:getEntranceZoneID() then

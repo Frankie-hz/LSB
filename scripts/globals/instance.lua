@@ -431,6 +431,21 @@ end
 -- 'Default' behavior. It's up to each instance whether or not they want to use this logic
 -- Can pass instance cutscene information directly if accessible from container, otherwise will try and find it from the player's instance
 xi.instance.onInstanceCreatedCallback = function(player, instance, entryInfo)
+    -- The instance failed to load: release the requester from the entrance event
+    if not instance then
+        player:setLocalVar('INSTANCE_REQUESTED', 0)
+        player:setLocalVar('INSTANCE_ID', 0)
+
+        local npc = player:getEventTarget()
+        if npc ~= nil then
+            player:instanceEntry(npc, 3)
+        end
+
+        player:updateEvent(0, 0, 0, 0, 0, 0, 0, 3)
+
+        return
+    end
+
     local instanceId = instance:getID()
 
     if entryInfo == nil then

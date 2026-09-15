@@ -26,6 +26,11 @@ end
 
 instanceObject.onInstanceCreatedCallback = function(player, instance)
     xi.assault.onInstanceCreatedCallback(player, instance)
+
+    if not instance then
+        return
+    end
+
     xi.instance.onInstanceCreatedCallback(player, instance)
 end
 
