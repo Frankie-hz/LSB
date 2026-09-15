@@ -78,10 +78,10 @@ public:
     void CheckTime(timer::time_point tick);  // Check time limit (run instance time script)
     bool CharRegistered(CCharEntity* PChar); // Check if PChar is registered to this instance
     void ClearEntities();
-    void Fail();                     // Fails the instance (onInstanceFailure)
-    bool Failed();                   // Checks if instance is failed
-    void Complete();                 // Completes the instance (onInstanceComplete)
-    bool Completed();                // Checks if instance is completed
+    void Fail();                     // Fails the instance (onInstanceFailure), no-op once failed or completed
+    bool Failed() const noexcept;    // Checks if instance is failed
+    void Complete();                 // Completes the instance (onInstanceComplete), no-op once failed or completed
+    bool Completed() const noexcept; // Checks if instance is completed
     void Cancel();                   // Sets instance to fail without calling onInstanceFailure
     bool CheckFirstEntry(uint32 id); // Checks if this is the first time a char is entering
 

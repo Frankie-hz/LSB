@@ -57,6 +57,36 @@ describe('Instances', function()
         assert(not player:getInstance(), 'player must stay detached after the reap')
     end)
 
+    it('runs the failure hook once and ignores completion after failing', function()
+        local player = xi.test.world:spawnPlayer({ zone = xi.zone.ALZADAAL_UNDERSEA_RUINS })
+
+        player:createInstance(7702)
+        xi.test.world:tick(xi.tick.TIME)
+
+        local instance = player:getInstance()
+        assert(instance, 'instance was not created')
+
+        local script   = GetCachedInstanceScript(7702)
+        local original = script.onInstanceFailure
+        local failures = 0
+        script.onInstanceFailure = function(failed)
+            failures = failures + 1
+            original(failed)
+        end
+
+        instance:fail()
+        instance:fail()
+        instance:complete()
+
+        script.onInstanceFailure = original
+
+        assert(failures == 1, 'onInstanceFailure should run once, ran ' .. failures)
+        assert(instance:failed(), 'instance should stay failed')
+        assert(not instance:completed(), 'a failed instance must not complete')
+
+        xi.test.world:tick(xi.tick.TIME)
+    end)
+
     it('respawns an instanced mob after its timer expires', function()
         local player = xi.test.world:spawnPlayer({ zone = xi.zone.ALZADAAL_UNDERSEA_RUINS })
 
