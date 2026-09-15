@@ -87,6 +87,28 @@ describe('Instances', function()
         xi.test.world:tick(xi.tick.TIME)
     end)
 
+    it('loads one instance for a player who requested twice before the tick', function()
+        local player = xi.test.world:spawnPlayer({ zone = xi.zone.ALZADAAL_UNDERSEA_RUINS })
+
+        local script   = GetCachedInstanceScript(7702)
+        local original = script.onInstanceCreatedCallback
+        local created  = 0
+        script.onInstanceCreatedCallback = function(requester, instance)
+            created = created + 1
+            original(requester, instance)
+        end
+
+        player:createInstance(7702)
+        player:createInstance(7702)
+        xi.test.world:tick(xi.tick.TIME)
+        xi.test.world:tick(xi.tick.TIME)
+
+        script.onInstanceCreatedCallback = original
+
+        assert(created == 1, 'expected one instance load, got ' .. created)
+        assert(player:getInstance(), 'the single request should still have loaded')
+    end)
+
     it('respawns an instanced mob after its timer expires', function()
         local player = xi.test.world:spawnPlayer({ zone = xi.zone.ALZADAAL_UNDERSEA_RUINS })
 
