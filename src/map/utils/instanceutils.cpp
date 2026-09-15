@@ -30,9 +30,10 @@
 #include "instance_loader.h"
 #include "zoneutils.h"
 
+#include <algorithm>
 #include <coroutine>
+#include <deque>
 #include <filesystem>
-#include <queue>
 
 #include <fmt/ranges.h>
 
@@ -40,7 +41,7 @@ namespace instanceutils
 {
 
 HashMap<uint16, InstanceData_t>       InstanceData;
-std::queue<std::pair<uint32, uint16>> LoadQueue; // player id, instance id
+std::deque<std::pair<uint32, uint16>> LoadQueue; // player id, instance id
 detail::LazyLoadState                 lazyLoad;
 
 namespace
@@ -166,17 +167,8 @@ auto CheckInstance(Scheduler& scheduler, MapConfig config) -> Task<void>
         co_return;
     }
 
-    const auto requestPair = LoadQueue.front();
-    auto*      PRequester  = zoneutils::GetChar(requestPair.first);
-    if (!PRequester)
-    {
-        ShowError("Encountered invalid requester id when loading instance!");
-        LoadQueue.pop();
-        co_return;
-    }
-
-    const auto instanceId = requestPair.second;
-    const auto data       = GetInstanceData(instanceId);
+    const auto [requesterId, instanceId] = LoadQueue.front();
+    const auto data                      = GetInstanceData(instanceId);
 
     // CInstanceLoader requires the instance template zone to be loaded.
     const bool zoneReady = co_await zoneutils::IsZoneReady(scheduler, config, data.instance_zone);
@@ -185,17 +177,36 @@ auto CheckInstance(Scheduler& scheduler, MapConfig config) -> Task<void>
         co_return;
     }
 
-    LoadQueue.pop();
+    LoadQueue.pop_front();
 
-    auto loader = std::make_unique<CInstanceLoader>(instanceId, PRequester);
-    loader->LoadInstance();
+    // Resolved after the await: the requester can log out while the zone loads
+    auto* PRequester = zoneutils::GetChar(requesterId);
+    if (!PRequester)
+    {
+        ShowError("Encountered invalid requester id when loading instance!");
+        co_return;
+    }
+
+    const auto loader = CInstanceLoader(instanceId, PRequester);
+    loader.LoadInstance();
 
     co_return;
 }
 
-auto LoadInstance(uint32 instanceid, CCharEntity* PRequester) -> void
+auto LoadInstance(const uint32 instanceId, CCharEntity* PRequester) -> void
 {
-    LoadQueue.emplace(PRequester->id, instanceid);
+    const auto alreadyQueued = std::ranges::any_of(LoadQueue, [&](const auto& request)
+    {
+        return request.first == PRequester->id;
+    });
+
+    if (alreadyQueued)
+    {
+        ShowWarning("%s already has an instance load queued", PRequester->getName());
+        return;
+    }
+
+    LoadQueue.emplace_back(PRequester->id, instanceId);
 }
 
 auto GetInstanceData(uint32 instanceid) -> InstanceData_t
