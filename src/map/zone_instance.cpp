@@ -600,14 +600,19 @@ void CZoneInstance::ForEachAllyInstance(CBaseEntity* PEntity, FnRef<void(CMobEnt
     }
 }
 
-CInstance* CZoneInstance::CreateInstance(uint32 instanceid)
+CInstance* CZoneInstance::CreateInstance(const uint32 instanceId)
 {
     TracyZoneScoped;
 
-    m_InstanceList.emplace_back(std::make_unique<CInstance>(scheduler_, config_, this, instanceid));
+    auto instance = std::make_unique<CInstance>(scheduler_, config_, this, instanceId);
+    if (instance->Failed())
+    {
+        return nullptr;
+    }
 
-    auto* PInstance = m_InstanceList.back().get();
+    auto* PInstance = instance.get();
     instancesByRun_.emplace(PInstance->runId(), PInstance);
+    m_InstanceList.emplace_back(std::move(instance));
 
     return PInstance;
 }
