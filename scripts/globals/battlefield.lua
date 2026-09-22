@@ -104,6 +104,14 @@ xi.battlefield.leaveCode =
     LOST   = 4
 }
 
+-- Tier of the Battlefield effect
+xi.battlefield.presence =
+{
+    OUTSIDE = 0,
+    ENTERED = 1,
+    WON     = 2
+}
+
 xi.battlefield.id =
 {
     RANK_2_MISSION_1                           = 0,   -- Converted
@@ -523,7 +531,7 @@ function Battlefield:register()
             onEventFinish =
             {
                 [32000] = utils.bind(Battlefield.redirectEventCall, 'onEventFinishEnter'),
-                [32001] = utils.bind(Battlefield.redirectEventCall, 'onEventFinishWin'),
+                [32001] = Battlefield.onEventFinishWinEvent,
                 [32002] = utils.bind(Battlefield.redirectEventCall, 'onEventFinishLeave'),
                 [32003] = utils.bind(Battlefield.redirectEventCall, 'onEventFinishExit'),
                 [32004] = utils.bind(Battlefield.redirectEventCall, 'onEventFinishBattlefield'),
@@ -950,6 +958,12 @@ function Battlefield:onEventFinishEnter(player, csid, option, npc)
     self:setLocalVar(player, 'CS', 1)
 end
 
+-- The win cutscene moves the player out of the arena, clearance ends once the client reports it finished
+function Battlefield.onEventFinishWinEvent(player, csid, option, npc)
+    player:delStatusEffectSilent(xi.effect.BATTLEFIELD)
+    Battlefield.redirectEventCall('onEventFinishWin', player, csid, option, npc)
+end
+
 function Battlefield:onEventFinishWin(player, csid, option, npc)
     if self.title then
         player:addTitle(self.title)
@@ -1235,7 +1249,16 @@ function Battlefield:onBattlefieldLoss(player, battlefield)
 end
 
 function Battlefield:onBattlefieldKick(player)
-    player:startEvent(32002, self.lossEventParams)
+    local effect = player:getStatusEffect(xi.effect.BATTLEFIELD)
+
+    -- A winner whose win cutscene never finished, usually a dropped connection, sees it on return
+    if effect and effect:getTier() == xi.battlefield.presence.WON then
+        player:setLocalVar('battlefieldID', self.battlefieldId)
+        player:setLocalVar('battlefieldWin', self.battlefieldId)
+        player:startEvent(32001, effect:getSubPower(), 0, 0, 0, player:getZoneID(), self.index, 0)
+    else
+        player:startEvent(32002, self.lossEventParams)
+    end
 end
 
 function Battlefield:handleWipe(battlefield, players)

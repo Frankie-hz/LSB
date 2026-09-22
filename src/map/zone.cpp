@@ -1181,14 +1181,14 @@ void CZone::CharZoneIn(CCharEntity* PChar)
         auto* PBattlefield = m_BattlefieldHandler->GetBattlefield(PChar, true);
         if (PBattlefield != nullptr && PChar->StatusEffectContainer->HasStatusEffectByFlag(xi::StatusEffectFlag::Confrontation))
         {
-            PBattlefield->InsertEntity(PChar, CBattlefield::hasPlayerEntered(PChar));
+            PBattlefield->InsertEntity(PChar, CBattlefield::hasPlayerEntered(PChar) || CBattlefield::hasPlayerWon(PChar));
         }
         else if (PChar->StatusEffectContainer->HasStatusEffectByFlag(xi::StatusEffectFlag::Confrontation))
         {
             // Player is in a zone with a battlefield but they are not part of one.
-            if (CBattlefield::hasPlayerEntered(PChar))
+            if (CBattlefield::hasPlayerEntered(PChar) || CBattlefield::hasPlayerWon(PChar))
             {
-                // If inside of the battlefield arena then kick them out
+                // If inside of the battlefield arena then kick them out, a winner is shown the win cutscene instead
                 // Battlefield and level restriction effects will be removed once fully kicked.
                 m_BattlefieldHandler->addOrphanedPlayer(PChar);
             }

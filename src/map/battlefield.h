@@ -65,6 +65,14 @@ enum BATTLEFIELD_STATUS : uint8
     BATTLEFIELD_STATUS_LOST   = 3
 };
 
+// Tier of the Battlefield effect, kept across a logout
+enum BATTLEFIELD_PRESENCE : uint8
+{
+    BATTLEFIELD_PRESENCE_OUTSIDE = 0,
+    BATTLEFIELD_PRESENCE_ENTERED = 1,
+    BATTLEFIELD_PRESENCE_WON     = 2
+};
+
 enum BATTLEFIELD_RETURN_CODE : uint8
 {
     BATTLEFIELD_RETURN_CODE_WAIT              = 1,
@@ -198,6 +206,8 @@ public:
 
     static void setPlayerEntered(CCharEntity* PChar, bool entered);
     static bool hasPlayerEntered(CCharEntity* PChar);
+    static void setPlayerWon(CCharEntity* PChar);
+    static bool hasPlayerWon(CCharEntity* PChar);
 
     static uint16 getBattlefieldArea(CCharEntity* PChar);
 
@@ -233,9 +243,10 @@ private:
     uint32 m_armouryCrate = 0;
 
     timer::time_point m_cleanupTime{};
-    bool              m_cleanedPlayers = false;
-    bool              m_Cleanup        = false;
-    bool              m_Attacked       = false;
+    // Entered players already shown the win or loss cutscene
+    std::set<uint32> m_ExitNotified;
+    bool             m_Cleanup  = false;
+    bool             m_Attacked = false;
 
     HashMap<std::string, uint64_t> localVars_;
     std::vector<BattlefieldGroup>  m_groups;

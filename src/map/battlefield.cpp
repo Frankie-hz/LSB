@@ -335,6 +335,12 @@ bool CBattlefield::InsertEntity(CBaseEntity* PEntity, bool enter, BATTLEFIELDMOB
                     charutils::SendTimerPacket(PChar, GetRemainingTime());
                 }
 
+                // A player reconnecting into a finished battlefield gets the exit cutscene once their client is ready for it
+                if (m_Status >= BATTLEFIELD_STATUS_WON)
+                {
+                    m_cleanupTime = std::max(m_cleanupTime, timer::now() + 5s);
+                }
+
                 // Try to add the player's pet in case they have one that can
                 if (PChar->PPet != nullptr)
                 {
@@ -611,6 +617,7 @@ bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
         }
 
         m_EnteredPlayers.erase(PEntity->id);
+        m_ExitNotified.erase(PEntity->id);
 
         charutils::SendClearTimerPacket(PChar);
 
@@ -749,22 +756,28 @@ bool CBattlefield::Cleanup(timer::time_point time, bool force)
         return false;
     }
 
-    // First cleanup the players if they haven't been cleaned up yet
-    if (!m_cleanedPlayers)
+    // Show the exit cutscene to every entered player once, including one that reconnected after the first pass
+    const uint8 leavecode = m_Status == BATTLEFIELD_STATUS_WON ? BATTLEFIELD_LEAVE_CODE_WIN : BATTLEFIELD_LEAVE_CODE_LOSE;
+    bool        notified  = false;
+    for (auto id : m_EnteredPlayers)
     {
-        uint8 leavecode = m_Status == BATTLEFIELD_STATUS_WON ? BATTLEFIELD_LEAVE_CODE_WIN : BATTLEFIELD_LEAVE_CODE_LOSE;
-        for (auto id : m_EnteredPlayers)
+        if (m_ExitNotified.insert(id).second)
         {
             auto* PChar = GetZone()->GetCharByID(id);
-            luautils::OnBattlefieldLeave(PChar, this, leavecode);
-        }
+            if (m_Status == BATTLEFIELD_STATUS_WON)
+            {
+                setPlayerWon(PChar);
+            }
 
-        m_cleanedPlayers = true;
-        if (!force)
-        {
-            m_cleanupTime = time + 10s;
-            return false;
+            luautils::OnBattlefieldLeave(PChar, this, leavecode);
+            notified = true;
         }
+    }
+
+    if (notified && !force)
+    {
+        m_cleanupTime = time + 10s;
+        return false;
     }
 
     for (const auto& mob : m_RequiredEnemyList)
@@ -822,8 +835,6 @@ bool CBattlefield::Cleanup(timer::time_point time, bool force)
         RemoveEntity(ally);
     }
 
-    uint8 leavecode = m_Status == BATTLEFIELD_STATUS_WON ? BATTLEFIELD_LEAVE_CODE_WIN : BATTLEFIELD_LEAVE_CODE_LOSE;
-
     for (auto id : tempPlayers)
     {
         auto* PChar = GetZone()->GetCharByID(id);
@@ -834,10 +845,11 @@ bool CBattlefield::Cleanup(timer::time_point time, bool force)
     }
 
     // Remove all registered players as long as they're in the zone and still hold clearance for this battlefield
+    // A winner keeps it until the client reports the win cutscene finished, even across a dropped connection
     for (auto id : m_RegisteredPlayers)
     {
         auto* PChar = GetZone()->GetCharByID(id);
-        if (PChar && HasClearance(PChar))
+        if (PChar && HasClearance(PChar) && !hasPlayerWon(PChar))
         {
             PChar->StatusEffectContainer->DelStatusEffectsByFlag(xi::StatusEffectFlag::Confrontation, EffectNotice::Silent);
             m_Zone->updateCharLevelRestriction(PChar);
@@ -1048,6 +1060,20 @@ bool CBattlefield::hasPlayerEntered(CCharEntity* PChar)
     }
 
     return PChar->StatusEffectContainer->GetStatusEffect(xi::StatusEffect::Battlefield)->GetTier() == 1;
+}
+
+void CBattlefield::setPlayerWon(CCharEntity* PChar)
+{
+    if (auto* PEffect = PChar->StatusEffectContainer->GetStatusEffect(xi::StatusEffect::Battlefield))
+    {
+        PEffect->SetTier(BATTLEFIELD_PRESENCE_WON);
+    }
+}
+
+bool CBattlefield::hasPlayerWon(CCharEntity* PChar)
+{
+    const auto* PEffect = PChar->StatusEffectContainer->GetStatusEffect(xi::StatusEffect::Battlefield);
+    return PEffect != nullptr && PEffect->GetTier() == BATTLEFIELD_PRESENCE_WON;
 }
 
 uint16 CBattlefield::getBattlefieldArea(CCharEntity* PChar)
