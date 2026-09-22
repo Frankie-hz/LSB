@@ -2696,6 +2696,32 @@ catchresponse_t* ReelCheck(CCharEntity* PChar, fishresponse_t* fishResponse, rod
     return catchResponse;
 }
 
+void ReleaseFishing(CCharEntity* PChar)
+{
+    if (PChar->hookedFish != nullptr)
+    {
+        UnhookMob(PChar, Lost::No);
+
+        // No skillups for items or mobs.
+        if (PChar->hookedFish->catchtype == FISHINGCATCHTYPE_SMALLFISH || PChar->hookedFish->catchtype == FISHINGCATCHTYPE_BIGFISH)
+        {
+            const uint16 skillUpChances = 1 + PChar->getMod(xi::Mod::PELICAN_RING_EFFECT);
+
+            for (uint16 i = 0; i < skillUpChances; i++)
+            {
+                FishingSkillup(PChar, PChar->hookedFish->catchlevel, PChar->hookedFish->successtype);
+            }
+        }
+
+        destroy(PChar->hookedFish);
+        PChar->hookedFish = nullptr;
+    }
+
+    PChar->fishingToken = 0;
+    PChar->animation    = xi::Animation::None;
+    PChar->updatemask |= UPDATE_HP;
+}
+
 void FishingAction(CCharEntity* PChar, const GP_CLI_COMMAND_FISHING_2_MODE mode, const uint32 para, const uint32 para2)
 {
     const uint32 stamina = para;
@@ -2712,16 +2738,15 @@ void FishingAction(CCharEntity* PChar, const GP_CLI_COMMAND_FISHING_2_MODE mode,
     uint16 MessageOffset = GetMessageOffset(PChar->getZone());
     uint32 vanaTime      = earth_time::vanadiel_timestamp();
 
-    if (PChar->fishingToken == 0)
-    {
-        PChar->animation = xi::Animation::NewFishingStop;
-        return;
-    }
-
     switch (mode)
     {
         case GP_CLI_COMMAND_FISHING_2_MODE::RequestCheckHook:
         {
+            if (PChar->fishingToken == 0)
+            {
+                return;
+            }
+
             if (PChar->animation != xi::Animation::NewFishingStart)
             {
                 CatchNothing(PChar, FISHINGFAILTYPE_NONE);
@@ -2803,6 +2828,11 @@ void FishingAction(CCharEntity* PChar, const GP_CLI_COMMAND_FISHING_2_MODE mode,
 
         case GP_CLI_COMMAND_FISHING_2_MODE::RequestEndMiniGame:
         {
+            if (PChar->fishingToken == 0)
+            {
+                return;
+            }
+
             if (stamina <= 4)
             {
                 CItemWeapon* Rod = nullptr;
@@ -2920,38 +2950,24 @@ void FishingAction(CCharEntity* PChar, const GP_CLI_COMMAND_FISHING_2_MODE mode,
 
         case GP_CLI_COMMAND_FISHING_2_MODE::RequestPotentialTimeout:
         {
+            if (PChar->fishingToken == 0)
+            {
+                return;
+            }
+
             // message: "You don't know how much longer you can keep this one on the line..."
             PChar->pushPacket<GP_SERV_COMMAND_TALKNUM>(PChar, MessageOffset + FISHMESSAGEOFFSET_WARNING);
-            return;
         }
         break;
 
-        default:
+        // Sent after the minigame ends, so the token has already been spent by then
         case GP_CLI_COMMAND_FISHING_2_MODE::RequestRelease:
         {
-            if (PChar->hookedFish != nullptr)
+            if (PChar->isFishing())
             {
-                UnhookMob(PChar, Lost::No);
-
-                // No skillups for items or mobs.
-                if (PChar->hookedFish->catchtype == FISHINGCATCHTYPE_SMALLFISH || PChar->hookedFish->catchtype == FISHINGCATCHTYPE_BIGFISH)
-                {
-                    uint16 skillUpChances = 1 + PChar->getMod(xi::Mod::PELICAN_RING_EFFECT);
-
-                    for (int i = 0; i < skillUpChances; i++)
-                    {
-                        FishingSkillup(PChar, PChar->hookedFish->catchlevel, PChar->hookedFish->successtype);
-                    }
-                }
-
-                destroy(PChar->hookedFish);
-                PChar->hookedFish = nullptr;
+                ReleaseFishing(PChar);
             }
-
-            PChar->animation = xi::Animation::None;
-            PChar->updatemask |= UPDATE_HP;
         }
-
         break;
     }
 }
