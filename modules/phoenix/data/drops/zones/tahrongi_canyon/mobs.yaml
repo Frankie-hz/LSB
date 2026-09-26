@@ -1,5 +1,6 @@
-# Remove Mandragora Dewdrop, added to Pygmaioi on May 14, 2015.
-# Source: https://forum.square-enix.com/ffxi/threads/46976
+# Remove Mandragora Dewdrop (May 14, 2015) and Skull Locust (March 23, 2010).
+# Mandragora Dewdrop: https://forum.square-enix.com/ffxi/threads/46976
+# Skull Locust: https://www.playonline.com/pcd/verup/ff11us/detail/5338/detail.html
 
 templates:
   Pygmaioi:
@@ -13,3 +14,16 @@ templates:
           item:   pinch_of_yuhtunga_sulfur
         - chance: super_rare
           item:   four-leaf_mandragora_bud
+  Yagudo_Initiate:
+    loot:
+      drops:
+        - chance: common
+          item:   yagudo_feather
+        - chance: common
+          item:   yagudo_feather
+        - chance: uncommon
+          item:   yagudo_feather
+        - chance: uncommon
+          item:   yagudo_feather
+        - chance: uncommon
+          item:   yagudo_bead_necklace

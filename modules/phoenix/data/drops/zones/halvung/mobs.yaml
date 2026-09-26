@@ -1,15 +1,31 @@
-# Remove Plumbago (March 23, 2010) and Moblin Oil (June 17, 2014).
+# Remove Plumbago (March 23, 2010), Moblin Oil (June 17, 2014), Khroma Nugget (September 9, 2008)
+# and Puppetmaster's Testimony from the trolls it was added to (June 14, 2012).
 # Plumbago: https://www.playonline.com/pcd/verup/ff11us/detail/5338/detail.html
 # Moblin Oil: https://forum.square-enix.com/ffxi/threads/42614
+# Khroma Nugget: https://wiki.ffo.jp/html/16188.html
+# Puppetmaster's Testimony: https://forum.square-enix.com/ffxi/threads/24155
+# Pre-2012 droppers (Troll Surveillant, Troll Engraver): https://wiki.ffo.jp/html/14495.html
 
 templates:
-  Troll_Cameist:
+  Troll_Artilleryman_H:
     loot:
       drops:
         - chance: uncommon
-          item:   puppetmasters_testimony
+          item:   halvung_bronze_key
+        - chance: very_rare
+          item:   troll_pauldron
+  Troll_Cameist:
+    loot:
+      drops:
         - chance: rare
           item:   halvung_brass_key
+        - chance: very_rare
+          item:   troll_pauldron
+  Troll_Combatant:
+    loot:
+      drops:
+        - chance: uncommon
+          item:   halvung_bronze_key
         - chance: very_rare
           item:   troll_pauldron
   Troll_Cuirasser_H:
@@ -31,8 +47,6 @@ templates:
   Troll_Gemologist:
     loot:
       drops:
-        - chance: uncommon
-          item:   puppetmasters_testimony
         - chance: rare
           item:   halvung_brass_key
         - chance: very_rare
@@ -40,8 +54,6 @@ templates:
   Troll_Ironworker:
     loot:
       drops:
-        - chance: uncommon
-          item:   puppetmasters_testimony
         - chance: rare
           item:   halvung_brass_key
         - chance: very_rare
@@ -49,8 +61,6 @@ templates:
   Troll_Lapidarist:
     loot:
       drops:
-        - chance: uncommon
-          item:   puppetmasters_testimony
         - chance: rare
           item:   halvung_brass_key
         - chance: very_rare
@@ -62,3 +72,17 @@ templates:
           item:   halvung_bronze_key
         - chance: very_rare
           item:   troll_vambrace
+  Troll_Smelter:
+    loot:
+      drops:
+        - chance: rare
+          item:   halvung_brass_key
+        - chance: very_rare
+          item:   troll_pauldron
+  Troll_Stoneworker:
+    loot:
+      drops:
+        - chance: rare
+          item:   halvung_brass_key
+        - chance: very_rare
+          item:   troll_pauldron
