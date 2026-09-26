@@ -70,7 +70,7 @@ describe('Module: phoenix_gm_command_tiers', function()
     end
 
     local function fixture()
-        local actual = { starts = 0, calls = {}, players = {}, vars = {}, writes = {}, sends = {}, spawns = 0, moogles = 0 }
+        local actual = { starts = 0, calls = {}, args = {}, players = {}, vars = {}, writes = {}, sends = {}, spawns = 0, moogles = 0 }
         local testXi = { objType = xi.objType, msg = xi.msg, status = xi.status, zone = xi.zone, server = {} }
         local env = setmetatable({ xi = testXi }, { __index = _G })
         env.require = function()
@@ -82,8 +82,9 @@ describe('Module: phoenix_gm_command_tiers', function()
                 local command =
                 {
                     cmdprops = { permission = -1, parameters = '' },
-                    onTrigger = setfenv(function()
+                    onTrigger = setfenv(function(...)
                         actual.calls[name] = (actual.calls[name] or 0) + 1
+                        actual.args[name]  = { ... }
                     end, env),
                 }
                 rawset(commands, name, command)
@@ -185,6 +186,7 @@ describe('Module: phoenix_gm_command_tiers', function()
         testXi.server.onServerStart()
         assert(actual.starts == 1)
         assert(testXi.commands.costume.cmdprops.parameters == 'is')
+        assert(testXi.commands.additem.cmdprops.parameters == 's')
         assert(testXi.commands.uptime.cmdprops.permission == 0)
         assert(testXi.commands.debuginfo.cmdprops.permission == 0)
         assert(testXi.commands.TH.cmdprops.permission == 0)
@@ -287,6 +289,46 @@ describe('Module: phoenix_gm_command_tiers', function()
         assert(player.costume == nil and other.costume == nil and #player.messages >= 3)
         testXi.commands.costume.onTrigger(player, 0, 'Other')
         assert(other.costume == 0)
+    end)
+
+    it('keeps unnamed additem calls on the caller', function()
+        local testXi, actual = fixture()
+        local player = newPlayer(4)
+        testXi.commands.additem.onTrigger(player, '4096 12 45 3')
+        local args = actual.args.additem
+        assert(args[1] == player and args[2] == '4096' and args[3] == 12 and args[4] == 45 and args[5] == 3)
+    end)
+
+    it('gives named additem calls to that player', function()
+        local testXi, actual = fixture()
+        local player = newPlayer(4)
+        local other = newPlayer(0, 'Other', 2)
+        local counts = { 0, 12 }
+        other.getItemCount = function()
+            return table.remove(counts, 1)
+        end
+
+        actual.players.other = other
+        testXi.commands.additem.onTrigger(player, '4096 12 Other')
+        local args = actual.args.additem
+        assert(args[1] == other and args[2] == 4096 and args[3] == 12)
+        assert(#player.messages == 1 and player.messages[1][1] == 'Gave Other 12 of item 4096.')
+    end)
+
+    it('gives nothing for a missing player or a second name', function()
+        local testXi, actual = fixture()
+        local player = newPlayer(4)
+        testXi.commands.additem.onTrigger(player, '4096 Offline')
+        testXi.commands.additem.onTrigger(player, '4096 Other Offline')
+        assert(actual.calls.additem == nil and #player.messages == 2)
+    end)
+
+    it('passes split additem args straight through after a reload', function()
+        local testXi, actual = fixture()
+        local player = newPlayer(4)
+        testXi.commands.additem.onTrigger(player, '4096', 12, 0)
+        local args = actual.args.additem
+        assert(args[1] == player and args[2] == '4096' and args[3] == 12 and args[4] == 0)
     end)
 
     it('reports current TH with either spelling including zero privately to an ordinary player', function()

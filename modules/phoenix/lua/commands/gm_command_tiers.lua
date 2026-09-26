@@ -134,6 +134,7 @@ local commandTiers =
         'rdyna',
         'reset',
         'resetlights',
+        'setbag',
         'setbattlefieldtime',
         'setlocalvar',
         'setmobflags',
@@ -195,7 +196,6 @@ local commandTiers =
         'racechange',
         'rename',
         'setallegiance',
-        'setbag',
         'setcapacitypoints',
         'setcraftrank',
         'setfamelevel',
@@ -254,6 +254,7 @@ m:addOverride('xi.server.onServerStart', function()
     end
 
     xi.commands.costume.cmdprops.parameters = 'is'
+    xi.commands.additem.cmdprops.parameters = 's'
 end)
 
 m:addOverride('xi.commands.costume.onTrigger', function(player, costumeId, target)
@@ -279,6 +280,61 @@ m:addOverride('xi.commands.costume.onTrigger', function(player, costumeId, targe
     end
 
     targetPlayer:setCostume(costumeId)
+end)
+
+m:addOverride('xi.commands.additem.onTrigger', function(player, args, ...)
+    -- No args is a bare !additem.
+    -- Split args mean a reload of additem.lua put the stock parameters back until restart.
+    -- The stock command handles both.
+    if not args or select('#', ...) > 0 then
+        return super(player, args, ...)
+    end
+
+    local item    = nil
+    local target  = nil
+    local numbers = {}
+
+    for token in args:gmatch('%S+') do
+        if not item then
+            item = token
+        elseif token:match('^%-?%d+$') then
+            table.insert(numbers, tonumber(token))
+        elseif not target then
+            target = token
+        else
+            player:printToPlayer('!additem <itemId> (quantity) (aug1) (v1) (aug2) (v2) (aug3) (v3) (aug4) (v4) (trial) (player)', xi.msg.channel.SYSTEM_3)
+            return
+        end
+    end
+
+    if not target then
+        return super(player, item, unpack(numbers))
+    end
+
+    local targetPlayer = GetPlayerByName(target)
+    if not targetPlayer then
+        player:printToPlayer(string.format('Player named "%s" not found!', target), xi.msg.channel.SYSTEM_3)
+        return
+    end
+
+    local itemId = tonumber(item) or GetItemIDByName(item)
+    if itemId < 1 or itemId >= 65000 then
+        player:printToPlayer(string.format('Item %s not found. Use the item ID or exact name.', item), xi.msg.channel.SYSTEM_3)
+        return
+    end
+
+    -- Stock additem runs on the target and only messages them.
+    -- Comparing their item count before and after tells the GM if it worked.
+    local oldCount = targetPlayer:getItemCount(itemId)
+
+    super(targetPlayer, itemId, unpack(numbers))
+
+    local added = targetPlayer:getItemCount(itemId) - oldCount
+    if added > 0 then
+        player:printToPlayer(string.format('Gave %s %i of item %i.', targetPlayer:getName(), added, itemId), xi.msg.channel.SYSTEM_3)
+    else
+        player:printToPlayer(string.format('%s could not receive item %i.', targetPlayer:getName(), itemId), xi.msg.channel.SYSTEM_3)
+    end
 end)
 
 -- Keep tier checks active after command reloads.
