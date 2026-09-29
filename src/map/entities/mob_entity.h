@@ -97,6 +97,7 @@ public:
     uint32 GetRandomGil();   // returns a random amount of gil
     bool   CanRoamHome();    // is it possible for me to walk back?
     bool   CanRoam();        // check if mob can walk around
+    bool   StartRoam();      // set off on a roam: over the zone's path nodes when it has them, else to random navmesh points
     void   TapDeaggroTime(); // call CMobController->TapDeaggroTime if PAI->GetController() is a CMobController, otherwise do nothing.
 
     bool CanLink(position_t* pos, int16 superLink = 0);

@@ -21,6 +21,8 @@
 
 #pragma once
 
+#include <common/mmo.h>
+
 enum PATHFLAG
 {
     PATHFLAG_NONE     = 0x00,
@@ -32,3 +34,15 @@ enum PATHFLAG
     PATHFLAG_PATROL   = 0x20, // loop the path continuously while roaming
     PATHFLAG_COORDS   = 0x40, // walk through to end; do not repeat
 };
+
+namespace pathfind
+{
+
+// One stop on a roam: walk at `position` and turn for the next stop once within `arrivalRadius` of it.
+struct RoamTurn
+{
+    position_t position;
+    float      arrivalRadius;
+};
+
+} // namespace pathfind

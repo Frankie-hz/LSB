@@ -38,6 +38,7 @@
 
 class CBaseEntity;
 class NavMesh;
+class PathNodes;
 class RoamRegion;
 
 namespace pathfind
@@ -60,6 +61,10 @@ public:
 
     // Walk to a random point around the given point, or inside the region when the owner has one.
     auto RoamAround(const position_t& point, float maxRadius, uint8 minTurns, uint8 maxTurns, xi::RoamFlag roamFlags = xi::RoamFlag::None, const RoamRegion* region = nullptr) -> bool;
+
+    // Walk minTurns..maxTurns links of the zone's path nodes, keeping to nodes within `range` of `anchor` and inside the region if there is one.
+    // False when no such node is near enough to join, so the caller can roam the navmesh instead.
+    auto RoamNodes(const PathNodes& nodes, const position_t& anchor, float range, uint8 minTurns, uint8 maxTurns, xi::RoamFlag roamFlags, const RoamRegion* region) -> bool;
 
     // Find and walk to the given point.
     auto PathTo(const position_t& point, uint8 pathFlags = 0) -> bool;
@@ -134,6 +139,9 @@ private:
 
     auto BuildDirectPath(const position_t& end) -> bool;
 
+    // Path to turnPoints_[currentTurn_], stopping inside its arrival radius.
+    auto PathToTurn() -> bool;
+
     // Find a random path around the given point.
     auto FindRandomPath(const position_t& start, float maxRadius, uint8 minTurns, uint8 maxTurns, xi::RoamFlag roamFlags, const RoamRegion* region) -> bool;
 
@@ -162,9 +170,9 @@ private:
     // Re-requests the next leg of a partial path toward the eventual destination.
     pathfind::ChunkedPath chunked_;
 
-    std::vector<pathpoint_t> patrol_;
-    std::vector<position_t>  turnPoints_;
-    float                    distanceFromPoint_;
+    std::vector<pathpoint_t>        patrol_;
+    std::vector<pathfind::RoamTurn> turnPoints_;
+    float                           distanceFromPoint_;
 
     uint8        pathFlags_;
     uint8        patrolFlags_;

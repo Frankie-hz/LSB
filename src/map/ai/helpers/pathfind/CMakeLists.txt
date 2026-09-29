@@ -3,6 +3,8 @@ set(PATHFIND_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/chunked_path.h
     ${CMAKE_CURRENT_SOURCE_DIR}/entity_path_owner.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/entity_path_owner.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/node_route.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/node_route.h
     ${CMAKE_CURRENT_SOURCE_DIR}/path.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/path.h
     ${CMAKE_CURRENT_SOURCE_DIR}/path_builder.cpp

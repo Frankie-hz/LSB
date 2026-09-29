@@ -19,147 +19,21 @@
 ===========================================================================
 */
 
-#include "map/ai/helpers/pathfind/path_owner.h"
 #include "map/ai/helpers/pathfind/pathfind.h"
-#include "map/navmesh/navmesh.h"
 #include "map/roam_region.h"
+#include "pathfind_fakes.h"
 
 #include "common/utils.h"
 
 #include <catch2/catch_test_macros.hpp>
 
 #include <memory>
-#include <string>
 
 namespace
 {
 
-// flat ground everywhere: every path is the straight line to its end
-class FlatNavMesh final : public NavMesh
-{
-public:
-    auto findPath(const position_t&, const position_t& end, float) -> Maybe<PathResult> override
-    {
-        return PathResult{ { pathpoint_t{ end, 0s, false } }, false };
-    }
-
-    auto findRandomPosition(const position_t& start, float) const -> Maybe<position_t> override
-    {
-        return start;
-    }
-
-    auto validPosition(const position_t&) const -> bool override
-    {
-        return true;
-    }
-
-    auto findClosestValidPoint(const position_t& position) const -> Maybe<position_t> override
-    {
-        return position;
-    }
-
-    auto findFurthestValidPoint(const position_t&, const position_t& endPosition) const -> Maybe<position_t> override
-    {
-        return endPosition;
-    }
-
-    auto snapToValidPosition(position_t&) const -> void override
-    {
-    }
-
-    auto moveAlongSurface(const position_t&, const position_t& end, position_t& result) const -> bool override
-    {
-        result = end;
-        return true;
-    }
-};
-
-class StubOwner final : public pathfind::PathOwner
-{
-public:
-    StubOwner(position_t position, NavMesh& navMesh)
-    : position_(position)
-    , navMesh_(navMesh)
-    {
-    }
-
-    auto position() -> position_t& override
-    {
-        return position_;
-    }
-
-    auto position() const -> const position_t& override
-    {
-        return position_;
-    }
-
-    auto navMesh() -> NavMesh& override
-    {
-        return navMesh_;
-    }
-
-    auto markPositionDirty() -> void override
-    {
-    }
-
-    auto baseSpeed() const -> uint8 override
-    {
-        return 40;
-    }
-
-    auto updateSpeed(bool) -> uint8 override
-    {
-        return 40;
-    }
-
-    auto isMobEntity() const -> bool override
-    {
-        return true;
-    }
-
-    auto isRoaming() const -> bool override
-    {
-        return true;
-    }
-
-    auto inWater() const -> bool override
-    {
-        return false;
-    }
-
-    auto battleTargetPosition() const -> const position_t* override
-    {
-        return nullptr;
-    }
-
-    auto onPathPoint() -> void override
-    {
-    }
-
-    auto onPathComplete() -> void override
-    {
-    }
-
-    auto name() const -> const std::string& override
-    {
-        return name_;
-    }
-
-    auto id() const -> uint32 override
-    {
-        return 1;
-    }
-
-    auto hitboxRadius() const -> float override
-    {
-        return 0.0f;
-    }
-
-private:
-    position_t  position_;
-    NavMesh&    navMesh_;
-    std::string name_{ "stub" };
-};
+using pathfind_fakes::FlatNavMesh;
+using pathfind_fakes::StubOwner;
 
 auto squareWithHole() -> RoamRegion
 {

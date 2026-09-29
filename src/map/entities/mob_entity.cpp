@@ -43,6 +43,7 @@
 #include "mobskill.h"
 #include "packets/pet_sync.h"
 #include "packets/s2c/0x029_battle_message.h"
+#include "path_nodes.h"
 #include "recast_container.h"
 #include "roam_region.h"
 #include "roe.h"
@@ -828,12 +829,28 @@ void CMobEntity::Spawn()
     }
 
     // Roam immediately on spawn
-    const auto minTurns = static_cast<uint8>(getMobMod(xi::MobMod::RoamTurnsMin));
-    const auto maxTurns = static_cast<uint8>(getMobMod(xi::MobMod::RoamTurns));
-    if (CanRoam() && PAI->PathFind->RoamAround(GetRoamAnchor(), GetRoamDistance(), minTurns, maxTurns, m_roamFlags, roamRegion_))
+    if (CanRoam() && StartRoam())
     {
         PAI->PathFind->FollowPath(timer::now());
     }
+}
+
+bool CMobEntity::StartRoam()
+{
+    const auto  minTurns  = static_cast<uint8>(getMobMod(xi::MobMod::RoamTurnsMin));
+    const auto  maxTurns  = static_cast<uint8>(getMobMod(xi::MobMod::RoamTurns));
+    const auto  nodeRange = static_cast<float>(getMobMod(xi::MobMod::NodeRoamRange));
+    const auto* nodes     = loc.zone->pathNodes();
+
+    // Worms move underground between surfacings, so they keep to the navmesh.
+    const bool isWorm     = (m_roamFlags & xi::RoamFlag::Worm) != xi::RoamFlag::None;
+    const bool walksNodes = nodes && nodeRange > 0.0f && !isWorm && settings::get<bool>("map.MOB_NODE_ROAMING");
+    if (walksNodes && PAI->PathFind->RoamNodes(*nodes, GetRoamAnchor(), nodeRange, minTurns, maxTurns, m_roamFlags, roamRegion_))
+    {
+        return true;
+    }
+
+    return PAI->PathFind->RoamAround(GetRoamAnchor(), GetRoamDistance(), minTurns, maxTurns, m_roamFlags, roamRegion_);
 }
 
 void CMobEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& action)

@@ -1316,6 +1316,9 @@ void SetupRoaming(CMobEntity* PMob)
     PMob->defaultMobMod(xi::MobMod::RoamCool, 20);
     PMob->defaultMobMod(xi::MobMod::RoamRate, 15);
 
+    // median distance retail mobs strayed from the middle of the path nodes they walked
+    PMob->defaultMobMod(xi::MobMod::NodeRoamRange, 20);
+
     if ((PMob->m_roamFlags & xi::RoamFlag::Ambush) != xi::RoamFlag::None)
     {
         PMob->m_specialFlags |= SPECIALFLAG_HIDDEN;
@@ -1323,6 +1326,7 @@ void SetupRoaming(CMobEntity* PMob)
         PMob->m_maxRoamDistance = 2.0f;
         PMob->setMobMod(xi::MobMod::RoamDistance, 5);
         PMob->setMobMod(xi::MobMod::RoamTurns, 1);
+        PMob->setMobMod(xi::MobMod::NodeRoamRange, 0);
     }
 
     if ((PMob->m_roamFlags & xi::RoamFlag::Scripted) != xi::RoamFlag::None)

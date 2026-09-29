@@ -1956,9 +1956,6 @@ auto CMobController::DoRoamTick(timer::time_point tick) -> Task<void>
             }
             else if (PMob->CanRoam())
             {
-                const auto minTurns = static_cast<uint8>(PMob->getMobMod(xi::MobMod::RoamTurnsMin));
-                const auto maxTurns = static_cast<uint8>(PMob->getMobMod(xi::MobMod::RoamTurns));
-
                 // Worm dives underground; leave m_LastActionTime alone so it re-emerges promptly.
                 const bool isWormSurfacing = ((PMob->m_roamFlags & xi::RoamFlag::Worm) != xi::RoamFlag::None) && !PMob->IsNameHidden();
                 if (isWormSurfacing && !PMob->PAI->IsCurrentState<CMagicState>())
@@ -1985,7 +1982,7 @@ auto CMobController::DoRoamTick(timer::time_point tick) -> Task<void>
                     luautils::OnMobRoamAction(PMob);
                     m_LastActionTime = m_Tick;
                 }
-                else if (!isWormSurfacing && PMob->PAI->PathFind->RoamAround(PMob->GetRoamAnchor(), PMob->GetRoamDistance(), minTurns, maxTurns, PMob->m_roamFlags, PMob->roamRegion()))
+                else if (!isWormSurfacing && PMob->StartRoam())
                 {
                     if ((PMob->m_roamFlags & xi::RoamFlag::Stealth) != xi::RoamFlag::None)
                     {

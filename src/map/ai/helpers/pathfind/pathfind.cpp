@@ -24,12 +24,14 @@
 #include <map/ai/helpers/pathfind/pathfind.h>
 
 #include <map/ai/helpers/pathfind/entity_path_owner.h>
+#include <map/ai/helpers/pathfind/node_route.h>
 #include <map/ai/helpers/pathfind/path_builder.h>
 #include <map/ai/helpers/pathfind/path_owner.h>
 #include <map/ai/helpers/pathfind/pathfind_step.h>
 
 #include <common/logging.h>
 #include <common/utils.h>
+#include <common/xirand.h>
 
 #include <map/entities/mob_entity.h> // xi::RoamFlag::Worm
 #include <map/map_constants.h>
@@ -50,6 +52,9 @@ constexpr int kRecoveryPointAttempts = 8;
 
 // entity speed to yalms per second
 constexpr float kYalmsPerSecondPerSpeed = 1.0f / 17.0f;
+
+// keeps a node walk bounded however high RoamTurns is set
+constexpr uint8 kMaxNodeHops = 32;
 
 } // namespace
 
@@ -108,6 +113,45 @@ auto CPathFind::RoamAround(const position_t& point, float maxRadius, uint8 minTu
     roamFlags_  = roamFlags;
     roamRegion_ = region;
     if (FindRandomPath(point, maxRadius, minTurns, maxTurns, roamFlags, region))
+    {
+        return true;
+    }
+
+    Clear();
+    return false;
+}
+
+auto CPathFind::RoamNodes(const PathNodes& nodes, const position_t& anchor, const float range, const uint8 minTurns, const uint8 maxTurns, const xi::RoamFlag roamFlags, const RoamRegion* region) -> bool
+{
+    TracyZoneScoped;
+    TracyZoneString(owner_->name());
+
+    Clear();
+
+    const auto lowTurns  = std::clamp<uint8>(minTurns, 1, kMaxNodeHops);
+    const auto highTurns = std::clamp<uint8>(maxTurns, lowTurns, kMaxNodeHops);
+    const auto hops      = xirand::GetRandomNumber<uint8>(lowTurns, static_cast<uint8>(highTurns + 1));
+
+    auto turns = pathfind::findNodeRoute(nodes, { .from = owner_->position(), .anchor = anchor, .range = range, .hops = hops, .region = region });
+    if (turns.empty())
+    {
+        return false;
+    }
+
+    for (auto& turn : turns)
+    {
+        const auto       offset = pathfind::aimOffset(owner_->id(), turn.arrivalRadius);
+        const position_t aimed(turn.position.x + offset.x, turn.position.y, turn.position.z + offset.z, 0, 0);
+        if (ValidPosition(aimed))
+        {
+            turn.position = aimed;
+        }
+    }
+
+    roamFlags_  = roamFlags;
+    roamRegion_ = region;
+    turnPoints_ = std::move(turns);
+    if (PathToTurn())
     {
         return true;
     }
@@ -494,6 +538,13 @@ auto CPathFind::BuildDirectPath(const position_t& end) -> bool
     return true;
 }
 
+auto CPathFind::PathToTurn() -> bool
+{
+    const auto& turn   = turnPoints_[currentTurn_];
+    distanceFromPoint_ = turn.arrivalRadius;
+    return FindPathInternal(owner_->position(), turn.position);
+}
+
 auto CPathFind::FindRandomPath(const position_t& start, float maxRadius, uint8 minTurns, uint8 maxTurns, xi::RoamFlag roamFlags, const RoamRegion* region) -> bool
 {
     TracyZoneScoped;
@@ -507,7 +558,12 @@ auto CPathFind::FindRandomPath(const position_t& start, float maxRadius, uint8 m
         // Hard navmesh failure - bail rather than partially populate the turn list.
         return false;
     }
-    turnPoints_ = std::move(*turnPoints);
+    turnPoints_.clear();
+    turnPoints_.reserve(turnPoints->size());
+    for (const auto& point : *turnPoints)
+    {
+        turnPoints_.push_back(pathfind::RoamTurn{ .position = point, .arrivalRadius = 0.0f });
+    }
 
     // nothing to walk to from here: path to a nearby point of the region with the full navmesh
     if (turnPoints_.empty() && region)
@@ -530,7 +586,7 @@ auto CPathFind::FindRandomPath(const position_t& start, float maxRadius, uint8 m
 
         if (target)
         {
-            turnPoints_.push_back(*target);
+            turnPoints_.push_back(pathfind::RoamTurn{ .position = *target, .arrivalRadius = 0.0f });
             recoveringToRegion_ = true;
         }
     }
@@ -539,7 +595,7 @@ auto CPathFind::FindRandomPath(const position_t& start, float maxRadius, uint8 m
     // Turns are sampled around the anchor, but the walk starts from wherever the owner is.
     if (!turnPoints_.empty())
     {
-        FindPathInternal(owner_->position(), turnPoints_[0]);
+        PathToTurn();
     }
 
     return !path_.empty();
@@ -704,8 +760,7 @@ auto CPathFind::FinishedPath() -> void
     // Random-roam paths chain through turnPoints_ - set up the next leg if there is one.
     if (currentTurn_ < turnPoints_.size())
     {
-        const position_t& nextTurn = turnPoints_[currentTurn_];
-        if (!FindPathInternal(owner_->position(), nextTurn))
+        if (!PathToTurn())
         {
             Clear();
         }
