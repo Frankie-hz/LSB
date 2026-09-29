@@ -37,6 +37,7 @@
 #include "mob_spell_container.h"
 #include "mobskill.h"
 #include "party.h"
+#include "path_nodes.h"
 #include "recast_container.h"
 #include "roam_region.h"
 #include "spawn_handler.h"
@@ -45,7 +46,9 @@
 #include "utils/petutils.h"
 #include "zone.h"
 
+#include <cstdlib>
 #include <limits>
+#include <utility>
 
 namespace
 {
@@ -57,6 +60,9 @@ constexpr float kRoamHomeStepDistance = 10.0f;
 constexpr auto kNeutralDuration = 15s;
 
 constexpr float kChaseRepathDrift = 2.0f; // re-aim when the target drifts this far from where the path was headed
+
+// world angles are 256ths of a turn
+constexpr float kWorldAnglePerDegree = 256.0f / 360.0f;
 
 } // namespace
 
@@ -132,6 +138,9 @@ auto CMobController::Disengage() -> bool
     lastDirectProbeTargetPos_ = {};
     lastDirectProbeWasDirect_ = true;
 
+    chaseNode_.reset();
+    lastChaseNode_.reset();
+
     PMob->PAI->PathFind->Clear();
     PMob->PEnmityContainer->Clear();
 
@@ -173,6 +182,9 @@ auto CMobController::Engage(const EntityId& target) -> bool
     lastDirectProbePos_       = {};
     lastDirectProbeTargetPos_ = {};
     lastDirectProbeWasDirect_ = true;
+
+    chaseNode_.reset();
+    lastChaseNode_.reset();
 
     if (PFollowTarget != nullptr && m_followType == FollowType::Roam)
     {
@@ -237,6 +249,9 @@ void CMobController::Reset()
     lastDirectProbePos_       = {};
     lastDirectProbeTargetPos_ = {};
     lastDirectProbeWasDirect_ = true;
+
+    chaseNode_.reset();
+    lastChaseNode_.reset();
 }
 
 auto CMobController::MobSkill(const EntityId target, uint16 wsid, const Maybe<timer::duration> castTimeOverride) -> bool
@@ -1258,6 +1273,12 @@ void CMobController::Move()
         return;
     }
 
+    // A chaser that reached its target stops veering to the node it was heading for.
+    if (inAttackRange && chaseNode_)
+    {
+        lastChaseNode_ = std::exchange(chaseNode_, std::nullopt);
+    }
+
     if (inAttackRange && CanSeeTargetCached())
     {
         // Settle and attack unless the mob must not close, or the navmesh route is a detour worth walking instead.
@@ -1321,11 +1342,22 @@ void CMobController::Move()
         return;
     }
 
+    // Retail chasers veer to a path node they run close by, touch it, then carry on after the target.
+    const auto chaseNodeStep = StepChaseNode(PTarget, inAttackRange);
+    if (chaseNodeStep == ChaseNodeStep::Walking)
+    {
+        return;
+    }
+
     // Re-path against attackRange, with lost sight on its own short leash so the mob keeps trying without hammering findPath.
     bool needNewPath   = false;
     bool isStuckRepath = false;
     bool targetMoved   = false;
-    if (isFollowingPath)
+    if (chaseNodeStep == ChaseNodeStep::Left)
+    {
+        needNewPath = true;
+    }
+    else if (isFollowingPath)
     {
         needNewPath = !isWithinDistance(PMob->PAI->PathFind->GetDestination(), PTarget->loc.p, kChaseRepathDrift);
     }
@@ -1412,6 +1444,86 @@ void CMobController::Move()
 
     // Face the target when attacking right at the ShouldCloseToTarget boundary.
     FaceTarget();
+}
+
+auto CMobController::StepChaseNode(const CBattleEntity* PTarget, const bool inAttackRange) -> ChaseNodeStep
+{
+    auto& pathFind = *PMob->PAI->PathFind;
+    if (chaseNode_)
+    {
+        if (pathFind.IsFollowingPath())
+        {
+            pathFind.FollowPath(m_Tick);
+            return ChaseNodeStep::Walking;
+        }
+
+        lastChaseNode_ = std::exchange(chaseNode_, std::nullopt);
+        return ChaseNodeStep::Left;
+    }
+
+    if (inAttackRange)
+    {
+        return ChaseNodeStep::None;
+    }
+
+    const auto nodeIndex = SelectChaseNode(PTarget);
+    if (!nodeIndex)
+    {
+        return ChaseNodeStep::None;
+    }
+
+    const auto& node = PMob->loc.zone->pathNodes()->node(*nodeIndex);
+    if (!pathFind.PathInRange(node.position, node.radius, PATHFLAG_RUN))
+    {
+        return ChaseNodeStep::None;
+    }
+
+    chaseNode_ = nodeIndex;
+    pathFind.FollowPath(m_Tick);
+    return ChaseNodeStep::Walking;
+}
+
+auto CMobController::SelectChaseNode(const CBattleEntity* PTarget) const -> Maybe<uint32>
+{
+    const auto* nodes = PMob->loc.zone->pathNodes();
+    const auto  reach = settings::get<float>("map.MOB_CHASE_NODE_RANGE");
+    if (!nodes || reach <= 0.0f)
+    {
+        return std::nullopt;
+    }
+
+    const auto  maxTurn        = settings::get<float>("map.MOB_CHASE_NODE_ANGLE") * kWorldAnglePerDegree;
+    const auto& mobPos         = PMob->loc.p;
+    const auto& targetPos      = PTarget->loc.p;
+    const auto  targetDistance = distance(mobPos, targetPos);
+    const auto  targetAngle    = worldAngle(mobPos, targetPos);
+
+    Maybe<uint32> best;
+    auto          bestTurn = maxTurn;
+    for (const auto index : nodes->within(mobPos, reach))
+    {
+        if (index == lastChaseNode_)
+        {
+            continue;
+        }
+
+        const auto& node = nodes->node(index);
+
+        // standing in it already, or it would not bring the mob any closer to the target
+        if (isWithinDistance(mobPos, node.position, node.radius) || distance(node.position, targetPos) + node.radius >= targetDistance)
+        {
+            continue;
+        }
+
+        const auto turn = static_cast<float>(std::abs(angleDifference(worldAngle(mobPos, node.position), targetAngle)));
+        if (turn <= bestTurn)
+        {
+            bestTurn = turn;
+            best     = index;
+        }
+    }
+
+    return best;
 }
 
 auto CMobController::DoCombatTick(timer::time_point tick) -> Task<void>

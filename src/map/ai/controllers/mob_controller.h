@@ -84,6 +84,17 @@ protected:
     void         FollowRoamPath();
     auto         ShouldCloseToTarget(float currentDistance) -> bool;
 
+    // Where a chase stands with the zone's path nodes this tick.
+    enum class ChaseNodeStep : uint8
+    {
+        None,    // chasing the target as usual
+        Walking, // veering to a path node, which spends this tick's movement
+        Left,    // just touched the node, so re-path to the target now
+    };
+
+    auto StepChaseNode(const CBattleEntity* PTarget, bool inAttackRange) -> ChaseNodeStep;
+    auto SelectChaseNode(const CBattleEntity* PTarget) const -> Maybe<uint32>;
+
     // Per-tick cache for the CanSeeTarget() raycast, wrapped with its target so both are wiped together.
     struct TargetLOSCache
     {
@@ -166,4 +177,8 @@ private:
     position_t lastDirectProbePos_{};
     position_t lastDirectProbeTargetPos_{};
     bool       lastDirectProbeWasDirect_{ true };
+
+    // The path node a chase veered to, and the last one it touched so it does not turn back for it.
+    Maybe<uint32> chaseNode_;
+    Maybe<uint32> lastChaseNode_;
 };

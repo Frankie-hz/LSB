@@ -227,6 +227,13 @@ xi.settings.map =
     -- instead of to random points on the navmesh. Zones without nodes keep the navmesh roaming.
     MOB_NODE_ROAMING = true,
 
+    -- A chasing mob that runs within this many yalms of a path node ahead of it veers to the node, touches it,
+    -- then carries on after its target, so chases zig-zag the way they do on retail. 0 chases in a straight line.
+    MOB_CHASE_NODE_RANGE = 6.0,
+
+    -- How many degrees off the line to its target a path node may sit and still pull a chasing mob to it.
+    MOB_CHASE_NODE_ANGLE = 60,
+
     -- Adds extra time to mob despawn in seconds. Base time is 25s, so a setting of 5 here would be a total of 30 seconds.
     MOB_ADDITIONAL_TIME_TO_DEAGGRO = 0,
 
