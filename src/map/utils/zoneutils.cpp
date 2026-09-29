@@ -29,6 +29,7 @@
 #include "common/synchronized.h"
 #include "conquest_system.h"
 #include "data/datasets/zones/mobs/dataset.h"
+#include "data/datasets/zones/nodes/dataset.h"
 #include "data/datasets/zones/npcs/dataset.h"
 #include "data/datasets/zones/regions/dataset.h"
 #include "data/datasets/zones/settings/dataset.h"
@@ -43,6 +44,7 @@
 #include "map_networking.h"
 #include "mob_spell_list.h"
 #include "mobutils.h"
+#include "path_nodes.h"
 #include "roam_region.h"
 #include "spawn_handler.h"
 #include "spawn_slot.h"
@@ -69,6 +71,7 @@ using ZoneSettingsDataset = xi::data::datasets::zones::settings::Dataset;
 using NpcsDataset         = xi::data::datasets::zones::npcs::Dataset;
 using MobsDataset         = xi::data::datasets::zones::mobs::Dataset;
 using RegionsDataset      = xi::data::datasets::zones::regions::Dataset;
+using NodesDataset        = xi::data::datasets::zones::nodes::Dataset;
 
 Synchronized<std::deque<CMobSpellList>> ownedSpellLists;
 
@@ -77,6 +80,7 @@ struct ZoneEntityFiles
 {
     std::optional<xi::data::Npcs> Npcs;
     std::optional<xi::data::Mobs> Mobs;
+    std::unique_ptr<PathNodes>    Nodes;
 };
 
 // Loot is named in the files, so it resolves here, where the item table exists.
@@ -976,6 +980,11 @@ auto LoadZones(Scheduler& scheduler, MapConfig config, const std::vector<xi::Zon
 
                         records.Npcs = xi::data::loadZoneFile<NpcsDataset>(zoneId);
                         records.Mobs = xi::data::loadZoneFile<MobsDataset>(zoneId);
+
+                        if (const auto nodes = xi::data::loadZoneFile<NodesDataset>(zoneId))
+                        {
+                            records.Nodes = std::make_unique<PathNodes>(*nodes);
+                        }
                     }));
             }
         });
@@ -990,6 +999,11 @@ auto LoadZones(Scheduler& scheduler, MapConfig config, const std::vector<xi::Zon
     for (const auto zoneId : zonesIdsToLoad)
     {
         LoadRoamRegions(g_PZoneList[zoneId]);
+    }
+
+    for (auto&& [zoneId, records] : std::views::zip(zonesIdsToLoad, parsed))
+    {
+        g_PZoneList[zoneId]->setPathNodes(std::move(records.Nodes));
     }
 
     co_await LoadNPCList(scheduler, zonesIdsToLoad, parsed);

@@ -64,6 +64,7 @@ using RegionsDataset      = xi::data::datasets::zones::regions::Dataset;
 #include "monstrosity.h"
 #include "nominate_manager.h"
 #include "party.h"
+#include "path_nodes.h"
 #include "recast_container.h"
 #include "roam_region.h"
 #include "spawn_handler.h"
@@ -616,6 +617,16 @@ auto CZone::addRoamRegion(std::string name, RoamRegion region) -> const RoamRegi
     }
 
     return entry->second.get();
+}
+
+auto CZone::pathNodes() const -> const PathNodes*
+{
+    return pathNodes_.get();
+}
+
+void CZone::setPathNodes(std::unique_ptr<PathNodes> pathNodes)
+{
+    pathNodes_ = std::move(pathNodes);
 }
 
 void CZone::LoadXiMesh()

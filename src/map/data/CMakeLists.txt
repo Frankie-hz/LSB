@@ -32,6 +32,7 @@ add_data_dataset(zones/settings)
 add_data_dataset(zones/npcs)
 add_data_dataset(zones/mobs)
 add_data_dataset(zones/regions)
+add_data_dataset(zones/nodes)
 
 set(DATA_MAP_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/loader.h
