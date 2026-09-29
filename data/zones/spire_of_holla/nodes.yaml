@@ -1,0 +1,1138 @@
+# yaml-language-server: $schema=../../schemas/nodes.schema.json
+
+nodes:
+
+  0:    {at: [-16.31, -118.98, 345.47], radius: 1.72, source: navmesh, links: [323, 437, 812]}
+  1:    {at: [-2.57, -0.53, -18.93], radius: 1.10, source: navmesh, links: [94, 229, 424, 796, 860, 933]}
+  2:    {at: [224.90, 60.63, -8.45], radius: 1.63, source: navmesh, links: [305, 382, 388, 596, 829]}
+  3:    {at: [-261.26, 2.10, 348.02], radius: 1.30, source: navmesh, links: [239, 514, 672]}
+  4:    {at: [-212.23, 2.10, 337.73], radius: 1.57, source: navmesh, links: [118, 414, 496, 519, 759, 1030]}
+  5:    {at: [-37.97, -118.90, 323.98], radius: 1.63, source: navmesh, links: [456, 823]}
+  6:    {at: [21.11, -0.90, -250.16], radius: 1.13, source: navmesh, links: [60, 302, 371, 891]}
+  7:    {at: [-252.51, -58.90, 28.97], radius: 1.29, source: navmesh, links: [24, 399, 612, 727, 745, 894]}
+  8:    {at: [-214.74, -60.10, 3.72], radius: 1.10, source: navmesh, links: [240, 341, 637, 705, 773, 1077]}
+  9:    {at: [-238.48, -58.90, 33.05], radius: 1.08, source: navmesh, links: [88, 129, 425, 489, 682, 1042]}
+  10:   {at: [-202.66, -58.90, 20.18], radius: 1.59, source: navmesh, links: [115, 409, 925, 1003]}
+  11:   {at: [-32.91, -118.90, 380.43], radius: 1.61, source: navmesh, links: [86, 123, 417, 661, 881, 916]}
+  12:   {at: [34.56, -118.90, 396.12], radius: 1.49, source: navmesh, links: [415, 442, 569]}
+  13:   {at: [221.60, 60.70, 11.27], radius: 1.83, source: navmesh, links: [867]}
+  14:   {at: [234.38, 60.53, 10.87], radius: 1.28, source: navmesh, links: [145, 358, 495, 867, 1065, 1119]}
+  15:   {at: [-267.95, -58.90, -19.35], radius: 1.50, source: navmesh, links: [55, 79, 281, 477, 594, 741, 776]}
+  16:   {at: [209.02, 61.10, 38.57], radius: 1.74, source: navmesh, links: [167, 421, 886]}
+  17:   {at: [6.01, 0.55, 6.06], radius: 1.53, source: navmesh, links: [32, 40, 50, 100, 527, 737, 740, 1123]}
+  18:   {at: [0.76, -2.10, -56.05], radius: 1.50, source: navmesh, links: [1040]}
+  19:   {at: [-209.39, -58.90, -8.52], radius: 1.03, source: navmesh, links: [262, 312, 690, 915]}
+  20:   {at: [-0.44, -1.20, -258.83], radius: 1.02, source: navmesh, links: [272, 736, 848, 969, 991, 1033, 1111]}
+  21:   {at: [-234.17, -1.12, 265.07], radius: 1.07, source: navmesh, links: [65, 191, 454, 470, 828]}
+  22:   {at: [-241.29, -1.10, 283.50], radius: 1.01, source: navmesh, links: [126, 1132]}
+  23:   {at: [30.67, 1.10, -24.95], radius: 1.55, source: navmesh, links: [102, 150, 151, 545, 590, 1029, 1055]}
+  24:   {at: [-259.06, -58.90, 25.22], radius: 1.71, source: navmesh, links: [7, 244, 399, 609, 727, 921]}
+  25:   {at: [271.44, 61.10, -5.79], radius: 1.24, source: navmesh, links: [233, 256, 332, 602, 678, 876]}
+  26:   {at: [-256.20, 2.10, 389.67], radius: 1.70, source: navmesh, links: [54, 81, 208, 216, 525, 687, 896, 1002]}
+  27:   {at: [-222.33, -58.90, -25.52], radius: 1.59, source: navmesh, links: [105, 188, 407, 761, 843, 888, 972]}
+  28:   {at: [-7.00, 0.62, -10.22], radius: 1.80, source: navmesh, links: [50, 649, 652, 835, 860]}
+  29:   {at: [-214.97, -60.10, -3.86], radius: 1.02, source: navmesh, links: [240, 345, 705, 773, 1001, 1107]}
+  30:   {at: [-232.83, 1.65, 365.38], radius: 1.38, source: navmesh, links: [77, 141, 227, 506, 633, 777, 936]}
+  31:   {at: [-260.03, 0.71, 353.05], radius: 1.02, source: navmesh, links: [940, 985]}
+  32:   {at: [11.17, 0.22, 2.50], radius: 1.51, source: navmesh, links: [17, 40, 59, 981]}
+  33:   {at: [8.33, -1.29, -286.89], radius: 1.19, source: navmesh, links: [485, 792, 802, 906, 1007]}
+  34:   {at: [-18.62, 1.03, -13.66], radius: 1.48, source: navmesh, links: [196, 354, 553, 769]}
+  35:   {at: [10.58, 0.90, -13.02], radius: 1.57, source: navmesh, links: [290]}
+  36:   {at: [-30.61, -118.90, 344.64], radius: 1.72, source: navmesh, links: [169, 323, 353, 467, 812, 841]}
+  37:   {at: [-262.12, 0.68, 360.24], radius: 1.10, source: navmesh, links: [492, 917, 940, 946, 985, 1011]}
+  38:   {at: [-33.28, 1.10, 8.29], radius: 1.10, source: navmesh, links: [104, 447, 774, 874, 937, 1012, 1016]}
+  39:   {at: [252.96, 61.10, -17.77], radius: 1.50, source: navmesh, links: [668, 901]}
+  40:   {at: [8.58, 0.50, -4.34], radius: 1.49, source: navmesh, links: [17, 32, 50, 222, 652, 860, 981]}
+  41:   {at: [-30.31, -0.90, -307.33], radius: 1.46, source: navmesh, links: [201, 343, 356, 449, 787, 847, 968]}
+  42:   {at: [-242.98, -60.10, 24.26], radius: 1.07, source: navmesh, links: [183, 558, 751, 922]}
+  43:   {at: [-36.13, -0.90, -272.27], radius: 1.15, source: navmesh, links: [252, 278, 448, 620, 693, 713]}
+  44:   {at: [39.08, -118.90, 361.80], radius: 1.05, source: navmesh, links: [379, 397, 416, 767, 798]}
+  45:   {at: [-25.51, -0.90, -277.94], radius: 1.13, source: navmesh, links: [252, 620, 942, 970]}
+  46:   {at: [-235.75, 0.90, 383.36], radius: 1.01, source: navmesh, links: [223, 779, 854, 952, 1098]}
+  47:   {at: [-231.40, 2.10, 391.54], radius: 1.09, source: navmesh, links: [370, 653, 859, 924, 1004]}
+  48:   {at: [-204.32, 2.10, 360.33], radius: 1.01, source: navmesh, links: [376, 505, 547, 820, 871]}
+  49:   {at: [-248.90, 1.50, 355.59], radius: 1.59, source: navmesh, links: [227, 270, 492, 747, 950, 985, 1034]}
+  50:   {at: [-1.68, 0.50, -0.09], radius: 1.90, source: navmesh, links: [17, 28, 40, 63, 351, 649, 652, 740]}
+  51:   {at: [-219.67, -59.02, 19.16], radius: 1.85, source: navmesh, links: [174, 409, 559, 574, 731]}
+  52:   {at: [-204.21, 2.10, 380.28], radius: 1.41, source: navmesh, links: [131, 212, 401, 462, 1015]}
+  53:   {at: [5.15, -0.90, -303.94], radius: 1.17, source: navmesh, links: [225, 764]}
+  54:   {at: [-264.78, 2.10, 394.55], radius: 1.58, source: navmesh, links: [26, 216, 646, 687, 973]}
+  55:   {at: [-258.25, -58.99, -20.58], radius: 1.58, source: navmesh, links: [15, 477, 555, 629, 899, 1008]}
+  56:   {at: [-238.03, -60.09, 14.43], radius: 1.46, source: navmesh, links: [67, 398, 432, 983]}
+  57:   {at: [-220.27, 2.10, 380.85], radius: 1.73, source: navmesh, links: [70, 163, 401, 490, 524]}
+  58:   {at: [240.25, 57.90, -54.92], radius: 1.05, source: navmesh, links: [632, 1038]}
+  59:   {at: [19.71, 0.05, 0.46], radius: 1.36, source: navmesh, links: [32, 259, 391, 539, 965, 977, 981, 1072]}
+  60:   {at: [27.49, -0.90, -247.53], radius: 1.22, source: navmesh, links: [6, 302, 685, 900, 905]}
+  61:   {at: [212.10, 61.10, -8.95], radius: 1.04, source: navmesh, links: [95, 179, 644, 990, 1006]}
+  62:   {at: [22.21, -118.90, 327.61], radius: 1.58, source: navmesh, links: [90, 139, 286, 529, 840, 1068]}
+  63:   {at: [-13.05, 0.04, 1.69], radius: 1.50, source: navmesh, links: [50, 148, 351, 400, 649, 914]}
+  64:   {at: [-279.29, -58.90, -32.30], radius: 1.53, source: navmesh, links: [445, 776, 895, 1130]}
+  65:   {at: [-236.73, -1.45, 269.98], radius: 1.38, source: navmesh, links: [21, 85, 575, 754, 828, 877]}
+  66:   {at: [34.09, -118.90, 352.71], radius: 1.11, source: navmesh, links: [306, 310, 326, 367, 379, 830]}
+  67:   {at: [-244.15, -59.89, 13.08], radius: 1.39, source: navmesh, links: [56, 398, 432, 576]}
+  68:   {at: [30.55, -0.90, -286.84], radius: 1.42, source: navmesh, links: [469, 603, 815, 842, 1022]}
+  69:   {at: [-11.48, 1.10, 22.93], radius: 1.03, source: navmesh, links: [108, 146, 156, 255, 880, 971]}
+  70:   {at: [-216.04, 2.09, 373.24], radius: 1.41, source: navmesh, links: [57, 212, 524]}
+  71:   {at: [-38.59, 1.10, -20.03], radius: 1.56, source: navmesh, links: [231, 465, 1061]}
+  72:   {at: [-212.02, 2.10, 325.19], radius: 1.62, source: navmesh, links: [181, 366, 414, 1030, 1053]}
+  73:   {at: [267.86, 61.10, 32.04], radius: 1.66, source: navmesh, links: [254, 455, 484, 655, 726]}
+  74:   {at: [12.80, -118.90, 320.88], radius: 1.33, source: navmesh, links: [989, 1013, 1068]}
+  75:   {at: [-246.06, 2.10, 325.73], radius: 1.13, source: navmesh, links: [499, 695, 832, 962]}
+  76:   {at: [2.38, -1.10, -268.97], radius: 1.09, source: navmesh, links: [198, 234, 969]}
+  77:   {at: [-225.01, 0.84, 361.70], radius: 1.40, source: navmesh, links: [30, 777, 936, 994]}
+  78:   {at: [-15.13, -0.90, -298.44], radius: 1.30, source: navmesh, links: [128, 516, 742, 996]}
+  79:   {at: [-268.18, -58.90, -25.51], radius: 1.51, source: navmesh, links: [15, 741, 776, 837]}
+  80:   {at: [-38.30, -0.90, -283.87], radius: 1.20, source: navmesh, links: [693, 893, 1017]}
+  81:   {at: [-253.83, 2.10, 380.83], radius: 1.32, source: navmesh, links: [26, 440, 464, 896]}
+  82:   {at: [-239.03, -62.10, -49.36], radius: 1.49, source: navmesh, links: [329, 618]}
+  83:   {at: [-215.65, 0.90, 367.62], radius: 1.08, source: navmesh, links: [468]}
+  84:   {at: [205.81, 61.10, 24.76], radius: 1.52, source: navmesh, links: [160, 167, 421, 1109]}
+  85:   {at: [-231.56, -1.10, 273.74], radius: 1.21, source: navmesh, links: [65, 873]}
+  86:   {at: [-39.25, -118.90, 372.00], radius: 1.14, source: navmesh, links: [11, 557, 634, 661, 856, 916, 964]}
+  87:   {at: [-13.17, -0.90, -266.54], radius: 1.03, source: navmesh, links: [241, 427, 733, 838, 1009, 1037]}
+  88:   {at: [-228.39, -58.91, 35.31], radius: 1.08, source: navmesh, links: [9, 211, 425, 489, 858, 939, 947, 1042, 1080]}
+  89:   {at: [255.66, 61.10, 36.02], radius: 1.44, source: navmesh, links: [335, 455, 520, 689, 732, 1076]}
+  90:   {at: [21.83, -118.90, 333.97], radius: 1.59, source: navmesh, links: [62, 139, 140, 840, 1082]}
+  91:   {at: [-273.78, 2.10, 324.14], radius: 1.62, source: navmesh, links: [372, 934, 1031]}
+  92:   {at: [247.05, 61.10, -32.90], radius: 1.00, source: navmesh, links: [330, 441, 587, 675, 763, 800]}
+  93:   {at: [-24.83, 1.10, 25.69], radius: 1.63, source: navmesh, links: [156, 333, 600, 839, 956, 971]}
+  94:   {at: [-6.09, -0.18, -21.57], radius: 1.10, source: navmesh, links: [1, 796]}
+  95:   {at: [214.95, 61.10, -12.00], radius: 1.04, source: navmesh, links: [61, 179, 402, 644, 990, 1006]}
+  96:   {at: [203.55, 61.10, -9.91], radius: 1.07, source: navmesh, links: [349, 644, 990, 1006, 1063]}
+  97:   {at: [224.63, 61.10, 31.13], radius: 1.54, source: navmesh, links: [461, 515, 522, 605, 961, 1086]}
+  98:   {at: [27.57, -0.90, -265.29], radius: 1.19, source: navmesh, links: [109, 122, 221, 481, 568, 958]}
+  99:   {at: [37.44, -0.90, -271.84], radius: 1.59, source: navmesh, links: [184, 412, 568, 992]}
+  100:  {at: [2.27, -0.10, 16.37], radius: 1.25, source: navmesh, links: [17, 527, 740, 743, 1123]}
+  101:  {at: [202.54, 61.10, -27.20], radius: 1.96, source: navmesh, links: [142, 349, 365, 504, 512]}
+  102:  {at: [37.80, 1.10, -27.92], radius: 1.68, source: navmesh, links: [23, 590, 647, 1029]}
+  103:  {at: [216.11, 61.10, -36.86], radius: 1.62, source: navmesh, links: [365, 512, 579, 974, 1104]}
+  104:  {at: [-37.27, 1.10, 16.78], radius: 1.51, source: navmesh, links: [38, 600, 874, 1012]}
+  105:  {at: [-225.79, -58.90, -16.34], radius: 1.41, source: navmesh, links: [27, 407, 643, 972]}
+  106:  {at: [-273.08, 2.10, 337.66], radius: 1.55, source: navmesh, links: [364, 372, 672, 684]}
+  107:  {at: [1.05, -2.10, -230.72], radius: 1.31, source: navmesh, links: [878, 932]}
+  108:  {at: [-19.11, 1.10, 15.59], radius: 1.59, source: navmesh, links: [69, 156, 255, 937, 956]}
+  109:  {at: [24.49, -0.90, -269.65], radius: 1.23, source: navmesh, links: [98, 303, 460, 568, 613, 958]}
+  110:  {at: [19.96, 1.10, 30.30], radius: 1.32, source: navmesh, links: [561, 593, 913, 930, 944]}
+  111:  {at: [39.71, 1.10, -8.83], radius: 1.38, source: navmesh, links: [151, 331, 749, 771]}
+  112:  {at: [2.02, -119.82, 347.43], radius: 1.67, source: navmesh, links: [193, 210, 714, 760, 849, 999]}
+  113:  {at: [-5.08, -0.90, -312.52], radius: 1.14, source: navmesh, links: [246, 592, 869, 1021]}
+  114:  {at: [12.86, 0.82, 10.67], radius: 1.28, source: navmesh, links: [429]}
+  115:  {at: [-206.83, -58.90, 13.09], radius: 1.27, source: navmesh, links: [10, 387, 409, 466, 598, 731, 1000, 1003]}
+  116:  {at: [263.04, 61.06, -11.13], radius: 1.33, source: navmesh, links: [159, 332, 678, 901]}
+  117:  {at: [-278.58, 2.10, 375.94], radius: 1.65, source: navmesh, links: [149, 564, 810, 824]}
+  118:  {at: [-207.76, 2.10, 344.95], radius: 1.73, source: navmesh, links: [4, 251, 376, 519, 566, 759]}
+  119:  {at: [216.53, 61.10, 18.33], radius: 1.61, source: navmesh, links: [160, 461, 581, 903, 1109]}
+  120:  {at: [-275.21, 2.10, 349.19], radius: 1.10, source: navmesh, links: [206, 328, 514, 657, 684, 943, 1128]}
+  121:  {at: [-233.82, -0.78, 235.88], radius: 1.03, source: navmesh, links: [268, 641, 1064]}
+  122:  {at: [32.41, -0.90, -265.90], radius: 1.22, source: navmesh, links: [98, 184, 481, 498, 568]}
+  123:  {at: [-25.67, -118.90, 380.16], radius: 1.69, source: navmesh, links: [11, 215, 417, 463, 661]}
+  124:  {at: [250.45, 60.67, 9.00], radius: 1.43, source: navmesh, links: [145, 852, 1081, 1119]}
+  125:  {at: [-26.70, -118.90, 325.18], radius: 1.49, source: navmesh, links: [232, 552, 626, 823]}
+  126:  {at: [-240.42, -1.10, 288.29], radius: 1.06, source: navmesh, links: [22, 844]}
+  127:  {at: [-233.86, 2.10, 331.06], radius: 1.09, source: navmesh, links: [453, 542, 694]}
+  128:  {at: [-22.03, -0.90, -296.88], radius: 1.32, source: navmesh, links: [78, 343, 570, 617, 847, 1019]}
+  129:  {at: [-241.49, -58.90, 36.18], radius: 1.08, source: navmesh, links: [9, 489, 612, 745, 1100]}
+  130:  {at: [5.52, -2.10, -251.55], radius: 1.03, source: navmesh, links: [235, 772, 848, 991, 1074]}
+  131:  {at: [-206.51, 2.10, 385.44], radius: 1.41, source: navmesh, links: [52, 401, 439, 462, 699, 1026]}
+  132:  {at: [-244.34, -1.33, 228.18], radius: 1.20, source: navmesh, links: [298, 392]}
+  133:  {at: [-8.40, 0.79, -27.72], radius: 1.01, source: navmesh, links: [452, 753, 908]}
+  134:  {at: [35.80, 1.10, 21.41], radius: 1.43, source: navmesh, links: [236, 472, 722, 948]}
+  135:  {at: [-32.56, -0.90, -292.06], radius: 1.35, source: navmesh, links: [570, 617, 628, 752, 893, 1017]}
+  136:  {at: [-236.04, -58.90, -38.45], radius: 1.29, source: navmesh, links: [474, 826]}
+  137:  {at: [-259.23, -58.90, -35.50], radius: 1.53, source: navmesh, links: [482, 629, 837, 1129]}
+  138:  {at: [12.91, -119.06, 378.08], radius: 1.33, source: navmesh, links: [200, 784]}
+  139:  {at: [29.38, -118.90, 334.66], radius: 1.84, source: navmesh, links: [62, 90, 140, 220, 286, 310, 404]}
+  140:  {at: [24.19, -118.90, 340.62], radius: 1.54, source: navmesh, links: [90, 139, 310, 491, 589, 1082]}
+  141:  {at: [-241.07, 1.60, 366.14], radius: 1.57, source: navmesh, links: [30, 227, 506, 686, 738, 804, 1034]}
+  142:  {at: [200.93, 61.10, -37.21], radius: 1.72, source: navmesh, links: [101, 365]}
+  143:  {at: [-37.18, 1.10, -7.20], radius: 1.39, source: navmesh, links: [158, 231, 340, 604, 728]}
+  144:  {at: [248.29, 59.90, 24.28], radius: 1.35, source: navmesh, links: [373]}
+  145:  {at: [243.62, 60.50, 4.04], radius: 1.65, source: navmesh, links: [14, 124, 207, 358, 495, 723, 852, 1081, 1119]}
+  146:  {at: [-12.08, 1.10, 32.07], radius: 1.10, source: navmesh, links: [69, 279, 572, 704, 755, 762, 880, 971, 1112, 1114]}
+  147:  {at: [-253.45, -0.18, 237.42], radius: 1.30, source: navmesh, links: [189, 709]}
+  148:  {at: [-22.49, -0.22, 1.07], radius: 1.01, source: navmesh, links: [63, 164, 284, 597, 791, 914]}
+  149:  {at: [-275.18, 2.10, 369.58], radius: 1.15, source: navmesh, links: [117, 458, 530, 564, 824]}
+  150:  {at: [21.37, 1.10, -28.95], radius: 1.63, source: navmesh, links: [23, 186, 267, 290, 545, 590, 775, 1055]}
+  151:  {at: [30.92, 1.10, -14.21], radius: 1.40, source: navmesh, links: [23, 111, 253, 517, 545, 749, 771, 1029]}
+  152:  {at: [254.99, 60.93, 19.42], radius: 1.58, source: navmesh, links: [165, 689, 789, 1036]}
+  153:  {at: [-5.49, -118.90, 390.30], radius: 1.18, source: navmesh, links: [172, 297, 698, 701, 750, 785, 1092]}
+  154:  {at: [-231.09, -59.38, -10.88], radius: 1.46, source: navmesh, links: [209, 276, 347, 1067, 1073]}
+  155:  {at: [25.58, -0.90, -307.19], radius: 1.53, source: navmesh, links: [226, 430, 543, 544, 676, 1048]}
+  156:  {at: [-18.70, 1.10, 22.27], radius: 1.54, source: navmesh, links: [69, 93, 108, 255, 880, 956, 971]}
+  157:  {at: [11.02, 1.10, 34.67], radius: 1.25, source: navmesh, links: [250, 778, 808, 814, 902, 944]}
+  158:  {at: [-34.62, 1.10, -0.95], radius: 1.04, source: navmesh, links: [143, 340, 447, 728, 774, 923]}
+  159:  {at: [264.98, 61.10, -21.38], radius: 1.54, source: navmesh, links: [116, 332, 668, 712, 901]}
+  160:  {at: [209.14, 61.10, 14.67], radius: 1.43, source: navmesh, links: [84, 119, 526, 677, 903, 1058, 1109]}
+  161:  {at: [-207.05, -58.90, 32.38], radius: 1.76, source: navmesh, links: [389, 435, 622, 925]}
+  162:  {at: [11.64, -0.90, -243.20], radius: 1.09, source: navmesh, links: [1095]}
+  163:  {at: [-220.56, 2.10, 388.29], radius: 1.46, source: navmesh, links: [57, 346, 370, 401, 490, 699, 1004]}
+  164:  {at: [-24.71, -0.10, -5.01], radius: 1.05, source: navmesh, links: [148, 791, 914]}
+  165:  {at: [261.07, 60.97, 17.69], radius: 1.58, source: navmesh, links: [152, 288, 615, 726, 789, 1036]}
+  166:  {at: [245.67, 59.90, -25.58], radius: 1.05, source: navmesh, links: [718, 1059]}
+  167:  {at: [211.88, 61.10, 29.20], radius: 1.60, source: navmesh, links: [16, 84, 421, 461, 961, 1109]}
+  168:  {at: [-0.84, -119.80, 371.49], radius: 1.31, source: navmesh, links: [218, 315, 317, 324, 494, 588, 1084]}
+  169:  {at: [-38.51, -118.90, 345.33], radius: 1.30, source: navmesh, links: [36, 467, 608, 841, 872]}
+  170:  {at: [-12.07, -119.59, 355.30], radius: 1.47, source: navmesh, links: [193, 636, 714, 834]}
+  171:  {at: [-241.98, 2.10, 397.98], radius: 1.23, source: navmesh, links: [208, 314, 525, 666]}
+  172:  {at: [-12.54, -118.90, 383.90], radius: 1.02, source: navmesh, links: [153, 463, 1092]}
+  173:  {at: [-10.39, -118.90, 324.10], radius: 1.04, source: navmesh, links: [274, 626, 669, 683, 756, 919]}
+  174:  {at: [-218.38, -58.90, 28.55], radius: 1.71, source: navmesh, links: [51, 211, 409, 622, 858]}
+  175:  {at: [-0.94, -2.10, -240.31], radius: 1.02, source: navmesh, links: [235, 885, 932, 966]}
+  176:  {at: [-27.50, 1.10, -34.56], radius: 1.88, source: navmesh, links: [304, 479, 562, 887]}
+  177:  {at: [251.66, 60.64, -9.97], radius: 1.36, source: navmesh, links: [207, 549, 723, 788]}
+  178:  {at: [-245.09, -0.28, 262.35], radius: 1.12, source: navmesh, links: [301, 828, 877, 1028]}
+  179:  {at: [216.11, 61.10, -18.46], radius: 1.56, source: navmesh, links: [61, 95, 402, 504, 681, 974, 990]}
+  180:  {at: [-252.74, -59.45, -7.69], radius: 1.43, source: navmesh, links: [390, 957, 978, 1025]}
+  181:  {at: [-204.13, 2.10, 324.34], radius: 1.70, source: navmesh, links: [72, 519, 975, 1030]}
+  182:  {at: [-217.05, 0.77, 350.94], radius: 1.06, source: navmesh, links: [228, 822]}
+  183:  {at: [-239.37, -60.10, 21.96], radius: 1.07, source: navmesh, links: [42, 558, 861, 922]}
+  184:  {at: [37.54, -0.90, -265.35], radius: 1.29, source: navmesh, links: [99, 122, 498]}
+  185:  {at: [38.24, -118.90, 380.38], radius: 1.46, source: navmesh, links: [397, 406, 457, 1078]}
+  186:  {at: [14.61, 1.10, -25.49], radius: 1.31, source: navmesh, links: [150, 267, 290, 380, 538, 809, 1134]}
+  187:  {at: [-229.90, 1.91, 338.98], radius: 1.40, source: navmesh, links: [998]}
+  188:  {at: [-221.05, -58.90, -35.87], radius: 1.95, source: navmesh, links: [27, 344, 768, 816, 826, 843, 888]}
+  189:  {at: [-248.30, -0.18, 236.01], radius: 1.06, source: navmesh, links: [147, 392, 679, 709, 997]}
+  190:  {at: [-200.88, -58.90, -28.62], radius: 1.78, source: navmesh, links: [230, 418, 438]}
+  191:  {at: [-232.00, -0.10, 259.64], radius: 1.46, source: navmesh, links: [21, 454]}
+  192:  {at: [37.83, -0.90, -245.92], radius: 1.09, source: navmesh, links: [403, 905, 941]}
+  193:  {at: [-3.62, -119.44, 356.77], radius: 2.01, source: navmesh, links: [112, 170, 210, 218, 317, 714, 760, 834]}
+  194:  {at: [-5.24, -0.90, -265.75], radius: 1.05, source: navmesh, links: [427, 838]}
+  196:  {at: [-10.96, 0.98, -20.39], radius: 1.25, source: navmesh, links: [34, 769]}
+  197:  {at: [-275.29, -58.90, 25.05], radius: 1.69, source: navmesh, links: [609, 674, 799]}
+  198:  {at: [-3.12, -1.03, -270.15], radius: 1.10, source: navmesh, links: [76, 234, 794]}
+  199:  {at: [25.96, -118.90, 384.34], radius: 1.44, source: navmesh, links: [406, 442, 744, 784, 875]}
+  200:  {at: [15.22, -118.90, 382.87], radius: 1.33, source: navmesh, links: [138, 486, 537, 660, 744, 784]}
+  201:  {at: [-37.86, -0.90, -308.57], radius: 1.43, source: navmesh, links: [41, 449, 793, 968]}
+  202:  {at: [-254.26, -58.99, 14.66], radius: 1.53, source: navmesh, links: [244]}
+  203:  {at: [276.50, 61.10, 9.47], radius: 1.13, source: navmesh, links: [288, 308, 615, 892, 1125]}
+  204:  {at: [-261.64, 1.99, 371.50], radius: 1.01, source: navmesh, links: [464, 564, 984]}
+  205:  {at: [27.98, -118.90, 370.20], radius: 1.05, source: navmesh, links: [397, 457, 798, 875, 976]}
+  206:  {at: [-270.62, 2.10, 352.55], radius: 1.05, source: navmesh, links: [120, 328, 514, 1128]}
+  207:  {at: [251.98, 60.22, -2.05], radius: 1.39, source: navmesh, links: [145, 177, 723, 765, 1081]}
+  208:  {at: [-247.12, 2.10, 394.01], radius: 1.10, source: navmesh, links: [26, 171, 525, 666, 896, 1002]}
+  209:  {at: [-230.02, -59.34, 0.58], radius: 1.35, source: navmesh, links: [154, 432, 540, 705, 959, 1067, 1073]}
+  210:  {at: [-5.34, -119.68, 345.70], radius: 1.44, source: navmesh, links: [112, 193, 714, 999]}
+  211:  {at: [-217.98, -58.90, 35.52], radius: 1.62, source: navmesh, links: [88, 174, 435, 622, 858, 1080]}
+  212:  {at: [-210.09, 2.10, 375.99], radius: 1.60, source: navmesh, links: [52, 70, 401, 436, 757, 1015]}
+  213:  {at: [15.26, -0.90, -294.23], radius: 1.24, source: navmesh, links: [611]}
+  214:  {at: [10.69, -118.90, 335.13], radius: 1.14, source: navmesh, links: [840, 1013, 1082]}
+  215:  {at: [-23.24, -118.90, 373.87], radius: 1.25, source: navmesh, links: [123, 584, 661]}
+  216:  {at: [-259.13, 2.10, 397.35], radius: 1.58, source: navmesh, links: [26, 54, 525]}
+  217:  {at: [-252.75, -59.77, 4.97], radius: 1.48, source: navmesh, links: [282, 390, 398, 576, 978]}
+  218:  {at: [-1.87, -119.37, 366.33], radius: 1.31, source: navmesh, links: [168, 193, 315, 317, 494, 588, 834, 1084]}
+  219:  {at: [13.93, -0.90, -274.89], radius: 1.19, source: navmesh, links: [460, 613, 889, 960, 1010]}
+  220:  {at: [37.12, -118.90, 341.12], radius: 1.56, source: navmesh, links: [139, 310, 326, 404]}
+  221:  {at: [21.37, -0.90, -260.36], radius: 1.19, source: navmesh, links: [98, 336, 710, 958]}
+  222:  {at: [16.55, 0.70, -8.91], radius: 1.28, source: navmesh, links: [40, 391, 539, 965]}
+  223:  {at: [-241.92, 0.90, 379.96], radius: 1.12, source: navmesh, links: [46, 369, 779, 854, 952]}
+  224:  {at: [-262.34, -60.14, -6.45], radius: 1.00, source: navmesh, links: [282, 1099]}
+  225:  {at: [5.94, -0.90, -310.47], radius: 1.46, source: navmesh, links: [53, 321, 764, 819]}
+  226:  {at: [34.23, -0.90, -311.06], radius: 1.48, source: navmesh, links: [155, 476, 676, 716, 805]}
+  227:  {at: [-238.28, 1.56, 358.89], radius: 1.92, source: navmesh, links: [30, 49, 141, 270, 293, 488, 777, 1034]}
+  228:  {at: [-216.23, 0.64, 355.09], radius: 1.06, source: navmesh, links: [182, 532, 822, 994]}
+  229:  {at: [4.46, -0.44, -22.36], radius: 1.01, source: navmesh, links: [1, 648, 898, 933]}
+  230:  {at: [-202.53, -58.90, -20.02], radius: 1.63, source: navmesh, links: [190, 312, 438, 1105]}
+  231:  {at: [-34.52, 1.10, -14.15], radius: 1.53, source: navmesh, links: [71, 143, 354, 465, 553, 604, 728]}
+  232:  {at: [-32.44, -118.90, 333.83], radius: 1.61, source: navmesh, links: [125, 456, 552, 608]}
+  233:  {at: [276.08, 61.10, -8.73], radius: 1.02, source: navmesh, links: [25, 332, 602, 678, 876, 1117, 1131]}
+  234:  {at: [-0.08, -1.02, -273.36], radius: 1.10, source: navmesh, links: [76, 198, 794, 954]}
+  235:  {at: [1.36, -2.10, -246.46], radius: 1.07, source: navmesh, links: [130, 175, 394, 821, 931, 1074]}
+  236:  {at: [26.48, 1.10, 22.46], radius: 1.39, source: navmesh, links: [134, 472, 550, 913, 930]}
+  237:  {at: [225.46, 59.78, 4.96], radius: 1.62, source: navmesh, links: [322, 495, 596, 829, 867]}
+  238:  {at: [-18.13, -120.10, 367.33], radius: 1.31, source: navmesh, links: [294, 378, 719]}
+  239:  {at: [-255.68, 2.01, 345.26], radius: 1.56, source: navmesh, links: [3, 243]}
+  240:  {at: [-218.38, -60.10, -1.04], radius: 1.04, source: navmesh, links: [8, 29, 345, 705, 773, 1073, 1077, 1107]}
+  241:  {at: [-12.09, -0.90, -273.35], radius: 1.04, source: navmesh, links: [87, 838, 882, 1009]}
+  242:  {at: [-16.34, -0.90, -257.60], radius: 1.03, source: navmesh, links: [257, 635]}
+  243:  {at: [-258.36, 2.10, 336.43], radius: 1.55, source: navmesh, links: [239, 296, 623, 672, 962, 979]}
+  244:  {at: [-259.97, -58.90, 17.94], radius: 1.65, source: navmesh, links: [24, 202, 609, 727]}
+  245:  {at: [261.71, 60.75, 9.00], radius: 1.06, source: navmesh, links: [478]}
+  246:  {at: [-11.60, -0.90, -310.79], radius: 1.48, source: navmesh, links: [113, 360, 516, 592, 742, 869]}
+  247:  {at: [39.39, -0.90, -301.47], radius: 1.01, source: navmesh, links: [292, 676, 716, 1049, 1127]}
+  248:  {at: [9.11, 1.10, -39.18], radius: 1.53, source: navmesh, links: [267, 538, 663]}
+  249:  {at: [-34.48, -0.90, -246.05], radius: 1.25, source: navmesh, links: [261, 715, 803, 833, 1018, 1054]}
+  250:  {at: [8.24, 1.10, 38.83], radius: 1.14, source: navmesh, links: [157, 778, 902]}
+  251:  {at: [-210.05, 2.10, 352.16], radius: 1.61, source: navmesh, links: [118, 376, 759, 820]}
+  252:  {at: [-28.48, -0.90, -271.34], radius: 1.12, source: navmesh, links: [43, 45, 620, 817, 942, 1088]}
+  253:  {at: [30.84, 1.10, -6.80], radius: 1.12, source: navmesh, links: [151, 517, 556, 749]}
+  254:  {at: [273.23, 61.10, 24.82], radius: 1.56, source: navmesh, links: [73, 288, 484, 577, 726, 1097]}
+  255:  {at: [-12.93, 1.10, 17.02], radius: 1.31, source: navmesh, links: [69, 108, 156]}
+  256:  {at: [271.25, 61.10, -0.84], radius: 1.08, source: navmesh, links: [25, 602, 619, 678, 892]}
+  257:  {at: [-18.22, -0.90, -252.11], radius: 1.21, source: navmesh, links: [242, 531]}
+  258:  {at: [-10.46, -1.34, -293.76], radius: 1.13, source: navmesh, links: [384, 766]}
+  259:  {at: [24.91, -0.10, 2.08], radius: 1.02, source: navmesh, links: [59, 977, 1072]}
+  260:  {at: [-238.97, -1.10, 202.31], radius: 1.21, source: navmesh, links: [865]}
+  261:  {at: [-38.14, -0.90, -250.07], radius: 1.30, source: navmesh, links: [249, 395, 715]}
+  262:  {at: [-213.28, -58.90, -15.75], radius: 1.52, source: navmesh, links: [19, 312, 407, 643, 1105]}
+  263:  {at: [-227.43, 0.05, 239.50], radius: 1.04, source: navmesh, links: [268, 1110]}
+  264:  {at: [277.95, 61.10, 2.37], radius: 1.05, source: navmesh, links: [602, 892, 1125]}
+  265:  {at: [202.89, 61.10, -2.67], radius: 1.08, source: navmesh, links: [573, 644, 1063]}
+  266:  {at: [24.56, -0.90, -295.95], radius: 1.25, source: navmesh, links: [292, 430, 645, 1022, 1048, 1070]}
+  267:  {at: [15.16, 1.10, -34.48], radius: 1.61, source: navmesh, links: [150, 186, 248, 538, 663, 775, 809, 1055]}
+  268:  {at: [-233.41, -0.10, 239.97], radius: 1.03, source: navmesh, links: [121, 263, 309, 1101, 1110]}
+  269:  {at: [4.10, -118.90, 394.42], radius: 1.22, source: navmesh, links: [338, 528, 698, 750, 801, 1062, 1083]}
+  270:  {at: [-243.57, 1.50, 350.52], radius: 1.76, source: navmesh, links: [49, 227, 475, 488, 717, 747, 950, 1034]}
+  271:  {at: [-22.79, -0.90, -245.97], radius: 1.16, source: navmesh, links: [625, 803, 855, 927, 1018]}
+  272:  {at: [-4.24, -1.06, -261.02], radius: 1.08, source: navmesh, links: [20, 736, 969, 988, 1111]}
+  273:  {at: [-252.51, 0.16, 258.57], radius: 1.34, source: navmesh, links: [571]}
+  274:  {at: [-17.45, -118.90, 330.63], radius: 1.64, source: navmesh, links: [173, 437, 552, 626, 756]}
+  275:  {at: [-21.97, -120.30, 356.54], radius: 1.28, source: navmesh, links: [636, 719, 953]}
+  276:  {at: [-240.02, -59.50, -6.91], radius: 1.65, source: navmesh, links: [154, 285, 390, 540, 957, 1067]}
+  277:  {at: [1.91, -122.10, 335.79], radius: 1.13, source: navmesh, links: [846, 999]}
+  278:  {at: [-38.99, -0.90, -277.52], radius: 1.26, source: navmesh, links: [43, 620, 693]}
+  279:  {at: [-18.31, 1.10, 34.84], radius: 1.50, source: navmesh, links: [146, 375, 755, 762, 839, 880, 971, 1112]}
+  280:  {at: [-273.20, -58.90, 38.13], radius: 1.59, source: navmesh, links: [595, 799]}
+  281:  {at: [-271.30, -58.90, -12.47], radius: 1.11, source: navmesh, links: [15, 471, 477, 501, 594, 741, 851, 1115, 1133]}
+  282:  {at: [-260.55, -60.30, -1.04], radius: 1.23, source: navmesh, links: [217, 224, 362, 546, 735, 978, 1099]}
+  283:  {at: [-29.28, 1.10, 37.51], radius: 1.53, source: navmesh, links: [333, 375, 839, 909]}
+  284:  {at: [-18.25, 0.22, 8.43], radius: 1.15, source: navmesh, links: [148, 597]}
+  285:  {at: [-242.09, -60.14, -13.37], radius: 1.41, source: navmesh, links: [276, 868, 957, 1025, 1052, 1067]}
+  286:  {at: [31.07, -118.90, 327.51], radius: 1.57, source: navmesh, links: [62, 139, 404, 529, 654, 1091]}
+  287:  {at: [10.76, -119.73, 358.11], radius: 1.43, source: navmesh, links: [317, 443, 760, 786, 811]}
+  288:  {at: [270.82, 61.06, 18.61], radius: 1.66, source: navmesh, links: [165, 203, 254, 308, 577, 615, 726]}
+  289:  {at: [-243.16, -60.28, -23.75], radius: 1.09, source: navmesh, links: [313, 1052]}
+  290:  {at: [18.90, 1.10, -18.71], radius: 1.69, source: navmesh, links: [35, 150, 186, 517, 545, 1134]}
+  291:  {at: [-4.04, -120.10, 335.81], radius: 1.16, source: navmesh, links: [999, 1039]}
+  292:  {at: [33.89, -0.90, -297.56], radius: 1.47, source: navmesh, links: [247, 266, 603, 676, 1022, 1048, 1049, 1127]}
+  293:  {at: [-230.24, 1.69, 351.18], radius: 1.43, source: navmesh, links: [227, 777]}
+  294:  {at: [-23.13, -120.10, 368.85], radius: 1.25, source: navmesh, links: [238, 378]}
+  295:  {at: [21.15, -118.90, 395.50], radius: 1.39, source: navmesh, links: [338, 415, 486, 744]}
+  296:  {at: [-250.13, 2.08, 339.94], radius: 1.11, source: navmesh, links: [243, 962]}
+  297:  {at: [-9.12, -118.90, 393.33], radius: 1.08, source: navmesh, links: [153, 701, 785, 853, 1092]}
+  298:  {at: [-237.37, -1.10, 229.11], radius: 1.05, source: navmesh, links: [132, 320, 392, 393, 641, 1064]}
+  299:  {at: [269.92, 61.10, -38.37], radius: 1.78, source: navmesh, links: [508, 707, 866]}
+  300:  {at: [228.53, 61.10, -35.95], radius: 1.14, source: navmesh, links: [502, 513, 579, 688, 806, 1005, 1104]}
+  301:  {at: [-250.06, -0.12, 266.04], radius: 1.09, source: navmesh, links: [178, 571, 691, 862]}
+  302:  {at: [22.94, -0.90, -245.80], radius: 1.16, source: navmesh, links: [6, 60, 883, 891, 900]}
+  303:  {at: [28.65, -0.90, -276.38], radius: 1.23, source: navmesh, links: [109, 412, 469, 568, 815]}
+  304:  {at: [-35.88, 1.10, -35.25], radius: 1.58, source: navmesh, links: [176, 1061]}
+  305:  {at: [235.29, 60.50, -9.40], radius: 1.46, source: navmesh, links: [2, 382, 422, 549, 596, 723]}
+  306:  {at: [28.64, -118.90, 351.56], radius: 1.21, source: navmesh, links: [66, 310, 367]}
+  307:  {at: [-240.58, -1.10, 322.45], radius: 1.01, source: navmesh, links: [680, 818]}
+  308:  {at: [278.03, 61.10, 14.00], radius: 1.20, source: navmesh, links: [203, 288, 577, 615, 892, 1125]}
+  309:  {at: [-239.39, -0.19, 243.24], radius: 1.06, source: navmesh, links: [268, 624, 926, 997, 1101]}
+  310:  {at: [31.68, -118.90, 344.16], radius: 1.56, source: navmesh, links: [66, 139, 140, 220, 306, 326, 589]}
+  311:  {at: [-249.46, 1.74, 377.86], radius: 1.20, source: navmesh, links: [369]}
+  312:  {at: [-206.17, -58.90, -12.51], radius: 1.06, source: navmesh, links: [19, 230, 262, 614, 690, 915, 1105]}
+  313:  {at: [-246.49, -60.39, -20.90], radius: 1.09, source: navmesh, links: [289, 1052]}
+  314:  {at: [-237.20, 2.10, 396.88], radius: 1.23, source: navmesh, links: [171, 666, 859, 924]}
+  315:  {at: [4.32, -120.17, 374.11], radius: 1.30, source: navmesh, links: [168, 218, 317, 494, 1084]}
+  316:  {at: [239.05, 57.85, -23.27], radius: 1.01, source: navmesh, links: [422, 549, 718, 790, 1059]}
+  317:  {at: [5.31, -119.46, 363.05], radius: 1.83, source: navmesh, links: [168, 193, 218, 287, 315, 443, 494, 760]}
+  318:  {at: [-13.46, -0.94, -252.93], radius: 1.14, source: navmesh, links: [431, 541]}
+  319:  {at: [-239.97, -62.10, -33.71], radius: 1.17, source: navmesh, links: [734]}
+  320:  {at: [-232.14, -1.14, 226.05], radius: 1.15, source: navmesh, links: [298, 393, 864, 920]}
+  321:  {at: [9.50, -0.90, -315.67], radius: 1.57, source: navmesh, links: [225, 601, 783, 819]}
+  322:  {at: [218.41, 59.72, -0.95], radius: 1.10, source: navmesh, links: [237, 459, 630, 829, 1056]}
+  323:  {at: [-24.18, -118.90, 342.16], radius: 1.72, source: navmesh, links: [0, 36, 437, 552, 812]}
+  324:  {at: [-10.44, -119.23, 375.96], radius: 1.42, source: navmesh, links: [168, 588, 616, 813, 1023]}
+  325:  {at: [242.03, 61.10, 38.90], radius: 1.02, source: navmesh, links: [352, 520, 732, 1090]}
+  326:  {at: [39.15, -118.90, 348.29], radius: 1.03, source: navmesh, links: [66, 220, 310, 367, 379, 830]}
+  327:  {at: [-270.17, -58.90, 11.71], radius: 1.13, source: navmesh, links: [342, 383, 450, 565, 674, 721, 993]}
+  328:  {at: [-273.87, 2.10, 355.37], radius: 1.03, source: navmesh, links: [120, 206, 514, 657, 943, 1128]}
+  329:  {at: [-239.43, -62.10, -42.35], radius: 1.29, source: navmesh, links: [82]}
+  330:  {at: [253.80, 61.10, -31.81], radius: 1.55, source: navmesh, links: [92, 441, 587, 668, 675, 707, 763]}
+  331:  {at: [37.70, 1.10, -2.87], radius: 1.27, source: navmesh, links: [111, 361, 556]}
+  332:  {at: [272.95, 61.10, -15.28], radius: 1.57, source: navmesh, links: [25, 116, 159, 233, 560, 678, 876, 1117]}
+  333:  {at: [-32.22, 1.10, 32.16], radius: 1.53, source: navmesh, links: [93, 283, 600, 839, 909, 929]}
+  334:  {at: [211.46, 61.10, -1.67], radius: 1.02, source: navmesh, links: [644, 807]}
+  335:  {at: [249.32, 61.07, 31.19], radius: 1.04, source: navmesh, links: [89, 520, 689, 1076]}
+  336:  {at: [17.75, -0.90, -255.87], radius: 1.15, source: navmesh, links: [221, 710, 1045]}
+  337:  {at: [25.73, -0.90, -317.65], radius: 1.74, source: navmesh, links: [476, 543, 601]}
+  338:  {at: [11.87, -118.90, 395.79], radius: 1.01, source: navmesh, links: [269, 295, 486, 528, 660, 801, 1062]}
+  339:  {at: [23.22, 1.10, 10.39], radius: 1.12, source: navmesh, links: [429, 550, 703]}
+  340:  {at: [-38.67, 1.10, -1.83], radius: 1.04, source: navmesh, links: [143, 158, 447, 728]}
+  341:  {at: [-221.98, -60.10, 8.00], radius: 1.07, source: navmesh, links: [8, 1077]}
+  342:  {at: [-277.91, -58.90, 14.35], radius: 1.16, source: navmesh, links: [327, 450, 674, 721]}
+  343:  {at: [-23.15, -0.90, -305.08], radius: 1.38, source: navmesh, links: [41, 128, 356, 516, 787, 847]}
+  344:  {at: [-213.86, -58.90, -38.92], radius: 1.60, source: navmesh, links: [188, 768, 1050]}
+  345:  {at: [-222.37, -59.82, -7.79], radius: 1.02, source: navmesh, links: [29, 240, 1001, 1107]}
+  346:  {at: [-219.11, 2.10, 393.93], radius: 1.46, source: navmesh, links: [163, 446, 483, 699, 1004]}
+  347:  {at: [-231.37, -60.05, -17.17], radius: 1.41, source: navmesh, links: [154]}
+  348:  {at: [0.14, -2.10, -314.31], radius: 1.35, source: navmesh, links: [591]}
+  349:  {at: [202.43, 61.10, -19.35], radius: 1.96, source: navmesh, links: [96, 101, 504, 990]}
+  350:  {at: [-19.26, -0.90, -271.52], radius: 1.06, source: navmesh, links: [817, 882, 942, 1009, 1037]}
+  351:  {at: [-7.73, 0.62, 4.50], radius: 1.50, source: navmesh, links: [50, 63, 400, 649, 740, 743]}
+  352:  {at: [240.56, 61.10, 34.89], radius: 1.07, source: navmesh, links: [325, 510, 520, 781, 1027, 1090]}
+  353:  {at: [-28.98, -118.90, 352.86], radius: 1.08, source: navmesh, links: [36, 467, 583]}
+  354:  {at: [-26.62, 1.10, -11.16], radius: 1.30, source: navmesh, links: [34, 231, 553, 604, 728]}
+  355:  {at: [15.05, -0.90, -301.21], radius: 1.42, source: navmesh, links: [430, 544, 664, 764, 819, 1070]}
+  356:  {at: [-21.53, -0.90, -310.93], radius: 1.40, source: navmesh, links: [41, 343, 360, 516, 673, 787]}
+  357:  {at: [22.17, -120.31, 365.26], radius: 1.19, source: navmesh, links: [497, 665, 811, 1093]}
+  358:  {at: [239.83, 59.88, 14.67], radius: 1.30, source: navmesh, links: [14, 145, 852, 1119]}
+  359:  {at: [238.66, 57.90, -44.51], radius: 1.43, source: navmesh, links: [632, 667]}
+  360:  {at: [-16.20, -0.90, -317.40], radius: 1.66, source: navmesh, links: [246, 356, 516, 592, 673]}
+  361:  {at: [39.96, 1.10, 2.60], radius: 1.08, source: navmesh, links: [331, 850, 1103]}
+  362:  {at: [-258.66, -60.98, 4.61], radius: 1.40, source: navmesh, links: [282, 546, 735, 904]}
+  363:  {at: [31.98, 1.10, 31.04], radius: 1.51, source: navmesh, links: [434, 670, 722, 930, 995]}
+  364:  {at: [-278.19, 2.10, 334.17], radius: 1.55, source: navmesh, links: [106, 372, 684, 1031]}
+  365:  {at: [207.53, 61.10, -35.30], radius: 1.52, source: navmesh, links: [101, 103, 142, 512]}
+  366:  {at: [-221.78, 2.10, 321.22], radius: 1.66, source: navmesh, links: [72, 542, 782, 1053]}
+  367:  {at: [33.02, -118.90, 357.00], radius: 1.10, source: navmesh, links: [66, 306, 326, 379, 767, 1094]}
+  368:  {at: [-19.36, -0.90, -281.98], radius: 1.15, source: navmesh, links: [882, 1079]}
+  369:  {at: [-247.10, 0.78, 382.06], radius: 1.20, source: navmesh, links: [223, 311, 854]}
+  370:  {at: [-227.98, 2.10, 388.85], radius: 1.06, source: navmesh, links: [47, 163, 490, 653, 859, 1004]}
+  371:  {at: [25.42, -0.90, -255.61], radius: 1.42, source: navmesh, links: [6, 481, 685]}
+  372:  {at: [-268.55, 2.10, 332.61], radius: 1.62, source: navmesh, links: [91, 106, 364, 672, 934, 979]}
+  373:  {at: [247.62, 59.85, 18.91], radius: 1.35, source: navmesh, links: [144, 507]}
+  374:  {at: [-272.40, 2.10, 386.67], radius: 1.64, source: navmesh, links: [408, 646, 687, 810, 984]}
+  375:  {at: [-22.96, 1.10, 38.80], radius: 1.52, source: navmesh, links: [279, 283, 839, 1112]}
+  376:  {at: [-202.73, 2.10, 349.69], radius: 1.68, source: navmesh, links: [48, 118, 251, 566, 820, 871]}
+  377:  {at: [5.22, -0.10, 20.90], radius: 1.28, source: navmesh, links: [708, 737, 857, 1060]}
+  378:  {at: [-25.85, -120.16, 363.92], radius: 1.08, source: navmesh, links: [238, 294, 719]}
+  379:  {at: [38.78, -118.90, 357.62], radius: 1.05, source: navmesh, links: [44, 66, 326, 367, 767, 830]}
+  380:  {at: [5.76, 0.34, -29.07], radius: 1.09, source: navmesh, links: [186, 538, 663, 809]}
+  381:  {at: [-30.17, -0.90, -260.15], radius: 1.13, source: navmesh, links: [426, 444, 448, 963, 1088]}
+  382:  {at: [229.49, 60.54, -14.48], radius: 1.61, source: navmesh, links: [2, 305, 422, 596]}
+  383:  {at: [-271.87, -58.90, 2.05], radius: 1.14, source: navmesh, links: [327, 450, 501, 610, 993, 1043, 1133]}
+  384:  {at: [-9.01, -1.27, -287.82], radius: 1.04, source: navmesh, links: [258, 567, 766]}
+  385:  {at: [-1.18, -0.10, 25.83], radius: 1.00, source: navmesh, links: [708, 836, 857]}
+  386:  {at: [-2.28, -118.90, 399.04], radius: 1.09, source: navmesh, links: [750, 1083]}
+  387:  {at: [-208.17, -58.90, 8.19], radius: 1.03, source: navmesh, links: [115, 466, 598, 731, 1000, 1003]}
+  388:  {at: [218.41, 61.02, -9.09], radius: 1.13, source: navmesh, links: [2]}
+  389:  {at: [-200.32, -58.90, 36.89], radius: 2.02, source: navmesh, links: [161, 435, 925]}
+  390:  {at: [-248.81, -59.50, -2.80], radius: 1.57, source: navmesh, links: [180, 217, 276, 398, 540, 957, 978]}
+  391:  {at: [24.95, -0.10, -6.12], radius: 1.01, source: navmesh, links: [59, 222, 539, 965, 1072]}
+  392:  {at: [-242.92, -0.82, 232.91], radius: 1.01, source: navmesh, links: [132, 189, 298, 624, 641, 679]}
+  393:  {at: [-237.04, -1.10, 224.80], radius: 1.08, source: navmesh, links: [298, 320, 656]}
+  394:  {at: [-3.06, -2.14, -249.41], radius: 1.14, source: navmesh, links: [235, 736, 797, 931, 1074]}
+  395:  {at: [-38.20, -0.90, -255.35], radius: 1.18, source: navmesh, links: [261, 426, 715, 963]}
+  396:  {at: [6.42, -0.94, -277.25], radius: 1.02, source: navmesh, links: [1007]}
+  397:  {at: [36.63, -118.90, 371.35], radius: 1.20, source: navmesh, links: [44, 185, 205, 416, 457, 798, 976]}
+  398:  {at: [-243.64, -59.50, 7.21], radius: 1.47, source: navmesh, links: [56, 67, 217, 390, 432, 540, 576]}
+  399:  {at: [-259.61, -58.90, 34.25], radius: 1.57, source: navmesh, links: [7, 24, 595, 745, 921]}
+  400:  {at: [-12.46, 0.36, 8.18], radius: 1.45, source: navmesh, links: [63, 351, 740, 743]}
+  401:  {at: [-212.78, 2.10, 383.30], radius: 1.54, source: navmesh, links: [52, 57, 131, 163, 212, 699]}
+  402:  {at: [223.42, 60.96, -16.63], radius: 1.61, source: navmesh, links: [95, 179, 681]}
+  403:  {at: [34.66, -0.90, -242.86], radius: 1.10, source: navmesh, links: [192, 900, 905, 941]}
+  404:  {at: [38.67, -118.90, 334.31], radius: 1.75, source: navmesh, links: [139, 220, 286, 654]}
+  405:  {at: [-38.23, -118.90, 392.77], radius: 1.63, source: navmesh, links: [417, 627, 881, 987]}
+  406:  {at: [31.56, -118.90, 383.05], radius: 1.44, source: navmesh, links: [185, 199, 442, 457, 875, 1078]}
+  407:  {at: [-217.81, -58.90, -20.50], radius: 1.64, source: navmesh, links: [27, 105, 262, 438, 643, 843, 972, 1105]}
+  408:  {at: [-278.32, 2.10, 393.10], radius: 1.77, source: navmesh, links: [374, 646, 810, 973]}
+  409:  {at: [-212.25, -58.95, 20.12], radius: 1.67, source: navmesh, links: [10, 51, 115, 174, 622, 731]}
+  410:  {at: [7.32, -0.90, -264.91], radius: 1.10, source: navmesh, links: [548, 889, 1122]}
+  411:  {at: [230.53, 59.90, -22.38], radius: 1.21, source: navmesh, links: [911, 1118]}
+  412:  {at: [34.06, -0.90, -277.21], radius: 1.09, source: navmesh, links: [99, 303, 568, 815, 842, 992]}
+  413:  {at: [-4.31, -0.90, -302.23], radius: 1.20, source: navmesh, links: [742, 869]}
+  414:  {at: [-217.83, 2.10, 332.31], radius: 1.52, source: navmesh, links: [4, 72, 496, 998, 1030, 1053]}
+  415:  {at: [27.53, -118.90, 394.62], radius: 1.61, source: navmesh, links: [12, 295, 442, 744]}
+  416:  {at: [39.74, -118.90, 367.70], radius: 1.14, source: navmesh, links: [44, 397, 798]}
+  417:  {at: [-30.92, -118.90, 386.95], radius: 1.71, source: navmesh, links: [11, 123, 405, 509, 627, 881]}
+  418:  {at: [-200.90, -58.90, -35.72], radius: 1.64, source: navmesh, links: [190, 768, 1050]}
+  419:  {at: [4.71, -120.10, 385.94], radius: 1.04, source: navmesh, links: [879, 907, 1096]}
+  420:  {at: [14.10, -0.95, -281.22], radius: 1.12, source: navmesh, links: [938, 1007]}
+  421:  {at: [201.82, 61.10, 30.73], radius: 1.65, source: navmesh, links: [16, 84, 167, 886]}
+  422:  {at: [236.47, 59.81, -15.13], radius: 1.29, source: navmesh, links: [305, 316, 382, 549, 1059]}
+  423:  {at: [-227.54, -0.28, 266.05], radius: 1.06, source: navmesh, links: [470, 873]}
+  424:  {at: [0.08, -2.10, -28.15], radius: 1.15, source: navmesh, links: [1, 825, 933]}
+  425:  {at: [-232.55, -58.90, 30.28], radius: 1.01, source: navmesh, links: [9, 88, 858, 939, 1042]}
+  426:  {at: [-30.47, -0.90, -255.62], radius: 1.13, source: navmesh, links: [381, 395, 715, 855, 963, 1018]}
+  427:  {at: [-9.55, -0.90, -264.58], radius: 1.01, source: navmesh, links: [87, 194, 733, 838]}
+  428:  {at: [32.32, 1.10, 4.62], radius: 1.20, source: navmesh, links: [556, 640, 703, 850, 945, 1103]}
+  429:  {at: [16.49, 0.99, 14.45], radius: 1.31, source: navmesh, links: [114, 339, 550, 561]}
+  430:  {at: [23.18, -0.90, -301.43], radius: 1.41, source: navmesh, links: [155, 266, 355, 544, 1048, 1070]}
+  431:  {at: [-12.34, -0.96, -258.59], radius: 1.03, source: navmesh, links: [318, 541, 988, 1111]}
+  432:  {at: [-235.23, -59.50, 9.31], radius: 1.29, source: navmesh, links: [56, 67, 209, 398, 540, 959, 983]}
+  433:  {at: [1.64, -2.10, -40.46], radius: 1.22, source: navmesh, links: [739, 955]}
+  434:  {at: [38.47, 1.10, 33.26], radius: 1.62, source: navmesh, links: [363, 722, 995]}
+  435:  {at: [-209.48, -58.90, 39.41], radius: 1.86, source: navmesh, links: [161, 211, 389]}
+  436:  {at: [-204.51, 2.10, 368.62], radius: 1.02, source: navmesh, links: [212, 547, 757, 1015, 1035]}
+  437:  {at: [-16.16, -118.90, 337.06], radius: 1.64, source: navmesh, links: [0, 274, 323, 552, 756]}
+  438:  {at: [-210.81, -58.90, -26.68], radius: 1.50, source: navmesh, links: [190, 230, 407, 768, 843, 1105]}
+  439:  {at: [-205.76, 2.10, 391.82], radius: 1.41, source: navmesh, links: [131, 446, 462, 699, 758, 1026]}
+  440:  {at: [-254.33, 2.01, 374.30], radius: 1.51, source: navmesh, links: [81, 464]}
+  441:  {at: [243.94, 61.03, -29.39], radius: 1.04, source: navmesh, links: [92, 330]}
+  442:  {at: [33.31, -118.90, 390.29], radius: 1.49, source: navmesh, links: [12, 199, 406, 415, 569, 1078]}
+  443:  {at: [12.62, -119.76, 364.07], radius: 1.56, source: navmesh, links: [287, 317, 494, 497, 811]}
+  444:  {at: [-24.49, -0.90, -263.96], radius: 1.24, source: navmesh, links: [381, 817, 1037, 1088]}
+  445:  {at: [-271.07, -58.90, -37.12], radius: 1.59, source: navmesh, links: [64, 776, 837, 895, 1129]}
+  446:  {at: [-212.16, 2.10, 396.89], radius: 1.87, source: navmesh, links: [346, 439, 699]}
+  447:  {at: [-37.72, 1.10, 5.10], radius: 1.37, source: navmesh, links: [38, 158, 340, 774, 874, 1012]}
+  448:  {at: [-35.52, -0.90, -264.63], radius: 1.16, source: navmesh, links: [43, 381, 713, 845, 963, 1088]}
+  449:  {at: [-36.88, -0.90, -301.38], radius: 1.58, source: navmesh, links: [41, 201, 570, 628, 847]}
+  450:  {at: [-274.82, -58.90, 6.15], radius: 1.12, source: navmesh, links: [327, 342, 383, 721, 993, 1043]}
+  451:  {at: [-205.13, -58.90, 1.20], radius: 1.04, source: navmesh, links: [598, 724, 795, 915, 1000]}
+  452:  {at: [-10.96, 1.04, -32.26], radius: 1.08, source: navmesh, links: [133, 533, 562, 725, 753, 887, 908]}
+  453:  {at: [-228.73, 2.10, 332.89], radius: 1.36, source: navmesh, links: [127, 542, 694, 998, 1053]}
+  454:  {at: [-238.05, -0.17, 259.11], radius: 1.24, source: navmesh, links: [21, 191, 662, 828, 1028, 1057]}
+  455:  {at: [260.69, 61.10, 31.26], radius: 1.69, source: navmesh, links: [73, 89, 655, 689, 726, 789]}
+  456:  {at: [-38.99, -118.90, 331.04], radius: 1.54, source: navmesh, links: [5, 232, 608]}
+  457:  {at: [33.79, -118.90, 376.37], radius: 1.44, source: navmesh, links: [185, 205, 397, 406, 875, 976]}
+  458:  {at: [-271.30, 2.10, 367.10], radius: 1.15, source: navmesh, links: [149, 530, 564, 730]}
+  459:  {at: [216.57, 59.79, 5.96], radius: 1.27, source: navmesh, links: [322, 829, 1056]}
+  460:  {at: [19.57, -0.90, -269.39], radius: 1.16, source: navmesh, links: [109, 219, 613, 710, 958, 960]}
+  461:  {at: [217.25, 61.10, 25.70], radius: 1.60, source: navmesh, links: [97, 119, 167, 581, 961, 1086, 1109]}
+  462:  {at: [-200.16, 2.10, 384.28], radius: 1.42, source: navmesh, links: [52, 131, 439, 1026]}
+  463:  {at: [-20.06, -118.90, 384.53], radius: 1.71, source: navmesh, links: [123, 172, 509, 701]}
+  464:  {at: [-259.63, 2.10, 377.36], radius: 1.53, source: navmesh, links: [81, 204, 440, 564, 984]}
+  465:  {at: [-33.53, 1.10, -23.68], radius: 1.56, source: navmesh, links: [71, 231, 479, 553, 1061]}
+  466:  {at: [-201.55, -58.90, 8.16], radius: 1.11, source: navmesh, links: [115, 387, 795, 1000, 1003]}
+  467:  {at: [-33.26, -118.90, 353.34], radius: 1.06, source: navmesh, links: [36, 169, 353, 554, 583, 841, 872]}
+  468:  {at: [-219.56, 0.90, 364.50], radius: 1.16, source: navmesh, links: [83, 949, 994]}
+  469:  {at: [25.40, -0.90, -282.04], radius: 1.12, source: navmesh, links: [68, 303, 645, 815]}
+  470:  {at: [-230.59, -0.13, 269.01], radius: 1.06, source: navmesh, links: [21, 423, 873]}
+  471:  {at: [-279.40, -58.90, -17.94], radius: 1.52, source: navmesh, links: [281, 741, 851, 1115, 1130]}
+  472:  {at: [30.62, 1.10, 18.76], radius: 1.39, source: navmesh, links: [134, 236, 550, 703, 948]}
+  473:  {at: [-248.25, -58.98, -31.49], radius: 1.08, source: navmesh, links: [482, 629, 980]}
+  474:  {at: [-234.77, -58.98, -32.08], radius: 1.13, source: navmesh, links: [136, 761, 826, 888]}
+  475:  {at: [-241.75, 0.13, 339.35], radius: 1.26, source: navmesh, links: [270, 658, 717, 1032, 1121]}
+  476:  {at: [32.54, -0.90, -319.02], radius: 1.73, source: navmesh, links: [226, 337, 805]}
+  477:  {at: [-265.24, -58.90, -13.71], radius: 1.26, source: navmesh, links: [15, 55, 281, 594, 899]}
+  478:  {at: [258.55, 59.90, 6.06], radius: 1.08, source: navmesh, links: [245, 711, 935]}
+  479:  {at: [-25.28, 1.10, -27.38], radius: 1.57, source: navmesh, links: [176, 465, 553, 769, 887]}
+  480:  {at: [234.72, 59.90, 25.75], radius: 1.05, source: navmesh, links: [507, 928, 1108]}
+  481:  {at: [28.29, -0.90, -260.57], radius: 1.19, source: navmesh, links: [98, 122, 371, 498]}
+  482:  {at: [-250.35, -58.90, -35.79], radius: 1.20, source: navmesh, links: [137, 473, 551, 980, 1008, 1124]}
+  483:  {at: [-223.72, 2.10, 397.94], radius: 1.32, source: navmesh, links: [346, 924, 1004]}
+  484:  {at: [274.68, 61.10, 33.38], radius: 1.54, source: navmesh, links: [73, 254, 655, 746, 1097]}
+  485:  {at: [2.25, -2.20, -290.35], radius: 1.05, source: navmesh, links: [33, 521, 599, 780, 792, 906]}
+  486:  {at: [16.06, -118.90, 391.98], radius: 1.31, source: navmesh, links: [200, 295, 338, 528, 660, 744]}
+  487:  {at: [25.65, -120.10, 355.34], radius: 1.04, source: navmesh, links: [621, 665, 811]}
+  488:  {at: [-235.72, 1.40, 349.49], radius: 1.43, source: navmesh, links: [227, 270, 717]}
+  489:  {at: [-235.98, -58.90, 38.78], radius: 1.18, source: navmesh, links: [9, 88, 129, 947, 1042]}
+  490:  {at: [-227.02, 2.05, 382.33], radius: 1.10, source: navmesh, links: [57, 163, 370]}
+  491:  {at: [14.91, -119.01, 345.22], radius: 1.46, source: navmesh, links: [140, 589, 1082]}
+  492:  {at: [-254.86, 0.82, 362.78], radius: 1.71, source: navmesh, links: [37, 49, 738, 985, 1034]}
+  493:  {at: [37.56, -0.90, -253.62], radius: 1.21, source: navmesh, links: [498, 685, 905, 1047]}
+  494:  {at: [8.21, -119.31, 369.77], radius: 1.46, source: navmesh, links: [168, 218, 315, 317, 443]}
+  495:  {at: [236.60, 60.50, 2.63], radius: 1.68, source: navmesh, links: [14, 145, 237, 596, 723, 867, 1119]}
+  496:  {at: [-218.33, 2.10, 340.83], radius: 1.63, source: navmesh, links: [4, 414, 759, 884, 998, 1102]}
+  497:  {at: [16.06, -119.30, 370.76], radius: 1.07, source: navmesh, links: [357, 443, 1093]}
+  498:  {at: [35.35, -0.90, -258.95], radius: 1.14, source: navmesh, links: [122, 184, 481, 493, 1047]}
+  499:  {at: [-253.30, 2.10, 323.21], radius: 1.15, source: navmesh, links: [75, 623, 651, 695, 832, 962]}
+  500:  {at: [17.99, -0.90, -283.47], radius: 1.12, source: navmesh, links: [611, 729]}
+  501:  {at: [-273.17, -58.90, -5.64], radius: 1.02, source: navmesh, links: [281, 383, 594, 610, 851, 1115, 1133]}
+  502:  {at: [236.91, 61.00, -33.96], radius: 1.02, source: navmesh, links: [300, 513, 1005]}
+  503:  {at: [-238.53, -1.10, 309.98], radius: 1.54, source: navmesh, links: [680, 700]}
+  504:  {at: [211.08, 61.10, -22.14], radius: 1.56, source: navmesh, links: [101, 179, 349, 512, 974, 990]}
+  505:  {at: [-209.19, 2.10, 361.77], radius: 1.18, source: navmesh, links: [48, 820]}
+  506:  {at: [-234.42, 1.51, 370.65], radius: 1.38, source: navmesh, links: [30, 141, 633, 804, 936]}
+  507:  {at: [241.08, 59.90, 22.45], radius: 1.06, source: navmesh, links: [373, 480, 928, 1041, 1108]}
+  508:  {at: [274.78, 61.10, -32.36], radius: 1.85, source: navmesh, links: [299, 560, 712, 866]}
+  509:  {at: [-24.43, -118.90, 391.01], radius: 1.91, source: navmesh, links: [417, 463, 534, 586, 627, 701]}
+  510:  {at: [241.39, 61.10, 30.34], radius: 1.02, source: navmesh, links: [352, 520, 1027]}
+  511:  {at: [5.68, -119.92, 338.25], radius: 1.13, source: navmesh, links: [1087]}
+  512:  {at: [212.34, 61.10, -31.57], radius: 1.52, source: navmesh, links: [101, 103, 365, 504, 579, 974]}
+  513:  {at: [232.92, 61.09, -34.74], radius: 1.02, source: navmesh, links: [300, 502, 688, 806, 1005]}
+  514:  {at: [-268.26, 2.10, 348.28], radius: 1.22, source: navmesh, links: [3, 120, 206, 328, 672, 684, 943, 1128]}
+  515:  {at: [219.82, 61.10, 38.73], radius: 1.60, source: navmesh, links: [97, 522, 961]}
+  516:  {at: [-16.81, -0.90, -307.93], radius: 1.40, source: navmesh, links: [78, 246, 343, 356, 360, 742]}
+  517:  {at: [23.53, 1.10, -13.81], radius: 1.34, source: navmesh, links: [151, 253, 290, 545]}
+  518:  {at: [-23.15, -0.90, -285.41], radius: 1.23, source: navmesh, links: [617, 752, 970, 1019]}
+  519:  {at: [-205.51, 2.10, 334.89], radius: 1.53, source: navmesh, links: [4, 118, 181, 566, 975, 1030]}
+  520:  {at: [245.49, 61.10, 32.76], radius: 1.04, source: navmesh, links: [89, 325, 335, 352, 510, 689, 732, 1076]}
+  521:  {at: [2.33, -2.10, -295.01], radius: 1.13, source: navmesh, links: [485, 599, 906, 951]}
+  522:  {at: [227.23, 61.10, 38.03], radius: 1.76, source: navmesh, links: [97, 515, 605, 781, 961]}
+  523:  {at: [1.46, -122.10, 320.78], radius: 1.11, source: navmesh, links: [1066]}
+  524:  {at: [-223.52, 2.08, 372.63], radius: 1.43, source: navmesh, links: [57, 70]}
+  525:  {at: [-250.59, 2.10, 396.73], radius: 1.10, source: navmesh, links: [26, 171, 208, 216, 666, 896, 1002]}
+  526:  {at: [201.50, 61.10, 14.31], radius: 1.40, source: navmesh, links: [160, 677, 1058]}
+  527:  {at: [7.89, 0.40, 11.89], radius: 1.28, source: navmesh, links: [17, 100, 737, 740, 1123]}
+  528:  {at: [9.83, -118.90, 392.28], radius: 1.01, source: navmesh, links: [269, 338, 486, 660, 801, 1062]}
+  529:  {at: [26.30, -118.90, 322.77], radius: 1.56, source: navmesh, links: [62, 286, 1068, 1091]}
+  530:  {at: [-275.83, 2.10, 363.15], radius: 1.17, source: navmesh, links: [149, 458, 730, 824]}
+  531:  {at: [-15.43, -0.90, -247.98], radius: 1.04, source: navmesh, links: [257]}
+  532:  {at: [-213.07, 0.90, 358.95], radius: 1.20, source: navmesh, links: [228, 949, 994]}
+  533:  {at: [-9.92, 1.09, -37.44], radius: 1.10, source: navmesh, links: [452, 562, 725, 908]}
+  534:  {at: [-19.32, -118.90, 398.46], radius: 1.78, source: navmesh, links: [509, 586, 701, 785, 853]}
+  535:  {at: [-8.00, 0.16, 18.84], radius: 1.25, source: navmesh, links: [836, 857]}
+  536:  {at: [-250.94, -0.18, 226.02], radius: 1.25, source: navmesh, links: [639, 679]}
+  537:  {at: [20.06, -118.90, 374.77], radius: 1.30, source: navmesh, links: [200, 784, 875]}
+  538:  {at: [8.89, 0.99, -33.08], radius: 1.07, source: navmesh, links: [186, 248, 267, 380, 663, 809]}
+  539:  {at: [21.12, 0.03, -4.79], radius: 1.01, source: navmesh, links: [59, 222, 391, 965, 1072]}
+  540:  {at: [-239.52, -59.50, 1.36], radius: 1.79, source: navmesh, links: [209, 276, 390, 398, 432, 1067]}
+  541:  {at: [-8.91, -1.19, -253.14], radius: 1.08, source: navmesh, links: [318, 431, 797, 1111]}
+  542:  {at: [-228.40, 2.10, 326.65], radius: 1.46, source: navmesh, links: [127, 366, 453, 694, 782, 1053, 1106]}
+  543:  {at: [20.47, -0.90, -312.06], radius: 1.52, source: navmesh, links: [155, 337, 544, 601, 819]}
+  544:  {at: [19.59, -0.90, -306.05], radius: 1.46, source: navmesh, links: [155, 355, 430, 543, 764, 819, 1070]}
+  545:  {at: [26.06, 1.10, -20.35], radius: 1.63, source: navmesh, links: [23, 150, 151, 290, 517, 1029]}
+  546:  {at: [-267.11, -60.10, -0.08], radius: 1.07, source: navmesh, links: [282, 362, 735, 1099]}
+  547:  {at: [-202.51, 2.10, 364.57], radius: 1.04, source: navmesh, links: [48, 436, 1035]}
+  548:  {at: [5.65, -0.90, -271.82], radius: 1.02, source: navmesh, links: [410, 889, 1010]}
+  549:  {at: [243.29, 59.82, -15.18], radius: 1.41, source: navmesh, links: [177, 305, 316, 422, 1118]}
+  550:  {at: [23.33, 1.10, 16.16], radius: 1.44, source: navmesh, links: [236, 339, 429, 472, 913, 945]}
+  551:  {at: [-243.01, -58.94, -37.37], radius: 1.02, source: navmesh, links: [482]}
+  552:  {at: [-26.03, -118.90, 334.20], radius: 1.61, source: navmesh, links: [125, 232, 274, 323, 437]}
+  553:  {at: [-26.12, 1.01, -17.78], radius: 1.66, source: navmesh, links: [34, 231, 354, 465, 479, 604, 769]}
+  554:  {at: [-28.37, -118.90, 358.24], radius: 1.17, source: navmesh, links: [467, 583, 967]}
+  555:  {at: [-251.51, -59.06, -19.81], radius: 1.28, source: navmesh, links: [55, 629, 1008]}
+  556:  {at: [33.28, 1.10, -0.34], radius: 1.16, source: navmesh, links: [253, 331, 428, 640]}
+  557:  {at: [-35.45, -118.90, 369.46], radius: 1.13, source: navmesh, links: [86, 584, 634, 661, 856, 916]}
+  558:  {at: [-236.48, -60.10, 25.82], radius: 1.18, source: navmesh, links: [42, 183, 861]}
+  559:  {at: [-226.58, -59.06, 13.06], radius: 1.32, source: navmesh, links: [51]}
+  560:  {at: [276.28, 61.10, -23.75], radius: 1.57, source: navmesh, links: [332, 508, 712, 1117]}
+  561:  {at: [15.17, 1.10, 22.98], radius: 1.52, source: navmesh, links: [110, 429, 814, 913, 944]}
+  562:  {at: [-17.57, 1.10, -36.90], radius: 1.57, source: navmesh, links: [176, 452, 533, 887]}
+  563:  {at: [-11.15, -1.00, -279.44], radius: 1.13, source: navmesh, links: [567, 671, 1071]}
+  564:  {at: [-268.75, 2.10, 376.06], radius: 1.57, source: navmesh, links: [117, 149, 204, 458, 464, 810, 984]}
+  565:  {at: [-266.34, -58.90, 9.30], radius: 1.13, source: navmesh, links: [327, 674, 993]}
+  566:  {at: [-200.40, 2.10, 341.66], radius: 2.02, source: navmesh, links: [118, 376, 519]}
+  567:  {at: [-10.85, -1.03, -284.07], radius: 1.04, source: navmesh, links: [384, 563, 671, 766, 1071]}
+  568:  {at: [30.48, -0.90, -271.82], radius: 1.23, source: navmesh, links: [98, 99, 109, 122, 303, 412]}
+  569:  {at: [39.43, -118.90, 391.75], radius: 1.40, source: navmesh, links: [12, 442, 1078]}
+  570:  {at: [-29.38, -0.90, -296.45], radius: 1.36, source: navmesh, links: [128, 135, 449, 617, 628, 847]}
+  571:  {at: [-254.41, 0.14, 263.58], radius: 1.25, source: navmesh, links: [273, 301]}
+  572:  {at: [-3.28, 1.10, 29.25], radius: 1.00, source: navmesh, links: [146, 704, 755]}
+  573:  {at: [201.99, 61.10, 2.28], radius: 1.26, source: navmesh, links: [265, 677, 807]}
+  574:  {at: [-227.39, -59.06, 21.41], radius: 1.56, source: navmesh, links: [51, 858]}
+  575:  {at: [-238.39, -1.10, 276.52], radius: 1.00, source: navmesh, links: [65, 578, 754, 1024, 1132]}
+  576:  {at: [-249.33, -59.33, 11.02], radius: 1.39, source: navmesh, links: [67, 217, 398, 904]}
+  577:  {at: [279.31, 61.10, 23.49], radius: 1.56, source: navmesh, links: [254, 288, 308, 1097]}
+  578:  {at: [-243.72, -1.10, 276.59], radius: 1.15, source: navmesh, links: [575, 1132]}
+  579:  {at: [221.22, 61.10, -32.72], radius: 1.54, source: navmesh, links: [103, 300, 512, 681, 806, 974, 1104]}
+  580:  {at: [-12.33, -0.90, -243.27], radius: 1.01, source: navmesh, links: [1051, 1126]}
+  581:  {at: [225.86, 61.10, 20.07], radius: 1.44, source: navmesh, links: [119, 461, 1086]}
+  582:  {at: [10.56, -0.90, -260.10], radius: 1.25, source: navmesh, links: [710, 1122]}
+  583:  {at: [-34.00, -118.90, 357.53], radius: 1.01, source: navmesh, links: [353, 467, 554, 872, 964, 967]}
+  584:  {at: [-29.51, -118.90, 366.24], radius: 1.08, source: navmesh, links: [215, 557, 661, 856, 967]}
+  585:  {at: [31.87, 1.10, -37.93], radius: 1.69, source: navmesh, links: [590, 647, 775, 1055]}
+  586:  {at: [-26.79, -118.90, 398.76], radius: 1.60, source: navmesh, links: [509, 534, 627, 987]}
+  587:  {at: [253.36, 61.10, -38.25], radius: 1.12, source: navmesh, links: [92, 330, 707, 763, 800]}
+  588:  {at: [-7.99, -119.42, 370.65], radius: 1.46, source: navmesh, links: [168, 218, 324, 834, 1084]}
+  589:  {at: [23.41, -118.90, 346.73], radius: 1.54, source: navmesh, links: [140, 310, 491]}
+  590:  {at: [31.93, 1.10, -31.17], radius: 1.59, source: navmesh, links: [23, 102, 150, 585, 647, 1055]}
+  591:  {at: [0.90, -2.10, -307.50], radius: 1.38, source: navmesh, links: [348, 986]}
+  592:  {at: [-7.31, -0.90, -316.53], radius: 1.14, source: navmesh, links: [113, 246, 360, 1021]}
+  593:  {at: [21.69, 1.10, 38.31], radius: 1.52, source: navmesh, links: [110, 670, 902]}
+  594:  {at: [-268.00, -58.90, -9.50], radius: 1.11, source: navmesh, links: [15, 281, 477, 501, 1115]}
+  595:  {at: [-265.51, -58.90, 36.43], radius: 1.57, source: navmesh, links: [280, 399, 921]}
+  596:  {at: [230.23, 60.50, -3.55], radius: 1.81, source: navmesh, links: [2, 237, 305, 382, 495, 829]}
+  597:  {at: [-22.80, -0.28, 7.67], radius: 1.09, source: navmesh, links: [148, 284]}
+  598:  {at: [-210.17, -58.90, 4.22], radius: 1.11, source: navmesh, links: [115, 387, 451, 731, 1000]}
+  599:  {at: [-3.22, -2.20, -293.34], radius: 1.02, source: navmesh, links: [485, 521, 780, 1085]}
+  600:  {at: [-35.08, 1.10, 22.91], radius: 1.63, source: navmesh, links: [93, 104, 333, 874, 929]}
+  601:  {at: [16.00, -0.90, -318.67], radius: 1.79, source: navmesh, links: [321, 337, 543, 819]}
+  602:  {at: [277.64, 61.10, -2.18], radius: 1.06, source: navmesh, links: [25, 233, 256, 264, 876, 1131]}
+  603:  {at: [38.63, -0.90, -289.26], radius: 1.02, source: navmesh, links: [68, 292, 842, 1022, 1049, 1127]}
+  604:  {at: [-31.32, 1.10, -8.94], radius: 1.20, source: navmesh, links: [143, 231, 354, 553, 728]}
+  605:  {at: [232.87, 61.10, 32.18], radius: 1.11, source: navmesh, links: [97, 522, 781, 1027, 1086]}
+  606:  {at: [3.55, -118.90, 328.00], radius: 1.06, source: navmesh, links: [697, 989, 1013]}
+  607:  {at: [0.07, -1.18, -282.08], radius: 1.13, source: navmesh, links: [671, 780, 792, 912, 954]}
+  608:  {at: [-38.56, -118.90, 337.18], radius: 1.54, source: navmesh, links: [169, 232, 456]}
+  609:  {at: [-268.61, -58.90, 24.09], radius: 1.58, source: navmesh, links: [24, 197, 244, 674, 799, 921]}
+  610:  {at: [-276.95, -58.90, -2.41], radius: 1.15, source: navmesh, links: [383, 501, 851, 1043, 1115, 1133]}
+  611:  {at: [15.44, -0.90, -288.47], radius: 1.14, source: navmesh, links: [213, 500]}
+  612:  {at: [-245.87, -58.90, 32.83], radius: 1.00, source: navmesh, links: [7, 129, 745, 894, 1100]}
+  613:  {at: [20.54, -0.90, -274.89], radius: 1.26, source: navmesh, links: [109, 219, 460, 729, 960]}
+  614:  {at: [-201.36, -58.90, -5.21], radius: 1.11, source: navmesh, links: [312, 690, 724, 915]}
+  615:  {at: [269.21, 61.10, 11.53], radius: 1.01, source: navmesh, links: [165, 203, 288, 308, 619, 892, 1120]}
+  616:  {at: [-5.74, -120.10, 379.18], radius: 1.07, source: navmesh, links: [324, 813, 879, 1023, 1096]}
+  617:  {at: [-23.71, -0.90, -291.87], radius: 1.32, source: navmesh, links: [128, 135, 518, 570, 752, 1019]}
+  618:  {at: [-240.83, -62.10, -55.04], radius: 1.14, source: navmesh, links: [82, 870]}
+  619:  {at: [270.16, 61.10, 3.34], radius: 1.08, source: navmesh, links: [256, 615, 892]}
+  620:  {at: [-31.97, -0.90, -274.17], radius: 1.12, source: navmesh, links: [43, 45, 252, 278, 693, 942, 970]}
+  621:  {at: [19.99, -120.10, 352.08], radius: 1.43, source: navmesh, links: [487, 811]}
+  622:  {at: [-211.75, -58.90, 26.78], radius: 1.67, source: navmesh, links: [161, 174, 211, 409, 925]}
+  623:  {at: [-256.66, 2.10, 328.63], radius: 1.56, source: navmesh, links: [243, 499, 651, 695, 832, 934, 962, 979]}
+  624:  {at: [-240.62, -0.15, 238.62], radius: 1.19, source: navmesh, links: [309, 392, 641, 997]}
+  625:  {at: [-23.05, -0.90, -241.02], radius: 1.24, source: navmesh, links: [271, 803, 927, 1051]}
+  626:  {at: [-17.20, -118.90, 323.61], radius: 1.71, source: navmesh, links: [125, 173, 274]}
+  627:  {at: [-31.50, -118.90, 394.44], radius: 1.59, source: navmesh, links: [405, 417, 509, 586, 987]}
+  628:  {at: [-37.18, -0.90, -295.07], radius: 1.38, source: navmesh, links: [135, 449, 570, 1017]}
+  629:  {at: [-256.65, -58.90, -26.71], radius: 1.58, source: navmesh, links: [55, 137, 473, 555, 1008]}
+  630:  {at: [215.05, 59.90, -3.77], radius: 1.04, source: navmesh, links: [322, 829, 1056]}
+  631:  {at: [-31.11, -0.90, -318.86], radius: 1.67, source: navmesh, links: [673, 787, 793, 968]}
+  632:  {at: [239.01, 57.90, -50.91], radius: 1.05, source: navmesh, links: [58, 359]}
+  633:  {at: [-229.49, 1.59, 374.22], radius: 1.52, source: navmesh, links: [30, 506, 1098]}
+  634:  {at: [-39.44, -118.90, 366.99], radius: 1.14, source: navmesh, links: [86, 557, 661, 856, 964]}
+  635:  {at: [-22.35, -0.90, -259.05], radius: 1.34, source: navmesh, links: [242, 733]}
+  636:  {at: [-16.65, -120.30, 359.00], radius: 1.47, source: navmesh, links: [170, 275, 719, 834]}
+  637:  {at: [-214.54, -60.10, 8.87], radius: 1.21, source: navmesh, links: [8, 1077]}
+  638:  {at: [12.26, -1.15, -248.14], radius: 1.15, source: navmesh, links: [772, 821, 918]}
+  639:  {at: [-253.96, 0.07, 229.99], radius: 1.25, source: navmesh, links: [536, 679]}
+  640:  {at: [28.91, 1.10, 1.24], radius: 1.01, source: navmesh, links: [428, 556]}
+  641:  {at: [-238.92, -0.66, 233.45], radius: 1.01, source: navmesh, links: [121, 298, 392, 624, 1064]}
+  642:  {at: [-4.95, -2.12, -297.02], radius: 1.02, source: navmesh, links: [951, 986]}
+  643:  {at: [-219.05, -59.01, -12.18], radius: 1.27, source: navmesh, links: [105, 262, 407]}
+  644:  {at: [207.99, 61.10, -4.34], radius: 1.09, source: navmesh, links: [61, 95, 96, 265, 334, 807, 1006]}
+  645:  {at: [20.99, -0.90, -288.82], radius: 1.39, source: navmesh, links: [266, 469, 1022, 1070]}
+  646:  {at: [-271.28, 2.10, 393.79], radius: 1.56, source: navmesh, links: [54, 374, 408, 687, 973]}
+  647:  {at: [39.55, 1.10, -36.12], radius: 1.97, source: navmesh, links: [102, 585, 590]}
+  648:  {at: [8.62, 0.15, -21.99], radius: 1.04, source: navmesh, links: [229, 898]}
+  649:  {at: [-11.28, 0.56, -4.44], radius: 1.50, source: navmesh, links: [28, 50, 63, 351, 835, 914]}
+  650:  {at: [-235.86, 0.90, 334.93], radius: 1.09, source: navmesh, links: [717, 1032]}
+  651:  {at: [-261.79, 2.10, 322.53], radius: 1.59, source: navmesh, links: [499, 623, 934, 979]}
+  652:  {at: [2.02, 0.50, -6.74], radius: 1.65, source: navmesh, links: [28, 40, 50, 860]}
+  653:  {at: [-231.88, 2.10, 387.16], radius: 1.06, source: navmesh, links: [47, 370, 859, 1004]}
+  654:  {at: [39.18, -118.90, 325.26], radius: 1.76, source: navmesh, links: [286, 404, 1091]}
+  655:  {at: [266.26, 61.10, 38.98], radius: 1.78, source: navmesh, links: [73, 455, 484]}
+  656:  {at: [-243.24, -1.10, 221.61], radius: 1.12, source: navmesh, links: [393, 1075]}
+  657:  {at: [-279.26, 2.10, 356.77], radius: 1.09, source: navmesh, links: [120, 328, 943]}
+  658:  {at: [-244.77, 0.90, 333.58], radius: 1.00, source: navmesh, links: [475, 1121]}
+  659:  {at: [-225.25, 0.12, 234.26], radius: 1.12, source: navmesh, links: [864, 1110]}
+  660:  {at: [11.55, -118.90, 387.64], radius: 1.08, source: navmesh, links: [200, 338, 486, 528, 744, 1062]}
+  661:  {at: [-30.37, -118.90, 371.01], radius: 1.21, source: navmesh, links: [11, 86, 123, 215, 557, 584, 634, 856, 967]}
+  662:  {at: [-239.61, 0.03, 253.92], radius: 1.02, source: navmesh, links: [454, 926, 1028, 1057]}
+  663:  {at: [4.82, 0.70, -34.34], radius: 1.07, source: navmesh, links: [248, 267, 380, 538]}
+  664:  {at: [9.43, -0.90, -297.19], radius: 1.06, source: navmesh, links: [355, 764]}
+  665:  {at: [25.93, -120.10, 361.25], radius: 1.02, source: navmesh, links: [357, 487, 811]}
+  666:  {at: [-241.76, 2.10, 391.53], radius: 1.32, source: navmesh, links: [171, 208, 314, 525, 859, 896, 1002]}
+  667:  {at: [240.34, 57.90, -39.05], radius: 1.06, source: navmesh, links: [359, 910]}
+  668:  {at: [258.39, 61.10, -24.52], radius: 1.82, source: navmesh, links: [39, 159, 330, 675, 707, 712, 901]}
+  669:  {at: [-6.35, -118.90, 323.17], radius: 1.01, source: navmesh, links: [173, 683, 919]}
+  670:  {at: [28.89, 1.10, 36.32], radius: 1.53, source: navmesh, links: [363, 593, 930, 995]}
+  671:  {at: [-5.54, -0.96, -280.17], radius: 1.14, source: navmesh, links: [563, 567, 607, 912, 954]}
+  672:  {at: [-266.16, 2.10, 340.13], radius: 1.84, source: navmesh, links: [3, 106, 243, 372, 514, 979]}
+  673:  {at: [-22.57, -0.90, -319.20], radius: 1.66, source: navmesh, links: [356, 360, 631, 787]}
+  674:  {at: [-271.25, -58.90, 18.35], radius: 1.58, source: navmesh, links: [197, 327, 342, 565, 609, 721]}
+  675:  {at: [250.09, 61.10, -26.72], radius: 1.14, source: navmesh, links: [92, 330, 668, 763]}
+  676:  {at: [33.62, -0.90, -304.86], radius: 1.56, source: navmesh, links: [155, 226, 247, 292, 716, 1048, 1049]}
+  677:  {at: [202.89, 61.10, 8.88], radius: 1.40, source: navmesh, links: [160, 526, 573, 1058]}
+  678:  {at: [269.19, 61.10, -10.24], radius: 1.25, source: navmesh, links: [25, 116, 233, 256, 332, 876]}
+  679:  {at: [-247.42, -0.14, 231.85], radius: 1.06, source: navmesh, links: [189, 392, 536, 639]}
+  680:  {at: [-239.97, -1.10, 316.05], radius: 1.41, source: navmesh, links: [307, 503]}
+  681:  {at: [222.62, 61.08, -24.57], radius: 1.60, source: navmesh, links: [179, 402, 579, 806, 974]}
+  682:  {at: [-242.43, -58.90, 28.81], radius: 1.15, source: navmesh, links: [9]}
+  683:  {at: [-3.68, -118.90, 328.98], radius: 1.19, source: navmesh, links: [173, 669, 756]}
+  684:  {at: [-276.98, 2.10, 342.62], radius: 1.58, source: navmesh, links: [106, 120, 364, 514, 943]}
+  685:  {at: [30.13, -0.90, -252.46], radius: 1.40, source: navmesh, links: [60, 371, 493, 905]}
+  686:  {at: [-244.84, 1.48, 371.16], radius: 1.30, source: navmesh, links: [141, 738, 804, 1034]}
+  687:  {at: [-264.84, 2.10, 387.58], radius: 1.62, source: navmesh, links: [26, 54, 374, 646, 984]}
+  688:  {at: [233.01, 61.10, -39.04], radius: 1.07, source: navmesh, links: [300, 513, 1104]}
+  689:  {at: [254.05, 61.04, 28.97], radius: 1.31, source: navmesh, links: [89, 152, 335, 455, 520, 789, 1076]}
+  690:  {at: [-203.83, -58.90, -8.98], radius: 1.06, source: navmesh, links: [19, 312, 614, 915]}
+  691:  {at: [-249.92, -0.49, 270.59], radius: 1.01, source: navmesh, links: [301, 1044]}
+  692:  {at: [-233.07, -60.10, -22.98], radius: 1.19, source: navmesh, links: [868, 1052, 1089]}
+  693:  {at: [-34.25, -0.90, -279.20], radius: 1.26, source: navmesh, links: [43, 80, 278, 620, 893, 970]}
+  694:  {at: [-234.68, 2.10, 325.79], radius: 1.06, source: navmesh, links: [127, 453, 542, 782, 1106]}
+  695:  {at: [-249.11, 2.10, 329.04], radius: 1.13, source: navmesh, links: [75, 499, 623, 962]}
+  696:  {at: [-264.46, 0.86, 368.61], radius: 1.01, source: navmesh, links: [917, 1011]}
+  697:  {at: [8.45, -118.90, 331.16], radius: 1.14, source: navmesh, links: [606, 840, 1013]}
+  698:  {at: [0.67, -118.90, 388.54], radius: 1.20, source: navmesh, links: [153, 269, 750]}
+  699:  {at: [-212.14, 2.10, 389.42], radius: 1.54, source: navmesh, links: [131, 163, 346, 401, 439, 446]}
+  700:  {at: [-241.08, -1.10, 304.36], radius: 1.15, source: navmesh, links: [503, 702]}
+  701:  {at: [-16.14, -118.90, 390.14], radius: 1.57, source: navmesh, links: [153, 297, 463, 509, 534, 785, 853, 1092]}
+  702:  {at: [-241.21, -1.10, 299.75], radius: 1.15, source: navmesh, links: [700]}
+  703:  {at: [32.72, 1.10, 11.52], radius: 1.16, source: navmesh, links: [339, 428, 472, 850, 945, 948, 1103]}
+  704:  {at: [-2.42, 1.10, 35.13], radius: 1.03, source: navmesh, links: [146, 572, 755, 762, 778, 1113, 1114]}
+  705:  {at: [-221.63, -60.57, 1.58], radius: 1.04, source: navmesh, links: [8, 29, 209, 240, 773, 959, 1073, 1077, 1107]}
+  706:  {at: [265.89, 59.90, -0.99], radius: 1.09, source: navmesh, links: [711, 765, 897, 935, 982]}
+  707:  {at: [259.89, 61.10, -35.00], radius: 1.72, source: navmesh, links: [299, 330, 587, 668, 712, 763]}
+  708:  {at: [4.91, -0.10, 26.02], radius: 1.16, source: navmesh, links: [377, 385]}
+  709:  {at: [-249.24, 0.07, 240.47], radius: 1.14, source: navmesh, links: [147, 189, 997]}
+  710:  {at: [16.33, -0.90, -262.53], radius: 1.28, source: navmesh, links: [221, 336, 460, 582, 958, 960, 1122]}
+  711:  {at: [263.09, 59.56, 5.00], radius: 1.06, source: navmesh, links: [478, 706, 765, 935]}
+  712:  {at: [267.06, 61.10, -27.16], radius: 1.54, source: navmesh, links: [159, 508, 560, 668, 707]}
+  713:  {at: [-39.17, -0.90, -267.48], radius: 1.16, source: navmesh, links: [43, 448]}
+  714:  {at: [-8.91, -119.40, 350.24], radius: 1.44, source: navmesh, links: [112, 170, 193, 210, 834, 890, 953]}
+  715:  {at: [-33.19, -0.90, -251.59], radius: 1.22, source: navmesh, links: [249, 261, 395, 426, 963, 1018]}
+  716:  {at: [39.82, -0.90, -309.15], radius: 1.48, source: navmesh, links: [226, 247, 676, 805]}
+  717:  {at: [-238.63, 0.85, 343.32], radius: 1.20, source: navmesh, links: [270, 475, 488, 650, 1032, 1121]}
+  718:  {at: [246.48, 59.90, -19.82], radius: 1.09, source: navmesh, links: [166, 316, 1059]}
+  719:  {at: [-22.17, -120.56, 361.64], radius: 1.08, source: navmesh, links: [238, 275, 378, 636]}
+  720:  {at: [-238.12, -1.10, 214.52], radius: 1.03, source: navmesh, links: [1069, 1075]}
+  721:  {at: [-277.70, -58.90, 9.72], radius: 1.15, source: navmesh, links: [327, 342, 450, 674, 1043]}
+  722:  {at: [36.55, 1.10, 27.08], radius: 1.43, source: navmesh, links: [134, 363, 434]}
+  723:  {at: [242.15, 60.50, -3.44], radius: 1.91, source: navmesh, links: [145, 177, 207, 305, 495]}
+  724:  {at: [-201.04, -58.90, -0.80], radius: 1.07, source: navmesh, links: [451, 614, 795]}
+  725:  {at: [-5.59, 1.08, -38.22], radius: 1.10, source: navmesh, links: [452, 533, 908]}
+  726:  {at: [266.71, 61.10, 25.50], radius: 1.64, source: navmesh, links: [73, 165, 254, 288, 455, 789]}
+  727:  {at: [-251.45, -58.90, 20.43], radius: 1.20, source: navmesh, links: [7, 24, 244]}
+  728:  {at: [-31.88, 1.10, -4.19], radius: 1.04, source: navmesh, links: [143, 158, 231, 340, 354, 604, 774]}
+  729:  {at: [21.51, -0.90, -279.82], radius: 1.12, source: navmesh, links: [500, 613]}
+  730:  {at: [-270.66, 2.10, 362.14], radius: 1.11, source: navmesh, links: [458, 530, 1128]}
+  731:  {at: [-214.66, -58.92, 13.71], radius: 1.21, source: navmesh, links: [51, 115, 387, 409, 598]}
+  732:  {at: [247.36, 61.10, 39.29], radius: 1.10, source: navmesh, links: [89, 325, 520, 1076]}
+  733:  {at: [-15.72, -0.90, -262.45], radius: 1.21, source: navmesh, links: [87, 427, 635, 1037]}
+  734:  {at: [-238.35, -62.10, -29.32], radius: 1.05, source: navmesh, links: [319]}
+  735:  {at: [-264.27, -60.15, 4.51], radius: 1.30, source: navmesh, links: [282, 362, 546, 904]}
+  736:  {at: [-1.81, -1.30, -254.99], radius: 1.02, source: navmesh, links: [20, 272, 394, 991, 1074, 1111]}
+  737:  {at: [9.94, 0.30, 16.70], radius: 1.31, source: navmesh, links: [17, 377, 527]}
+  738:  {at: [-250.83, 1.54, 368.31], radius: 1.66, source: navmesh, links: [141, 492, 686, 1034]}
+  739:  {at: [0.60, -2.10, -45.82], radius: 1.12, source: navmesh, links: [433, 1040]}
+  740:  {at: [-2.49, 0.50, 8.34], radius: 1.34, source: navmesh, links: [17, 50, 100, 351, 400, 527, 743, 1123]}
+  741:  {at: [-273.23, -58.90, -22.24], radius: 1.50, source: navmesh, links: [15, 79, 281, 471, 776, 1130]}
+  742:  {at: [-11.86, -0.90, -303.41], radius: 1.37, source: navmesh, links: [78, 246, 413, 516, 869, 996]}
+  743:  {at: [-5.02, -0.10, 13.86], radius: 1.45, source: navmesh, links: [100, 351, 400, 740, 1123]}
+  744:  {at: [20.87, -118.90, 389.95], radius: 1.31, source: navmesh, links: [199, 200, 295, 415, 486, 660, 784]}
+  745:  {at: [-250.23, -58.90, 37.56], radius: 1.05, source: navmesh, links: [7, 129, 399, 612, 894, 1100]}
+  746:  {at: [278.90, 61.10, 38.16], radius: 1.59, source: navmesh, links: [484, 1097]}
+  747:  {at: [-254.21, 1.40, 352.11], radius: 1.48, source: navmesh, links: [49, 270, 950]}
+  748:  {at: [17.68, -0.04, 8.58], radius: 1.31, source: navmesh, links: [977]}
+  749:  {at: [34.25, 1.10, -9.73], radius: 1.12, source: navmesh, links: [111, 151, 253, 771]}
+  750:  {at: [-1.99, -118.90, 394.67], radius: 1.09, source: navmesh, links: [153, 269, 386, 698, 1083]}
+  751:  {at: [-246.95, -60.13, 22.07], radius: 1.13, source: navmesh, links: [42, 922]}
+  752:  {at: [-29.09, -0.90, -286.61], radius: 1.19, source: navmesh, links: [135, 518, 617, 893, 970, 1017]}
+  753:  {at: [-5.13, 1.02, -30.09], radius: 1.01, source: navmesh, links: [133, 452, 908]}
+  754:  {at: [-242.85, -1.22, 272.09], radius: 1.15, source: navmesh, links: [65, 575, 877, 1044]}
+  755:  {at: [-7.62, 1.10, 33.38], radius: 1.13, source: navmesh, links: [146, 279, 572, 704, 762, 880, 971, 1112, 1114]}
+  756:  {at: [-8.95, -118.90, 330.53], radius: 1.17, source: navmesh, links: [173, 274, 437, 683]}
+  757:  {at: [-210.88, 2.10, 369.57], radius: 1.29, source: navmesh, links: [212, 436, 1015]}
+  758:  {at: [-201.59, 2.10, 397.27], radius: 1.45, source: navmesh, links: [439, 1026]}
+  759:  {at: [-215.36, 2.10, 347.03], radius: 1.06, source: navmesh, links: [4, 118, 251, 496, 1102]}
+  760:  {at: [7.46, -119.50, 353.45], radius: 1.43, source: navmesh, links: [112, 193, 287, 317, 786, 849]}
+  761:  {at: [-231.30, -58.90, -27.78], radius: 1.08, source: navmesh, links: [27, 474, 826, 888]}
+  762:  {at: [-8.53, 1.10, 37.80], radius: 1.13, source: navmesh, links: [146, 279, 704, 755, 1112, 1114]}
+  763:  {at: [249.38, 61.10, -36.16], radius: 1.00, source: navmesh, links: [92, 330, 587, 675, 707, 800]}
+  764:  {at: [10.07, -0.90, -303.92], radius: 1.23, source: navmesh, links: [53, 225, 355, 544, 664, 819]}
+  765:  {at: [257.17, 59.76, 0.20], radius: 1.18, source: navmesh, links: [207, 706, 711, 935, 982, 1081]}
+  766:  {at: [-13.41, -0.92, -288.27], radius: 1.01, source: navmesh, links: [258, 384, 567]}
+  767:  {at: [32.87, -118.90, 361.39], radius: 1.10, source: navmesh, links: [44, 367, 379, 798, 976, 1094]}
+  768:  {at: [-210.86, -58.90, -33.28], radius: 1.60, source: navmesh, links: [188, 344, 418, 438, 843, 1050]}
+  769:  {at: [-19.71, 1.02, -23.59], radius: 1.68, source: navmesh, links: [34, 196, 479, 553, 887]}
+  770:  {at: [-244.88, 0.25, 248.34], radius: 1.68, source: navmesh, links: [926, 997]}
+  771:  {at: [38.54, 1.10, -15.67], radius: 1.51, source: navmesh, links: [111, 151, 749, 1029]}
+  772:  {at: [9.35, -1.10, -254.55], radius: 1.01, source: navmesh, links: [130, 638, 848, 918, 991]}
+  773:  {at: [-212.63, -60.10, -0.53], radius: 1.02, source: navmesh, links: [8, 29, 240, 705]}
+  774:  {at: [-31.02, 1.10, 1.59], radius: 1.10, source: navmesh, links: [38, 158, 447, 728, 923, 1016]}
+  775:  {at: [21.88, 1.10, -39.26], radius: 1.67, source: navmesh, links: [150, 267, 585, 1055]}
+  776:  {at: [-273.52, -58.90, -28.59], radius: 1.54, source: navmesh, links: [15, 64, 79, 445, 741, 837, 1130]}
+  777:  {at: [-229.70, 1.57, 358.15], radius: 1.47, source: navmesh, links: [30, 77, 227, 293]}
+  778:  {at: [4.04, 1.10, 36.99], radius: 1.05, source: navmesh, links: [157, 250, 704, 808, 1113]}
+  779:  {at: [-235.46, 0.90, 378.70], radius: 1.17, source: navmesh, links: [46, 223, 854, 952, 1098]}
+  780:  {at: [-1.01, -1.96, -287.71], radius: 1.05, source: navmesh, links: [485, 599, 607, 792, 912, 1085]}
+  781:  {at: [234.21, 61.10, 37.00], radius: 1.11, source: navmesh, links: [352, 522, 605, 1090]}
+  782:  {at: [-232.30, 2.10, 322.29], radius: 1.06, source: navmesh, links: [366, 542, 694, 1106]}
+  783:  {at: [3.90, -0.90, -318.52], radius: 1.41, source: navmesh, links: [321]}
+  784:  {at: [21.32, -118.90, 380.36], radius: 1.43, source: navmesh, links: [138, 199, 200, 537, 744, 875]}
+  785:  {at: [-12.85, -118.90, 395.47], radius: 1.04, source: navmesh, links: [153, 297, 534, 701, 853, 1092]}
+  786:  {at: [14.07, -119.43, 350.99], radius: 1.46, source: navmesh, links: [287, 760]}
+  787:  {at: [-28.25, -0.90, -312.82], radius: 1.39, source: navmesh, links: [41, 343, 356, 631, 673, 968]}
+  788:  {at: [257.09, 60.70, -9.62], radius: 1.36, source: navmesh, links: [177, 897, 982]}
+  789:  {at: [259.26, 61.03, 24.65], radius: 1.69, source: navmesh, links: [152, 165, 455, 689, 726]}
+  790:  {at: [240.39, 57.90, -27.21], radius: 1.04, source: navmesh, links: [316, 910, 1059]}
+  791:  {at: [-19.62, -0.17, -6.91], radius: 1.15, source: navmesh, links: [148, 164, 914]}
+  792:  {at: [4.09, -1.66, -284.38], radius: 1.10, source: navmesh, links: [33, 485, 607, 780, 1007]}
+  793:  {at: [-39.47, -0.90, -316.40], radius: 1.71, source: navmesh, links: [201, 631, 968]}
+  794:  {at: [-4.74, -0.90, -275.52], radius: 1.08, source: navmesh, links: [198, 234, 954]}
+  795:  {at: [-201.28, -58.90, 3.49], radius: 1.07, source: navmesh, links: [451, 466, 724, 1000, 1003]}
+  796:  {at: [-4.31, -0.15, -25.81], radius: 1.09, source: navmesh, links: [1, 94]}
+  797:  {at: [-9.17, -2.22, -246.52], radius: 1.13, source: navmesh, links: [394, 541, 931]}
+  798:  {at: [35.91, -118.90, 365.24], radius: 1.14, source: navmesh, links: [44, 205, 397, 416, 767, 976]}
+  799:  {at: [-275.62, -58.90, 32.23], radius: 1.59, source: navmesh, links: [197, 280, 609]}
+  800:  {at: [244.56, 61.10, -38.51], radius: 1.06, source: navmesh, links: [92, 587, 763]}
+  801:  {at: [6.50, -118.90, 398.65], radius: 1.10, source: navmesh, links: [269, 338, 528, 1083]}
+  802:  {at: [11.58, -1.02, -290.92], radius: 1.08, source: navmesh, links: [33, 906]}
+  803:  {at: [-28.47, -0.90, -244.33], radius: 1.25, source: navmesh, links: [249, 271, 625, 833, 1018]}
+  804:  {at: [-240.99, 0.79, 374.65], radius: 1.30, source: navmesh, links: [141, 506, 686]}
+  805:  {at: [39.31, -0.90, -317.64], radius: 1.73, source: navmesh, links: [226, 476, 716]}
+  806:  {at: [230.69, 60.95, -28.19], radius: 1.31, source: navmesh, links: [300, 513, 579, 681, 1005]}
+  807:  {at: [208.80, 61.10, 3.40], radius: 1.39, source: navmesh, links: [334, 573, 644, 903, 1058]}
+  808:  {at: [4.48, 1.10, 32.13], radius: 1.22, source: navmesh, links: [157, 778, 814]}
+  809:  {at: [9.98, 0.85, -27.91], radius: 1.09, source: navmesh, links: [186, 267, 380, 538]}
+  810:  {at: [-277.43, 2.10, 382.45], radius: 1.64, source: navmesh, links: [117, 374, 408, 564]}
+  811:  {at: [19.99, -120.85, 357.82], radius: 1.43, source: navmesh, links: [287, 357, 443, 487, 621, 665]}
+  812:  {at: [-24.63, -118.90, 349.40], radius: 1.39, source: navmesh, links: [0, 36, 323]}
+  813:  {at: [-5.18, -120.10, 383.69], radius: 1.01, source: navmesh, links: [324, 616, 879, 1023]}
+  814:  {at: [9.60, 1.10, 29.61], radius: 1.15, source: navmesh, links: [157, 561, 808, 944]}
+  815:  {at: [32.43, -0.90, -281.47], radius: 1.14, source: navmesh, links: [68, 303, 412, 469, 842, 992]}
+  816:  {at: [-230.73, -58.90, -39.27], radius: 1.16, source: navmesh, links: [188, 826, 888]}
+  817:  {at: [-24.57, -0.90, -268.93], radius: 1.15, source: navmesh, links: [252, 350, 444, 942, 1037, 1088]}
+  818:  {at: [-239.31, -1.10, 327.99], radius: 1.04, source: navmesh, links: [307, 863]}
+  819:  {at: [14.26, -0.90, -310.71], radius: 1.59, source: navmesh, links: [225, 321, 355, 543, 544, 601, 764]}
+  820:  {at: [-205.17, 2.10, 356.40], radius: 1.01, source: navmesh, links: [48, 251, 376, 505, 871]}
+  821:  {at: [6.97, -2.10, -247.70], radius: 1.03, source: navmesh, links: [235, 638, 1074]}
+  822:  {at: [-221.34, 0.87, 352.61], radius: 1.15, source: navmesh, links: [182, 228, 994]}
+  823:  {at: [-31.74, -118.90, 321.98], radius: 1.49, source: navmesh, links: [5, 125]}
+  824:  {at: [-278.94, 2.10, 366.65], radius: 1.17, source: navmesh, links: [117, 149, 530]}
+  825:  {at: [0.41, -2.10, -32.75], radius: 1.02, source: navmesh, links: [424, 955]}
+  826:  {at: [-230.42, -58.90, -34.62], radius: 1.16, source: navmesh, links: [136, 188, 474, 761, 816, 888]}
+  827:  {at: [8.80, -120.10, 384.31], radius: 1.08, source: navmesh, links: [907, 1096]}
+  828:  {at: [-238.41, -0.42, 264.46], radius: 1.07, source: navmesh, links: [21, 65, 178, 454, 877]}
+  829:  {at: [223.14, 59.70, -1.11], radius: 1.18, source: navmesh, links: [2, 237, 322, 459, 596, 630, 1056]}
+  830:  {at: [39.56, -118.90, 352.37], radius: 1.03, source: navmesh, links: [66, 326, 379]}
+  831:  {at: [231.62, 60.10, 20.03], radius: 1.11, source: navmesh, links: [928, 1065]}
+  832:  {at: [-249.02, 2.10, 321.53], radius: 1.15, source: navmesh, links: [75, 499, 623]}
+  833:  {at: [-33.82, -0.90, -241.10], radius: 1.18, source: navmesh, links: [249, 803, 1054]}
+  834:  {at: [-10.00, -119.31, 361.63], radius: 1.66, source: navmesh, links: [170, 193, 218, 588, 636, 714]}
+  835:  {at: [-14.24, 0.61, -9.66], radius: 1.48, source: navmesh, links: [28, 649]}
+  836:  {at: [-7.44, -0.10, 23.82], radius: 1.03, source: navmesh, links: [385, 535]}
+  837:  {at: [-266.18, -58.90, -33.07], radius: 1.59, source: navmesh, links: [79, 137, 445, 776, 1129]}
+  838:  {at: [-9.19, -0.90, -268.60], radius: 1.01, source: navmesh, links: [87, 194, 241, 427, 1009]}
+  839:  {at: [-25.91, 1.10, 32.14], radius: 1.58, source: navmesh, links: [93, 279, 283, 333, 375, 971]}
+  840:  {at: [15.79, -118.90, 331.70], radius: 1.54, source: navmesh, links: [62, 90, 214, 697, 1013, 1082]}
+  841:  {at: [-37.63, -118.90, 350.46], radius: 1.30, source: navmesh, links: [36, 169, 467, 872]}
+  842:  {at: [37.46, -0.90, -283.05], radius: 1.24, source: navmesh, links: [68, 412, 603, 815, 992]}
+  843:  {at: [-216.61, -58.90, -28.27], radius: 1.50, source: navmesh, links: [27, 188, 407, 438, 768]}
+  844:  {at: [-241.18, -1.10, 292.44], radius: 1.06, source: navmesh, links: [126]}
+  845:  {at: [-39.86, -0.90, -261.45], radius: 1.35, source: navmesh, links: [448]}
+  846:  {at: [0.95, -122.10, 331.35], radius: 1.06, source: navmesh, links: [277, 999, 1066]}
+  847:  {at: [-27.40, -0.90, -301.53], radius: 1.36, source: navmesh, links: [41, 128, 343, 449, 570]}
+  848:  {at: [6.32, -1.22, -257.50], radius: 1.05, source: navmesh, links: [20, 130, 772, 991, 1033]}
+  849:  {at: [8.69, -119.34, 347.88], radius: 1.43, source: navmesh, links: [112, 760, 1087]}
+  850:  {at: [37.51, 1.10, 6.17], radius: 1.08, source: navmesh, links: [361, 428, 703, 1103]}
+  851:  {at: [-276.83, -58.90, -8.17], radius: 1.02, source: navmesh, links: [281, 471, 501, 610, 1115]}
+  852:  {at: [244.84, 60.06, 13.36], radius: 1.30, source: navmesh, links: [124, 145, 358, 1119]}
+  853:  {at: [-9.43, -118.90, 397.84], radius: 1.04, source: navmesh, links: [297, 534, 701, 785]}
+  854:  {at: [-242.23, 0.90, 384.43], radius: 1.12, source: navmesh, links: [46, 223, 369, 779, 952]}
+  855:  {at: [-23.47, -0.90, -252.35], radius: 1.31, source: navmesh, links: [271, 426, 1018]}
+  856:  {at: [-35.38, -118.90, 364.93], radius: 1.09, source: navmesh, links: [86, 557, 584, 634, 661, 964, 967]}
+  857:  {at: [-0.37, -0.20, 20.87], radius: 1.26, source: navmesh, links: [377, 385, 535]}
+  858:  {at: [-225.79, -58.96, 28.97], radius: 1.43, source: navmesh, links: [88, 174, 211, 425, 574, 939, 1042, 1080]}
+  859:  {at: [-236.48, 2.10, 391.48], radius: 1.16, source: navmesh, links: [47, 314, 370, 653, 666]}
+  860:  {at: [1.74, 0.05, -13.34], radius: 1.65, source: navmesh, links: [1, 28, 40, 652, 933]}
+  861:  {at: [-233.59, -60.10, 22.09], radius: 1.18, source: navmesh, links: [183, 558]}
+  862:  {at: [-253.50, 0.26, 268.69], radius: 1.01, source: navmesh, links: [301]}
+  863:  {at: [-240.26, -1.10, 332.05], radius: 1.04, source: navmesh, links: [818]}
+  864:  {at: [-229.41, -0.16, 231.41], radius: 1.00, source: navmesh, links: [320, 659, 920, 1110]}
+  865:  {at: [-239.13, -1.10, 207.13], radius: 1.13, source: navmesh, links: [260, 1069]}
+  866:  {at: [276.93, 61.10, -39.45], radius: 1.78, source: navmesh, links: [299, 508]}
+  867:  {at: [229.28, 60.66, 10.33], radius: 1.28, source: navmesh, links: [13, 14, 237, 495, 1119]}
+  868:  {at: [-237.80, -60.93, -20.53], radius: 1.03, source: navmesh, links: [285, 692, 1052]}
+  869:  {at: [-4.65, -0.90, -307.02], radius: 1.20, source: navmesh, links: [113, 246, 413, 742]}
+  870:  {at: [-240.26, -62.10, -59.56], radius: 1.14, source: navmesh, links: [618]}
+  871:  {at: [-200.83, 2.10, 356.12], radius: 1.09, source: navmesh, links: [48, 376, 820]}
+  872:  {at: [-38.70, -118.90, 355.92], radius: 1.24, source: navmesh, links: [169, 467, 583, 841, 964]}
+  873:  {at: [-226.37, -0.08, 270.84], radius: 1.15, source: navmesh, links: [85, 423, 470]}
+  874:  {at: [-31.07, 1.10, 13.61], radius: 1.44, source: navmesh, links: [38, 104, 447, 600, 937, 956, 1012, 1016]}
+  875:  {at: [27.43, -118.90, 375.74], radius: 1.39, source: navmesh, links: [199, 205, 406, 457, 537, 784, 976]}
+  876:  {at: [278.55, 61.10, -12.10], radius: 1.04, source: navmesh, links: [25, 233, 332, 602, 678, 1117, 1131]}
+  877:  {at: [-243.27, -0.86, 267.20], radius: 1.23, source: navmesh, links: [65, 178, 754, 828]}
+  878:  {at: [-1.47, -2.10, -224.68], radius: 1.15, source: navmesh, links: [107, 1020]}
+  879:  {at: [0.28, -120.10, 383.03], radius: 1.23, source: navmesh, links: [419, 616, 813, 1096]}
+  880:  {at: [-9.97, 1.10, 28.22], radius: 1.10, source: navmesh, links: [69, 146, 156, 279, 755, 971]}
+  881:  {at: [-38.50, -118.90, 385.52], radius: 1.81, source: navmesh, links: [11, 405, 417, 916]}
+  882:  {at: [-16.53, -0.90, -278.36], radius: 1.10, source: navmesh, links: [241, 350, 368]}
+  883:  {at: [21.35, -0.90, -241.45], radius: 1.07, source: navmesh, links: [302, 891, 900, 1095]}
+  884:  {at: [-227.86, 2.08, 344.75], radius: 1.50, source: navmesh, links: [496, 998]}
+  885:  {at: [-4.91, -2.10, -241.25], radius: 1.02, source: navmesh, links: [175]}
+  886:  {at: [202.17, 61.10, 37.31], radius: 1.65, source: navmesh, links: [16, 421]}
+  887:  {at: [-20.32, 1.10, -31.25], radius: 1.57, source: navmesh, links: [176, 452, 479, 562, 769]}
+  888:  {at: [-227.63, -58.90, -30.02], radius: 1.08, source: navmesh, links: [27, 188, 474, 761, 816, 826]}
+  889:  {at: [9.92, -0.90, -269.08], radius: 1.07, source: navmesh, links: [219, 410, 548, 960, 1010, 1122]}
+  890:  {at: [-10.13, -119.30, 340.81], radius: 1.45, source: navmesh, links: [714, 999]}
+  891:  {at: [18.07, -0.90, -244.19], radius: 1.02, source: navmesh, links: [6, 302, 883]}
+  892:  {at: [274.43, 61.10, 5.23], radius: 1.13, source: navmesh, links: [203, 256, 264, 308, 615, 619, 1120, 1125]}
+  893:  {at: [-33.30, -0.90, -284.42], radius: 1.19, source: navmesh, links: [80, 135, 693, 752, 970, 1017]}
+  894:  {at: [-247.37, -58.90, 29.10], radius: 1.00, source: navmesh, links: [7, 612, 745]}
+  895:  {at: [-278.91, -58.90, -38.43], radius: 1.53, source: navmesh, links: [64, 445]}
+  896:  {at: [-250.34, 2.10, 386.24], radius: 1.09, source: navmesh, links: [26, 81, 208, 525, 666, 1002]}
+  897:  {at: [265.01, 59.82, -6.18], radius: 1.01, source: navmesh, links: [706, 788, 982]}
+  898:  {at: [6.40, -0.26, -18.22], radius: 1.09, source: navmesh, links: [229, 648, 933]}
+  899:  {at: [-255.85, -58.91, -12.54], radius: 1.44, source: navmesh, links: [55, 477]}
+  900:  {at: [28.02, -0.90, -240.52], radius: 1.68, source: navmesh, links: [60, 302, 403, 883]}
+  901:  {at: [258.93, 61.10, -17.12], radius: 1.50, source: navmesh, links: [39, 116, 159, 668]}
+  902:  {at: [15.66, 1.10, 39.04], radius: 1.52, source: navmesh, links: [157, 250, 593, 944]}
+  903:  {at: [213.66, 61.10, 10.11], radius: 1.17, source: navmesh, links: [119, 160, 807, 1058]}
+  904:  {at: [-258.88, -59.31, 10.55], radius: 1.49, source: navmesh, links: [362, 576, 735]}
+  905:  {at: [34.03, -0.90, -248.02], radius: 1.09, source: navmesh, links: [60, 192, 403, 493, 685]}
+  906:  {at: [7.36, -1.80, -291.87], radius: 1.08, source: navmesh, links: [33, 485, 521, 802]}
+  907:  {at: [7.43, -120.15, 380.13], radius: 1.04, source: navmesh, links: [419, 827, 1096]}
+  908:  {at: [-6.97, 1.10, -33.90], radius: 1.06, source: navmesh, links: [133, 452, 533, 725, 753]}
+  909:  {at: [-35.61, 1.10, 39.28], radius: 1.64, source: navmesh, links: [283, 333, 929]}
+  910:  {at: [241.37, 57.90, -32.79], radius: 1.06, source: navmesh, links: [667, 790]}
+  911:  {at: [235.28, 59.85, -25.58], radius: 1.10, source: navmesh, links: [411, 1118]}
+  912:  {at: [-5.39, -1.76, -284.72], radius: 1.14, source: navmesh, links: [607, 671, 780, 1085]}
+  913:  {at: [21.00, 1.10, 25.13], radius: 1.32, source: navmesh, links: [110, 236, 550, 561, 930, 944]}
+  914:  {at: [-20.34, -0.26, -2.37], radius: 1.01, source: navmesh, links: [63, 148, 164, 649, 791]}
+  915:  {at: [-207.65, -58.90, -4.78], radius: 1.03, source: navmesh, links: [19, 312, 451, 614, 690]}
+  916:  {at: [-38.96, -118.90, 378.22], radius: 1.56, source: navmesh, links: [11, 86, 557, 881]}
+  917:  {at: [-266.33, 0.90, 363.04], radius: 1.05, source: navmesh, links: [37, 696, 946, 985]}
+  918:  {at: [12.96, -1.05, -252.69], radius: 1.01, source: navmesh, links: [638, 772]}
+  919:  {at: [-2.98, -118.90, 320.94], radius: 1.01, source: navmesh, links: [173, 669]}
+  920:  {at: [-227.85, -0.02, 227.72], radius: 1.00, source: navmesh, links: [320, 864]}
+  921:  {at: [-264.20, -58.90, 29.73], radius: 1.61, source: navmesh, links: [24, 399, 595, 609]}
+  922:  {at: [-242.18, -60.38, 18.54], radius: 1.11, source: navmesh, links: [42, 183, 751]}
+  923:  {at: [-28.06, 1.10, -2.50], radius: 1.04, source: navmesh, links: [158, 774]}
+  924:  {at: [-231.24, 2.10, 397.99], radius: 1.30, source: navmesh, links: [47, 314, 483, 1004]}
+  925:  {at: [-203.15, -58.90, 26.53], radius: 1.59, source: navmesh, links: [10, 161, 389, 622]}
+  926:  {at: [-237.86, 0.22, 249.94], radius: 1.09, source: navmesh, links: [309, 662, 770]}
+  927:  {at: [-18.28, -0.90, -244.95], radius: 1.04, source: navmesh, links: [271, 625, 1051]}
+  928:  {at: [236.16, 59.79, 18.74], radius: 1.18, source: navmesh, links: [480, 507, 831, 1108]}
+  929:  {at: [-38.34, 1.10, 29.38], radius: 1.68, source: navmesh, links: [333, 600, 909]}
+  930:  {at: [25.70, 1.10, 28.54], radius: 1.45, source: navmesh, links: [110, 236, 363, 670, 913]}
+  931:  {at: [-2.62, -2.10, -244.86], radius: 1.07, source: navmesh, links: [235, 394, 797]}
+  932:  {at: [-1.13, -2.10, -235.50], radius: 1.20, source: navmesh, links: [107, 175]}
+  933:  {at: [0.41, -1.42, -22.42], radius: 1.01, source: navmesh, links: [1, 229, 424, 860, 898]}
+  934:  {at: [-266.97, 2.10, 326.20], radius: 1.59, source: navmesh, links: [91, 372, 623, 651, 979]}
+  935:  {at: [261.87, 59.90, 0.63], radius: 1.05, source: navmesh, links: [478, 706, 711, 765, 982]}
+  936:  {at: [-225.55, 1.65, 367.28], radius: 1.40, source: navmesh, links: [30, 77, 506]}
+  937:  {at: [-24.89, 1.10, 11.50], radius: 1.09, source: navmesh, links: [38, 108, 874, 956]}
+  938:  {at: [10.36, -0.98, -278.31], radius: 1.02, source: navmesh, links: [420, 1007]}
+  939:  {at: [-230.98, -58.90, 26.54], radius: 1.01, source: navmesh, links: [88, 425, 858]}
+  940:  {at: [-265.32, 0.90, 353.85], radius: 1.29, source: navmesh, links: [31, 37, 946, 985]}
+  941:  {at: [38.94, -0.90, -241.38], radius: 1.13, source: navmesh, links: [192, 403]}
+  942:  {at: [-24.49, -0.90, -273.55], radius: 1.13, source: navmesh, links: [45, 252, 350, 620, 817]}
+  943:  {at: [-277.93, 2.10, 352.64], radius: 1.09, source: navmesh, links: [120, 328, 514, 657, 684]}
+  944:  {at: [14.20, 1.10, 30.17], radius: 1.16, source: navmesh, links: [110, 157, 561, 814, 902, 913]}
+  945:  {at: [28.89, 1.10, 8.90], radius: 1.16, source: navmesh, links: [428, 550, 703]}
+  946:  {at: [-266.56, 0.90, 358.85], radius: 1.01, source: navmesh, links: [37, 917, 940, 985]}
+  947:  {at: [-230.30, -58.90, 39.17], radius: 1.08, source: navmesh, links: [88, 489, 1042, 1080]}
+  948:  {at: [39.60, 1.10, 16.02], radius: 1.47, source: navmesh, links: [134, 472, 703, 1103]}
+  949:  {at: [-213.37, 0.90, 363.97], radius: 1.08, source: navmesh, links: [468, 532, 994]}
+  950:  {at: [-249.36, 1.53, 346.56], radius: 1.61, source: navmesh, links: [49, 270, 747]}
+  951:  {at: [-0.96, -2.42, -298.10], radius: 1.03, source: navmesh, links: [521, 642, 986, 1116]}
+  952:  {at: [-237.58, 0.90, 386.98], radius: 1.01, source: navmesh, links: [46, 223, 779, 854]}
+  953:  {at: [-19.26, -119.95, 351.70], radius: 1.39, source: navmesh, links: [275, 714]}
+  954:  {at: [-1.01, -1.04, -277.68], radius: 1.08, source: navmesh, links: [234, 607, 671, 794]}
+  955:  {at: [-1.21, -2.10, -36.48], radius: 1.02, source: navmesh, links: [433, 825]}
+  956:  {at: [-24.71, 1.10, 18.87], radius: 1.62, source: navmesh, links: [93, 108, 156, 874, 937]}
+  957:  {at: [-246.17, -59.48, -9.48], radius: 1.41, source: navmesh, links: [180, 276, 285, 390, 1025, 1052]}
+  958:  {at: [21.39, -0.90, -265.10], radius: 1.16, source: navmesh, links: [98, 109, 221, 460, 710]}
+  959:  {at: [-229.03, -59.33, 7.30], radius: 1.57, source: navmesh, links: [209, 432, 705, 983]}
+  960:  {at: [14.49, -0.90, -270.06], radius: 1.17, source: navmesh, links: [219, 460, 613, 710, 889, 1010, 1122]}
+  961:  {at: [218.20, 61.10, 32.53], radius: 1.60, source: navmesh, links: [97, 167, 461, 515, 522]}
+  962:  {at: [-250.18, 2.10, 333.46], radius: 1.14, source: navmesh, links: [75, 243, 296, 499, 623, 695]}
+  963:  {at: [-34.92, -0.90, -258.76], radius: 1.18, source: navmesh, links: [381, 395, 426, 448, 715]}
+  964:  {at: [-37.82, -118.90, 361.33], radius: 1.09, source: navmesh, links: [86, 583, 634, 856, 872, 967]}
+  965:  {at: [21.66, -0.10, -8.79], radius: 1.01, source: navmesh, links: [59, 222, 391, 539]}
+  966:  {at: [5.64, -2.63, -242.10], radius: 1.44, source: navmesh, links: [175]}
+  967:  {at: [-32.07, -118.90, 361.10], radius: 1.01, source: navmesh, links: [554, 583, 584, 661, 856, 964]}
+  968:  {at: [-33.80, -0.90, -312.59], radius: 1.39, source: navmesh, links: [41, 201, 631, 787, 793]}
+  969:  {at: [-1.35, -1.10, -264.21], radius: 1.05, source: navmesh, links: [20, 76, 272, 1033]}
+  970:  {at: [-28.69, -0.90, -281.83], radius: 1.20, source: navmesh, links: [45, 518, 620, 693, 752, 893]}
+  971:  {at: [-16.96, 1.10, 28.15], radius: 1.54, source: navmesh, links: [69, 93, 146, 156, 279, 755, 839, 880]}
+  972:  {at: [-228.09, -58.90, -22.13], radius: 1.26, source: navmesh, links: [27, 105, 407]}
+  973:  {at: [-274.12, 2.10, 399.33], radius: 1.56, source: navmesh, links: [54, 408, 646]}
+  974:  {at: [217.26, 61.10, -28.02], radius: 1.52, source: navmesh, links: [103, 179, 504, 512, 579, 681]}
+  975:  {at: [-201.24, 2.10, 330.50], radius: 1.53, source: navmesh, links: [181, 519, 1030]}
+  976:  {at: [31.40, -118.90, 367.78], radius: 1.05, source: navmesh, links: [205, 397, 457, 767, 798, 875]}
+  977:  {at: [22.64, 0.33, 5.95], radius: 1.12, source: navmesh, links: [59, 259, 748]}
+  978:  {at: [-256.03, -60.59, -3.00], radius: 1.23, source: navmesh, links: [180, 217, 282, 390, 1099]}
+  979:  {at: [-262.16, 2.10, 331.55], radius: 1.55, source: navmesh, links: [243, 372, 623, 651, 672, 934]}
+  980:  {at: [-244.65, -59.00, -29.08], radius: 1.08, source: navmesh, links: [473, 482]}
+  981:  {at: [14.31, -0.13, -2.65], radius: 1.49, source: navmesh, links: [32, 40, 59]}
+  982:  {at: [261.94, 59.90, -3.58], radius: 1.01, source: navmesh, links: [706, 765, 788, 897, 935]}
+  983:  {at: [-231.85, -59.83, 13.18], radius: 1.29, source: navmesh, links: [56, 432, 959]}
+  984:  {at: [-265.05, 2.10, 381.11], radius: 1.57, source: navmesh, links: [204, 374, 464, 564, 687]}
+  985:  {at: [-259.10, 0.08, 357.04], radius: 1.02, source: navmesh, links: [31, 37, 49, 492, 917, 940, 946, 1011]}
+  986:  {at: [0.87, -2.37, -301.99], radius: 1.07, source: navmesh, links: [591, 642, 951]}
+  987:  {at: [-36.02, -118.90, 398.92], radius: 1.59, source: navmesh, links: [405, 586, 627]}
+  988:  {at: [-8.76, -0.92, -260.63], radius: 1.01, source: navmesh, links: [272, 431, 1111]}
+  989:  {at: [7.81, -118.90, 322.77], radius: 1.29, source: navmesh, links: [74, 606, 1013]}
+  990:  {at: [209.33, 61.10, -15.15], radius: 1.38, source: navmesh, links: [61, 95, 96, 179, 349, 504, 1006]}
+  991:  {at: [2.59, -1.28, -255.53], radius: 1.06, source: navmesh, links: [20, 130, 736, 772, 848, 1033, 1074]}
+  992:  {at: [38.32, -0.90, -278.16], radius: 1.09, source: navmesh, links: [99, 412, 815, 842]}
+  993:  {at: [-270.36, -58.90, 6.54], radius: 1.12, source: navmesh, links: [327, 383, 450, 565]}
+  994:  {at: [-219.03, 0.82, 359.89], radius: 1.16, source: navmesh, links: [77, 228, 468, 532, 822, 949]}
+  995:  {at: [34.42, 1.10, 39.34], radius: 1.58, source: navmesh, links: [363, 434, 670]}
+  996:  {at: [-9.92, -0.90, -298.27], radius: 1.13, source: navmesh, links: [78, 742]}
+  997:  {at: [-244.62, 0.07, 241.64], radius: 1.19, source: navmesh, links: [189, 309, 624, 709, 770]}
+  998:  {at: [-223.49, 2.10, 336.82], radius: 1.63, source: navmesh, links: [187, 414, 453, 496, 884, 1053, 1102]}
+  999:  {at: [-0.91, -120.53, 340.92], radius: 1.46, source: navmesh, links: [112, 210, 277, 291, 846, 890]}
+  1000: {at: [-205.14, -58.90, 5.37], radius: 1.03, source: navmesh, links: [115, 387, 451, 466, 598, 795, 1003]}
+  1001: {at: [-215.26, -60.22, -8.78], radius: 1.11, source: navmesh, links: [29, 345, 1107]}
+  1002: {at: [-246.77, 2.10, 388.73], radius: 1.09, source: navmesh, links: [26, 208, 525, 666, 896]}
+  1003: {at: [-200.71, -58.90, 12.51], radius: 1.11, source: navmesh, links: [10, 115, 387, 466, 795, 1000]}
+  1004: {at: [-227.56, 2.10, 394.34], radius: 1.19, source: navmesh, links: [47, 163, 346, 370, 483, 653, 924]}
+  1005: {at: [235.58, 60.99, -30.12], radius: 1.02, source: navmesh, links: [300, 502, 513, 806]}
+  1006: {at: [207.83, 61.10, -9.85], radius: 1.07, source: navmesh, links: [61, 95, 96, 644, 990]}
+  1007: {at: [7.89, -1.27, -282.14], radius: 1.10, source: navmesh, links: [33, 396, 420, 792, 938]}
+  1008: {at: [-250.06, -59.10, -25.73], radius: 1.50, source: navmesh, links: [55, 482, 555, 629]}
+  1009: {at: [-15.15, -0.90, -270.51], radius: 1.04, source: navmesh, links: [87, 241, 350, 838, 1037]}
+  1010: {at: [9.40, -0.90, -273.41], radius: 1.02, source: navmesh, links: [219, 548, 889, 960]}
+  1011: {at: [-260.34, 0.90, 367.05], radius: 1.10, source: navmesh, links: [37, 696, 985]}
+  1012: {at: [-36.93, 1.10, 10.76], radius: 1.10, source: navmesh, links: [38, 104, 447, 874, 1016]}
+  1013: {at: [10.86, -118.90, 326.92], radius: 1.22, source: navmesh, links: [74, 214, 606, 697, 840, 989]}
+  1014: {at: [-16.20, -0.90, -293.00], radius: 1.35, source: navmesh, links: [1079]}
+  1015: {at: [-203.86, 2.10, 374.60], radius: 1.42, source: navmesh, links: [52, 212, 436, 757, 1035]}
+  1016: {at: [-28.80, 1.10, 6.61], radius: 1.19, source: navmesh, links: [38, 774, 874, 1012]}
+  1017: {at: [-36.47, -0.90, -288.31], radius: 1.20, source: navmesh, links: [80, 135, 628, 752, 893]}
+  1018: {at: [-27.86, -0.90, -249.28], radius: 1.25, source: navmesh, links: [249, 271, 426, 715, 803, 855]}
+  1019: {at: [-19.49, -0.90, -288.71], radius: 1.03, source: navmesh, links: [128, 518, 617]}
+  1020: {at: [-0.11, -2.10, -220.29], radius: 1.15, source: navmesh, links: [878]}
+  1021: {at: [-2.57, -0.90, -319.00], radius: 1.34, source: navmesh, links: [113, 592]}
+  1022: {at: [29.93, -0.90, -292.68], radius: 1.47, source: navmesh, links: [68, 266, 292, 603, 645, 1048]}
+  1023: {at: [-8.87, -120.15, 382.11], radius: 1.01, source: navmesh, links: [324, 616, 813]}
+  1024: {at: [-234.27, -1.65, 279.21], radius: 1.12, source: navmesh, links: [575]}
+  1025: {at: [-249.09, -59.59, -14.72], radius: 1.41, source: navmesh, links: [180, 285, 957]}
+  1026: {at: [-200.12, 2.10, 391.66], radius: 1.41, source: navmesh, links: [131, 439, 462, 758]}
+  1027: {at: [236.47, 61.10, 29.58], radius: 1.05, source: navmesh, links: [352, 510, 605]}
+  1028: {at: [-243.59, -0.16, 258.13], radius: 1.12, source: navmesh, links: [178, 454, 662]}
+  1029: {at: [35.16, 1.10, -20.69], radius: 1.51, source: navmesh, links: [23, 102, 151, 545, 771]}
+  1030: {at: [-210.95, 2.10, 331.56], radius: 1.57, source: navmesh, links: [4, 72, 181, 414, 519, 975]}
+  1031: {at: [-279.07, 2.10, 327.87], radius: 1.59, source: navmesh, links: [91, 364]}
+  1032: {at: [-235.44, 0.20, 339.72], radius: 1.20, source: navmesh, links: [475, 650, 717]}
+  1033: {at: [4.68, -1.12, -261.39], radius: 1.05, source: navmesh, links: [20, 848, 969, 991]}
+  1034: {at: [-245.60, 1.51, 361.22], radius: 1.63, source: navmesh, links: [49, 141, 227, 270, 492, 686, 738]}
+  1035: {at: [-200.45, 2.10, 368.20], radius: 1.02, source: navmesh, links: [436, 547, 1015]}
+  1036: {at: [257.74, 61.09, 12.21], radius: 1.28, source: navmesh, links: [152, 165]}
+  1037: {at: [-20.10, -0.90, -266.73], radius: 1.22, source: navmesh, links: [87, 350, 444, 733, 817, 1009]}
+  1038: {at: [239.75, 57.90, -59.11], radius: 1.05, source: navmesh, links: [58]}
+  1039: {at: [-8.64, -120.10, 335.19], radius: 1.16, source: navmesh, links: [291]}
+  1040: {at: [-0.43, -2.10, -50.17], radius: 1.12, source: navmesh, links: [18, 739]}
+  1041: {at: [243.58, 59.90, 26.91], radius: 1.02, source: navmesh, links: [507, 1108]}
+  1042: {at: [-233.67, -58.90, 34.66], radius: 1.13, source: navmesh, links: [9, 88, 425, 489, 858, 947]}
+  1043: {at: [-277.39, -58.90, 2.16], radius: 1.15, source: navmesh, links: [383, 450, 610, 721]}
+  1044: {at: [-249.08, -1.10, 274.91], radius: 1.10, source: navmesh, links: [691, 754]}
+  1045: {at: [16.78, -0.90, -251.37], radius: 1.01, source: navmesh, links: [336]}
+  1046: {at: [-234.42, -1.62, 220.98], radius: 1.11, source: navmesh, links: [1075]}
+  1047: {at: [39.79, -0.90, -257.94], radius: 1.14, source: navmesh, links: [493, 498]}
+  1048: {at: [28.77, -0.90, -300.44], radius: 1.42, source: navmesh, links: [155, 266, 292, 430, 676, 1022, 1070]}
+  1049: {at: [40.14, -0.90, -297.51], radius: 1.01, source: navmesh, links: [247, 292, 603, 676, 1127]}
+  1050: {at: [-206.84, -58.90, -38.49], radius: 1.64, source: navmesh, links: [344, 418, 768]}
+  1051: {at: [-16.27, -0.90, -240.94], radius: 1.12, source: navmesh, links: [580, 625, 927, 1126]}
+  1052: {at: [-241.75, -60.93, -19.40], radius: 1.03, source: navmesh, links: [285, 289, 313, 692, 868, 957]}
+  1053: {at: [-221.97, 2.10, 327.85], radius: 1.52, source: navmesh, links: [72, 366, 414, 453, 542, 998]}
+  1054: {at: [-38.53, -0.90, -240.83], radius: 1.18, source: navmesh, links: [249, 833]}
+  1055: {at: [25.72, 1.10, -33.79], radius: 1.63, source: navmesh, links: [23, 150, 267, 585, 590, 775]}
+  1056: {at: [214.10, 59.90, 1.44], radius: 1.02, source: navmesh, links: [322, 459, 630, 829]}
+  1057: {at: [-235.62, 0.23, 254.80], radius: 1.02, source: navmesh, links: [454, 662]}
+  1058: {at: [209.12, 61.10, 8.97], radius: 1.17, source: navmesh, links: [160, 526, 677, 807, 903]}
+  1059: {at: [242.24, 59.02, -20.82], radius: 1.01, source: navmesh, links: [166, 316, 422, 718, 790]}
+  1060: {at: [9.44, -0.10, 25.01], radius: 1.15, source: navmesh, links: [377]}
+  1061: {at: [-37.20, 1.10, -29.07], radius: 1.58, source: navmesh, links: [71, 304, 465]}
+  1062: {at: [6.95, -118.90, 389.46], radius: 1.01, source: navmesh, links: [269, 338, 528, 660]}
+  1063: {at: [200.58, 61.10, -6.32], radius: 1.08, source: navmesh, links: [96, 265]}
+  1064: {at: [-234.03, -1.17, 231.69], radius: 1.05, source: navmesh, links: [121, 298, 641]}
+  1065: {at: [230.38, 60.76, 15.76], radius: 1.11, source: navmesh, links: [14, 831, 1119]}
+  1066: {at: [-0.29, -122.10, 325.62], radius: 1.13, source: navmesh, links: [523, 846]}
+  1067: {at: [-233.55, -59.50, -5.57], radius: 1.46, source: navmesh, links: [154, 209, 276, 285, 540, 1073]}
+  1068: {at: [20.49, -118.90, 320.50], radius: 1.56, source: navmesh, links: [62, 74, 529]}
+  1069: {at: [-240.76, -1.10, 211.35], radius: 1.03, source: navmesh, links: [720, 865]}
+  1070: {at: [19.68, -0.90, -296.95], radius: 1.25, source: navmesh, links: [266, 355, 430, 544, 645, 1048]}
+  1071: {at: [-14.62, -0.90, -282.31], radius: 1.00, source: navmesh, links: [563, 567]}
+  1072: {at: [26.91, -0.10, -2.27], radius: 1.01, source: navmesh, links: [59, 259, 391, 539]}
+  1073: {at: [-227.30, -59.78, -4.09], radius: 1.35, source: navmesh, links: [154, 209, 240, 705, 1067]}
+  1074: {at: [1.25, -2.24, -251.38], radius: 1.07, source: navmesh, links: [130, 235, 394, 736, 821, 991]}
+  1075: {at: [-238.84, -1.10, 220.68], radius: 1.11, source: navmesh, links: [656, 720, 1046]}
+  1076: {at: [249.90, 61.08, 35.72], radius: 1.10, source: navmesh, links: [89, 335, 520, 689, 732]}
+  1077: {at: [-218.94, -60.67, 4.97], radius: 1.07, source: navmesh, links: [8, 240, 341, 637, 705]}
+  1078: {at: [38.69, -118.90, 386.22], radius: 1.40, source: navmesh, links: [185, 406, 442, 569]}
+  1079: {at: [-16.61, -0.90, -285.79], radius: 1.00, source: navmesh, links: [368, 1014]}
+  1080: {at: [-223.20, -58.90, 39.35], radius: 1.62, source: navmesh, links: [88, 211, 858, 947]}
+  1081: {at: [251.95, 60.31, 3.50], radius: 1.39, source: navmesh, links: [124, 145, 207, 765]}
+  1082: {at: [16.56, -118.94, 338.17], radius: 1.63, source: navmesh, links: [90, 140, 214, 491, 840]}
+  1083: {at: [2.12, -118.90, 399.16], radius: 1.10, source: navmesh, links: [269, 386, 750, 801]}
+  1084: {at: [-1.18, -120.31, 376.73], radius: 1.29, source: navmesh, links: [168, 218, 315, 588]}
+  1085: {at: [-5.04, -2.10, -289.39], radius: 1.07, source: navmesh, links: [599, 780, 912]}
+  1086: {at: [227.99, 61.10, 25.98], radius: 1.54, source: navmesh, links: [97, 461, 581, 605]}
+  1087: {at: [9.21, -119.69, 341.44], radius: 1.19, source: navmesh, links: [511, 849]}
+  1088: {at: [-30.41, -0.90, -265.73], radius: 1.31, source: navmesh, links: [252, 381, 444, 448, 817]}
+  1089: {at: [-237.21, -60.15, -25.30], radius: 1.05, source: navmesh, links: [692]}
+  1090: {at: [237.97, 61.10, 39.39], radius: 1.02, source: navmesh, links: [325, 352, 781]}
+  1091: {at: [33.17, -118.90, 321.60], radius: 1.57, source: navmesh, links: [286, 529, 654]}
+  1092: {at: [-9.52, -118.90, 387.66], radius: 1.20, source: navmesh, links: [153, 172, 297, 701, 785]}
+  1093: {at: [20.16, -119.38, 369.57], radius: 1.07, source: navmesh, links: [357, 497]}
+  1094: {at: [28.65, -118.90, 358.24], radius: 1.02, source: navmesh, links: [367, 767]}
+  1095: {at: [15.45, -0.90, -241.04], radius: 1.02, source: navmesh, links: [162, 883]}
+  1096: {at: [3.37, -120.10, 379.21], radius: 1.04, source: navmesh, links: [419, 616, 827, 879, 907]}
+  1097: {at: [279.91, 61.10, 30.13], radius: 1.54, source: navmesh, links: [254, 484, 577, 746]}
+  1098: {at: [-231.41, 0.88, 382.18], radius: 1.10, source: navmesh, links: [46, 633, 779]}
+  1099: {at: [-265.81, -60.10, -4.43], radius: 1.00, source: navmesh, links: [224, 282, 546, 978]}
+  1100: {at: [-246.16, -58.90, 38.61], radius: 1.05, source: navmesh, links: [129, 612, 745]}
+  1101: {at: [-235.34, 0.09, 244.54], radius: 1.06, source: navmesh, links: [268, 309]}
+  1102: {at: [-222.26, 1.88, 346.93], radius: 1.44, source: navmesh, links: [496, 759, 998]}
+  1103: {at: [39.59, 1.10, 10.13], radius: 1.12, source: navmesh, links: [361, 428, 703, 850, 948]}
+  1104: {at: [222.89, 61.10, -38.97], radius: 1.60, source: navmesh, links: [103, 300, 579, 688]}
+  1105: {at: [-209.04, -58.90, -20.11], radius: 1.52, source: navmesh, links: [230, 262, 312, 407, 438]}
+  1106: {at: [-236.91, 2.10, 320.79], radius: 1.01, source: navmesh, links: [542, 694, 782]}
+  1107: {at: [-218.71, -60.75, -5.99], radius: 1.02, source: navmesh, links: [29, 240, 345, 705, 1001]}
+  1108: {at: [239.23, 59.90, 26.26], radius: 1.06, source: navmesh, links: [480, 507, 928, 1041]}
+  1109: {at: [211.20, 61.10, 21.96], radius: 1.52, source: navmesh, links: [84, 119, 160, 167, 461]}
+  1110: {at: [-229.44, -0.10, 235.86], radius: 1.04, source: navmesh, links: [263, 268, 659, 864]}
+  1111: {at: [-6.69, -0.99, -256.84], radius: 1.08, source: navmesh, links: [20, 272, 431, 541, 736, 988]}
+  1112: {at: [-13.94, 1.10, 38.98], radius: 1.38, source: navmesh, links: [146, 279, 375, 755, 762, 1114]}
+  1113: {at: [0.46, 1.10, 39.18], radius: 1.05, source: navmesh, links: [704, 778, 1114]}
+  1114: {at: [-4.04, 1.10, 38.93], radius: 1.03, source: navmesh, links: [146, 704, 755, 762, 1112, 1113]}
+  1115: {at: [-278.53, -58.90, -11.86], radius: 1.02, source: navmesh, links: [281, 471, 501, 594, 610, 851]}
+  1116: {at: [5.39, -2.70, -298.51], radius: 1.06, source: navmesh, links: [951]}
+  1117: {at: [279.42, 61.10, -18.33], radius: 1.57, source: navmesh, links: [233, 332, 560, 876]}
+  1118: {at: [234.76, 59.28, -20.01], radius: 1.21, source: navmesh, links: [411, 549, 911]}
+  1119: {at: [239.13, 60.50, 8.85], radius: 1.29, source: navmesh, links: [14, 124, 145, 358, 495, 852, 867, 1065]}
+  1120: {at: [268.02, 61.10, 7.66], radius: 1.01, source: navmesh, links: [615, 892]}
+  1121: {at: [-246.69, 0.79, 337.10], radius: 1.00, source: navmesh, links: [475, 658, 717]}
+  1122: {at: [12.10, -0.90, -265.40], radius: 1.07, source: navmesh, links: [410, 582, 710, 889, 960]}
+  1123: {at: [1.89, 0.31, 11.40], radius: 1.25, source: navmesh, links: [17, 100, 527, 740, 743]}
+  1124: {at: [-246.65, -58.90, -39.17], radius: 1.02, source: navmesh, links: [482]}
+  1125: {at: [279.61, 61.10, 6.21], radius: 1.05, source: navmesh, links: [203, 264, 308, 892]}
+  1126: {at: [-9.13, -0.90, -240.82], radius: 1.01, source: navmesh, links: [580, 1051]}
+  1127: {at: [40.12, -0.90, -293.05], radius: 1.02, source: navmesh, links: [247, 292, 603, 1049]}
+  1128: {at: [-269.96, 2.10, 356.68], radius: 1.01, source: navmesh, links: [120, 206, 328, 514, 730]}
+  1129: {at: [-264.12, -58.90, -39.19], radius: 1.53, source: navmesh, links: [137, 445, 837]}
+  1130: {at: [-279.22, -58.90, -24.01], radius: 1.52, source: navmesh, links: [64, 471, 741, 776]}
+  1131: {at: [279.22, 61.10, -6.12], radius: 1.02, source: navmesh, links: [233, 602, 876]}
+  1132: {at: [-238.55, -1.10, 280.53], radius: 1.00, source: navmesh, links: [22, 575, 578]}
+  1133: {at: [-270.73, -58.90, -2.38], radius: 1.02, source: navmesh, links: [281, 383, 501, 610]}
+  1134: {at: [12.02, 1.10, -19.15], radius: 1.11, source: navmesh, links: [186, 290]}

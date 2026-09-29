@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=../../schemas/nodes.schema.json
+
+nodes:
+
+  0:  {at: [-113.15, -2.30, -95.02], radius: 1.20, source: navmesh, links: [17]}
+  1:  {at: [-98.24, -2.34, -87.56], radius: 1.16, source: navmesh, links: [15, 18]}
+  4:  {at: [-114.25, -8.69, -104.39], radius: 1.11, source: navmesh, links: [22]}
+  5:  {at: [-110.32, -8.92, -83.12], radius: 1.11, source: navmesh, links: [19, 28]}
+  6:  {at: [-102.04, -2.30, -98.15], radius: 1.11, source: navmesh, links: [9, 20, 26]}
+  7:  {at: [-101.77, -9.09, -82.88], radius: 1.14, source: navmesh, links: [21, 28]}
+  8:  {at: [-108.52, -2.30, -105.52], radius: 1.14, source: navmesh, links: [20]}
+  9:  {at: [-108.23, -2.30, -95.46], radius: 1.09, source: navmesh, links: [6, 26]}
+  10: {at: [-89.52, -2.30, -93.42], radius: 1.01, source: navmesh, links: [24]}
+  11: {at: [-117.89, -8.87, -94.33], radius: 1.03, source: navmesh, links: [22]}
+  13: {at: [-100.04, -2.30, -104.90], radius: 1.26, source: navmesh, links: [20]}
+  15: {at: [-92.82, -2.66, -84.24], radius: 1.14, source: navmesh, links: [1]}
+  17: {at: [-115.75, -2.30, -90.81], radius: 1.03, source: navmesh, links: [0]}
+  18: {at: [-94.40, -2.30, -92.10], radius: 1.07, source: navmesh, links: [1, 23]}
+  19: {at: [-115.50, -8.49, -86.10], radius: 1.18, source: navmesh, links: [5]}
+  20: {at: [-104.71, -2.30, -102.98], radius: 1.15, source: navmesh, links: [6, 8, 13]}
+  21: {at: [-97.23, -8.38, -83.05], radius: 1.14, source: navmesh, links: [7]}
+  22: {at: [-117.86, -8.47, -100.18], radius: 1.39, source: navmesh, links: [4, 11]}
+  23: {at: [-97.76, -2.30, -96.92], radius: 1.00, source: navmesh, links: [18]}
+  24: {at: [-90.90, -2.30, -89.62], radius: 1.01, source: navmesh, links: [10]}
+  26: {at: [-103.71, -2.30, -92.79], radius: 1.21, source: navmesh, links: [6, 9]}
+  28: {at: [-106.26, -8.45, -81.28], radius: 1.11, source: navmesh, links: [5, 7]}

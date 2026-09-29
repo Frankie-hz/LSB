@@ -20,9 +20,11 @@
 */
 
 #include "map/data/datasets/zones/nodes/dataset.h"
+#include "map/data/loader.h"
 
 #include <catch2/catch_test_macros.hpp>
 
+#include <algorithm>
 #include <stdexcept>
 
 namespace
@@ -130,4 +132,19 @@ nodes:
 )";
 
     REQUIRE_THROWS_AS(NodesDataset::decode(twice), std::runtime_error);
+}
+
+TEST_CASE("nodes: East Ronfaure loads with every source present", "[data][nodes]")
+{
+    const auto records = xi::data::loadZoneFile<NodesDataset>(xi::ZoneId::EastRonfaure);
+    REQUIRE(records.has_value());
+    REQUIRE(records->size() > 1000);
+
+    for (const auto source : { xi::data::PathNodeSource::Extracted, xi::data::PathNodeSource::Recorded, xi::data::PathNodeSource::Navmesh })
+    {
+        REQUIRE(std::ranges::any_of(*records, [source](const auto& node)
+                                    {
+                                        return node.Source == source;
+                                    }));
+    }
 }

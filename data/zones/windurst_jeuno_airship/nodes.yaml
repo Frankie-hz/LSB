@@ -1,0 +1,44 @@
+# yaml-language-server: $schema=../../schemas/nodes.schema.json
+
+nodes:
+
+  0:  {at: [7.36, -3.28, -17.73], radius: 1.01, source: navmesh, links: [3]}
+  1:  {at: [7.04, -3.12, 8.75], radius: 1.40, source: navmesh, links: [5, 13]}
+  2:  {at: [6.68, -3.27, -6.13], radius: 1.07, source: navmesh, links: [12, 19]}
+  3:  {at: [9.08, -3.19, -14.00], radius: 1.03, source: navmesh, links: [0, 12]}
+  4:  {at: [-6.68, -3.31, -7.78], radius: 1.05, source: navmesh, links: [7, 10, 27, 28, 35]}
+  5:  {at: [2.57, -3.43, 12.13], radius: 1.15, source: navmesh, links: [1, 13, 26, 29]}
+  6:  {at: [3.96, 0.88, -19.94], radius: 1.01, source: navmesh, links: [14, 25, 40]}
+  7:  {at: [-7.76, -3.21, -11.85], radius: 1.05, source: navmesh, links: [4, 28, 34]}
+  8:  {at: [3.10, 0.88, 1.05], radius: 1.15, source: navmesh, links: [36]}
+  9:  {at: [-3.99, -8.53, -28.17], radius: 1.29, source: navmesh, links: [20]}
+  10: {at: [-4.40, -3.19, -0.42], radius: 1.18, source: navmesh, links: [4, 30, 32, 35, 45]}
+  11: {at: [0.70, 0.88, -10.45], radius: 1.04, source: navmesh, links: [23, 25]}
+  12: {at: [5.93, -3.13, -10.33], radius: 1.07, source: navmesh, links: [2, 3]}
+  13: {at: [6.82, -4.37, 16.02], radius: 1.14, source: navmesh, links: [1, 5]}
+  14: {at: [-1.75, 0.88, -23.54], radius: 1.11, source: navmesh, links: [6, 21, 40]}
+  16: {at: [-7.87, -3.32, 12.12], radius: 1.25, source: navmesh, links: [17, 24, 26, 41]}
+  17: {at: [-5.31, -4.69, 17.11], radius: 1.02, source: navmesh, links: [16, 41, 44]}
+  19: {at: [9.86, -3.31, -2.43], radius: 1.18, source: navmesh, links: [2]}
+  20: {at: [1.91, -8.65, -27.92], radius: 1.03, source: navmesh, links: [9]}
+  21: {at: [-5.22, 0.88, -20.76], radius: 1.11, source: navmesh, links: [14, 40]}
+  23: {at: [-1.41, 0.88, -14.17], radius: 1.02, source: navmesh, links: [11, 25, 40]}
+  24: {at: [-9.98, -3.72, 7.26], radius: 1.04, source: navmesh, links: [16, 26, 30, 45]}
+  25: {at: [4.10, 0.88, -14.69], radius: 1.12, source: navmesh, links: [6, 11, 23, 40]}
+  26: {at: [-4.42, -3.13, 8.49], radius: 1.15, source: navmesh, links: [5, 16, 24, 30, 41, 45]}
+  27: {at: [-12.19, -4.17, -4.82], radius: 1.09, source: navmesh, links: [4, 35]}
+  28: {at: [-3.44, -3.27, -10.64], radius: 1.02, source: navmesh, links: [4, 7, 34]}
+  29: {at: [0.50, -2.62, 5.36], radius: 1.26, source: navmesh, links: [5, 41]}
+  30: {at: [-10.25, -3.38, 3.11], radius: 1.04, source: navmesh, links: [10, 24, 26, 35, 45]}
+  31: {at: [3.42, -4.92, 23.98], radius: 1.03, source: navmesh, links: [43]}
+  32: {at: [-0.03, -3.31, -3.87], radius: 1.39, source: navmesh, links: [10]}
+  33: {at: [7.89, -7.04, -22.61], radius: 1.19, source: navmesh, links: [42]}
+  34: {at: [-5.74, -3.27, -15.92], radius: 1.14, source: navmesh, links: [7, 28]}
+  35: {at: [-9.21, -3.30, -1.65], radius: 1.09, source: navmesh, links: [4, 10, 27, 30, 45]}
+  36: {at: [7.24, 0.88, 3.03], radius: 1.15, source: navmesh, links: [8]}
+  40: {at: [0.18, 0.88, -18.23], radius: 1.04, source: navmesh, links: [6, 14, 21, 23, 25]}
+  41: {at: [-2.01, -3.54, 12.40], radius: 1.15, source: navmesh, links: [16, 17, 26, 29]}
+  42: {at: [3.01, -6.97, -23.94], radius: 1.03, source: navmesh, links: [33]}
+  43: {at: [5.32, -4.92, 20.33], radius: 1.03, source: navmesh, links: [31]}
+  44: {at: [-4.46, -4.92, 21.08], radius: 1.02, source: navmesh, links: [17]}
+  45: {at: [-5.96, -3.27, 4.03], radius: 1.10, source: navmesh, links: [10, 24, 26, 30, 35]}
