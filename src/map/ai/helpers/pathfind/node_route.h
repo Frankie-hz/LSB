@@ -23,6 +23,7 @@
 
 #include <common/cbasetypes.h>
 #include <common/mmo.h>
+#include <common/types/maybe.h>
 
 #include <map/ai/helpers/pathfind/pathfind_types.h>
 
@@ -55,5 +56,9 @@ auto findNodeRoute(const PathNodes& nodes, const NodeRouteRequest& request) -> s
 
 // Retail mobs each aim at their own spot beside a node's center, so a group walking the same nodes does not stack.
 auto aimOffset(uint32 entityId, float arrivalRadius) -> AimOffset;
+
+// The node a chasing mob veers to the center of: the first whose radius its next `stepLength` yalms toward the target run into,
+// other than the last one it touched, and whose center is nearer the target than the mob is.
+auto findChaseNode(const PathNodes& nodes, const position_t& from, const position_t& target, float stepLength, Maybe<uint32> lastNode) -> Maybe<uint32>;
 
 } // namespace pathfind

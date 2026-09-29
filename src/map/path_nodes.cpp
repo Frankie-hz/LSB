@@ -32,6 +32,9 @@ namespace
 
 constexpr float kCellSize = 16.0f;
 
+// a node further above or below than this is on another floor
+constexpr float kSameFloorHeight = 4.0f;
+
 auto cellIndex(const float coordinate) -> int32
 {
     return static_cast<int32>(std::floor(coordinate / kCellSize));
@@ -60,6 +63,7 @@ PathNodes::PathNodes(const xi::data::PathNodeList& records)
             .id       = record.Id,
         });
         cells_[cellKey(cellIndex(record.At[0]), cellIndex(record.At[2]))].push_back(index);
+        maxRadius_ = std::max(maxRadius_, record.Radius);
     }
 
     linkOffsets_.reserve(records.size() + 1);
@@ -139,6 +143,42 @@ auto PathNodes::within(const position_t& position, const float radius) const -> 
     forEachNear(position, radius, [&](const uint32 index)
                 {
                     if (distanceSquared(position, nodes_[index].position) <= reach)
+                    {
+                        found.push_back(index);
+                    }
+                });
+
+    return found;
+}
+
+auto PathNodes::touchedBy(const position_t& from, const position_t& to) const -> std::vector<uint32>
+{
+    const auto length = distance(from, to, true);
+    const auto middle = position_t((from.x + to.x) / 2.0f, from.y, (from.z + to.z) / 2.0f, 0, 0);
+
+    std::vector<uint32> found;
+    forEachNear(middle, length / 2.0f + maxRadius_, [&](const uint32 index)
+                {
+                    const auto& node = nodes_[index];
+                    if (std::abs(from.y - node.position.y) > kSameFloorHeight)
+                    {
+                        return;
+                    }
+
+                    // closest point of the segment to the center
+                    const auto along = [&]() -> float
+                    {
+                        if (length <= 0.0f)
+                        {
+                            return 0.0f;
+                        }
+
+                        const auto dot = (node.position.x - from.x) * (to.x - from.x) + (node.position.z - from.z) * (to.z - from.z);
+                        return std::clamp(dot / (length * length), 0.0f, 1.0f);
+                    }();
+
+                    const auto closest = position_t(from.x + (to.x - from.x) * along, from.y, from.z + (to.z - from.z) * along, 0, 0);
+                    if (isWithinDistance(closest, node.position, node.radius, true))
                     {
                         found.push_back(index);
                     }

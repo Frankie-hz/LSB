@@ -129,6 +129,22 @@ TEST_CASE("node route: keeps to its region", "[pathfind][nodes]")
     }
 }
 
+TEST_CASE("node route: skips a link whose straight line leaves the region", "[pathfind][nodes]")
+{
+    xi::data::PathNodeList records;
+    records.push_back(PathNodeData{ .Id = 0, .At = { 0.0f, 0.0f, 0.0f }, .Radius = kRadius, .Source = PathNodeSource::Extracted, .Links = { 1 } });
+    records.push_back(PathNodeData{ .Id = 1, .At = { 20.0f, 0.0f, 0.0f }, .Radius = kRadius, .Source = PathNodeSource::Extracted, .Links = { 0 } });
+    const PathNodes nodes(records);
+
+    // a U: both nodes sit in its arms, and the straight line between them crosses the notch
+    const RoamRegion region({ { -5.0f, 0.0f, -5.0f }, { 25.0f, 0.0f, -5.0f }, { 25.0f, 0.0f, 5.0f }, { 15.0f, 0.0f, 5.0f }, { 15.0f, 0.0f, -2.0f }, { 5.0f, 0.0f, -2.0f }, { 5.0f, 0.0f, 5.0f }, { -5.0f, 0.0f, 5.0f } }, {});
+
+    REQUIRE(region.contains(0.0f, 0.0f));
+    REQUIRE(region.contains(20.0f, 0.0f));
+    REQUIRE(pathfind::findNodeRoute(nodes, { .from = at(0.0f), .anchor = at(0.0f), .range = 100.0f, .hops = 1, .region = &region }).empty());
+    REQUIRE(xs(pathfind::findNodeRoute(nodes, { .from = at(0.0f), .anchor = at(0.0f), .range = 100.0f, .hops = 1, .region = nullptr })) == std::vector<float>{ 20.0f });
+}
+
 TEST_CASE("node route: finds nothing when no node is near enough to join", "[pathfind][nodes]")
 {
     const auto nodes = line();
@@ -144,6 +160,38 @@ TEST_CASE("node route: aim offsets stay small and spread mobs apart", "[pathfind
     REQUIRE(std::hypot(first.x, first.z) <= 2.0f);
     REQUIRE(std::hypot(pathfind::aimOffset(7, 1.0f).x, pathfind::aimOffset(7, 1.0f).z) <= 0.4f + 0.001f);
     REQUIRE(std::hypot(first.x - second.x, first.z - second.z) > 0.1f);
+}
+
+TEST_CASE("chase node: a mob inside a node's radius veers to its center when that closes on the target", "[pathfind][nodes]")
+{
+    const auto nodes = line();
+
+    const auto node = pathfind::findChaseNode(nodes, position_t(9.0f, 0.0f, 1.0f, 0, 0), at(40.0f), 0.0f, std::nullopt);
+    REQUIRE(node.has_value());
+    REQUIRE(nodes.node(*node).position.x == 10.0f);
+
+    // the node it just touched does not pull it back
+    REQUIRE_FALSE(pathfind::findChaseNode(nodes, position_t(9.0f, 0.0f, 1.0f, 0, 0), at(40.0f), 0.0f, node).has_value());
+}
+
+TEST_CASE("chase node: a radius the next step runs into counts, so a fast mob does not step over a node", "[pathfind][nodes]")
+{
+    const auto nodes = line();
+    const auto from  = position_t(5.0f, 0.0f, 1.0f, 0, 0);
+
+    const auto node = pathfind::findChaseNode(nodes, from, position_t(40.0f, 0.0f, 1.0f, 0, 0), 3.5f, std::nullopt);
+    REQUIRE(node.has_value());
+    REQUIRE(nodes.node(*node).position.x == 10.0f);
+
+    REQUIRE_FALSE(pathfind::findChaseNode(nodes, from, position_t(40.0f, 0.0f, 1.0f, 0, 0), 1.0f, std::nullopt).has_value());
+}
+
+TEST_CASE("chase node: no veer outside every radius or away from the target", "[pathfind][nodes]")
+{
+    const auto nodes = line();
+
+    REQUIRE_FALSE(pathfind::findChaseNode(nodes, at(5.0f), at(40.0f), 0.0f, std::nullopt).has_value());
+    REQUIRE_FALSE(pathfind::findChaseNode(nodes, at(9.0f), at(0.0f), 0.0f, std::nullopt).has_value());
 }
 
 TEST_CASE("pathfind: a node roam turns for the next node inside the arrival radius", "[pathfind][nodes]")

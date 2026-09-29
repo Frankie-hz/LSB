@@ -59,11 +59,15 @@ public:
     // every node within `radius`, height included
     auto within(const position_t& position, float radius) const -> std::vector<uint32>;
 
+    // every node whose arrival radius the flat segment from `from` to `to` enters, on the floor of `from`
+    auto touchedBy(const position_t& from, const position_t& to) const -> std::vector<uint32>;
+
 private:
     template <class Visit>
     void forEachNear(const position_t& position, float reach, Visit&& visit) const;
 
     std::vector<Node> nodes_;
+    float             maxRadius_{ 0.0f };
 
     // node i links to links_[linkOffsets_[i]] up to links_[linkOffsets_[i + 1]]
     std::vector<uint32> linkOffsets_;

@@ -109,3 +109,23 @@ TEST_CASE("path nodes: queries reach across cell borders", "[path_nodes]")
     REQUIRE(idOf(nodes, found[0]) == 11);
     REQUIRE(idOf(nodes, found[1]) == 15);
 }
+
+TEST_CASE("path nodes: touchedBy finds the nodes whose radius a flat segment enters on the same floor", "[path_nodes]")
+{
+    const auto nodes = graph();
+    const auto at    = [](const float x, const float y, const float z)
+    {
+        return position_t(x, y, z, 0, 0);
+    };
+
+    const auto inside = nodes.touchedBy(at(1.5f, 0.5f, 0.0f), at(1.5f, 0.5f, 0.0f));
+    REQUIRE(inside.size() == 1);
+    REQUIRE(idOf(nodes, inside.front()) == 10);
+
+    const auto crossing = nodes.touchedBy(at(-5.0f, 0.0f, 1.0f), at(5.0f, 0.0f, 1.0f));
+    REQUIRE(crossing.size() == 1);
+    REQUIRE(idOf(nodes, crossing.front()) == 10);
+
+    REQUIRE(nodes.touchedBy(at(3.0f, 0.0f, 0.0f), at(3.0f, 0.0f, 0.0f)).empty());
+    REQUIRE(nodes.touchedBy(at(0.0f, 10.0f, 0.0f), at(0.0f, 10.0f, 0.0f)).empty());
+}

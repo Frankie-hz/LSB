@@ -22,6 +22,7 @@
 #include "mob_controller.h"
 
 #include "ai/ai_container.h"
+#include "ai/helpers/pathfind/node_route.h"
 #include "ai/helpers/targetfind.h"
 #include "ai/states/ability_state.h"
 #include "ai/states/attack_state.h"
@@ -46,7 +47,6 @@
 #include "utils/petutils.h"
 #include "zone.h"
 
-#include <cstdlib>
 #include <limits>
 #include <utility>
 
@@ -60,9 +60,6 @@ constexpr float kRoamHomeStepDistance = 10.0f;
 constexpr auto kNeutralDuration = 15s;
 
 constexpr float kChaseRepathDrift = 2.0f; // re-aim when the target drifts this far from where the path was headed
-
-// world angles are 256ths of a turn
-constexpr float kWorldAnglePerDegree = 256.0f / 360.0f;
 
 } // namespace
 
@@ -1472,10 +1469,12 @@ auto CMobController::StepChaseNode(const CBattleEntity* PTarget, const bool inAt
         return ChaseNodeStep::None;
     }
 
+    // a center it cannot path to, or is already standing on, counts as touched
     const auto& node = PMob->loc.zone->pathNodes()->node(*nodeIndex);
-    if (!pathFind.PathInRange(node.position, node.radius, PATHFLAG_RUN))
+    if (!pathFind.PathTo(node.position, PATHFLAG_RUN))
     {
-        return ChaseNodeStep::None;
+        lastChaseNode_ = nodeIndex;
+        return ChaseNodeStep::Left;
     }
 
     chaseNode_ = nodeIndex;
@@ -1486,44 +1485,13 @@ auto CMobController::StepChaseNode(const CBattleEntity* PTarget, const bool inAt
 auto CMobController::SelectChaseNode(const CBattleEntity* PTarget) const -> Maybe<uint32>
 {
     const auto* nodes = PMob->loc.zone->pathNodes();
-    const auto  reach = settings::get<float>("map.MOB_CHASE_NODE_RANGE");
-    if (!nodes || reach <= 0.0f)
+    if (!nodes || !settings::get<bool>("map.MOB_CHASE_NODES"))
     {
         return std::nullopt;
     }
 
-    const auto  maxTurn        = settings::get<float>("map.MOB_CHASE_NODE_ANGLE") * kWorldAnglePerDegree;
-    const auto& mobPos         = PMob->loc.p;
-    const auto& targetPos      = PTarget->loc.p;
-    const auto  targetDistance = distance(mobPos, targetPos);
-    const auto  targetAngle    = worldAngle(mobPos, targetPos);
-
-    Maybe<uint32> best;
-    auto          bestTurn = maxTurn;
-    for (const auto index : nodes->within(mobPos, reach))
-    {
-        if (index == lastChaseNode_)
-        {
-            continue;
-        }
-
-        const auto& node = nodes->node(index);
-
-        // standing in it already, or it would not bring the mob any closer to the target
-        if (isWithinDistance(mobPos, node.position, node.radius) || distance(node.position, targetPos) + node.radius >= targetDistance)
-        {
-            continue;
-        }
-
-        const auto turn = static_cast<float>(std::abs(angleDifference(worldAngle(mobPos, node.position), targetAngle)));
-        if (turn <= bestTurn)
-        {
-            bestTurn = turn;
-            best     = index;
-        }
-    }
-
-    return best;
+    // test the whole stretch it runs this tick, so a small node is not stepped over between ticks
+    return pathfind::findChaseNode(*nodes, PMob->loc.p, PTarget->loc.p, PMob->PAI->PathFind->StepBudget(), lastChaseNode_);
 }
 
 auto CMobController::DoCombatTick(timer::time_point tick) -> Task<void>

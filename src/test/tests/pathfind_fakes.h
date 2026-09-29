@@ -33,8 +33,18 @@ namespace pathfind_fakes
 class FlatNavMesh final : public NavMesh
 {
 public:
+    int  queries{ 0 };
+    bool partial{ false };
+
     auto findPath(const position_t&, const position_t& end, float) -> Maybe<PathResult> override
     {
+        ++queries;
+        if (partial)
+        {
+            auto endpoint = end;
+            endpoint.x /= 2;
+            return PathResult{ { pathpoint_t{ endpoint, 0s, false } }, true };
+        }
         return PathResult{ { pathpoint_t{ end, 0s, false } }, false };
     }
 

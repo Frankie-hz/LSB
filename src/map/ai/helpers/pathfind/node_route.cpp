@@ -45,7 +45,9 @@ constexpr float kAimOffsetRadiusShare = 0.4f;
 constexpr uint8 kAimOffsetSteps       = 4;
 constexpr float kGoldenAngle          = 2.39996323f;
 
-auto allowed(const PathNodes& nodes, const uint32 index, const pathfind::NodeRouteRequest& request) -> bool
+// Whether a mob at `from` may walk to this node: in range of the anchor, and in its region along a straight line,
+// since the region would otherwise cut the leg short at its edge and leave the mob off every node.
+auto allowed(const PathNodes& nodes, const position_t& from, const uint32 index, const pathfind::NodeRouteRequest& request) -> bool
 {
     const auto& position = nodes.node(index).position;
     if (!isWithinDistance(request.anchor, position, request.range, true))
@@ -53,7 +55,24 @@ auto allowed(const PathNodes& nodes, const uint32 index, const pathfind::NodeRou
         return false;
     }
 
-    return !request.region || request.region->contains(position.x, position.z);
+    if (!request.region)
+    {
+        return true;
+    }
+
+    if (!request.region->contains(position.x, position.z))
+    {
+        return false;
+    }
+
+    const auto length = distance(from, position, true);
+    if (length <= 0.0f)
+    {
+        return true;
+    }
+
+    const Vector3 direction{ .x = (position.x - from.x) / length, .y = 0.0f, .z = (position.z - from.z) / length };
+    return request.region->clampToRegion(from, direction, length) >= length;
 }
 
 auto joinNode(const PathNodes& nodes, const pathfind::NodeRouteRequest& request) -> Maybe<uint32>
@@ -62,7 +81,7 @@ auto joinNode(const PathNodes& nodes, const pathfind::NodeRouteRequest& request)
     auto          bestDistance = std::numeric_limits<float>::max();
     for (const auto index : nodes.within(request.from, kJoinDistance))
     {
-        if (!allowed(nodes, index, request))
+        if (!allowed(nodes, request.from, index, request))
         {
             continue;
         }
@@ -112,15 +131,16 @@ auto findNodeRoute(const PathNodes& nodes, const NodeRouteRequest& request) -> s
     for (uint8 hop = 0; hop < request.hops; ++hop)
     {
         candidates.clear();
+        const auto& here = nodes.node(current).position;
         for (const auto next : nodes.neighbours(current))
         {
-            if (next != previous && allowed(nodes, next, request))
+            if (next != previous && allowed(nodes, here, next, request))
             {
                 candidates.push_back(next);
             }
         }
 
-        if (candidates.empty() && previous && allowed(nodes, *previous, request))
+        if (candidates.empty() && previous && allowed(nodes, here, *previous, request))
         {
             candidates.push_back(*previous);
         }
@@ -146,6 +166,41 @@ auto aimOffset(const uint32 entityId, const float arrivalRadius) -> AimOffset
     const auto angle  = static_cast<float>(entityId % 360) * kGoldenAngle;
 
     return AimOffset{ .x = length * std::cos(angle), .z = length * std::sin(angle) };
+}
+
+auto findChaseNode(const PathNodes& nodes, const position_t& from, const position_t& target, const float stepLength, const Maybe<uint32> lastNode) -> Maybe<uint32>
+{
+    const auto toTarget    = distance(from, target, true);
+    const auto reach       = std::min(stepLength, toTarget);
+    const auto dirX        = (target.x - from.x) / std::max(toTarget, 0.001f);
+    const auto dirZ        = (target.z - from.z) / std::max(toTarget, 0.001f);
+    const auto stepEnd     = position_t(from.x + dirX * reach, from.y, from.z + dirZ * reach, 0, 0);
+    const auto mobToTarget = distanceSquared(from, target);
+
+    Maybe<uint32> best;
+    auto          bestEntry = std::numeric_limits<float>::max();
+    for (const auto index : nodes.touchedBy(from, stepEnd))
+    {
+        const auto& node = nodes.node(index);
+        if (index == lastNode || distanceSquared(node.position, target) >= mobToTarget)
+        {
+            continue;
+        }
+
+        // yalms along the step where it crosses into the radius, zero when it starts inside
+        const auto offsetX = from.x - node.position.x;
+        const auto offsetZ = from.z - node.position.z;
+        const auto facing  = offsetX * dirX + offsetZ * dirZ;
+        const auto inside  = offsetX * offsetX + offsetZ * offsetZ - node.radius * node.radius;
+        const auto entry   = std::max(0.0f, -facing - std::sqrt(std::max(0.0f, facing * facing - inside)));
+        if (entry < bestEntry)
+        {
+            bestEntry = entry;
+            best      = index;
+        }
+    }
+
+    return best;
 }
 
 } // namespace pathfind
