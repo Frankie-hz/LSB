@@ -74,9 +74,10 @@ ecosystems:
           detects:
             - hearing
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  4
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       4
+            node_roam_range: 12
         species:
           acuex:
             id: 1
@@ -212,9 +213,10 @@ ecosystems:
           speed:           32
           animation_speed: 50
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  6
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       6
+            node_roam_range: 11
         species:
           blancmage:
             id: 4
@@ -320,9 +322,10 @@ ecosystems:
         id: 4
         attributes:
           mob_mods:
-            roam_cool:  60
-            roam_rate:  40
-            roam_turns:  1
+            roam_cool:       60
+            roam_rate:       40
+            roam_turns:       1
+            node_roam_range: 21
         species:
           hecteye:
             id: 7
@@ -381,9 +384,10 @@ ecosystems:
             - hearing
           charmable: true
           mob_mods:
-            roam_cool:  15
-            roam_rate:  15
-            roam_turns:  1
+            roam_cool:       15
+            roam_rate:       15
+            roam_turns:       1
+            node_roam_range: 19
         species:
           leech:
             id: 8
@@ -617,9 +621,10 @@ ecosystems:
             - scent
           charmable: true
           mob_mods:
-            roam_cool:  15
-            roam_rate:  15
-            roam_turns:  1
+            roam_cool:       15
+            roam_rate:       15
+            roam_turns:       1
+            node_roam_range: 14
         species:
           boil:
             id: 15
@@ -923,9 +928,10 @@ ecosystems:
             - hearing
           charmable: true
           mob_mods:
-            roam_cool:  15
-            roam_rate:  15
-            roam_turns:  1
+            roam_cool:       15
+            roam_rate:       15
+            roam_turns:       1
+            node_roam_range: 23
         species:
           carrier_crab:
             id: 24
@@ -1051,9 +1057,10 @@ ecosystems:
         id: 12
         attributes:
           mob_mods:
-            roam_cool:  35
-            roam_rate:  35
-            roam_turns:  3
+            roam_cool:       35
+            roam_rate:       35
+            roam_turns:       3
+            node_roam_range: 11
         species:
           craklaw:
             id: 29
@@ -1113,9 +1120,10 @@ ecosystems:
           detects:
             - hearing
           mob_mods:
-            roam_cool:  15
-            roam_rate:  15
-            roam_turns:  1
+            roam_cool:       15
+            roam_rate:       15
+            roam_turns:       1
+            node_roam_range: 16
         species:
           akagin:
             id: 30
@@ -1357,9 +1365,10 @@ ecosystems:
             - hearing
           charmable: true
           mob_mods:
-            roam_cool:  15
-            roam_rate:  15
-            roam_turns:  1
+            roam_cool:       15
+            roam_rate:       15
+            roam_turns:       1
+            node_roam_range: 22
         species:
           jagil:
             id: 37
@@ -1514,9 +1523,10 @@ ecosystems:
             - hearing
           charmable: true
           mob_mods:
-            roam_cool:  15
-            roam_rate:  15
-            roam_turns:  1
+            roam_cool:       15
+            roam_rate:       15
+            roam_turns:       1
+            node_roam_range: 19
         species:
           azure_sea_monk:
             id: 41
@@ -1705,9 +1715,10 @@ ecosystems:
             - sight
             - magic
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  6
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       6
+            node_roam_range: 13
         species:
           bomb:
             id: 46
@@ -2079,9 +2090,10 @@ ecosystems:
         id: 25
         attributes:
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  6
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       6
+            node_roam_range: 13
         species:
           cluster:
             id: 59
@@ -2128,9 +2140,10 @@ ecosystems:
           detects:
             - magic
           mob_mods:
-            roam_cool:  60
-            roam_rate:  40
-            roam_turns:  1
+            roam_cool:       60
+            roam_rate:       40
+            roam_turns:       1
+            node_roam_range: 11
         species:
           doll:
             id: 60
@@ -2184,9 +2197,10 @@ ecosystems:
         id: 27
         attributes:
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  4
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       4
+            node_roam_range: 16
         species:
           evil_weapon:
             id: 62
@@ -2238,9 +2252,10 @@ ecosystems:
             - sight
             - magic
           mob_mods:
-            roam_cool:  60
-            roam_rate:  40
-            roam_turns:  1
+            roam_cool:       60
+            roam_rate:       40
+            roam_turns:       1
+            node_roam_range:  9
         species:
           golem:
             id: 63
@@ -2441,9 +2456,10 @@ ecosystems:
           detects:
             - magic
           mob_mods:
-            roam_cool:  60
-            roam_rate:  40
-            roam_turns:  1
+            roam_cool:       60
+            roam_rate:       40
+            roam_turns:       1
+            node_roam_range: 10
         species:
           magic_pot:
             id: 69
@@ -2516,9 +2532,10 @@ ecosystems:
             - sight
             - magic
           mob_mods:
-            roam_cool:  60
-            roam_rate:  40
-            roam_turns:  6
+            roam_cool:       60
+            roam_rate:       40
+            roam_turns:       6
+            node_roam_range: 10
         species:
           marolith:
             id: 71
@@ -2616,9 +2633,10 @@ ecosystems:
             - hearing
             - magic
           mob_mods:
-            roam_cool:  60
-            roam_rate:  40
-            roam_turns:  1
+            roam_cool:       60
+            roam_rate:       40
+            roam_turns:       1
+            node_roam_range: 45
         species:
           spheroid:
             id: 74
@@ -2830,10 +2848,11 @@ ecosystems:
             - hearing
             - magic
           mob_mods:
-            roam_cool:      15
-            roam_rate:      -1
-            roam_turns:      3
-            roam_turns_min:  3
+            roam_cool:       15
+            roam_rate:       -1
+            roam_turns:       3
+            roam_turns_min:   3
+            node_roam_range: 19
         species:
           cog:
             id: 78
@@ -3312,9 +3331,10 @@ ecosystems:
           speed:     60
           charmable: true
           mob_mods:
-            roam_cool:  60
-            roam_rate:  40
-            roam_turns:  1
+            roam_cool:       60
+            roam_rate:       40
+            roam_turns:       1
+            node_roam_range:  9
         species:
           coeurl:
             id: 92
@@ -3392,9 +3412,10 @@ ecosystems:
         id: 44
         attributes:
           mob_mods:
-            roam_cool:  35
-            roam_rate:  35
-            roam_turns:  3
+            roam_cool:       35
+            roam_rate:       35
+            roam_turns:       3
+            node_roam_range: 37
         species:
           dhalmel:
             id: 95
@@ -3436,9 +3457,10 @@ ecosystems:
         id: 45
         attributes:
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  6
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       6
+            node_roam_range: 19
         species:
           gnole:
             id: 96
@@ -3492,9 +3514,10 @@ ecosystems:
             - scent
           speed: 75
           mob_mods:
-            roam_cool:  60
-            roam_rate:  40
-            roam_turns:  6
+            roam_cool:       60
+            roam_rate:       40
+            roam_turns:       6
+            node_roam_range: 15
         species:
           legendary_manticore:
             id: 97
@@ -3596,9 +3619,10 @@ ecosystems:
         id: 48
         attributes:
           mob_mods:
-            roam_cool:  35
-            roam_rate:  35
-            roam_turns:  3
+            roam_cool:       35
+            roam_rate:       35
+            roam_turns:       3
+            node_roam_range: 20
         species:
           opo_opo:
             id: 100
@@ -3650,9 +3674,10 @@ ecosystems:
           detects:
             - hearing
           mob_mods:
-            roam_cool:  60
-            roam_rate:  40
-            roam_turns:  6
+            roam_cool:       60
+            roam_rate:       40
+            roam_turns:       6
+            node_roam_range: 12
         species:
           fazz:
             id: 101
@@ -3726,9 +3751,10 @@ ecosystems:
             - scent
           charmable: true
           mob_mods:
-            roam_cool:  35
-            roam_rate:  35
-            roam_turns:  3
+            roam_cool:       35
+            roam_rate:       35
+            roam_turns:       3
+            node_roam_range: 38
         species:
           alabaster_rabbit:
             id: 103
@@ -3840,9 +3866,10 @@ ecosystems:
             - sight
             - scent
           mob_mods:
-            roam_cool:  60
-            roam_rate:  40
-            roam_turns:  6
+            roam_cool:       60
+            roam_rate:       40
+            roam_turns:       6
+            node_roam_range: 14
         species:
           mosshorn:
             id: 496
@@ -3935,9 +3962,10 @@ ecosystems:
             chr: d
           charmable: true
           mob_mods:
-            roam_cool:  60
-            roam_rate:  40
-            roam_turns:  6
+            roam_cool:       60
+            roam_rate:       40
+            roam_turns:       6
+            node_roam_range: 32
         species:
           karakul:
             id: 109
@@ -4035,9 +4063,10 @@ ecosystems:
           speed:     68
           charmable: true
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  6
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       6
+            node_roam_range: 26
         species:
           legendary_tigers:
             id: 112
@@ -4139,9 +4168,10 @@ ecosystems:
             - scent
           speed: 70
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  6
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       6
+            node_roam_range: 24
         species:
           red_yztarg:
             id: 115
@@ -4199,9 +4229,10 @@ ecosystems:
         id: 55
         attributes:
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  6
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       6
+            node_roam_range: 26
         species:
           antica:
             id: 117
@@ -4243,9 +4274,10 @@ ecosystems:
         id: 56
         attributes:
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  6
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       6
+            node_roam_range: 11
         species:
           bugbear:
             id: 118
@@ -4302,9 +4334,10 @@ ecosystems:
           detects:
             - sight
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  2
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       2
+            node_roam_range: 21
         species:
           berglisi:
             id: 119
@@ -4443,9 +4476,10 @@ ecosystems:
           detects:
             - sight
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  6
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       6
+            node_roam_range: 27
         species:
           armored_goblin:
             id: 124
@@ -4605,9 +4639,10 @@ ecosystems:
           detects:
             - sight
           mob_mods:
-            roam_cool:  10
-            roam_rate:  20
-            roam_turns:  6
+            roam_cool:       10
+            roam_rate:       20
+            roam_turns:       6
+            node_roam_range: 12
         species:
           experimental:
             id: 128
@@ -4740,9 +4775,10 @@ ecosystems:
           detects:
             - sight
           mob_mods:
-            roam_cool:  10
-            roam_rate:  20
-            roam_turns:  6
+            roam_cool:       10
+            roam_rate:       20
+            roam_turns:       6
+            node_roam_range:  8
         species:
           knight_ja:
             id: 132
@@ -4856,7 +4892,8 @@ ecosystems:
         id: 61
         attributes:
           mob_mods:
-            roam_turns: 6
+            roam_turns:      6
+            node_roam_range: 9
         species:
           meeble:
             id: 136
@@ -4968,9 +5005,10 @@ ecosystems:
             - sight
             - scent
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  6
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       6
+            node_roam_range: 18
         species:
           dynamis_orc:
             id: 140
@@ -5125,9 +5163,10 @@ ecosystems:
         id: 64
         attributes:
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  6
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       6
+            node_roam_range: 24
         species:
           orcish_warmachine:
             id: 143
@@ -5174,9 +5213,10 @@ ecosystems:
           detects:
             - hearing
           mob_mods:
-            roam_cool:  15
-            roam_rate:  15
-            roam_turns:  1
+            roam_cool:       15
+            roam_rate:       15
+            roam_turns:       1
+            node_roam_range:  8
         species:
           blue_poroggo:
             id: 144
@@ -5298,9 +5338,10 @@ ecosystems:
             - sight
             - scent
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  6
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       6
+            node_roam_range: 12
         species:
           qiqirn:
             id: 147
@@ -5368,9 +5409,10 @@ ecosystems:
             - hearing
             - scent
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  6
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       6
+            node_roam_range: 21
         species:
           dynamis_quadav:
             id: 149
@@ -5500,9 +5542,10 @@ ecosystems:
           detects:
             - hearing
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  6
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       6
+            node_roam_range: 16
         species:
           blue_sahagin:
             id: 151
@@ -5705,9 +5748,10 @@ ecosystems:
           detects:
             - sight
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  6
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       6
+            node_roam_range: 14
         species:
           cryptonberry:
             id: 157
@@ -5823,10 +5867,11 @@ ecosystems:
           mods:
             hpp: 50
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  6
-            sublink:     9
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       6
+            sublink:          9
+            node_roam_range: 11
         species:
           destroyer:
             id: 161
@@ -5970,9 +6015,10 @@ ecosystems:
             - sight
             - scent
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  6
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       6
+            node_roam_range: 15
         species:
           blue_velkk:
             id: 164
@@ -6033,9 +6079,10 @@ ecosystems:
           detects:
             - sight
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  6
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       6
+            node_roam_range: 21
         species:
           dynamis_yagudo:
             id: 166
@@ -6186,9 +6233,10 @@ ecosystems:
           detects:
             - sight
           mob_mods:
-            roam_cool:  15
-            roam_rate:  30
-            roam_turns:  1
+            roam_cool:       15
+            roam_rate:       30
+            roam_turns:       1
+            node_roam_range: 45
         species:
           amphiptere:
             id: 169
@@ -6267,9 +6315,10 @@ ecosystems:
             - hearing
           speed: 28
           mob_mods:
-            roam_cool:  60
-            roam_rate:  40
-            roam_turns:  4
+            roam_cool:       60
+            roam_rate:       40
+            roam_turns:       4
+            node_roam_range: 12
         species:
           apkallu:
             id: 171
@@ -6347,9 +6396,10 @@ ecosystems:
             - hearing
           charmable: true
           mob_mods:
-            roam_cool:  35
-            roam_rate:  35
-            roam_turns:  3
+            roam_cool:       35
+            roam_rate:       35
+            roam_turns:       3
+            node_roam_range: 18
         species:
           bat:
             id: 173
@@ -6420,9 +6470,10 @@ ecosystems:
             - sight
           charmable: true
           mob_mods:
-            roam_cool:  15
-            roam_rate:  15
-            roam_turns:  1
+            roam_cool:       15
+            roam_rate:       15
+            roam_turns:       1
+            node_roam_range: 42
         species:
           bird:
             id: 175
@@ -6483,9 +6534,10 @@ ecosystems:
           detects:
             - sight
           mob_mods:
-            roam_cool:  35
-            roam_rate:  35
-            roam_turns:  3
+            roam_cool:       35
+            roam_rate:       35
+            roam_turns:       3
+            node_roam_range: 25
         species:
           cockatrice:
             id: 177
@@ -6570,9 +6622,10 @@ ecosystems:
           speed:     64
           charmable: true
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  4
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       4
+            node_roam_range: 18
         species:
           colibri:
             id: 179
@@ -6650,9 +6703,10 @@ ecosystems:
             - hearing
           charmable: true
           mob_mods:
-            roam_cool:  35
-            roam_rate:  35
-            roam_turns:  3
+            roam_cool:       35
+            roam_rate:       35
+            roam_turns:       3
+            node_roam_range: 20
         species:
           flock_bat:
             id: 181
@@ -6841,9 +6895,10 @@ ecosystems:
         id: 83
         attributes:
           mob_mods:
-            roam_cool:  60
-            roam_rate:  40
-            roam_turns:  6
+            roam_cool:       60
+            roam_rate:       40
+            roam_turns:       6
+            node_roam_range: 16
         species:
           hippogryph:
             id: 187
@@ -6896,9 +6951,10 @@ ecosystems:
             - sight
           speed: 60
           mob_mods:
-            roam_cool:  35
-            roam_rate:  35
-            roam_turns:  3
+            roam_cool:       35
+            roam_rate:       35
+            roam_turns:       3
+            node_roam_range: 26
         species:
           gagana:
             id: 188
@@ -6998,9 +7054,10 @@ ecosystems:
             - sight
             - hearing
           mob_mods:
-            roam_cool:  15
-            roam_rate:  15
-            roam_turns:  1
+            roam_cool:       15
+            roam_rate:       15
+            roam_turns:       1
+            node_roam_range: 11
         species:
           blue_tulfaire:
             id: 191
@@ -7150,9 +7207,10 @@ ecosystems:
             - sight
             - hearing
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  4
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       4
+            node_roam_range: 25
         species:
           ahriman:
             id: 195
@@ -7287,9 +7345,10 @@ ecosystems:
             mnd: f
           speed: 50
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  4
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       4
+            node_roam_range: 17
         species:
           crystal_demon:
             id: 198
@@ -7673,9 +7732,10 @@ ecosystems:
             - hearing
             - scent
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  4
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       4
+            node_roam_range: 16
         species:
           gargouille:
             id: 208
@@ -7749,9 +7809,10 @@ ecosystems:
             - hearing
           speed: 64
           mob_mods:
-            roam_cool:  35
-            roam_rate:  35
-            roam_turns:  3
+            roam_cool:       35
+            roam_rate:       35
+            roam_turns:       3
+            node_roam_range: 19
         species:
           devilet:
             id: 210
@@ -7882,9 +7943,10 @@ ecosystems:
             - ability
             - scent
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  4
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       4
+            node_roam_range: 15
         species:
           black_robe_flayer:
             id: 214
@@ -7957,9 +8019,10 @@ ecosystems:
           detects:
             - sight
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  4
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       4
+            node_roam_range: 23
         species:
           falxitaur:
             id: 216
@@ -8052,9 +8115,10 @@ ecosystems:
           detects:
             - hearing
           mob_mods:
-            roam_cool:  60
-            roam_rate:  40
-            roam_turns:  1
+            roam_cool:       60
+            roam_rate:       40
+            roam_turns:       1
+            node_roam_range: 34
         species:
           dahak:
             id: 218
@@ -8236,9 +8300,10 @@ ecosystems:
           speed:     56
           charmable: true
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  6
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       6
+            node_roam_range: 20
         species:
           peapuk:
             id: 223
@@ -8519,9 +8584,10 @@ ecosystems:
             - sight
           speed: 75
           mob_mods:
-            roam_cool:  60
-            roam_rate:  40
-            roam_turns:  6
+            roam_cool:       60
+            roam_rate:       40
+            roam_turns:       6
+            node_roam_range: 17
         species:
           ajattara:
             id: 232
@@ -8643,7 +8709,8 @@ ecosystems:
             - sight
           speed: 40
           mob_mods:
-            roam_turns: 6
+            roam_turns:       6
+            node_roam_range: 10
         species:
           blue_wyvern:
             id: 236
@@ -8745,6 +8812,8 @@ ecosystems:
             def: d
             att: a
             acc: a
+          mob_mods:
+            node_roam_range: 19
         species:
           alexander:
             id: 239
@@ -9274,9 +9343,10 @@ ecosystems:
           detects:
             - magic
           mob_mods:
-            roam_cool:  10
-            roam_rate:  -1
-            roam_turns:  4
+            roam_cool:       10
+            roam_rate:       -1
+            roam_turns:       4
+            node_roam_range: 18
         species:
           air_elemental:
             id: 256
@@ -9842,9 +9912,10 @@ ecosystems:
           detects:
             - sight
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  6
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       6
+            node_roam_range: 25
         species:
           danaid:
             id: 273
@@ -9960,9 +10031,10 @@ ecosystems:
         id: 108
         attributes:
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  6
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       6
+            node_roam_range: 18
         species:
           porxie:
             id: 277
@@ -10020,10 +10092,11 @@ ecosystems:
             - sight
             - magic
           mob_mods:
-            roam_cool:      15
-            roam_rate:      -1
-            roam_turns:      3
-            roam_turns_min:  3
+            roam_cool:       15
+            roam_rate:       -1
+            roam_turns:       3
+            roam_turns_min:   3
+            node_roam_range: 12
         species:
           lava_umbril:
             id: 278
@@ -10271,9 +10344,10 @@ ecosystems:
           detects:
             - hearing
           mob_mods:
-            roam_cool:  60
-            roam_rate:  40
-            roam_turns:  2
+            roam_cool:       60
+            roam_rate:       40
+            roam_turns:       2
+            node_roam_range:  6
         species:
           apex_seether:
             id: 285
@@ -10340,6 +10414,8 @@ ecosystems:
           detects:
             - hearing
           speed: 45
+          mob_mods:
+            node_roam_range: 20
         species:
           apex_thinker:
             id: 287
@@ -10406,9 +10482,10 @@ ecosystems:
           detects:
             - hearing
           mob_mods:
-            roam_cool:  15
-            roam_rate:  15
-            roam_turns:  1
+            roam_cool:       15
+            roam_rate:       15
+            roam_turns:       1
+            node_roam_range: 16
         species:
           apex_wanderer:
             id: 289
@@ -10478,9 +10555,10 @@ ecosystems:
           detects:
             - hearing
           mob_mods:
-            roam_cool:  35
-            roam_rate:  35
-            roam_turns:  3
+            roam_cool:       35
+            roam_rate:       35
+            roam_turns:       3
+            node_roam_range: 11
         species:
           apex_weeper:
             id: 291
@@ -10540,6 +10618,9 @@ ecosystems:
     families:
       elvaan:
         id: 117
+        attributes:
+          mob_mods:
+            node_roam_range: 23
         species:
           elvaan:
             id: 293
@@ -10576,6 +10657,9 @@ ecosystems:
                   gravity:     0
       galka:
         id: 118
+        attributes:
+          mob_mods:
+            node_roam_range: 27
         species:
           galks:
             id: 294
@@ -10612,6 +10696,9 @@ ecosystems:
                   gravity:     0
       hume:
         id: 119
+        attributes:
+          mob_mods:
+            node_roam_range: 30
         species:
           humes:
             id: 295
@@ -10687,6 +10774,9 @@ ecosystems:
                   gravity:     0
       tarutaru:
         id: 121
+        attributes:
+          mob_mods:
+            node_roam_range: 29
         species:
           tarutaru:
             id: 297
@@ -10850,9 +10940,10 @@ ecosystems:
             - hearing
           speed: 60
           mob_mods:
-            roam_cool:  60
-            roam_rate:  40
-            roam_turns:  6
+            roam_cool:       60
+            roam_rate:       40
+            roam_turns:       6
+            node_roam_range: 18
         species:
           abyssobugard:
             id: 301
@@ -10921,9 +11012,10 @@ ecosystems:
             - hearing
           charmable: true
           mob_mods:
-            roam_cool:  60
-            roam_rate:  40
-            roam_turns:  6
+            roam_cool:       60
+            roam_rate:       40
+            roam_turns:       6
+            node_roam_range: 13
         species:
           eft:
             id: 303
@@ -11025,9 +11117,10 @@ ecosystems:
             - hearing
           charmable: true
           mob_mods:
-            roam_cool:  60
-            roam_rate:  40
-            roam_turns:  6
+            roam_cool:       60
+            roam_rate:       40
+            roam_turns:       6
+            node_roam_range: 19
         species:
           ash_lizard:
             id: 306
@@ -11119,9 +11212,10 @@ ecosystems:
             - sight
             - hearing
           mob_mods:
-            roam_cool:  60
-            roam_rate:  40
-            roam_turns:  2
+            roam_cool:       60
+            roam_rate:       40
+            roam_turns:       2
+            node_roam_range: 10
         species:
           matamata:
             id: 309
@@ -11201,9 +11295,10 @@ ecosystems:
           detects:
             - sight
           mob_mods:
-            roam_cool:  60
-            roam_rate:  40
-            roam_turns:  6
+            roam_cool:       60
+            roam_rate:       40
+            roam_turns:       6
+            node_roam_range: 22
         species:
           far_east_peiste:
             id: 311
@@ -11297,9 +11392,10 @@ ecosystems:
           speed:     70
           charmable: true
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  6
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       6
+            node_roam_range: 25
         species:
           green_raptor:
             id: 494
@@ -11438,9 +11534,10 @@ ecosystems:
             - hearing
             - scent
           mob_mods:
-            roam_cool:  60
-            roam_rate:  40
-            roam_turns:  2
+            roam_cool:       60
+            roam_rate:       40
+            roam_turns:       2
+            node_roam_range: 13
         species:
           mamool_ja_riden:
             id: 317
@@ -11533,9 +11630,10 @@ ecosystems:
         id: 131
         attributes:
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  4
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       4
+            node_roam_range: 22
         species:
           aern:
             id: 320
@@ -11576,9 +11674,10 @@ ecosystems:
         id: 132
         attributes:
           mob_mods:
-            roam_cool:  35
-            roam_rate:  35
-            roam_turns:  3
+            roam_cool:       35
+            roam_rate:       35
+            roam_turns:       3
+            node_roam_range: 11
         species:
           euvhi:
             id: 321
@@ -11622,9 +11721,10 @@ ecosystems:
         id: 133
         attributes:
           mob_mods:
-            roam_cool:  35
-            roam_rate:  35
-            roam_turns:  3
+            roam_cool:       35
+            roam_rate:       35
+            roam_turns:       3
+            node_roam_range: 45
         species:
           hpemde:
             id: 322
@@ -11664,9 +11764,10 @@ ecosystems:
         attributes:
           speed: 80
           mob_mods:
-            roam_cool:  20
-            roam_rate:  13
-            roam_turns:  1
+            roam_cool:       20
+            roam_rate:       13
+            roam_turns:       1
+            node_roam_range: 31
         species:
           phuabo:
             id: 323
@@ -11752,6 +11853,8 @@ ecosystems:
           detects:
             - sight
           speed: 72
+          mob_mods:
+            node_roam_range: 45
         species:
           xzomit:
             id: 325
@@ -11859,7 +11962,8 @@ ecosystems:
           detects:
             - hearing
           mob_mods:
-            roam_turns: 6
+            roam_turns:       6
+            node_roam_range: 12
         species:
           bird_ghrah:
             id: 328
@@ -12074,9 +12178,10 @@ ecosystems:
             - hearing
           charmable: true
           mob_mods:
-            roam_cool:  15
-            roam_rate:  15
-            roam_turns:  1
+            roam_cool:       15
+            roam_rate:       15
+            roam_turns:       1
+            node_roam_range: 26
         species:
           sabotender:
             id: 334
@@ -12136,9 +12241,10 @@ ecosystems:
         id: 142
         attributes:
           mob_mods:
-            roam_cool:  15
-            roam_rate:  15
-            roam_turns:  1
+            roam_cool:       15
+            roam_rate:       15
+            roam_turns:       1
+            node_roam_range: 27
         species:
           flytrap:
             id: 336
@@ -12191,9 +12297,10 @@ ecosystems:
             - hearing
           charmable: true
           mob_mods:
-            roam_cool:  60
-            roam_rate:  40
-            roam_turns:  1
+            roam_cool:       60
+            roam_rate:       40
+            roam_turns:       1
+            node_roam_range:  7
         species:
           coppercap:
             id: 337
@@ -12326,9 +12433,10 @@ ecosystems:
           detects:
             - sight
           mob_mods:
-            roam_cool:  15
-            roam_rate:  15
-            roam_turns:  1
+            roam_cool:       15
+            roam_rate:       15
+            roam_turns:       1
+            node_roam_range: 36
         species:
           cirrus:
             id: 341
@@ -12448,9 +12556,10 @@ ecosystems:
             - hearing
           charmable: true
           mob_mods:
-            roam_cool:  15
-            roam_rate:  15
-            roam_turns:  1
+            roam_cool:       15
+            roam_rate:       15
+            roam_turns:       1
+            node_roam_range: 29
         species:
           adenium:
             id: 345
@@ -12651,9 +12760,10 @@ ecosystems:
           detects:
             - hearing
           mob_mods:
-            roam_cool:  35
-            roam_rate:  35
-            roam_turns:  3
+            roam_cool:       35
+            roam_rate:       35
+            roam_turns:       3
+            node_roam_range: 28
         species:
           ameretat:
             id: 352
@@ -12783,9 +12893,10 @@ ecosystems:
         id: 148
         attributes:
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  6
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       6
+            node_roam_range: 13
         species:
           panopt:
             id: 357
@@ -12836,9 +12947,10 @@ ecosystems:
           detects:
             - hearing
           mob_mods:
-            roam_cool:  35
-            roam_rate:  35
-            roam_turns:  3
+            roam_cool:       35
+            roam_rate:       35
+            roam_turns:       3
+            node_roam_range: 27
         species:
           mitrastema:
             id: 358
@@ -12900,9 +13012,10 @@ ecosystems:
         id: 150
         attributes:
           mob_mods:
-            roam_cool:  15
-            roam_rate:  15
-            roam_turns:  1
+            roam_cool:       15
+            roam_rate:       15
+            roam_turns:       1
+            node_roam_range: 45
         species:
           sapling:
             id: 360
@@ -12957,9 +13070,10 @@ ecosystems:
             - hearing
             - scent
           mob_mods:
-            roam_cool:  15
-            roam_rate:  15
-            roam_turns:  1
+            roam_cool:       15
+            roam_rate:       15
+            roam_turns:       1
+            node_roam_range: 23
         species:
           jewelweed:
             id: 361
@@ -13305,6 +13419,9 @@ ecosystems:
                   gravity:     0
       automaton:
         id: 158
+        attributes:
+          mob_mods:
+            node_roam_range: 9
         species:
           automaton:
             id: 382
@@ -13680,9 +13797,10 @@ ecosystems:
             - hearing
             - lowhp
           mob_mods:
-            roam_cool:  35
-            roam_rate:  35
-            roam_turns:  3
+            roam_cool:       35
+            roam_rate:       35
+            roam_turns:       3
+            node_roam_range: 28
         species:
           corpselight:
             id: 391
@@ -13784,9 +13902,10 @@ ecosystems:
             - hearing
             - lowhp
           mob_mods:
-            roam_cool:  60
-            roam_rate:  40
-            roam_turns:  6
+            roam_cool:       60
+            roam_rate:       40
+            roam_turns:       6
+            node_roam_range: 19
         species:
           corse:
             id: 394
@@ -13982,9 +14101,10 @@ ecosystems:
             - hearing
             - lowhp
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  4
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       4
+            node_roam_range: 13
         species:
           dullahan:
             id: 399
@@ -14057,9 +14177,10 @@ ecosystems:
             - lowhp
             - ability
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  2
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       2
+            node_roam_range: 12
         species:
           dynamis_fomor:
             id: 499
@@ -14376,9 +14497,10 @@ ecosystems:
         id: 174
         attributes:
           mob_mods:
-            roam_cool:  60
-            roam_rate:  40
-            roam_turns:  6
+            roam_cool:       60
+            roam_rate:       40
+            roam_turns:       6
+            node_roam_range:  8
         species:
           hound:
             id: 409
@@ -14427,9 +14549,10 @@ ecosystems:
             - hearing
             - lowhp
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  4
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       4
+            node_roam_range: 13
         species:
           green_naraka:
             id: 410
@@ -14535,9 +14658,10 @@ ecosystems:
             - hearing
             - lowhp
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  6
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       6
+            node_roam_range: 16
         species:
           adorned_qutrub:
             id: 413
@@ -14609,9 +14733,10 @@ ecosystems:
         id: 177
         attributes:
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  2
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       2
+            node_roam_range: 12
         species:
           shadow:
             id: 415
@@ -14654,9 +14779,10 @@ ecosystems:
             - hearing
             - lowhp
           mob_mods:
-            roam_cool:  60
-            roam_rate:  40
-            roam_turns:  6
+            roam_cool:       60
+            roam_rate:       40
+            roam_turns:       6
+            node_roam_range: 10
         species:
           draugar:
             id: 416
@@ -14820,9 +14946,10 @@ ecosystems:
             - hearing
             - lowhp
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  4
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       4
+            node_roam_range: 19
         species:
           strigoi:
             id: 420
@@ -14902,9 +15029,10 @@ ecosystems:
             - hearing
           charmable: true
           mob_mods:
-            roam_cool:  60
-            roam_rate:  40
-            roam_turns:  2
+            roam_cool:       60
+            roam_rate:       40
+            roam_turns:       2
+            node_roam_range: 14
         species:
           antlion:
             id: 422
@@ -14998,9 +15126,10 @@ ecosystems:
             - scent
           charmable: true
           mob_mods:
-            roam_cool:  15
-            roam_rate:  15
-            roam_turns:  1
+            roam_cool:       15
+            roam_rate:       15
+            roam_turns:       1
+            node_roam_range: 40
         species:
           blue_bee:
             id: 425
@@ -15121,9 +15250,10 @@ ecosystems:
             - scent
           charmable: true
           mob_mods:
-            roam_cool:  60
-            roam_rate:  40
-            roam_turns:  2
+            roam_cool:       60
+            roam_rate:       40
+            roam_turns:       2
+            node_roam_range: 13
         species:
           beetle:
             id: 429
@@ -15252,9 +15382,10 @@ ecosystems:
           speed:     80
           charmable: true
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  4
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       4
+            node_roam_range: 11
         species:
           caeferli:
             id: 433
@@ -15322,9 +15453,10 @@ ecosystems:
             - sight
             - hearing
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  6
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       6
+            node_roam_range: 12
         species:
           chigoe:
             id: 435
@@ -15389,9 +15521,10 @@ ecosystems:
             def: e
           charmable: true
           mob_mods:
-            roam_cool:  60
-            roam_rate:  40
-            roam_turns:  1
+            roam_cool:       60
+            roam_rate:       40
+            roam_turns:       1
+            node_roam_range:  8
         species:
           crawler:
             id: 437
@@ -15519,9 +15652,10 @@ ecosystems:
           speed:     45
           charmable: true
           mob_mods:
-            roam_cool:  15
-            roam_rate:  15
-            roam_turns:  1
+            roam_cool:       15
+            roam_rate:       15
+            roam_turns:       1
+            node_roam_range: 16
         species:
           arundimite:
             id: 441
@@ -15588,9 +15722,10 @@ ecosystems:
             - hearing
           charmable: true
           mob_mods:
-            roam_cool:  15
-            roam_rate:  15
-            roam_turns:  1
+            roam_cool:       15
+            roam_rate:       15
+            roam_turns:       1
+            node_roam_range: 33
         species:
           apex_flys:
             id: 443
@@ -15684,9 +15819,10 @@ ecosystems:
           detects:
             - sight
           mob_mods:
-            roam_cool:  15
-            roam_rate:  15
-            roam_turns:  1
+            roam_cool:       15
+            roam_rate:       15
+            roam_turns:       1
+            node_roam_range: 25
         species:
           croc:
             id: 446
@@ -15780,9 +15916,10 @@ ecosystems:
             - scent
           charmable: true
           mob_mods:
-            roam_cool:  15
-            roam_rate:  15
-            roam_turns:  1
+            roam_cool:       15
+            roam_rate:       15
+            roam_turns:       1
+            node_roam_range: 21
         species:
           ladybug:
             id: 449
@@ -15840,9 +15977,10 @@ ecosystems:
         id: 191
         attributes:
           mob_mods:
-            roam_cool:  15
-            roam_rate:  15
-            roam_turns:  1
+            roam_cool:       15
+            roam_rate:       15
+            roam_turns:       1
+            node_roam_range: 17
         species:
           lucani:
             id: 451
@@ -15894,9 +16032,10 @@ ecosystems:
           detects:
             - sight
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  4
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       4
+            node_roam_range: 14
         species:
           golden_mantid:
             id: 452
@@ -16012,9 +16151,10 @@ ecosystems:
         id: 193
         attributes:
           mob_mods:
-            roam_cool:  15
-            roam_rate:  15
-            roam_turns:  1
+            roam_cool:       15
+            roam_rate:       15
+            roam_turns:       1
+            node_roam_range: 18
         species:
           mosquito:
             id: 456
@@ -16068,9 +16208,10 @@ ecosystems:
             - scent
           charmable: true
           mob_mods:
-            roam_cool:  60
-            roam_rate:  40
-            roam_turns:  1
+            roam_cool:       60
+            roam_rate:       40
+            roam_turns:       1
+            node_roam_range: 22
         species:
           clawed_scolopendrid:
             id: 457
@@ -16188,9 +16329,10 @@ ecosystems:
             - hearing
           charmable: true
           mob_mods:
-            roam_cool:  15
-            roam_rate:  15
-            roam_turns:  1
+            roam_cool:       15
+            roam_rate:       15
+            roam_turns:       1
+            node_roam_range: 19
         species:
           anansi:
             id: 461
@@ -16305,9 +16447,10 @@ ecosystems:
             - sight
           charmable: true
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  2
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       2
+            node_roam_range: 12
         species:
           brown_fluturini:
             id: 465
@@ -16449,9 +16592,10 @@ ecosystems:
             - hearing
             - magic
           mob_mods:
-            roam_cool:  60
-            roam_rate:  40
-            roam_turns:  6
+            roam_cool:       60
+            roam_rate:       40
+            roam_turns:       6
+            node_roam_range: 16
         species:
           coral_wamoura:
             id: 469
@@ -16515,9 +16659,10 @@ ecosystems:
         attributes:
           speed: 24
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  4
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       4
+            node_roam_range: 15
         species:
           wamouracampa:
             id: 471
@@ -16570,9 +16715,10 @@ ecosystems:
         id: 199
         attributes:
           mob_mods:
-            roam_cool:  35
-            roam_rate:  35
-            roam_turns:  3
+            roam_cool:       35
+            roam_rate:       35
+            roam_turns:       3
+            node_roam_range: 17
         species:
           amoeban:
             id: 472
@@ -16608,9 +16754,10 @@ ecosystems:
         id: 200
         attributes:
           mob_mods:
-            roam_cool:  35
-            roam_rate:  35
-            roam_turns:  3
+            roam_cool:       35
+            roam_rate:       35
+            roam_turns:       3
+            node_roam_range: 17
         species:
           clionid:
             id: 473
@@ -16646,9 +16793,10 @@ ecosystems:
         id: 201
         attributes:
           mob_mods:
-            roam_cool:  15
-            roam_rate:  15
-            roam_turns:  1
+            roam_cool:       15
+            roam_rate:       15
+            roam_turns:       1
+            node_roam_range: 37
         species:
           limule:
             id: 474
@@ -16682,9 +16830,10 @@ ecosystems:
         id: 202
         attributes:
           mob_mods:
-            roam_cool:  35
-            roam_rate:  35
-            roam_turns:  3
+            roam_cool:       35
+            roam_rate:       35
+            roam_turns:       3
+            node_roam_range: 16
         species:
           murex:
             id: 475
@@ -16724,6 +16873,8 @@ ecosystems:
         attributes:
           detects:
             - hearing
+          mob_mods:
+            node_roam_range: 9
         species:
           belfrys:
             id: 370
@@ -17032,9 +17183,10 @@ ecosystems:
         id: 203
         attributes:
           mob_mods:
-            roam_cool:  45
-            roam_rate:  15
-            roam_turns:  4
+            roam_cool:       45
+            roam_rate:       15
+            roam_turns:       4
+            node_roam_range: 18
         species:
           animated_weapons:
             id: 476
