@@ -186,7 +186,6 @@ local lotteryNMs =
     { 'Konschtat_Highlands', 'Stray_Mary',        3600 }, -- 60 minutes
     { 'La_Theine_Plateau',   'Lumbering_Lambert', 3600 }, -- 60 minutes
     { 'Pashhow_Marshlands',  'Bloodpool_Vorax',   3600 }, -- 60 minutes
-    { 'South_Gustaberg',     'Leaping_Lizzy',     3600 }, -- 60 minutes
     { 'Valkurm_Dunes',       'Valkurm_Emperor',   3600 }, -- 60 minutes
 }
 
