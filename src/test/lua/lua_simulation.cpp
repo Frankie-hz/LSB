@@ -721,6 +721,51 @@ auto CLuaSimulation::getSpawnSlot(const xi::ZoneId zoneId, const uint32 slotId) 
     return result;
 }
 
+/************************************************************************
+ *  Function: setLotteryChance()
+ *  Purpose : Sets a slot members chance to win its slots roll, in percent.
+ *  Example : xi.test.world:setLotteryChance(nm, 100)
+ *  Notes   : Lasts until the server restarts. 0 makes the mob unweighted again.
+ ************************************************************************/
+
+void CLuaSimulation::setLotteryChance(CLuaBaseEntity& entity, const double percent) const
+{
+    auto* PMob = dynamic_cast<CMobEntity*>(entity.GetBaseEntity());
+    if (!PMob || !PMob->GetSpawnSlot())
+    {
+        TestError("setLotteryChance expects a slotted mob, got {}", entity.getName());
+        return;
+    }
+
+    // A lottery NM at 0 would stop being a lottery member and spawn like any unweighted mob.
+    if (percent <= 0.0 && PMob->GetSpawnSlot()->IsLotteryMember(PMob))
+    {
+        TestError("setLotteryChance needs a chance above 0 for lottery NM {}", entity.getName());
+        return;
+    }
+
+    PMob->GetSpawnSlot()->SetChance(PMob, static_cast<uint16>(std::lround(percent * 10.0)));
+}
+
+/************************************************************************
+ *  Function: setLotteryCooldown()
+ *  Purpose : Sets how long a lottery NM sits out its slots roll after it despawns.
+ *  Example : xi.test.world:setLotteryCooldown(nm, 3600)
+ *  Notes   : Also ends any wait in progress. Lasts until the server restarts.
+ ************************************************************************/
+
+void CLuaSimulation::setLotteryCooldown(CLuaBaseEntity& entity, const uint32 seconds) const
+{
+    auto* PMob = dynamic_cast<CMobEntity*>(entity.GetBaseEntity());
+    if (!PMob || !PMob->GetSpawnSlot())
+    {
+        TestError("setLotteryCooldown expects a slotted mob, got {}", entity.getName());
+        return;
+    }
+
+    PMob->GetSpawnSlot()->SetCooldown(PMob, std::chrono::seconds(seconds));
+}
+
 void CLuaSimulation::Register()
 {
     SOL_USERTYPE("CSimulation", CLuaSimulation);
@@ -738,4 +783,6 @@ void CLuaSimulation::Register()
     SOL_REGISTER("seed", CLuaSimulation::seed);
     SOL_REGISTER("spawnPlayer", CLuaSimulation::spawnPlayer);
     SOL_REGISTER("getSpawnSlot", CLuaSimulation::getSpawnSlot);
+    SOL_REGISTER("setLotteryChance", CLuaSimulation::setLotteryChance);
+    SOL_REGISTER("setLotteryCooldown", CLuaSimulation::setLotteryCooldown);
 };

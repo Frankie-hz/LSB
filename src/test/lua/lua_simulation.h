@@ -78,6 +78,8 @@ public:
     void setSetupContext(bool inSetup);
     auto spawnPlayer(sol::optional<sol::table> params) -> CLuaClientEntityPair*;
     auto getSpawnSlot(xi::ZoneId zoneId, uint32 slotId) const -> sol::table;
+    void setLotteryChance(CLuaBaseEntity& entity, double percent) const;
+    void setLotteryCooldown(CLuaBaseEntity& entity, uint32 seconds) const;
 
     static void Register();
 

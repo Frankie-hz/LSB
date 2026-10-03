@@ -59,6 +59,10 @@ public:
     void StartCooldown(const CMobEntity* mob);
     auto PlaceholderRespawnTime() const -> Maybe<timer::duration>;
 
+    // Test hooks for xi_test only.
+    void SetChance(const CMobEntity* mob, uint16 spawnChance);
+    void SetCooldown(const CMobEntity* mob, timer::duration cooldown); // also ends any wait in progress
+
 private:
     std::vector<SpawnSlotEntry> entries;
 };

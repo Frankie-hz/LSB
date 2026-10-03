@@ -605,4 +605,95 @@ describe('Spawn Handler', function()
             ph.assert:isSpawned()
         end)
     end)
+
+    -- Valkurm Emperor shares a spawn slot with its Damselfly placeholder
+    describe('lottery slot', function()
+        ---@type CTestEntity
+        local nm
+        ---@type CTestEntity
+        local ph
+
+        local function killPlaceholder()
+            player:claimAndKillMob(ph)
+            xi.test.world:skipTime(305)
+            xi.test.world:tick(xi.tick.SPAWN)
+        end
+
+        before_each(function()
+            player:gotoZone(xi.zone.VALKURM_DUNES)
+            local ID = zones[xi.zone.VALKURM_DUNES]
+            nm = player.entities:get(ID.mob.VALKURM_EMPEROR)
+            ph = player.entities:get(ID.mob.VALKURM_EMPEROR - 4)
+
+            -- the NM wins every roll it is allowed into, so each case decides the outcome
+            xi.test.world:setLotteryChance(nm, 100)
+            xi.test.world:setLotteryChance(ph, 0)
+            xi.test.world:setLotteryCooldown(nm, 0)
+
+            if nm:isSpawned() then
+                nm:despawn()
+                SpawnMob(ph:getID())
+            end
+        end)
+
+        it('keeps the NM out of the first roll after a restart', function()
+            ph.assert:isSpawned()
+            nm.assert.no:isSpawned()
+        end)
+
+        it('rolls the NM in place of its placeholder', function()
+            killPlaceholder()
+
+            nm.assert:isSpawned()
+            ph.assert.no:isSpawned()
+        end)
+
+        it('brings the placeholder back on its own timer after the NM dies', function()
+            killPlaceholder()
+            nm.assert:isSpawned()
+
+            -- a cooldown keeps the NM out of the next roll
+            xi.test.world:setLotteryCooldown(nm, 3600)
+            player:claimAndKillMob(nm)
+            xi.test.world:tick(xi.tick.SPAWN)
+            ph.assert.no:isSpawned()
+
+            xi.test.world:skipTime(305)
+            xi.test.world:tick(xi.tick.SPAWN)
+            ph.assert:isSpawned()
+            nm.assert.no:isSpawned()
+        end)
+
+        it('keeps the NM out of the roll until its cooldown ends', function()
+            xi.test.world:setLotteryCooldown(nm, 3600)
+            killPlaceholder()
+            nm.assert:isSpawned()
+
+            player:claimAndKillMob(nm)
+            xi.test.world:skipTime(305)
+            xi.test.world:tick(xi.tick.SPAWN)
+            ph.assert:isSpawned()
+
+            killPlaceholder()
+            ph.assert:isSpawned()
+            nm.assert.no:isSpawned()
+
+            xi.test.world:skipTime(3600)
+            killPlaceholder()
+            nm.assert:isSpawned()
+        end)
+
+        it('spawns the placeholder when every member is weighted and the NM sits out', function()
+            xi.test.world:setLotteryCooldown(nm, 3600)
+            killPlaceholder()
+            nm.assert:isSpawned()
+
+            -- with nothing unweighted left, the placeholders 1% has to fill the whole roll
+            xi.test.world:setLotteryChance(ph, 1)
+            player:claimAndKillMob(nm)
+            xi.test.world:skipTime(305)
+            xi.test.world:tick(xi.tick.SPAWN)
+            ph.assert:isSpawned()
+        end)
+    end)
 end)

@@ -92,3 +92,17 @@ end
 ---@return CTestEntity[]
 function CSimulation:getSpawnSlot(zoneId, slotId)
 end
+
+---Sets a slot members chance to win its slots roll, in percent
+---@param entity CBaseEntity
+---@param percent number
+---@return nil
+function CSimulation:setLotteryChance(entity, percent)
+end
+
+---Sets how long a lottery NM sits out its slots roll after it despawns
+---@param entity CBaseEntity
+---@param seconds integer
+---@return nil
+function CSimulation:setLotteryCooldown(entity, seconds)
+end

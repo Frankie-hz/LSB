@@ -231,6 +231,29 @@ void SpawnSlot::StartCooldown(const CMobEntity* mob)
     }
 }
 
+void SpawnSlot::SetChance(const CMobEntity* mob, const uint16 spawnChance)
+{
+    for (auto& entry : entries)
+    {
+        if (entry.mob == mob)
+        {
+            entry.spawnChance = spawnChance;
+        }
+    }
+}
+
+void SpawnSlot::SetCooldown(const CMobEntity* mob, const timer::duration cooldown)
+{
+    for (auto& entry : entries)
+    {
+        if (entry.mob == mob)
+        {
+            entry.cooldown = cooldown;
+            entry.readyAt  = {};
+        }
+    }
+}
+
 auto SpawnSlot::PlaceholderRespawnTime() const -> Maybe<timer::duration>
 {
     const auto placeholder = std::ranges::find_if(entries, [](const SpawnSlotEntry& entry)
