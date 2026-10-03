@@ -114,6 +114,14 @@ void SpawnHandler::registerForRespawn(CMobEntity* PMob, const Maybe<timer::durat
         return;
     }
 
+    // A lottery NM never pins its slot: the placeholders come back on their own timer and the roll starts over.
+    if (auto* slot = PMob->GetSpawnSlot(); slot && slot->IsLotteryMember(PMob))
+    {
+        const auto placeholderRespawn = slot->PlaceholderRespawnTime().value_or(PMob->m_RespawnTime);
+        pendingSlotRespawns_[slot]    = { timer::now() + placeholderRespawn, std::nullopt };
+        return;
+    }
+
     const timer::duration   duration  = respawnTime.value_or(PMob->m_RespawnTime);
     const timer::time_point respawnAt = timer::now() + duration;
 
@@ -249,7 +257,7 @@ void SpawnHandler::Tick(const timer::time_point now)
             }
 
             SpawnSlot* slot = pair.first;
-            return !slot || slot->TrySpawn(pair.second.specificMobId);
+            return !slot || slot->TrySpawn(pair.second.specificMobId, SlotRoll::Respawn);
         });
 }
 

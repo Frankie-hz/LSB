@@ -254,7 +254,8 @@ bool CMobEntity::TrySpawn()
     {
         if (spawnSlot)
         {
-            spawnSlot->TrySpawn();
+            // Lottery NMs are left out of this roll, so a placeholder always spawns first after a restart.
+            spawnSlot->TrySpawn(std::nullopt, SlotRoll::Boot);
             return false;
         }
 

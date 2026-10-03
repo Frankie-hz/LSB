@@ -708,11 +708,11 @@ auto CLuaSimulation::getSpawnSlot(const xi::ZoneId zoneId, const uint32 slotId) 
 
     const auto& entries = slot->GetEntries();
     auto        i       = 1;
-    for (const auto& [mob, spawnChance] : entries)
+    for (const auto& entry : entries)
     {
-        if (mob)
+        if (entry.mob)
         {
-            result[i] = CLuaTestEntity(engine_->scheduler(), mob);
+            result[i] = CLuaTestEntity(engine_->scheduler(), entry.mob);
         }
 
         ++i;

@@ -25,6 +25,7 @@
 #include "enums/four_cc.h"
 #include "packets/s2c/0x038_schedulor.h"
 #include "spawn_handler.h"
+#include "spawn_slot.h"
 #include "zone.h"
 
 CDespawnState::CDespawnState(xi::Badge<CState>, CBaseEntity* PEntity, const bool instantDespawn)
@@ -45,6 +46,11 @@ auto CDespawnState::init() -> StateErrorOr<void>
 
     if (auto* PMob = dynamic_cast<CMobEntity*>(m_PEntity); PMob && PMob->m_AllowRespawn && PMob->loc.zone != nullptr)
     {
+        if (auto* slot = PMob->GetSpawnSlot(); slot && slot->IsLotteryMember(PMob))
+        {
+            slot->StartCooldown(PMob);
+        }
+
         PMob->loc.zone->spawnHandler().registerForRespawn(PMob);
     }
 

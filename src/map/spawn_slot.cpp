@@ -21,9 +21,21 @@
 #include "spawn_handler.h"
 #include "zone.h"
 
-void SpawnSlot::AddMob(CMobEntity* mob, const uint8 spawnChance)
+#include <algorithm>
+
+namespace
 {
-    entries.push_back({ mob, spawnChance });
+
+auto isLotteryEntry(const SpawnSlotEntry& entry) -> bool
+{
+    return entry.spawnChance > 0 && (entry.mob->m_SpawnType & xi::SpawnType::Lottery) != xi::SpawnType::Normal;
+}
+
+} // namespace
+
+void SpawnSlot::AddMob(CMobEntity* mob, const uint16 spawnChance, const timer::duration cooldown)
+{
+    entries.push_back({ .mob = mob, .spawnChance = spawnChance, .cooldown = cooldown });
     mob->SetSpawnSlot(this);
 }
 
@@ -35,7 +47,7 @@ void SpawnSlot::RemoveMob(const CMobEntity* mob)
                   });
 }
 
-auto SpawnSlot::TrySpawn(const Maybe<uint32> specificMobId) -> bool
+auto SpawnSlot::TrySpawn(const Maybe<uint32> specificMobId, const SlotRoll roll) -> bool
 {
     // Get SpawnHandler from first mob's zone for condition checking
     SpawnHandler* spawnHandler = nullptr;
@@ -75,6 +87,8 @@ auto SpawnSlot::TrySpawn(const Maybe<uint32> specificMobId) -> bool
 
     uint32 totalChance = 0;
 
+    const auto now = timer::now();
+
     for (auto&& entry : entries)
     {
         if (entry.mob->PAI->IsSpawned())
@@ -85,6 +99,12 @@ auto SpawnSlot::TrySpawn(const Maybe<uint32> specificMobId) -> bool
 
         // Use SpawnHandler to check spawn conditions (time, weather, etc.)
         if (spawnHandler && !spawnHandler->canSpawnNow(entry.mob))
+        {
+            continue;
+        }
+
+        // A lottery NM sits out the first roll after a restart and every roll during its cooldown.
+        if (isLotteryEntry(entry) && (roll == SlotRoll::Boot || entry.readyAt > now))
         {
             continue;
         }
@@ -115,10 +135,21 @@ auto SpawnSlot::TrySpawn(const Maybe<uint32> specificMobId) -> bool
     // Check for chance spawns
     if (totalChance > 0)
     {
-        const uint32 roll = xirand::GetRandomNumber(100);
+        // With nothing unweighted to fall back on, or weights past the whole roll, the eligible weights share it in proportion.
+        const auto rollRange = [&]() -> uint32
+        {
+            if (remainingSpawns.empty())
+            {
+                return totalChance;
+            }
+
+            return std::max<uint32>(totalChance, 1000);
+        }();
+
+        const uint32 rolled = xirand::GetRandomNumber(rollRange);
 
         // Check if roll is low enough number to make one of the chance mobs to spawn.
-        if (roll < totalChance)
+        if (rolled < totalChance)
         {
             // Find the chance spawn which matches the roll
             uint32 accumulatedRoll = 0;
@@ -127,7 +158,7 @@ auto SpawnSlot::TrySpawn(const Maybe<uint32> specificMobId) -> bool
             {
                 const auto mob = std::get<1>(entry);
                 accumulatedRoll += std::get<0>(entry);
-                if (roll < accumulatedRoll)
+                if (rolled < accumulatedRoll)
                 {
                     allowedSpawn = mob;
                     break;
@@ -171,4 +202,46 @@ auto SpawnSlot::IsEmpty() const -> bool
 auto SpawnSlot::GetEntries() const -> const std::vector<SpawnSlotEntry>&
 {
     return entries;
+}
+
+auto SpawnSlot::IsLotteryMember(const CMobEntity* mob) const -> bool
+{
+    return std::ranges::any_of(entries, [mob](const SpawnSlotEntry& entry)
+                               {
+                                   return entry.mob == mob && isLotteryEntry(entry);
+                               });
+}
+
+// Every copy of the NM in this slot shares the wait, so a second spawn point cant bring it straight back.
+void SpawnSlot::StartCooldown(const CMobEntity* mob)
+{
+    const auto despawned = std::ranges::find(entries, mob, &SpawnSlotEntry::mob);
+    if (despawned == entries.end())
+    {
+        return;
+    }
+
+    const auto readyAt = timer::now() + despawned->cooldown;
+    for (auto& entry : entries)
+    {
+        if (isLotteryEntry(entry) && entry.mob->getName() == mob->getName())
+        {
+            entry.readyAt = readyAt;
+        }
+    }
+}
+
+auto SpawnSlot::PlaceholderRespawnTime() const -> Maybe<timer::duration>
+{
+    const auto placeholder = std::ranges::find_if(entries, [](const SpawnSlotEntry& entry)
+                                                  {
+                                                      return !isLotteryEntry(entry);
+                                                  });
+
+    if (placeholder == entries.end())
+    {
+        return std::nullopt;
+    }
+
+    return placeholder->mob->m_RespawnTime;
 }

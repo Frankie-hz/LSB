@@ -125,6 +125,17 @@ auto convertNames(const std::optional<wire::Names>& source) -> std::vector<std::
     return std::get<std::vector<std::string>>(*source);
 }
 
+// Loot and slot chances are kept in tenths of a percent, so 2.5% is stored as 25.
+auto percentInTenths(const double percent) -> std::optional<uint16>
+{
+    if (percent < 0.0 || percent > 100.0)
+    {
+        return std::nullopt;
+    }
+
+    return static_cast<uint16>(std::lround(percent * 10.0));
+}
+
 // A name resolves straight to its per-mille rate. A percentage is the only form needing conversion.
 auto perMille(const wire::Chance& chance, const std::string_view key) -> uint16
 {
@@ -133,13 +144,30 @@ auto perMille(const wire::Chance& chance, const std::string_view key) -> uint16
         return static_cast<uint16>(yaml::resolveEnum(*tier));
     }
 
-    const auto percent = std::get<double>(chance);
-    if (percent < 0.0 || percent > 100.0)
+    const auto percent     = std::get<double>(chance);
+    const auto maybeTenths = percentInTenths(percent);
+    if (!maybeTenths)
     {
         throw std::runtime_error(fmt::format("template '{}' has a loot chance of {}%, outside 0-100", key, percent));
     }
 
-    return static_cast<uint16>(std::lround(percent * 10.0));
+    return *maybeTenths;
+}
+
+auto convertSlotChance(const std::optional<double>& percent, const uint32 slotId, const uint32 memberId) -> uint16
+{
+    if (!percent)
+    {
+        return 0;
+    }
+
+    const auto maybeTenths = percentInTenths(*percent);
+    if (!maybeTenths)
+    {
+        throw std::runtime_error(fmt::format("slot {} gives {} a chance of {}%, outside 0-100", slotId, memberId, *percent));
+    }
+
+    return *maybeTenths;
 }
 
 auto convertLoot(const std::optional<wire::Loot>& source, const std::string_view key) -> LootData
@@ -346,17 +374,18 @@ auto Dataset::decode(const std::string_view text) -> Records
                     throw std::runtime_error(fmt::format("slot {} lists {}, which no spawn declares", slot.Id, id));
                 }
 
-                weighted += member.chance.value_or(0);
+                const auto chance = convertSlotChance(member.chance, slot.Id, id);
+                weighted += chance;
                 slot.Members.emplace_back(MobSlotMemberData{
                     .ActIndex = static_cast<uint16>(id & 0xFFF),
-                    .Chance   = member.chance.value_or(0),
+                    .Chance   = chance,
                     .Cooldown = member.cooldown.value_or(0),
                 });
             }
 
-            if (weighted > 100)
+            if (weighted > 1000)
             {
-                throw std::runtime_error(fmt::format("slot {} allocates {}% across its weighted members", slot.Id, weighted));
+                throw std::runtime_error(fmt::format("slot {} allocates {}% across its weighted members", slot.Id, weighted / 10.0));
             }
 
             records.Slots.emplace_back(std::move(slot));

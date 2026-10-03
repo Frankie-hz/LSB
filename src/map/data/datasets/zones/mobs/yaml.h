@@ -110,7 +110,7 @@ struct Slot
 {
     struct Member
     {
-        std::optional<uint8>  chance;
+        std::optional<double> chance;
         std::optional<uint32> cooldown;
     };
 
@@ -155,11 +155,11 @@ template <>
 struct glz::json_schema<xi::data::datasets::zones::mobs::wire::Slot::Member>
 {
     glz::schema chance{
-        .description = "Not implemented: no zone sets one, so a slot always picks uniformly among its members.",
+        .description = "How likely this mob is to be the one that spawns, as a percent (decimals like 2.5 work). Mobs without a chance share whatever is left. If every mob that can spawn has a chance, they split the odds between them. A lottery NM needs a chance, never spawns right after a server restart, and waits out its cooldown before it can spawn again.",
         .minimum     = 0L,
         .maximum     = 100L,
     };
-    glz::schema cooldown{ .description = "Seconds this member should stay out of the roll after its own death. Recorded but not yet implemented." };
+    glz::schema cooldown{ .description = "How many seconds a lottery NM waits after it despawns before it can spawn again. If the NM has more than one spawn point in this slot, they all wait together. Leave it out for no wait." };
 };
 
 template <>

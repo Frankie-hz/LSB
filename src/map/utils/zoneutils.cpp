@@ -252,7 +252,8 @@ void InsertMobs(CZone* PZone, const xi::ZoneId zoneId, const xi::data::Mobs& mob
     struct SlotPlacement
     {
         uint32 SlotId{};
-        uint8  Chance{};
+        uint16 Chance{};
+        uint32 Cooldown{};
     };
 
     HashMap<uint16, SlotPlacement> slotByActIndex;
@@ -260,7 +261,7 @@ void InsertMobs(CZone* PZone, const xi::ZoneId zoneId, const xi::data::Mobs& mob
     {
         for (const auto& member : slot.Members)
         {
-            slotByActIndex[member.ActIndex] = { slot.Id, member.Chance };
+            slotByActIndex[member.ActIndex] = { slot.Id, member.Chance, member.Cooldown };
         }
     }
 
@@ -411,7 +412,7 @@ void InsertMobs(CZone* PZone, const xi::ZoneId zoneId, const xi::data::Mobs& mob
                     ShowError("Mob with ID %u in spawn slot %u in zone %u is a scripted spawn. Scripted spawns should not be assigned to spawn slots.", PMob->id, placement->second.SlotId, zoneId);
                 }
 
-                spawnSlot->AddMob(PMob, placement->second.Chance);
+                spawnSlot->AddMob(PMob, placement->second.Chance, std::chrono::seconds(placement->second.Cooldown));
             }
 
             if ((zoneType & xi::ZoneType::Dynamis) != xi::ZoneType::Unknown)
@@ -817,6 +818,12 @@ auto LoadMOBList(Scheduler& scheduler, const std::vector<xi::ZoneId>& zoneIds, c
                                              PMob->m_SpawnType == xi::SpawnType::Scripted ||
                                              PMob->m_SpawnType == xi::SpawnType::Windowed);
 
+                    // A lottery NM with a slot chance is held back by its slot rather than by its scripts.
+                    if (const auto* slot = PMob->GetSpawnSlot(); slot && slot->IsLotteryMember(PMob))
+                    {
+                        PMob->m_AllowRespawn = true;
+                    }
+
                     // Intialize monsters that do not require specific conditions to spawn initially. Monsters conditioned to
                     // spawn by time or weather will be allowed upon corresponding time/weather events.
                     PMob->m_CanSpawn = !PMob->spawnWindow().has_value() &&
@@ -851,6 +858,12 @@ auto LoadMOBList(Scheduler& scheduler, const std::vector<xi::ZoneId>& zoneIds, c
                         if (PMob->m_SpawnType == xi::SpawnType::Scripted && PMob->m_RespawnTime > 0s)
                         {
                             PMob->m_AllowRespawn = true;
+                        }
+
+                        // A lottery NMs slot is already scheduled by its placeholders.
+                        if (const auto* slot = PMob->GetSpawnSlot(); slot && slot->IsLotteryMember(PMob))
+                        {
+                            return;
                         }
 
                         // Condition-based mobs (time/weather) register with 0s so they spawn when conditions are met

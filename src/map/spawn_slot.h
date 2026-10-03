@@ -17,7 +17,10 @@
 #pragma once
 
 #include <common/cbasetypes.h>
+#include <common/timer.h>
 #include <common/types/maybe.h>
+
+#include <vector>
 
 class CMobEntity;
 
@@ -25,20 +28,36 @@ struct SpawnSlotEntry
 {
     CMobEntity* mob;
 
-    // Chance out of 100 of this mob spawning out of the mobs sharing the slot.
+    // Chance out of 1000 of this mob spawning out of the mobs sharing the slot.
     // If not all mobs in the slot have a chance defined, then the ones without it
     // will be rolled between equally, if none of the ones with a specified chance succeeds.
-    uint8 spawnChance{ 0 };
+    uint16 spawnChance{ 0 };
+
+    // A lottery NM sits out the roll for this long after it despawns.
+    timer::duration cooldown{};
+
+    timer::time_point readyAt{};
+};
+
+enum class SlotRoll : uint8
+{
+    Boot,
+    Respawn,
 };
 
 class SpawnSlot
 {
 public:
-    void AddMob(CMobEntity* mob, uint8 spawnChance);
+    void AddMob(CMobEntity* mob, uint16 spawnChance, timer::duration cooldown);
     void RemoveMob(const CMobEntity* mob);
-    auto TrySpawn(Maybe<uint32> specificMobId = std::nullopt) -> bool;
+    auto TrySpawn(Maybe<uint32> specificMobId, SlotRoll roll) -> bool;
     auto IsEmpty() const -> bool;
     auto GetEntries() const -> const std::vector<SpawnSlotEntry>&;
+
+    // A lottery NM with a chance in this slot, rolled here instead of by its scripts.
+    auto IsLotteryMember(const CMobEntity* mob) const -> bool;
+    void StartCooldown(const CMobEntity* mob);
+    auto PlaceholderRespawnTime() const -> Maybe<timer::duration>;
 
 private:
     std::vector<SpawnSlotEntry> entries;

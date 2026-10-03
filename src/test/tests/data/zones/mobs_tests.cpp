@@ -382,9 +382,35 @@ slots:
     REQUIRE_THROWS_AS(MobsDataset::decode(overAllocated), std::runtime_error);
 }
 
-TEST_CASE("mobs: a weighted member keeps its chance and cooldown", "[data][mob]")
+TEST_CASE("mobs: a weighted member keeps its chance in tenths of a percent", "[data][mob]")
 {
     constexpr auto lottery = R"(
+templates: {}
+spawns:
+  17186822: { script: Damselfly }
+  17186823: { script: Valkurm_Emperor }
+  17186824: { script: Valkurm_Emperor }
+slots:
+  - members:
+      17186822: {}
+      17186823: {chance: 10}
+      17186824: {chance: 2.5}
+)";
+
+    const auto records = MobsDataset::decode(lottery);
+    REQUIRE(records.Slots.size() == 1);
+
+    const auto& members = records.Slots.front().Members;
+    REQUIRE(members.size() == 3);
+
+    REQUIRE(std::ranges::count(members, 0, &xi::data::MobSlotMemberData::Chance) == 1);
+    REQUIRE(std::ranges::count(members, 100, &xi::data::MobSlotMemberData::Chance) == 1);
+    REQUIRE(std::ranges::count(members, 25, &xi::data::MobSlotMemberData::Chance) == 1);
+}
+
+TEST_CASE("mobs: a slot chance must be a percentage", "[data][mob]")
+{
+    constexpr auto overWhole = R"(
 templates: {}
 spawns:
   17186822: { script: Damselfly }
@@ -392,18 +418,30 @@ spawns:
 slots:
   - members:
       17186822: {}
-      17186823: {chance: 10, cooldown: 28800}
+      17186823: {chance: 120}
 )";
 
-    const auto records = MobsDataset::decode(lottery);
-    REQUIRE(records.Slots.size() == 1);
+    REQUIRE_THROWS_AS(MobsDataset::decode(overWhole), std::runtime_error);
+}
 
+TEST_CASE("mobs: a lottery member keeps its cooldown", "[data][mob]")
+{
+    constexpr auto cooldown = R"(
+templates: {}
+spawns:
+  17186822: { script: Damselfly }
+  17186823: { script: Valkurm_Emperor }
+slots:
+  - members:
+      17186822: {}
+      17186823: {chance: 10, cooldown: 3600}
+)";
+
+    const auto  records = MobsDataset::decode(cooldown);
     const auto& members = records.Slots.front().Members;
-    REQUIRE(members.size() == 2);
 
-    const auto notorious = std::ranges::find(members, 10, &xi::data::MobSlotMemberData::Chance);
-    REQUIRE(notorious != members.end());
-    REQUIRE(notorious->Cooldown == 28800);
+    REQUIRE(std::ranges::count(members, 3600u, &xi::data::MobSlotMemberData::Cooldown) == 1);
+    REQUIRE(std::ranges::count(members, 0u, &xi::data::MobSlotMemberData::Cooldown) == 1);
 }
 
 TEST_CASE("mobs: a spawn overrides its template's attributes", "[data][mob]")
