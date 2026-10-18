@@ -120,6 +120,8 @@ auto CMobController::Disengage() -> bool
 {
     TracyZoneScoped;
 
+    PMob->setPulledFromRegion(PMob->roamRegion() && PMob->DistanceFromHome() > 0.0f);
+
     // this will let me decide to walk home or despawn
     m_LastActionTime = m_Tick - std::chrono::seconds(PMob->getMobMod(xi::MobMod::RoamCool)) + 10s;
     PMob->m_neutral  = true;

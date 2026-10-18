@@ -363,7 +363,7 @@ bool CMobEntity::CanRoamHome()
         return true;
     }
 
-    // a mob that left its region does not walk back, it despawns and respawns somewhere inside
+    // a mob combat dragged out of its region does not walk back, it despawns and respawns somewhere inside
     if (roamRegion_)
     {
         return false;
@@ -386,6 +386,11 @@ auto CMobEntity::GetRoamAnchor() const -> position_t
 auto CMobEntity::roamRegion() const -> const RoamRegion*
 {
     return roamRegion_;
+}
+
+void CMobEntity::setPulledFromRegion(const bool pulled)
+{
+    pulledFromRegion_ = pulled;
 }
 
 void CMobEntity::setPatrolRoute(std::vector<position_t> route)
@@ -514,6 +519,12 @@ bool CMobEntity::CanDeaggro() const
 
 bool CMobEntity::IsFarFromHome()
 {
+    // a region mob that wandered out on its own finds its way back in through roaming, however far out it is
+    if (roamRegion_ && !pulledFromRegion_)
+    {
+        return false;
+    }
+
     return DistanceFromHome() > m_maxRoamDistance;
 }
 
@@ -757,6 +768,8 @@ void CMobEntity::Spawn()
 
     mobutils::CalculateMobStats(this);
     mobutils::GetAvailableSpells(this);
+
+    pulledFromRegion_ = false;
 
     // region mobs pick one of their regions and a fresh point in it every life, and m_SpawnPoint keeps it for the point-based checks
     if (!roamRegions_.empty() && loc.zone)

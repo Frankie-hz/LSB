@@ -636,11 +636,11 @@ describe('Spawn Handler', function()
             ph.assert.no:isSpawned()
         end)
 
-        it('brings the same NM back after it deaggros', function()
+        it('keeps an NM that wandered out of its region on its own', function()
             killAndRespawn(ph)
             nm.assert:isSpawned()
 
-            -- notorious mobs walk home instead of despawning, and a Hill Lizard across the zone marks walkable ground far outside the NM's region
+            -- a Hill Lizard across the zone marks walkable ground far outside the NM's region
             nm:setMobMod(xi.mobMod.NO_DESPAWN, 0)
             local far = player.entities:get(17199263):getPos()
             nm:setPos(far.x, far.y, far.z)
@@ -648,6 +648,36 @@ describe('Spawn Handler', function()
 
             for _ = 1, 10 do
                 xi.test.world:skipTime(5)
+                xi.test.world:tickEntity(nm)
+            end
+
+            nm.assert:isSpawned()
+        end)
+
+        it('brings the same NM back after it deaggros outside its region', function()
+            killAndRespawn(ph)
+            nm.assert:isSpawned()
+
+            -- notorious mobs walk home instead of despawning
+            nm:setMobMod(xi.mobMod.NO_DESPAWN, 0)
+            nm:updateEnmity(player)
+            xi.test.world:tickEntity(nm)
+
+            local far = player.entities:get(17199263):getPos()
+            nm:setPos(far.x, far.y, far.z)
+            nm:clearPath()
+            nm:disengage()
+
+            -- retail stands it still for 10 s before the fade out, then the despawn takes 3 s
+            for _ = 1, 8 do
+                xi.test.world:skipTime(1)
+                xi.test.world:tickEntity(nm)
+            end
+
+            nm.assert:isSpawned()
+
+            for _ = 1, 7 do
+                xi.test.world:skipTime(1)
                 xi.test.world:tickEntity(nm)
             end
 

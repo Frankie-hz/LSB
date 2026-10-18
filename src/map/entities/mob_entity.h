@@ -76,6 +76,7 @@ public:
     auto GetRoamAnchor() const -> position_t;                    // the point roaming is measured from
     void setRoamRegions(std::vector<const RoamRegion*> regions); // one is picked on every spawn and its edge is the roam limit, so m_maxRoamDistance drops to 0
     auto roamRegion() const -> const RoamRegion*;                // the region picked for this life, null for a point spawner
+    void setPulledFromRegion(bool pulled);                       // set on disengage: combat left it outside its region, so it despawns instead of roaming back in
     auto dropList() const -> const DropList_t*;
     void setPatrolRoute(std::vector<position_t> route); // walked as a loop from every spawn
 
@@ -250,5 +251,6 @@ private:
     Maybe<SpawnWindow>                    spawnWindow_;
     std::vector<const RoamRegion*>        roamRegions_;           // areas it may spawn in, owned by the zone
     const RoamRegion*                     roamRegion_{ nullptr }; // the one picked for this life
+    bool                                  pulledFromRegion_{ false };
     std::vector<position_t>               patrolRoute_;           // waypoints it loops while roaming, empty for a free roamer
 };
