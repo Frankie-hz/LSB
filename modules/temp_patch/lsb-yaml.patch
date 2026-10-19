@@ -12,7 +12,7 @@ index 875e93d68a..ba94d5ffc1 100644
 +`modules/example/data/zones/west_ronfaure/mobs.yaml` patches `data/zones/west_ronfaure/mobs.yaml`.
 +
 +Nested data components may be selected directly. For example, an `init.txt` entry for
-+`era/data/abyssea/advanced_job_quest_mob_stats` loads patches relative to that directory.
++`example/data/feature` loads patches relative to that directory.
 +Only entries that name a `data` directory, or a bare module name such as `renamer`, contribute patches; `sql`, `lua` and `cpp` entries do not.
 +
 +Patches use RFC 7396 semantics and are applied in `init.txt` order. Objects merge by key, lists are replaced whole, and `null` removes a key.
@@ -428,7 +428,7 @@ index 558f34de7c..adcffbd7cb 100644
 +TEST_CASE("data binding: zone patches preserve numeric mapping keys", "[data][binding]")
 +{
 +    const std::vector<std::string> modules{
-+        "modules/era/data/abyssea/advanced_job_quest_mob_stats/zones/korroloka_tunnel/mobs.yaml"
++        "modules/phoenix/data/zones/korroloka_tunnel/mobs.yaml"
 +    };
 +    const auto records = MobsDataset::decode(xi::data::loadPatchedZoneYaml("data/zones/korroloka_tunnel/mobs.yaml", modules));
 +
