@@ -27,6 +27,7 @@
 #include "data/enums/key_item.h"
 #include "items/item.h"
 
+#include <functional>
 #include <map>
 
 enum class GP_CLI_COMMAND_FISHING_2_MODE : uint8_t;
@@ -883,6 +884,18 @@ using RemoveFly               = xi::Flag<struct RemoveFlyTag>;
 using BigFish                 = xi::Flag<struct BigFishTag>;
 using CancelOnMobLoadFailBait = xi::Flag<struct CancelOnMobLoadFailBaitTag>;
 using Lost                    = xi::Flag<struct LostTag>;
+
+// The daily allowance lives on the account, which only a module knows how to reach. It hands
+// these in at startup, and without them an angler is never held back
+using AccountMeterFetch   = std::function<int32(uint32 accountId, const std::string& varName)>;
+using AccountMeterPersist = std::function<void(uint32 accountId, const std::string& varName, int32 value, uint32 expiry)>;
+
+void SetAccountMeterAccess(AccountMeterFetch fetch, AccountMeterPersist persist);
+
+// Fatigue owed for a fish: by size and by how far above the angler it sat; failure adds the certain-loss penalty
+auto RodFatigue(uint16 rodId, int32 fatigue) -> int32;
+auto CatchFatigue(uint8 fishingSkill, const fishresponse_t& hooked) -> int32;
+auto FailedCatchFatigue(uint8 fishingSkill, const fishresponse_t& hooked) -> int32;
 
 // Calculations
 uint8               GetMoonPhase();
