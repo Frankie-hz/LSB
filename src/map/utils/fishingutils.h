@@ -901,6 +901,9 @@ uint8               CalculateLuckyTiming(CCharEntity* PChar, uint8 fishingSkill,
 uint16              CalculateHookChance(uint8 fishingSkill, fish_t* fish, bait_t* bait, rod_t* rod);
 uint8               CalculateDelay(CCharEntity* PChar, uint8 baseDelay, uint8 sizeType, rod_t* rod, uint8 count);
 uint8               CalculateMovement(CCharEntity* PChar, uint8 baseMove, uint8 sizeType, rod_t* rod, uint8 count);
+lsbret_t            CalculateLoseChance(uint8 catchType, uint8 fishingSkill, uint8 maxSkill, uint8 sizeType, bool legendary, uint8 ranking, rod_t* rod);
+lsbret_t            CalculateSnapChance(uint8 catchType, uint8 fishingSkill, uint8 maxSkill, uint8 sizeType, bool legendary, uint8 ranking, rod_t* rod);
+lsbret_t            CalculateBreakChance(uint8 catchType, uint8 fishingSkill, uint8 maxSkill, uint8 sizeType, bool legendary, uint8 ranking, rod_t* rod);
 uint8               CalculateFishSense(CCharEntity* PChar, fishresponse_t* response, uint8 fishingSkill, uint8 catchType, uint8 sizeType, uint8 maxSkill, Legendary legendary, uint16 minLength, uint16 maxLength, uint8 ranking, rod_t* rod);
 uint16              CalculateCriticalBite(uint8 fishingSkill, uint8 fishSkill, rod_t* rod);
 big_fish_stats_t    CalculateBigFishStats(uint16 minLength, uint16 maxLength);

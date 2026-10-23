@@ -732,29 +732,14 @@ lsbret_t CalculateLoseChance(uint8 catchType, uint8 fishingSkill, uint8 maxSkill
     {
         if (sizeType > rod->sizeType && ranking > rod->maxRank)
         {
-            tooBigChance = 50;
-            if (fishingSkill < maxSkill)
-            {
-                tooBigChance += maxSkill - fishingSkill;
-            }
-
-            if (fishingSkill > maxSkill)
-            {
-                tooBigChance -= fishingSkill - maxSkill;
-            }
+            // Capped here so a big fish can never outrank a certain low-skill loss below
+            const auto skillGap = static_cast<int>(fishingSkill) - static_cast<int>(maxSkill);
+            tooBigChance        = static_cast<uint8>(std::clamp(50 - skillGap, 0, 50));
         }
-        else if (sizeType < rod->sizeType && ranking < rod->minRank)
+        else if (sizeType < rod->sizeType)
         {
-            tooSmallChance = 50;
-            if (fishingSkill < maxSkill)
-            {
-                tooSmallChance += maxSkill - fishingSkill;
-            }
-
-            if (fishingSkill > maxSkill)
-            {
-                tooSmallChance -= std::min<uint8>(fishingSkill - maxSkill, tooSmallChance);
-            }
+            // A rod meant for big fish loses a small one by how big that fish is, whatever the angler's skill
+            tooSmallChance = (uint8)std::min(90, (int)std::floor(maxSkill * 1.8f));
         }
     }
 
@@ -762,23 +747,29 @@ lsbret_t CalculateLoseChance(uint8 catchType, uint8 fishingSkill, uint8 maxSkill
     {
         uint8 diff     = maxSkill - (fishingSkill + 7);
         float diffAdd  = diff * 0.8f;
-        lowSkillChance = (uint8)std::floor(diffAdd); // min 5, max 85
+        lowSkillChance = (uint8)std::floor(diffAdd);
+
+        // Nothing fifty levels above the angler is ever landed
+        if (fishingSkill + 50 <= maxSkill)
+        {
+            lowSkillChance = 100;
+        }
     }
 
     if (tooBigChance > 0 && tooBigChance > lowSkillChance)
     {
         lsb.failReason = FISHINGFAILTYPE_LOST_TOOBIG;
-        lsb.chance     = std::clamp<uint8>(tooBigChance, 0, 50);
+        lsb.chance     = tooBigChance;
     }
     else if (tooSmallChance > 0 && tooSmallChance > lowSkillChance)
     {
         lsb.failReason = FISHINGFAILTYPE_LOST_TOOSMALL;
-        lsb.chance     = std::clamp<uint8>(tooSmallChance, 0, 50);
+        lsb.chance     = std::clamp<uint8>(tooSmallChance, 0, 100);
     }
     else if (catchType < FISHINGCATCHTYPE_ITEM && lowSkillChance > 0)
     {
         lsb.failReason = FISHINGFAILTYPE_LOST_LOWSKILL;
-        lsb.chance     = std::clamp<uint8>(lowSkillChance, 0, 55);
+        lsb.chance     = std::clamp<uint8>(lowSkillChance, 0, 100);
     }
 
     return lsb;
@@ -787,17 +778,11 @@ lsbret_t CalculateLoseChance(uint8 catchType, uint8 fishingSkill, uint8 maxSkill
 lsbret_t CalculateSnapChance(uint8 catchType, uint8 fishingSkill, uint8 maxSkill, uint8 sizeType, bool legendary, uint8 ranking, rod_t* rod)
 {
     lsbret_t lsb;
-    uint8    levelDiffBonus  = 0;
     uint8    sizePenalty     = 0;
     uint8    legendaryBonus  = 0;
     uint8    totalDurability = 0;
     lsb.failReason           = FISHINGFAILTYPE_NONE;
     lsb.chance               = 0;
-
-    if (fishingSkill + 10 > maxSkill)
-    {
-        levelDiffBonus = 2;
-    }
 
     if (!rod->legendary && sizeType > rod->sizeType)
     {
@@ -816,13 +801,13 @@ lsbret_t CalculateSnapChance(uint8 catchType, uint8 fishingSkill, uint8 maxSkill
         }
     }
 
-    totalDurability = rod->maxRank + levelDiffBonus + legendaryBonus - sizePenalty;
+    totalDurability = rod->maxRank + legendaryBonus - sizePenalty;
 
     if (ranking > totalDurability)
     {
         uint8 strDuraDiff = ranking - totalDurability;
         lsb.failReason    = FISHINGFAILTYPE_LINESNAP;
-        lsb.chance        = std::clamp<uint8>((uint8)std::floor(strDuraDiff * 8.5f), 0, 55);
+        lsb.chance        = static_cast<uint8>(std::min(55, strDuraDiff * 19));
     }
 
     return lsb;
@@ -831,7 +816,6 @@ lsbret_t CalculateSnapChance(uint8 catchType, uint8 fishingSkill, uint8 maxSkill
 lsbret_t CalculateBreakChance(uint8 catchType, uint8 fishingSkill, uint8 maxSkill, uint8 sizeType, bool legendary, uint8 ranking, rod_t* rod)
 {
     lsbret_t lsb;
-    uint8    levelDiffBonus = 0;
     uint8    legendaryBonus = 0;
     uint8    sizePenalty    = 0;
     lsb.failReason          = FISHINGFAILTYPE_NONE;
@@ -840,11 +824,6 @@ lsbret_t CalculateBreakChance(uint8 catchType, uint8 fishingSkill, uint8 maxSkil
     if (!rod->breakable)
     {
         return lsb;
-    }
-
-    if (fishingSkill + 10 > maxSkill)
-    {
-        levelDiffBonus = 2;
     }
 
     if (!rod->legendary && sizeType > rod->sizeType)
@@ -861,11 +840,11 @@ lsbret_t CalculateBreakChance(uint8 catchType, uint8 fishingSkill, uint8 maxSkil
         sizePenalty = 5;
     }
 
-    if (ranking > rod->maxRank + levelDiffBonus + legendaryBonus)
+    if (ranking > rod->maxRank + legendaryBonus)
     {
-        uint8 strDuraDiff = ranking - (rod->maxRank + levelDiffBonus + legendaryBonus);
+        uint8 strDuraDiff = ranking - (rod->maxRank + legendaryBonus);
         lsb.failReason    = FISHINGFAILTYPE_RODBREAK;
-        lsb.chance        = std::clamp<uint8>((uint8)std::floor((strDuraDiff + sizePenalty) * 1.3f), 0, 55);
+        lsb.chance        = static_cast<uint8>(std::min(20, (strDuraDiff + sizePenalty) * 10));
     }
 
     return lsb;
