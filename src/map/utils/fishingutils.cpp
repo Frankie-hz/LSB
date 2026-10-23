@@ -1636,6 +1636,7 @@ int32 CatchMonster(CCharEntity* PChar, uint32 MobID)
     PMob->setMobMod(xi::MobMod::IdleDespawn, 180);
     PMob->SetDespawnTime(180s);
     PMob->SetLocalVar("hooked", 0);
+    PMob->SetLocalVar("hookedBy", 0);
 
     if (mob->maxRespawn > mob->minRespawn)
     {
@@ -1745,7 +1746,7 @@ bool SendHookResponse(CCharEntity* PChar, fishresponse_t* response, CancelOnMobL
             break;
         case FISHINGCATCHTYPE_MOB:
         {
-            CMobEntity* PMob = dynamic_cast<CMobEntity*>(zoneutils::GetEntity(PChar->hookedFish->catchid, TYPE_MOB));
+            CMobEntity* PMob = dynamic_cast<CMobEntity*>(zoneutils::GetEntity(response->catchid, TYPE_MOB));
 
             if (CanFishMob(PMob))
             {
@@ -1997,6 +1998,12 @@ void StartFishing(CCharEntity* PChar)
 
     if (FishingAreaID > 0)
     {
+        // A hook still live from the previous cast was escaped without an end packet
+        if (PChar->hookedFish != nullptr && PChar->hookedFish->hooked && PChar->fishingToken != 0)
+        {
+            AbandonHook(PChar);
+        }
+
         PChar->fishingToken = 1 + xirand::GetRandomNumber(9999);
         destroy(PChar->hookedFish);
 
@@ -2099,9 +2106,12 @@ uint8 UnhookMob(CCharEntity* PChar, Lost lost)
     {
         CMobEntity* PMob = dynamic_cast<CMobEntity*>(zoneutils::GetEntity(PChar->hookedFish->catchid, TYPE_MOB));
 
-        if (PMob != nullptr)
+        // Only the angler holding the reservation may clear it; a later cleanup of an already
+        // released hook must not knock off whoever hooked the mob since
+        if (PMob != nullptr && PMob->GetLocalVar("hookedBy") == PChar->id)
         {
             PMob->SetLocalVar("hooked", 0);
+            PMob->SetLocalVar("hookedBy", 0);
 
             if (lost && PChar->hookedFish->nm && PChar->hookedFish->nmFlags & FISHINGNM_RESET_RESPAWN_ON_FAIL)
             {
@@ -2602,6 +2612,7 @@ fishresponse_t* FishingCheck(CCharEntity* PChar, uint8 fishingSkill, rod_t* rod,
         if (PMob != nullptr && PMob->GetLocalVar("hooked") == 0)
         {
             PMob->SetLocalVar("hooked", 1);
+            PMob->SetLocalVar("hookedBy", PChar->id);
             PMob->SetLocalVar("hookedTime", earth_time::timestamp());
 
             response->hooked              = true;
@@ -2701,6 +2712,39 @@ catchresponse_t* ReelCheck(CCharEntity* PChar, fishresponse_t* fishResponse, rod
     return catchResponse;
 }
 
+// The same cost as giving up through the minigame: the bait and the mob's hook
+void AbandonHook(CCharEntity* PChar)
+{
+    BaitLoss(PChar, RemoveFly::No, SendUpdate::Yes);
+    UnhookMob(PChar, Lost::Yes);
+}
+
+void ReleaseFishing(CCharEntity* PChar)
+{
+    if (PChar->hookedFish != nullptr)
+    {
+        UnhookMob(PChar, Lost::No);
+
+        // Only a fish that reached the bag skills up; items, mobs and every loss give nothing
+        if (PChar->hookedFish->successtype == FISHINGSUCCESSTYPE_CATCHSMALL || PChar->hookedFish->successtype == FISHINGSUCCESSTYPE_CATCHLARGE)
+        {
+            const uint16 skillUpChances = 1 + PChar->getMod(xi::Mod::PELICAN_RING_EFFECT);
+
+            for (uint16 i = 0; i < skillUpChances; i++)
+            {
+                FishingSkillup(PChar, PChar->hookedFish->catchlevel, PChar->hookedFish->successtype);
+            }
+        }
+
+        destroy(PChar->hookedFish);
+        PChar->hookedFish = nullptr;
+    }
+
+    PChar->fishingToken = 0;
+    PChar->animation    = xi::Animation::None;
+    PChar->updatemask |= UPDATE_HP;
+}
+
 void FishingAction(CCharEntity* PChar, const GP_CLI_COMMAND_FISHING_2_MODE mode, const uint32 para, const uint32 para2)
 {
     const uint32 stamina = para;
@@ -2717,18 +2761,21 @@ void FishingAction(CCharEntity* PChar, const GP_CLI_COMMAND_FISHING_2_MODE mode,
     uint16 MessageOffset = GetMessageOffset(PChar->getZone());
     uint32 vanaTime      = earth_time::vanadiel_timestamp();
 
-    // Ending the minigame clears the token before the client requests release.
-    // Release must still clean up the catch and restore the idle animation.
-    if (PChar->fishingToken == 0 && mode != GP_CLI_COMMAND_FISHING_2_MODE::RequestRelease)
-    {
-        PChar->animation = xi::Animation::NewFishingStop;
-        return;
-    }
-
     switch (mode)
     {
         case GP_CLI_COMMAND_FISHING_2_MODE::RequestCheckHook:
         {
+            if (PChar->fishingToken == 0)
+            {
+                return;
+            }
+
+            // A fish already on the line has to be fought or given up, never re-checked
+            if (PChar->animation == xi::Animation::NewFishingFish)
+            {
+                return;
+            }
+
             if (PChar->animation != xi::Animation::NewFishingStart)
             {
                 CatchNothing(PChar, FISHINGFAILTYPE_NONE);
@@ -2789,6 +2836,10 @@ void FishingAction(CCharEntity* PChar, const GP_CLI_COMMAND_FISHING_2_MODE mode,
                 // send catch message
                 if (!SendHookResponse(PChar, response, CancelOnMobLoadFailBait::Yes))
                 {
+                    // The angler was told nothing bit, so the hook must not survive to cost them bait later
+                    UnhookMob(PChar, Lost::No);
+                    destroy(PChar->hookedFish);
+                    PChar->hookedFish = nullptr;
                     return;
                 }
 
@@ -2810,6 +2861,11 @@ void FishingAction(CCharEntity* PChar, const GP_CLI_COMMAND_FISHING_2_MODE mode,
 
         case GP_CLI_COMMAND_FISHING_2_MODE::RequestEndMiniGame:
         {
+            if (PChar->fishingToken == 0)
+            {
+                return;
+            }
+
             if (stamina <= 4)
             {
                 CItemWeapon* Rod        = dynamic_cast<CItemWeapon*>(PChar->getEquip(SLOT_RANGED));
@@ -2935,38 +2991,31 @@ void FishingAction(CCharEntity* PChar, const GP_CLI_COMMAND_FISHING_2_MODE mode,
 
         case GP_CLI_COMMAND_FISHING_2_MODE::RequestPotentialTimeout:
         {
+            if (PChar->fishingToken == 0)
+            {
+                return;
+            }
+
             // message: "You don't know how much longer you can keep this one on the line..."
             PChar->pushPacket<GP_SERV_COMMAND_TALKNUM>(PChar, MessageOffset + FISHMESSAGEOFFSET_WARNING);
-            return;
         }
         break;
 
-        default:
+        // Sent after the minigame ends, so the token has already been spent by then
         case GP_CLI_COMMAND_FISHING_2_MODE::RequestRelease:
         {
-            if (PChar->hookedFish != nullptr)
+            if (PChar->isFishing())
             {
-                UnhookMob(PChar, Lost::No);
-
-                // No skillups for items or mobs.
-                if (PChar->hookedFish->catchtype == FISHINGCATCHTYPE_SMALLFISH || PChar->hookedFish->catchtype == FISHINGCATCHTYPE_BIGFISH)
+                // A hook that reaches the release without an end packet is a give-up, so a release
+                // mid-fight costs the same as giving up and can never leave the angler stuck
+                if (PChar->hookedFish != nullptr && PChar->hookedFish->hooked && PChar->fishingToken != 0)
                 {
-                    uint16 skillUpChances = 1 + PChar->getMod(xi::Mod::PELICAN_RING_EFFECT);
-
-                    for (int i = 0; i < skillUpChances; i++)
-                    {
-                        FishingSkillup(PChar, PChar->hookedFish->catchlevel, PChar->hookedFish->successtype);
-                    }
+                    AbandonHook(PChar);
                 }
 
-                destroy(PChar->hookedFish);
-                PChar->hookedFish = nullptr;
+                ReleaseFishing(PChar);
             }
-
-            PChar->animation = xi::Animation::None;
-            PChar->updatemask |= UPDATE_HP;
         }
-
         break;
     }
 }
