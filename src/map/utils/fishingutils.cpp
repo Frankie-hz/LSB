@@ -28,6 +28,7 @@
 
 #include "packets/char_status.h"
 #include "packets/char_sync.h"
+#include "packets/s2c/0x009_message.h"
 #include "packets/s2c/0x017_chat_std.h"
 #include "packets/s2c/0x01d_item_same.h"
 #include "packets/s2c/0x027_talknumwork2.h"
@@ -1517,6 +1518,13 @@ int32 CatchFish(CCharEntity* PChar, uint16 FishID, BigFish bigFish, uint16 lengt
             return 0;
         }
 
+        // The give would refuse a second copy anyway, but that is an expected outcome, not a lost catch
+        if (Fish->hasFlag(xi::ItemFlag::Rare) && charutils::HasItem(PChar, FishID))
+        {
+            PChar->pushPacket<GP_SERV_COMMAND_MESSAGE>(PChar, FishID, 0, MsgStd::ItemEx);
+            return 0;
+        }
+
         if (bigFish && length > 1 && weight > 1)
         {
             auto& fishData  = Fish->exdata<Exdata::Fish>();
@@ -1558,14 +1566,36 @@ int32 CatchItem(CCharEntity* PChar, uint16 ItemID, uint8 Count = 1)
     PChar->animation     = xi::Animation::NewFishingCaught;
     PChar->updatemask |= UPDATE_HP;
 
+    // Gil (65535) has no item entry and needs no free slot
+    if (ItemID == 65535)
+    {
+        auto transaction = ItemClaimTransaction::start(PChar);
+        if (!transaction || !transaction->earn(1) || !transaction->commit())
+        {
+            ShowErrorFmt("fishingutils: {} did not receive the gil they caught", PChar->getName());
+            return 0;
+        }
+
+        // TODO: packet guessed. No capture.
+        PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE_SELF, std::make_unique<GP_SERV_COMMAND_TALKNUMWORK2>(PChar, 1, MessageOffset + FISHMESSAGEOFFSET_CATCH_GIL, 1));
+        return 1;
+    }
+
     if (PChar->getStorage(LOC_INVENTORY)->GetFreeSlotsCount() != 0)
     {
-        if (xi::items::lookup(ItemID) == nullptr)
+        const auto* PItem = xi::items::lookup(ItemID);
+        if (PItem == nullptr)
         {
             ShowError("Invalid ItemID %i for fished item", ItemID);
             PChar->animation = xi::Animation::NewFishingStop;
             PChar->updatemask |= UPDATE_HP;
             PChar->pushPacket<GP_SERV_COMMAND_TALKNUM>(PChar, MessageOffset + FISHMESSAGEOFFSET_LOST);
+            return 0;
+        }
+
+        if (PItem->hasFlag(xi::ItemFlag::Rare) && charutils::HasItem(PChar, ItemID))
+        {
+            PChar->pushPacket<GP_SERV_COMMAND_MESSAGE>(PChar, ItemID, 0, MsgStd::ItemEx);
             return 0;
         }
 
@@ -2070,6 +2100,8 @@ void ReelInCatch(CCharEntity* PChar)
 {
     if (PChar->hookedFish != nullptr)
     {
+        int32 landed = 0;
+
         switch (PChar->hookedFish->catchtype)
         {
             case FISHINGCATCHTYPE_NONE:
@@ -2078,11 +2110,11 @@ void ReelInCatch(CCharEntity* PChar)
                 break;
             case FISHINGCATCHTYPE_SMALLFISH:
                 PChar->hookedFish->successtype = FISHINGSUCCESSTYPE_CATCHSMALL;
-                CatchFish(PChar, PChar->hookedFish->catchid, BigFish::No, 0, 0, PChar->hookedFish->count);
+                landed                         = CatchFish(PChar, PChar->hookedFish->catchid, BigFish::No, 0, 0, PChar->hookedFish->count);
                 break;
             case FISHINGCATCHTYPE_BIGFISH:
                 PChar->hookedFish->successtype = FISHINGSUCCESSTYPE_CATCHLARGE;
-                CatchFish(PChar, PChar->hookedFish->catchid, BigFish::Yes, PChar->hookedFish->length, PChar->hookedFish->weight, PChar->hookedFish->count);
+                landed                         = CatchFish(PChar, PChar->hookedFish->catchid, BigFish::Yes, PChar->hookedFish->length, PChar->hookedFish->weight, PChar->hookedFish->count);
                 break;
             case FISHINGCATCHTYPE_ITEM:
                 PChar->hookedFish->successtype = FISHINGSUCCESSTYPE_CATCHITEM;
@@ -2096,6 +2128,12 @@ void ReelInCatch(CCharEntity* PChar)
                 PChar->hookedFish->successtype = FISHINGSUCCESSTYPE_CATCHCHEST;
                 CatchChest(PChar, PChar->hookedFish->catchid, PChar->hookedFish->distance, PChar->hookedFish->angle);
                 break;
+        }
+
+        // A fish that never made it into the bag teaches the angler nothing
+        if (!landed && (PChar->hookedFish->catchtype == FISHINGCATCHTYPE_SMALLFISH || PChar->hookedFish->catchtype == FISHINGCATCHTYPE_BIGFISH))
+        {
+            PChar->hookedFish->successtype = FISHINGSUCCESSTYPE_NONE;
         }
     }
 }
