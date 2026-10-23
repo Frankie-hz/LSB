@@ -2576,7 +2576,8 @@ fishresponse_t* FishingCheck(CCharEntity* PChar, uint8 fishingSkill, rod_t* rod,
 
         if (FishSelection->maxhook > 1 && bait->maxhook > 1)
         {
-            response->count = (uint8)xirand::GetRandomNumber<uint16>(1, bait->maxhook);
+            // The roll is half-open, so the rig's top hook count needs the extra one
+            response->count = (uint8)xirand::GetRandomNumber<uint16>(1, bait->maxhook + 1);
         }
         else
         {
