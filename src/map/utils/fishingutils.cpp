@@ -868,43 +868,52 @@ uint8 CalculateFishSense(CCharEntity* PChar, fishresponse_t* response, uint8 fis
     lsbret_t lsnap  = CalculateSnapChance(catchType, fishingSkill, maxSkill, sizeType, legendary, ranking, rod);
     lsbret_t rbreak = CalculateBreakChance(catchType, fishingSkill, maxSkill, sizeType, legendary, ranking, rod);
 
-    if (lose.chance > 0 && lsnap.chance == 0 && rbreak.chance == 0)
+    // The reel is settled the moment the fish bites, in the order the reel itself reads the rolls
+    const bool lost     = xirand::GetRandomNumber(100) < lose.chance;
+    const bool snapped  = !lost && xirand::GetRandomNumber(100) < lsnap.chance;
+    const bool broken   = !lost && !snapped && xirand::GetRandomNumber(100) < rbreak.chance;
+    const bool willLand = !lost && !snapped && !broken;
+
+    // The angler is warned of whatever is likely about to go wrong
+    if (broken || (willLand && xirand::GetRandomNumber(100) < rbreak.chance / 2))
     {
-        if (lose.failReason == FISHINGFAILTYPE_LOST_TOOSMALL)
+        sense = FISHINGSENSETYPE_TERRIBLE;
+    }
+    else if (snapped || (willLand && xirand::GetRandomNumber(100) < lsnap.chance / 2))
+    {
+        sense = FISHINGSENSETYPE_BAD;
+    }
+    else if (lose.failReason == FISHINGFAILTYPE_LOST_LOWSKILL || lose.failReason == FISHINGFAILTYPE_LOST_TOOBIG)
+    {
+        // Doubt is about the gap between angler and fish
+        if (lose.chance < 20)
         {
-            sense = FISHINGSENSETYPE_GOOD;
+            sense = FISHINGSENSETYPE_NOSKILL_FEELING + (uint8)xirand::GetRandomNumber<uint16>(2);
+        }
+        else if (lose.chance < 45)
+        {
+            sense = FISHINGSENSETYPE_NOSKILL_SURE_FEELING;
         }
         else
         {
-            if (lose.chance < 20)
-            {
-                sense = FISHINGSENSETYPE_NOSKILL_FEELING + (uint8)xirand::GetRandomNumber<uint16>(2);
-            }
-            else if (lose.chance < 45)
-            {
-                sense = FISHINGSENSETYPE_NOSKILL_SURE_FEELING;
-            }
-            else
-            {
-                sense = FISHINGSENSETYPE_NOSKILL_POSITIVEFEELING;
-            }
+            sense = FISHINGSENSETYPE_NOSKILL_POSITIVEFEELING;
         }
     }
-    else if (lsnap.chance > 0 || rbreak.chance > 0)
+
+    // The reel reads these back as the outcome rather than as a chance
+    const auto asOutcome = [](const bool happened) -> uint8
     {
-        if (lsnap.chance < 30 && rbreak.chance < 30)
+        if (happened)
         {
-            sense = FISHINGSENSETYPE_BAD;
+            return 100;
         }
-        else if (lsnap.chance < 45 && rbreak.chance < 45)
-        {
-            sense = FISHINGSENSETYPE_BAD + (uint8)xirand::GetRandomNumber<uint16>(2);
-        }
-        else
-        {
-            sense = FISHINGSENSETYPE_TERRIBLE;
-        }
-    }
+
+        return 0;
+    };
+
+    lose.chance   = asOutcome(lost);
+    lsnap.chance  = asOutcome(snapped);
+    rbreak.chance = asOutcome(broken);
 
     response->lose   = lose;
     response->lsnap  = lsnap;
