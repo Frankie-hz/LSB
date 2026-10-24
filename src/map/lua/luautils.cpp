@@ -5120,41 +5120,53 @@ int32 OnSteal(CBattleEntity* PChar, CBattleEntity* PMob, CAbility* PAbility, act
     return 0;
 }
 
-auto OnFishingCheck(CCharEntity* PChar) -> std::vector<uint32>
+auto OnFishingCheck(CCharEntity* PChar, const uint8 areaId) -> std::vector<uint32>
 {
     TracyZoneScoped;
 
-    std::vector<uint32> itemIds;
+    std::vector<uint32> catchIds;
 
     if (PChar == nullptr)
     {
-        return itemIds;
+        return catchIds;
     }
 
     auto onFishingCheckFramework = lua["InteractionGlobal"]["onFishingCheck"];
 
-    auto result = onFishingCheckFramework(PChar);
+    auto result = onFishingCheckFramework(PChar, areaId);
     if (!result.valid())
     {
         sol::error err = result;
         ShowError("luautils::onFishingCheck: %s", err.what());
-        return itemIds;
+        return catchIds;
     }
 
-    if (result.get_type(0) == sol::type::table)
+    if (result.get_type(0) != sol::type::table)
     {
-        for (const auto& [_, itemId] : result.get<sol::table>(0))
+        return catchIds;
+    }
+
+    // Each handler answers with one catch id or a list of them
+    for (const auto& [key, answer] : result.get<sol::table>(0))
+    {
+        if (answer.get_type() == sol::type::number)
         {
-            if (itemId.get_type() == sol::type::number)
+            catchIds.emplace_back(answer.as<uint32>());
+        }
+        else if (answer.get_type() == sol::type::table)
+        {
+            for (const auto& [index, catchId] : answer.as<sol::table>())
             {
-                itemIds.emplace_back(itemId.as<uint32>());
+                if (catchId.get_type() == sol::type::number)
+                {
+                    catchIds.emplace_back(catchId.as<uint32>());
+                }
             }
         }
     }
 
-    return itemIds;
+    return catchIds;
 }
-
 bool OnCanUseSpell(CBattleEntity* PChar, CSpell* PSpell) // triggers when CanUseSpell is invoked on spell.cpp for PCs only
 {
     TracyZoneScoped;
