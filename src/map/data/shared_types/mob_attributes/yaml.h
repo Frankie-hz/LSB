@@ -40,6 +40,7 @@
 
 #include <array>
 #include <optional>
+#include <variant>
 #include <vector>
 
 namespace xi::data::shared
@@ -142,9 +143,18 @@ struct SpawnWindow
     std::optional<uint8> end;
 };
 
+struct RespawnRange
+{
+    uint32                min{};
+    uint32                max{};
+    std::optional<uint32> interval;
+};
+
+using Respawn = std::variant<uint32, RespawnRange>;
+
 struct Spawn
 {
-    std::optional<uint32>      respawn;
+    std::optional<Respawn>     respawn;
     SpawnTypes                 type;
     std::optional<SpawnWindow> window;
 };
@@ -220,9 +230,17 @@ struct glz::json_schema<xi::data::shared::SpawnWindow>
 };
 
 template <>
+struct glz::json_schema<xi::data::shared::RespawnRange>
+{
+    glz::schema min{ .description = "Shortest respawn in seconds." };
+    glz::schema max{ .description = "Longest respawn in seconds. The span from min must be a whole number of intervals." };
+    glz::schema interval{ .description = "Seconds between the respawn times it can roll, such as 1800 for 30 minute windows. Defaults to 1.", .minimum = 1L };
+};
+
+template <>
 struct glz::json_schema<xi::data::shared::Spawn>
 {
-    glz::schema respawn{ .description = "Seconds before respawning. Defaults to 0." };
+    glz::schema respawn{ .description = "Seconds before respawning, or a min/max range rolled again on every kill. Defaults to 0." };
     glz::schema type{ .description = "Conditions under which it spawns. Defaults to normal.", .uniqueItems = true };
     glz::schema window{ .description = "Vana'diel hours it may spawn between. Omitted means any hour." };
 };

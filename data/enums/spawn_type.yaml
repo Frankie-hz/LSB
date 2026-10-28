@@ -3,17 +3,18 @@
 meta:
   flags: true
   cpp:
-    underlying: uint8_t
+    underlying: uint16_t
   lua:
     table: xi.spawnType
 
 values:
-  normal:     0x00 # 00:00-24:00
-  at_night:   0x01 # 20:00-04:00
-  at_evening: 0x02 # 18:00-06:00
-  weather:    0x04
-  fog:        0x08 # 02:00-07:00
-  moonphase:  0x10
-  lottery:    0x20
-  windowed:   0x40
-  scripted:   0x80 # scripted spawn
+  normal:        0x000 # 00:00-24:00
+  at_night:      0x001 # 20:00-04:00
+  at_evening:    0x002 # 18:00-06:00
+  weather:       0x004
+  fog:           0x008 # 02:00-07:00
+  moonphase:     0x010
+  lottery:       0x020
+  window_open:   0x040 # respawn window is open when its zone loads
+  scripted:      0x080 # scripted spawn
+  window_closed: 0x100 # respawn window opens after the minimum respawn when its zone loads

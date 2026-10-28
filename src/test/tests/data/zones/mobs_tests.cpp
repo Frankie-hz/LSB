@@ -119,7 +119,59 @@ TEST_CASE("mobs: a template keeps its pool id and respawn", "[data][mob]")
     const auto& rabbit = templateNamed("Wild_Rabbit");
 
     REQUIRE(rabbit.Id == 4343);
-    REQUIRE(rabbit.Attributes.Respawn.value_or(0) == 60);
+    REQUIRE(rabbit.Attributes.Respawn.has_value());
+    REQUIRE(rabbit.Attributes.Respawn->Min == 60);
+    REQUIRE(rabbit.Attributes.Respawn->Max == 60);
+}
+
+TEST_CASE("mobs: a respawn range keeps its interval", "[data][mob]")
+{
+    constexpr auto ranged = R"(
+templates:
+  Orcish_Fodder:
+    id: 1
+    species: rabbit
+    attributes:
+      render:
+        look: { type: standard, model: 1 }
+      spawn:
+        respawn: {min: 259200, max: 432000, interval: 1800}
+spawns:
+  17186822:
+    template: Orcish_Fodder
+    at: [1.0, 2.0, 3.0]
+)";
+
+    const auto records = MobsDataset::decode(ranged);
+    const auto fodder  = records.Templates.find("Orcish_Fodder");
+    REQUIRE(fodder != records.Templates.end());
+
+    const auto& attributes = fodder->second.Attributes;
+    REQUIRE(attributes.Respawn.has_value());
+    REQUIRE(attributes.Respawn->Min == 259200);
+    REQUIRE(attributes.Respawn->Max == 432000);
+    REQUIRE(attributes.Respawn->Interval == 1800);
+}
+
+TEST_CASE("mobs: a respawn range must be a whole number of intervals", "[data][mob]")
+{
+    constexpr auto uneven = R"(
+templates:
+  Orcish_Fodder:
+    id: 1
+    species: rabbit
+    attributes:
+      render:
+        look: { type: standard, model: 1 }
+      spawn:
+        respawn: {min: 3600, max: 7000, interval: 1800}
+spawns:
+  17186822:
+    template: Orcish_Fodder
+    at: [1.0, 2.0, 3.0]
+)";
+
+    REQUIRE_THROWS_AS(MobsDataset::decode(uneven), std::runtime_error);
 }
 
 TEST_CASE("mobs: loot is named inline on the template", "[data][mob]")
@@ -440,7 +492,8 @@ spawns:
     REQUIRE(overridden != records.Spawns.end());
 
     REQUIRE_FALSE(inherited->Attributes.Respawn.has_value());
-    REQUIRE(overridden->Attributes.Respawn.value_or(0) == 900);
+    REQUIRE(overridden->Attributes.Respawn.has_value());
+    REQUIRE(overridden->Attributes.Respawn->Min == 900);
     REQUIRE(overridden->Attributes.SpawnWindow.has_value());
     REQUIRE(overridden->Attributes.SpawnWindow->first == 20);
 }
