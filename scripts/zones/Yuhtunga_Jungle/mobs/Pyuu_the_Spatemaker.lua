@@ -15,7 +15,6 @@ entity.onMobInitialize = function(mob)
     mob:addImmunity(xi.immunity.SILENCE)
     mob:addImmunity(xi.immunity.TERROR)
     mob:setMobMod(xi.mobMod.MAGIC_COOL, 40)
-    mob:setRespawnTime(math.randomInt(5400, 7200))
 end
 
 entity.onMobSpawn = function(mob)
@@ -39,10 +38,6 @@ end
 entity.onMobDeath = function(mob, player, optParams)
     xi.hunts.checkHunt(mob, player, 364)
     xi.regime.checkRegime(player, mob, 127, 1, xi.regime.type.FIELDS)
-end
-
-entity.onMobDespawn = function(mob)
-    mob:setRespawnTime(math.randomInt(5400, 7200)) -- 1.5 to 2 hours
 end
 
 return entity

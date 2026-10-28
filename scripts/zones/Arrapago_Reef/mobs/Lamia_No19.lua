@@ -275,12 +275,10 @@ entity.onMobDisengage = function(mob)
 end
 
 entity.onMobDespawn = function(mob)
-    -- She is never despawned by script, so this only runs when she is killed. Take any summoned skeletons with her and respawn her in 1-3 hours
+    -- She is never despawned by script, so this only runs when she is killed. Take any summoned skeletons with her.
     local mobId = mob:getID()
     DespawnMob(mobId + 1)
     DespawnMob(mobId + 2)
-
-    mob:setRespawnTime(math.randomInt(3600, 10800)) -- respawn in 1-3 hours
 end
 
 return entity

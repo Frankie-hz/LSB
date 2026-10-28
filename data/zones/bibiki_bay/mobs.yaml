@@ -1062,7 +1062,7 @@ templates:
         aggressive: true
       spawn:
         respawn: 3600
-        type:    [scripted]
+        type:    [window_closed]
       stats:
         hp: 327500
     content: rov
@@ -1333,7 +1333,11 @@ templates:
       behaviors:
         aggressive: true
       spawn:
-        respawn: 5400
+        type: [window_open]
+        respawn: # every 90-120 minutes, at exactly 100 minutes many times (guessing 10 minute intervals)
+          min:      5400
+          max:      7200
+          interval:  600
       stats:
         hp: 4800
     loot:

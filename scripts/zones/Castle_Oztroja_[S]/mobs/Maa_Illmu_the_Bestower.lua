@@ -12,14 +12,8 @@ mixins = { require('scripts/mixins/job_special') }
 local entity = {}
 
 entity.onMobInitialize = function(mob)
-    mob:setRespawnTime(math.randomInt(900, 10800))
-
     mob:setMobMod(xi.mobMod.MAGIC_COOL, 6)
     mob:setMod(xi.mod.SILENCE_MEVA, 100)
-end
-
-entity.onMobDespawn = function(mob)
-    mob:setRespawnTime(math.randomInt(7200, 14400)) -- 2 to 4 hours
 end
 
 return entity

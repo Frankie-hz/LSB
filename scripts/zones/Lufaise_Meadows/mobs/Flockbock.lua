@@ -14,7 +14,6 @@ entity.onMobInitialize = function(mob)
     -- TODO: Exact STP value needs to be researched further
     mob:setMod(xi.mod.DOUBLE_ATTACK, 50)
     mob:addMod(xi.mod.STORETP,       25)
-    mob:setRespawnTime(math.randomInt(3600, 7200))
 end
 
 entity.onMobSpawn = function(mob)
@@ -30,10 +29,6 @@ end
 
 entity.onMobDeath = function(mob, player, optParams)
     xi.hunts.checkHunt(mob, player, 442)
-end
-
-entity.onMobDespawn = function(mob)
-    mob:setRespawnTime(math.randomInt(3600, 7200)) -- 1-2 hours
 end
 
 return entity

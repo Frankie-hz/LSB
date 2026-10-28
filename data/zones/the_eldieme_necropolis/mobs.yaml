@@ -21,7 +21,10 @@ templates:
       behaviors:
         aggressive: true
       spawn:
-        type: [scripted]
+        type: [window_open]
+        respawn: # 18 to 24 hours
+          min: 64800
+          max: 86400
       mob_mods:
         base_damage_multiplier: 150
     loot:

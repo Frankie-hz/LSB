@@ -8,8 +8,6 @@ mixins = { require('scripts/mixins/rage') }
 local entity = {}
 
 entity.onMobInitialize = function(mob)
-    mob:setRespawnTime(math.randomInt(5400, 7200))
-
     mob:addImmunity(xi.immunity.DARK_SLEEP)
     mob:addImmunity(xi.immunity.LIGHT_SLEEP)
     mob:addImmunity(xi.immunity.PARALYZE)
@@ -66,10 +64,6 @@ entity.onMobDeath = function(mob, player, optParams)
     if player then
         player:addTitle(xi.title.CASSIENOVA)
     end
-end
-
-entity.onMobDespawn = function(mob)
-    mob:setRespawnTime(math.randomInt(5400, 7200)) -- 90 to 120 minutes
 end
 
 return entity

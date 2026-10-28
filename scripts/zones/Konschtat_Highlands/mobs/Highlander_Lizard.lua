@@ -6,8 +6,6 @@
 local entity = {}
 
 entity.onMobInitialize = function(mob)
-    mob:setRespawnTime(math.randomInt(1200, 1800)) -- When server restarts, reset timer
-
     -- Higher TP Gain per melee hit than normal lizards.
     -- It is definitly NOT regain.
     mob:addMod(xi.mod.STORETP, 25) -- May need adjustment.
@@ -21,10 +19,6 @@ entity.onMobDeath = function(mob, player, optParams)
     -- I think he still counts the FoV pages? Most NM's do not though.
     xi.regime.checkRegime(player, mob, 20, 2, xi.regime.type.FIELDS)
     xi.regime.checkRegime(player, mob, 82, 2, xi.regime.type.FIELDS)
-end
-
-entity.onMobDespawn = function(mob)
-    mob:setRespawnTime(math.randomInt(1200, 1800)) -- 20~30 min repop
 end
 
 return entity

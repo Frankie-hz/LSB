@@ -1024,6 +1024,10 @@ templates:
       behaviors:
         aggressive: true
         links:      true
+      spawn:
+        respawn: # 3 to 4 hours
+          min: 10800
+          max: 14400
       stats:
         hp: 5000
     loot:

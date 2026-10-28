@@ -214,7 +214,6 @@ entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.GIL_MAX, 12000)
 
     xi.mob.updateNMSpawnPoint(mob)
-    mob:setRespawnTime(math.randomInt(900, 10800))
 end
 
 entity.onMobSpawn = function(mob)
@@ -276,7 +275,6 @@ end
 
 entity.onMobDespawn = function(mob)
     xi.mob.updateNMSpawnPoint(mob)
-    mob:setRespawnTime(math.randomInt(64800, 86400)) -- 18 to 24 hours
 end
 
 return entity

@@ -115,7 +115,6 @@ local pathNodes =
 }
 
 entity.onMobInitialize = function(mob)
-    mob:setRespawnTime(math.randomInt(172800, 259200)) -- When server restarts, reset timer
     mob:addImmunity(xi.immunity.BIND)
     mob:addImmunity(xi.immunity.DARK_SLEEP)
     mob:addImmunity(xi.immunity.STUN)
@@ -140,10 +139,6 @@ entity.onMobDeath = function(mob, player, optParams)
     if player then
         player:addTitle(xi.title.CACTROT_DESACELERADOR)
     end
-end
-
-entity.onMobDespawn = function(mob)
-    mob:setRespawnTime(math.randomInt(172800, 259200)) -- 2 to 3 days
 end
 
 return entity

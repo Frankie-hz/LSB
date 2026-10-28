@@ -277,7 +277,10 @@ templates:
         links:          true
         true_detection: true
       spawn:
-        type: [scripted]
+        type: [window_closed]
+        respawn: # 2 to 4 hours
+          min:  7200
+          max: 14400
     loot:
       drops:
         - chance: always
@@ -749,7 +752,10 @@ templates:
         links:          true
         true_detection: true
       spawn:
-        type: [scripted]
+        type: [window_closed]
+        respawn: # 2 to 4 hours
+          min:  7200
+          max: 14400
     loot:
       drops:
         - chance: always
@@ -1070,7 +1076,10 @@ templates:
         links:          true
         true_detection: true
       spawn:
-        type: [scripted]
+        type: [window_closed]
+        respawn: # 2 to 4 hours
+          min:  7200
+          max: 14400
     loot:
       drops:
         - chance: uncommon
@@ -1300,7 +1309,10 @@ templates:
         aggressive:     true
         true_detection: true
       spawn:
-        type: [scripted]
+        type: [window_closed]
+        respawn: # 2 to 4 hours
+          min:  7200
+          max: 14400
     loot:
       drops:
         - chance: always
@@ -1830,7 +1842,10 @@ templates:
         links:          true
         true_detection: true
       spawn:
-        type: [scripted]
+        type: [window_closed]
+        respawn: # 2 to 4 hours
+          min:  7200
+          max: 14400
     loot:
       drops:
         - chance: always
@@ -1866,7 +1881,10 @@ templates:
         links:          true
         true_detection: true
       spawn:
-        type: [scripted]
+        type: [window_closed]
+        respawn: # 2 to 4 hours
+          min:  7200
+          max: 14400
       stats:
         hp: 12000
         mp: 99999
@@ -1926,7 +1944,10 @@ templates:
         links:          true
         true_detection: true
       spawn:
-        type: [scripted]
+        type: [window_closed]
+        respawn: # 5 to 6 hours
+          min: 18000
+          max: 21600
     loot:
       drops:
         - chance: always
@@ -2653,7 +2674,10 @@ templates:
         links:          true
         true_detection: true
       spawn:
-        type: [scripted]
+        type: [window_closed]
+        respawn: # 4 to 5 hours
+          min: 14400
+          max: 18000
       stats:
         hp: 14500
     loot:
@@ -2863,7 +2887,10 @@ templates:
         links:          true
         true_detection: true
       spawn:
-        type: [scripted]
+        type: [window_closed]
+        respawn: # 2 to 4 hours
+          min:  7200
+          max: 14400
     loot:
       drops:
         - chance: always

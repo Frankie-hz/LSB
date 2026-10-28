@@ -3714,7 +3714,10 @@ templates:
         links:          true
         true_detection: true
       spawn:
-        type: [scripted]
+        type: [window_closed]
+        respawn: # 4 to 5 hours
+          min: 14400
+          max: 18000
       stats:
         hp: 20000
         mp: 20000

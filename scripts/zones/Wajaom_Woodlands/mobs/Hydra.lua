@@ -32,8 +32,6 @@ local regenPerHead =
 }
 
 entity.onMobInitialize = function(mob)
-    mob:setRespawnTime(math.randomInt(48, 72) * 3600) -- 48 - 72 hours with 1 hour windows
-
     mob:addImmunity(xi.immunity.PETRIFY)
     mob:addImmunity(xi.immunity.LIGHT_SLEEP)
     mob:addImmunity(xi.immunity.DARK_SLEEP)
@@ -160,10 +158,6 @@ entity.onMobDeath = function(mob, player, optParams)
     if player then
         player:addTitle(xi.title.HYDRA_HEADHUNTER)
     end
-end
-
-entity.onMobDespawn = function(mob)
-    mob:setRespawnTime(math.randomInt(48, 72) * 3600) -- 48 to 72 hours, in 1 hour windows
 end
 
 return entity

@@ -26,8 +26,4 @@ entity.onMobDeath = function(mob, player, optParams)
     xi.regime.checkRegime(player, mob, 800, 2, xi.regime.type.GROUNDS)
 end
 
-entity.onMobDespawn = function(mob)
-    mob:setRespawnTime(math.randomInt(1260, 1440)) -- 21 to 24 minutes
-end
-
 return entity

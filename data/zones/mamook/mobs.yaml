@@ -283,7 +283,10 @@ templates:
         links:          true
         true_detection: true
       spawn:
-        type: [scripted]
+        type: [window_closed]
+        respawn: # 3 to 5 days
+          min: 259200
+          max: 432000
     loot:
       drops:
         - chance: common
@@ -315,7 +318,10 @@ templates:
         links:          true
         true_detection: true
       spawn:
-        respawn: 100800
+        type: [window_closed]
+        respawn: # 28 to 72 hours
+          min: 100800
+          max: 259200
     loot:
       drops:
         - chance: uncommon

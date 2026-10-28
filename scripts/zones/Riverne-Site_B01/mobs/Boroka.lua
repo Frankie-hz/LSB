@@ -82,8 +82,6 @@ entity.onMobDeath = function(mob, player, optParams)
     if player then
         player:addTitle(xi.title.BOROKA_BELEAGUERER)
     end
-
-    mob:setRespawnTime(math.randomInt(75600, 86400)) -- 21-24 hour respawn
 end
 
 return entity
