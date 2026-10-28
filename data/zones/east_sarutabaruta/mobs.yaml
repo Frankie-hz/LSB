@@ -295,7 +295,10 @@ templates:
         name_prefix:   32
         hitbox:        11
       spawn:
-        type: [scripted]
+        type: [windowed]
+        respawn: # 60 to 70 minutes
+          min: 3600
+          max: 4200
       stats:
         hp: 200
         mp: 125

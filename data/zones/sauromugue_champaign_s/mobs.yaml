@@ -575,7 +575,10 @@ templates:
       behaviors:
         aggressive: true
       spawn:
-        respawn: 7200
+        type: [windowed]
+        respawn: # 2 hours plus 10 minute window
+          min: 7200
+          max: 7800
       stats:
         hp: 12000
     loot:
@@ -1555,7 +1558,10 @@ templates:
       behaviors:
         aggressive: true
       spawn:
-        respawn: 7200
+        type: [windowed]
+        respawn: # 2 to 4 hours
+          min:  7200
+          max: 14400
       stats:
         hp: 5500
     loot:
@@ -1613,7 +1619,10 @@ templates:
         name_prefix:   32
         hitbox:         6
       spawn:
-        respawn: 5400
+        type: [windowed]
+        respawn: # 90 to 120 minutes
+          min: 5400
+          max: 7200
       stats:
         hp: 6200
     loot:

@@ -638,6 +638,9 @@ templates:
         links:      true
       spawn:
         type: [scripted]
+        respawn: # 21 to 24 hours
+          min: 75600
+          max: 86400
       stats:
         hp: 4500
     loot:
@@ -982,6 +985,9 @@ templates:
         links:      true
       spawn:
         type: [scripted]
+        respawn: # 21 to 24 hours
+          min: 75600
+          max: 86400
       stats:
         hp: 4100
     loot:
@@ -1117,7 +1123,10 @@ templates:
         aggressive: true
         links:      true
       spawn:
-        type: [scripted]
+        type: [windowed]
+        respawn: # 60 to 70 minutes
+          min: 3600
+          max: 4200
       stats:
         hp: 7000
     loot:
@@ -1146,6 +1155,9 @@ templates:
         links:      true
       spawn:
         type: [scripted]
+        respawn: # 21 to 24 hours
+          min: 75600
+          max: 86400
       stats:
         hp: 4800
     loot:
@@ -1179,6 +1191,9 @@ templates:
         links:      true
       spawn:
         type: [scripted]
+        respawn: # 21 to 24 hours
+          min: 75600
+          max: 86400
       stats:
         hp: 4200
     loot:
@@ -1246,7 +1261,10 @@ templates:
         aggressive: true
         links:      true
       spawn:
-        respawn: 3600
+        type: [windowed]
+        respawn: # 1 to 2 hours
+          min: 3600
+          max: 7200
       stats:
         hp: 6000
     loot:

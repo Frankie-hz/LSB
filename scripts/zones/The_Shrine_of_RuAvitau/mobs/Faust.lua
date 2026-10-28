@@ -103,8 +103,4 @@ entity.onMobWeaponSkill = function(mob, target, skill, action)
     end
 end
 
-entity.onMobDespawn = function(mob)
-    mob:setRespawnTime(math.randomInt(10800, 21600)) -- 3 to 6 hours.
-end
-
 return entity

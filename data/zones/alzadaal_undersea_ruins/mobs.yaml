@@ -139,7 +139,10 @@ templates:
         aggressive:     true
         true_detection: true
       spawn:
-        respawn: 7200
+        type: [scripted]
+        respawn: # 120 to 150 minutes
+          min: 7200
+          max: 9000
     loot:
       drops:
         - chance: uncommon
@@ -324,7 +327,10 @@ templates:
         aggressive:     true
         true_detection: true
       spawn:
-        respawn: 14400
+        type: [scripted]
+        respawn: # 4 to 5 hours
+          min: 14400
+          max: 18000
     loot:
       drops:
         - chance: always

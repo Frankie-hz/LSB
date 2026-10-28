@@ -2871,7 +2871,10 @@ templates:
       behaviors:
         links: true
       spawn:
-        type: [scripted]
+        type: [windowed]
+        respawn: # 90 to 120 minutes
+          min: 5400
+          max: 7200
       stats:
         hp: 4500
         mp: 5000

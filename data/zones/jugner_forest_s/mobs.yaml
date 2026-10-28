@@ -387,7 +387,10 @@ templates:
         aggressive: true
         links:      true
       spawn:
-        respawn: 5400
+        type: [windowed]
+        respawn: # 90 to 120 minutes
+          min: 5400
+          max: 7200
     loot:
       drops:
         - chance: rare

@@ -217,7 +217,10 @@ templates:
         aggressive: true
         links:      true
       spawn:
-        respawn: 3600
+        type: [windowed]
+        respawn: # 60 to 90 minutes
+          min: 3600
+          max: 5400
     loot:
       drops:
         - chance: very_common
@@ -458,7 +461,10 @@ templates:
         aggressive: true
         links:      true
       spawn:
-        respawn: 3600
+        type: [windowed]
+        respawn: # 1 to 2 hours
+          min: 3600
+          max: 7200
     loot:
       drops:
         - chance: very_common

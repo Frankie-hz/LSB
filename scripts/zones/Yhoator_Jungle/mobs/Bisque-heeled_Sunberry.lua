@@ -8,8 +8,6 @@ mixins = { require('scripts/mixins/families/tonberry') }
 local entity = {}
 
 entity.onMobInitialize = function(mob)
-    mob:setRespawnTime(math.randomInt(3600, 7200)) -- 1 to 2 hours
-
     mob:addImmunity(xi.immunity.LIGHT_SLEEP)
     mob:addImmunity(xi.immunity.DARK_SLEEP)
     mob:addImmunity(xi.immunity.SILENCE)
@@ -26,10 +24,6 @@ end
 
 entity.onMobDeath = function(mob, player, optParams)
     xi.regime.checkRegime(player, mob, 133, 1, xi.regime.type.FIELDS)
-end
-
-entity.onMobDespawn = function(mob)
-    mob:setRespawnTime(math.randomInt(3600, 7200)) -- 1 to 2 hours
 end
 
 return entity

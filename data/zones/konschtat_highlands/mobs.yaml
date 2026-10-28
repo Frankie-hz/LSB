@@ -366,7 +366,10 @@ templates:
       behaviors:
         links: true
       spawn:
-        type: [scripted]
+        type: [windowed]
+        respawn: # 60~70 min repop.
+          min: 3600
+          max: 4200
       stats:
         hp: 600
         mp: 250
@@ -826,7 +829,10 @@ templates:
       behaviors:
         links: true
       spawn:
-        respawn: 1200
+        type: [windowed]
+        respawn: # 20~30 min repop
+          min: 1200
+          max: 1800
       stats:
         hp: 950
     loot:

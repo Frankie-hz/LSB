@@ -58,7 +58,10 @@ templates:
       behaviors:
         aggressive: true
       spawn:
-        respawn: 1800
+        type: [scripted]
+        respawn: # 30 minutes to 3 hrs
+          min:  1800
+          max: 10800
     loot:
       drops:
         - chance: common

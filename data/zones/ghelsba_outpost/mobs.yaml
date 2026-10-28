@@ -320,7 +320,10 @@ templates:
         aggressive: true
         links:      true
       spawn:
-        respawn: 4200
+        type: [windowed]
+        respawn: # 70 to 95 min
+          min: 4200
+          max: 5700
       stats:
         hp: 380
     loot:
@@ -595,7 +598,10 @@ templates:
         aggressive: true
         links:      true
       spawn:
-        respawn: 3900
+        type: [windowed]
+        respawn: # 65 to 90 min
+          min: 3900
+          max: 5400
       stats:
         hp: 280
     loot:

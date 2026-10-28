@@ -285,7 +285,10 @@ templates:
         aggressive: true
         links:      true
       spawn:
-        type: [scripted]
+        type: [windowed]
+        respawn: # 21 hours, plus 10 to 15 min
+          min: 76200
+          max: 76500
       stats:
         hp: 2750
     loot:

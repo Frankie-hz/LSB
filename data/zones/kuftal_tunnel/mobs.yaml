@@ -632,6 +632,9 @@ templates:
         aggressive: true
       spawn:
         type: [scripted]
+        respawn: # 18 to 24 hours
+          min: 64800
+          max: 86400
       stats:
         hp: 13500
     loot:

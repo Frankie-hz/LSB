@@ -568,7 +568,10 @@ templates:
       mob_mods:
         sight_range: 30
       spawn:
-        respawn: 10800
+        type: [scripted]
+        respawn: # 3 to 6 hours.
+          min: 10800
+          max: 21600
       stats:
         hp: 10000
     loot:

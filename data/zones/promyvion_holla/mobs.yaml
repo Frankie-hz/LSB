@@ -108,7 +108,10 @@ templates:
         aggressive:     true
         true_detection: true
       spawn:
-        respawn: 14400
+        type: [windowed]
+        respawn: # 1 to 6 hours
+          min:  3600
+          max: 21600
       stats:
         hp: 3000
     loot:

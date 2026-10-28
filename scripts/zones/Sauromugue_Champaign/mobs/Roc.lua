@@ -12,8 +12,6 @@ mixins =
 local entity = {}
 
 entity.onMobInitialize = function(mob)
-    mob:setRespawnTime(math.randomInt(3600, 7200))
-
     mob:setMobMod(xi.mobMod.GIL_MIN, 20000)
     mob:setMobMod(xi.mobMod.GIL_MAX, 20000)
     mob:addImmunity(xi.immunity.DARK_SLEEP)
@@ -47,10 +45,6 @@ entity.onMobDeath = function(mob, player, optParams)
     if player then
         player:addTitle(xi.title.ROC_STAR)
     end
-end
-
-entity.onMobDespawn = function(mob)
-    mob:setRespawnTime(math.randomInt(3600, 7200)) -- 1 to 2 hours
 end
 
 return entity

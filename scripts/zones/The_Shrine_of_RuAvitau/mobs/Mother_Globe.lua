@@ -281,7 +281,6 @@ end
 
 entity.onMobDespawn = function(mob)
     mob:removeListener('MG_SPIKES')
-    mob:setRespawnTime(math.randomInt(10800, 21600)) -- 3 to 6 hours.
 end
 
 return entity

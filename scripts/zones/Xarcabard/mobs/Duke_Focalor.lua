@@ -7,8 +7,6 @@
 local entity = {}
 
 entity.onMobInitialize = function(mob)
-    mob:setRespawnTime(math.randomInt(5400, 7200)) -- When server restarts, reset timer
-
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
 end
 
@@ -27,10 +25,6 @@ end
 entity.onMobDeath = function(mob, player, optParams)
     xi.hunts.checkHunt(mob, player, 316)
     xi.regime.checkRegime(player, mob, 55, 1, xi.regime.type.FIELDS)
-end
-
-entity.onMobDespawn = function(mob)
-    mob:setRespawnTime(math.randomInt(5400, 7200)) -- 1.5 to 2 hours
 end
 
 return entity

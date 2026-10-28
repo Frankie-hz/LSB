@@ -48,8 +48,8 @@ local feiyinID    = zones[xi.zone.FEIYIN]
 -- Simple timed NMs
 -- Each override registers the window during initialize. The boot spawn pass
 -- skips a mob with a pending respawn, so the NM stays down.
--- This table handles normal and scripted spawn types only. The engine blocks
--- lottery and windowed mobs after initialize.
+-- This table handles normal, scripted and windowed spawn types only. The
+-- engine blocks lottery mobs after initialize.
 -----------------------------------
 local timedNMs =
 {

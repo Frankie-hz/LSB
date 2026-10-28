@@ -250,7 +250,10 @@ templates:
       behaviors:
         links: true
       spawn:
-        respawn: 7200
+        type: [windowed]
+        respawn: # 2 hours, then 10 minute window
+          min: 7200
+          max: 7800
       stats:
         hp: 3200
     loot:

@@ -471,7 +471,10 @@ templates:
         model_size:      1
         hitbox:         12
       spawn:
-        respawn: 7200
+        type: [windowed]
+        respawn: # 120 to 130 minutes
+          min: 7200
+          max: 7800
       stats:
         hp: 10000
     loot:

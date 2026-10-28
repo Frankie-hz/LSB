@@ -217,7 +217,11 @@ templates:
         aggressive:     true
         true_detection: true
       spawn:
-        respawn: 172800
+        type: [scripted]
+        respawn: # 48 - 72 hours with 1 hour windows
+          min:      172800
+          max:      259200
+          interval:   3600
       stats:
         hp: 50000
     loot:

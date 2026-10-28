@@ -1142,7 +1142,10 @@ templates:
         model_size:      1
         hitbox:         27
       spawn:
-        type: [scripted]
+        type: [windowed]
+        respawn: # 60-90 min repop
+          min: 3600
+          max: 5400
       stats:
         hp: 2250
     loot:
@@ -1440,7 +1443,10 @@ templates:
         model_size:     1
         hitbox:        13
       spawn:
-        type: [scripted]
+        type: [windowed]
+        respawn: # 60-70 min repop
+          min: 3600
+          max: 4200
       stats:
         hp: 750
     loot:

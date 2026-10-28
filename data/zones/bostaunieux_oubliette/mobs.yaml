@@ -300,7 +300,10 @@ templates:
         aggressive: true
         links:      true
       spawn:
-        type: [scripted]
+        type: [windowed]
+        respawn: # 60 to 72 hours
+          min: 216000
+          max: 259200
     loot:
       drops:
         - chance: common
@@ -700,7 +703,10 @@ templates:
         aggressive: true
         links:      true
       spawn:
-        type: [scripted]
+        type: [windowed]
+        respawn: # 60 to 72 hours
+          min: 216000
+          max: 259200
     loot:
       drops:
         - chance: common

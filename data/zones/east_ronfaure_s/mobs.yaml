@@ -2161,7 +2161,11 @@ templates:
         name_prefix:    32
         hitbox:          6
       spawn:
-        respawn: 7200
+        type: [windowed]
+        respawn: # 120 to 130 minutes
+          min:      7200
+          max:      7800
+          interval:   60
       stats:
         hp: 8000
     loot:
@@ -2283,7 +2287,10 @@ templates:
         entity_flags: 129
         hitbox:        10
       spawn:
-        type: [scripted]
+        type: [windowed]
+        respawn: # 90 to 120 minutes
+          min: 5400
+          max: 7200
       stats:
         hp: 4444
     loot:

@@ -8,7 +8,6 @@ local entity = {}
 
 entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
-    mob:setRespawnTime(math.randomInt(75600, 86400)) -- 21-24 hours
 end
 
 entity.onAdditionalEffect = function(mob, target, damage)
@@ -17,11 +16,6 @@ end
 
 entity.onMobDeath = function(mob, player, optParams)
     xi.hunts.checkHunt(mob, player, 451)
-end
-
-entity.onMobDespawn = function(mob)
-    -- Set Harvesman's spawnpoint and respawn time (21-24 hours)
-    mob:setRespawnTime(math.randomInt(75600, 86400))
 end
 
 return entity

@@ -976,7 +976,10 @@ templates:
       behaviors:
         aggressive: true
       spawn:
-        respawn: 86400
+        type: [windowed]
+        respawn: # 21 to 24 hours
+          min: 75600
+          max: 86400
       stats:
         hp: 32700
     loot:

@@ -405,7 +405,6 @@ end
 entity.onMobDespawn = function(mob)
     local spawnPoint = utils.randomEntry(spawnPoints)
     mob:setSpawn(spawnPoint.x, spawnPoint.y, spawnPoint.z)
-    mob:setRespawnTime(math.randomInt(10800, 21600)) -- 3 to 6 hours.
 end
 
 return entity

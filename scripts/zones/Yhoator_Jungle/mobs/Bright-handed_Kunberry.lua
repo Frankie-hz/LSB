@@ -12,10 +12,6 @@ mixins =
 ---@type TMobEntity
 local entity = {}
 
-entity.onMobInitialize = function(mob)
-    mob:setRespawnTime(math.randomInt(75600, 77400)) -- 21 to 21.5 hours
-end
-
 -- all body guard functionality in the rotz_bodyguarded_nm mixin
 
 entity.onMobSpawn = function(mob)
@@ -32,10 +28,6 @@ end
 
 entity.onMobDeath = function(mob, player, optParams)
     xi.regime.checkRegime(player, mob, 133, 1, xi.regime.type.FIELDS)
-end
-
-entity.onMobDespawn = function(mob)
-    mob:setRespawnTime(math.randomInt(75600, 77400)) -- 21 to 21.5 hours
 end
 
 return entity

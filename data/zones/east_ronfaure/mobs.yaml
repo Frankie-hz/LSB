@@ -1129,7 +1129,10 @@ templates:
         entity_flags: 129
         hitbox:        35
       spawn:
-        respawn: 3600
+        type: [windowed]
+        respawn: # 15 min to 1 hour
+          min:  900
+          max: 3600
       stats:
         hp: 420
     loot:

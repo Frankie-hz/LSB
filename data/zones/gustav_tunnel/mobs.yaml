@@ -216,6 +216,9 @@ templates:
         links:      true
       spawn:
         type: [scripted]
+        respawn: # 21-24 hours
+          min: 75600
+          max: 86400
       stats:
         hp: 13000
     loot:

@@ -1018,7 +1018,10 @@ templates:
       behaviors:
         flags: [no_turn]
       spawn:
-        respawn: 7200
+        type: [scripted]
+        respawn: # 2 hours, then 10 minute window
+          min: 7200
+          max: 7800
       stats:
         hp: 16000
     loot:
@@ -1394,7 +1397,11 @@ templates:
         aggressive:     true
         true_detection: true
       spawn:
-        respawn: 172800
+        type: [scripted]
+        respawn: # 48 to 72 hours, in 1 hour windows
+          min:      172800
+          max:      259200
+          interval:   3600
       stats:
         hp: 75000
     loot:

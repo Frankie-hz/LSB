@@ -408,7 +408,10 @@ templates:
         links:          true
         true_detection: true
       spawn:
-        respawn: 1200
+        type: [windowed]
+        respawn: # 21 to 24 minutes
+          min: 1260
+          max: 1440
       stats:
         hp: 4600
     loot:
@@ -669,7 +672,10 @@ templates:
         links:          true
         true_detection: true
       spawn:
-        respawn: 1200
+        type: [windowed]
+        respawn: # 21 to 24 minutes
+          min: 1260
+          max: 1440
       stats:
         hp: 4900
     loot:

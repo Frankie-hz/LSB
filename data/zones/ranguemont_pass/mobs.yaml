@@ -762,7 +762,10 @@ templates:
       behaviors:
         aggressive: true
       spawn:
-        respawn: 6000
+        type: [windowed]
+        respawn: # 90 to 100 minutes
+          min: 5400
+          max: 6000
     loot:
       drops:
         - chance: common

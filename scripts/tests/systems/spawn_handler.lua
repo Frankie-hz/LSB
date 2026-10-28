@@ -304,7 +304,17 @@ describe('Spawn Handler', function()
         end)
     end)
 
-    describe('scripted spawns', function()
+    describe('timed NM spawns', function()
+        it('opens the respawn window of windowed Simurgh when its zone loads', function()
+            player:gotoZone(xi.zone.ROLANBERRY_FIELDS)
+            local ID = zones[xi.zone.ROLANBERRY_FIELDS]
+            local simurgh = player.entities:get(ID.mob.SIMURGH)
+
+            xi.test.world:skipTime(3600)
+            xi.test.world:tick(xi.tick.SPAWN)
+            simurgh.assert:isSpawned()
+        end)
+
         it('respawns Simurgh after kill within respawn window', function()
             player:gotoZone(xi.zone.ROLANBERRY_FIELDS)
             local ID = zones[xi.zone.ROLANBERRY_FIELDS]
@@ -321,6 +331,43 @@ describe('Spawn Handler', function()
             xi.test.world:skipTime(7200)
             xi.test.world:tick(xi.tick.SPAWN)
 
+            simurgh.assert:isSpawned()
+        end)
+
+        it('respawns Tiamat 3 to 5 days after a kill', function()
+            player:gotoZone(xi.zone.ATTOHWA_CHASM)
+            local ID = zones[xi.zone.ATTOHWA_CHASM]
+            local tiamat = player.entities:get(ID.mob.TIAMAT)
+
+            xi.test.world:skipTime(432000)
+            xi.test.world:tick(xi.tick.SPAWN)
+            tiamat.assert:isSpawned()
+
+            player:claimAndKillMob(tiamat)
+
+            xi.test.world:skipTime(259200 - 60)
+            xi.test.world:tick(xi.tick.SPAWN)
+            tiamat.assert.no:isSpawned()
+
+            xi.test.world:skipTime(172800 + 60)
+            xi.test.world:tick(xi.tick.SPAWN)
+            tiamat.assert:isSpawned()
+        end)
+
+        it('lets a script respawn time replace the yaml range', function()
+            player:gotoZone(xi.zone.ROLANBERRY_FIELDS)
+            local ID = zones[xi.zone.ROLANBERRY_FIELDS]
+            local simurgh = player.entities:get(ID.mob.SIMURGH)
+
+            xi.test.world:skipTime(7200)
+            xi.test.world:tick(xi.tick.SPAWN)
+            simurgh.assert:isSpawned()
+
+            simurgh:setRespawnTime(60)
+            player:claimAndKillMob(simurgh)
+
+            xi.test.world:skipTime(65)
+            xi.test.world:tick(xi.tick.SPAWN)
             simurgh.assert:isSpawned()
         end)
 

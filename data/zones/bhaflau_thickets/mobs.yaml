@@ -933,7 +933,10 @@ templates:
       behaviors:
         links: true
       spawn:
-        respawn: 7200
+        type: [windowed]
+        respawn: # 21 to 24 hours
+          min: 75600
+          max: 86400
       stats:
         hp: 10000
     loot:

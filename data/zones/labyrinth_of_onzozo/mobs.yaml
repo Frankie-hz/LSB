@@ -855,7 +855,11 @@ templates:
         aggressive: true
         links:      true
       spawn:
-        type: [scripted]
+        type: [windowed]
+        respawn: # 2 to 2.5 hours in 5 minute windows
+          min:      7200
+          max:      9000
+          interval:  300
       stats:
         hp: 4500
         mp: 4500

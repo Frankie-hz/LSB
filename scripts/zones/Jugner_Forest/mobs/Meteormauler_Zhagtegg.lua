@@ -7,10 +7,6 @@ mixins = { require('scripts/mixins/job_special'), require('scripts/mixins/rotz_b
 ---@type TMobEntity
 local entity = {}
 
-entity.onMobInitialize = function(mob)
-    mob:setRespawnTime(75600 + math.randomInt(0, 600))
-end
-
 -- all body guard functionality in the rotz_bodyguarded_nm mixin
 
 entity.onMobSpawn = function(mob)
@@ -19,10 +15,6 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.UDMGRANGE, -5000)
     mob:setMod(xi.mod.UDMGBREATH, -5000)
     mob:setMod(xi.mod.UDMGMAGIC, -5000)
-end
-
-entity.onMobDespawn = function(mob)
-    mob:setRespawnTime(75600 + math.randomInt(0, 600)) -- 21 hours, 10 minute window
 end
 
 return entity

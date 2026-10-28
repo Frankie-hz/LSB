@@ -534,7 +534,10 @@ templates:
         aggressive: true
         links:      true
       spawn:
-        respawn: 1800
+        type: [windowed]
+        respawn: # 10-30 minutes
+          min:  600
+          max: 1800
 
   Jelly_KT_GM:
     id:            2146

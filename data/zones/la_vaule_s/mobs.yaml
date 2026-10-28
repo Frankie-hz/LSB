@@ -67,7 +67,10 @@ templates:
         aggressive:     true
         true_detection: true
       spawn:
-        respawn: 7200
+        type: [scripted]
+        respawn: # 2 to 4 hours
+          min:  7200
+          max: 14400
       stats:
         hp: 20000
         mp:  9999
@@ -125,7 +128,10 @@ templates:
         aggressive:     true
         true_detection: true
       spawn:
-        respawn: 7200
+        type: [scripted]
+        respawn: # 2 to 4 hours
+          min:  7200
+          max: 14400
       stats:
         hp: 15000
         mp:  9999
@@ -787,7 +793,10 @@ templates:
         links:          true
         true_detection: true
       spawn:
-        respawn: 7200
+        type: [scripted]
+        respawn: # 2 to 4 hours
+          min:  7200
+          max: 14400
       stats:
         hp: 10000
         mp:  9999
@@ -824,7 +833,10 @@ templates:
         links:          true
         true_detection: true
       spawn:
-        respawn: 7200
+        type: [scripted]
+        respawn: # 2 to 4 hours
+          min:  7200
+          max: 14400
       stats:
         hp: 20000
         mp:  9999
@@ -1070,7 +1082,10 @@ templates:
         links:          true
         true_detection: true
       spawn:
-        respawn: 7200
+        type: [scripted]
+        respawn: # 2 to 5 hours
+          min:  7200
+          max: 18000
       stats:
         hp: 20000
         mp:  9999
@@ -1198,7 +1213,10 @@ templates:
         links:          true
         true_detection: true
       spawn:
-        respawn: 7200
+        type: [scripted]
+        respawn: # 2 to 4 hours
+          min:  7200
+          max: 14400
       stats:
         hp: 22000
         mp:  9999
@@ -1232,7 +1250,10 @@ templates:
         links:          true
         true_detection: true
       spawn:
-        respawn: 7200
+        type: [scripted]
+        respawn: # 2 to 4 hours
+          min:  7200
+          max: 14400
       stats:
         hp: 15000
         mp:  9999

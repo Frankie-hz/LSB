@@ -278,6 +278,9 @@ templates:
         true_detection: true
       spawn:
         type: [scripted]
+        respawn: # 2 to 4 hours
+          min:  7200
+          max: 14400
     loot:
       drops:
         - chance: always
@@ -750,6 +753,9 @@ templates:
         true_detection: true
       spawn:
         type: [scripted]
+        respawn: # 2 to 4 hours
+          min:  7200
+          max: 14400
     loot:
       drops:
         - chance: always
@@ -1071,6 +1077,9 @@ templates:
         true_detection: true
       spawn:
         type: [scripted]
+        respawn: # 2 to 4 hours
+          min:  7200
+          max: 14400
     loot:
       drops:
         - chance: uncommon
@@ -1301,6 +1310,9 @@ templates:
         true_detection: true
       spawn:
         type: [scripted]
+        respawn: # 2 to 4 hours
+          min:  7200
+          max: 14400
     loot:
       drops:
         - chance: always
@@ -1831,6 +1843,9 @@ templates:
         true_detection: true
       spawn:
         type: [scripted]
+        respawn: # 2 to 4 hours
+          min:  7200
+          max: 14400
     loot:
       drops:
         - chance: always
@@ -1867,6 +1882,9 @@ templates:
         true_detection: true
       spawn:
         type: [scripted]
+        respawn: # 2 to 4 hours
+          min:  7200
+          max: 14400
       stats:
         hp: 12000
         mp: 99999
@@ -1927,6 +1945,9 @@ templates:
         true_detection: true
       spawn:
         type: [scripted]
+        respawn: # 5 to 6 hours
+          min: 18000
+          max: 21600
     loot:
       drops:
         - chance: always
@@ -2654,6 +2675,9 @@ templates:
         true_detection: true
       spawn:
         type: [scripted]
+        respawn: # 4 to 5 hours
+          min: 14400
+          max: 18000
       stats:
         hp: 14500
     loot:
@@ -2864,6 +2888,9 @@ templates:
         true_detection: true
       spawn:
         type: [scripted]
+        respawn: # 2 to 4 hours
+          min:  7200
+          max: 14400
     loot:
       drops:
         - chance: always

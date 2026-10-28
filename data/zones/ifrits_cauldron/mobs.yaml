@@ -21,6 +21,9 @@ templates:
         aggressive: true
       spawn:
         type: [scripted]
+        respawn: # 3 to 5 days
+          min: 259200
+          max: 432000
       stats:
         hp: 60000
         mp: 10000

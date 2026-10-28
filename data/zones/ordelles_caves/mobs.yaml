@@ -1053,7 +1053,10 @@ templates:
       mob_mods:
         always_aggro: 1
       spawn:
-        type: [scripted]
+        type: [windowed]
+        respawn: # 1 to 2 hours
+          min: 3600
+          max: 7200
       stats:
         hp: 2900
     loot:

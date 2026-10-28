@@ -5,10 +5,6 @@
 ---@type TMobEntity
 local entity = {}
 
-entity.onMobDespawn = function(mob)
-    mob:setRespawnTime(math.randomInt(3600, 7200)) -- 1 to 2 hours
-end
-
 entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1) -- Has an Additional Effect of Enwater on all attacks.
     mob:setMod(xi.mod.DOUBLE_ATTACK, 15)

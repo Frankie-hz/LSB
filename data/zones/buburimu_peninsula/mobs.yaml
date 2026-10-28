@@ -77,6 +77,10 @@ templates:
         links: true
       stats:
         hp: 2700
+      spawn:
+        respawn: # 60 to 90 minutes. The 06 to 16 spawn window holds a repop that lands past 16:00 until the next morning.
+          min: 3600
+          max: 5400
     loot:
       drops:
         - chance: common
@@ -1486,7 +1490,10 @@ templates:
         model_size:      1
         hitbox:         13
       spawn:
-        type: [scripted]
+        type: [windowed]
+        respawn: # repop 60-70min
+          min: 3600
+          max: 4200
       stats:
         hp: 1030
     loot:
