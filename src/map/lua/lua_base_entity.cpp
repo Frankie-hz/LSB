@@ -18258,7 +18258,7 @@ void CLuaBaseEntity::spawn(const sol::object& despawnSec, const sol::object& res
 
     if (respawnSec != sol::lua_nil)
     {
-        PMob->m_RespawnTime  = std::chrono::seconds(respawnSec.as<uint32>());
+        PMob->setRespawnTime(std::chrono::seconds(respawnSec.as<uint32>()));
         PMob->m_AllowRespawn = true;
     }
     else
@@ -18393,7 +18393,7 @@ void CLuaBaseEntity::setRespawnTime(const uint32 seconds) const
     auto* PMob = static_cast<CMobEntity*>(m_PBaseEntity);
     if (seconds == 0)
     {
-        PMob->m_RespawnTime  = 0s;
+        PMob->setRespawnTime(0s);
         PMob->m_AllowRespawn = false;
 
         if (PMob->loc.zone != nullptr)
@@ -18404,7 +18404,7 @@ void CLuaBaseEntity::setRespawnTime(const uint32 seconds) const
         return;
     }
 
-    PMob->m_RespawnTime  = std::chrono::seconds(seconds);
+    PMob->setRespawnTime(std::chrono::seconds(seconds));
     PMob->m_AllowRespawn = true;
 
     // If mob is not currently spawned, update its pending respawn time in SpawnHandler

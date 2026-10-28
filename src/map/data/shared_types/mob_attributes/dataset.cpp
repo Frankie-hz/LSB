@@ -34,6 +34,7 @@
 #include <string>
 #include <string_view>
 #include <utility>
+#include <variant>
 
 namespace xi::data
 {
@@ -206,6 +207,28 @@ auto convertResists(const std::optional<shared::Resists>& source) -> HashMap<xi:
     return resists;
 }
 
+auto convertRespawn(const shared::Respawn& source, const std::string_view context) -> RespawnData
+{
+    if (const auto* seconds = std::get_if<uint32>(&source))
+    {
+        return RespawnData{ .Min = *seconds, .Max = *seconds };
+    }
+
+    const auto& range = std::get<shared::RespawnRange>(source);
+    if (range.min == 0)
+    {
+        throw std::runtime_error(fmt::format("{}: respawn range must start above 0", context));
+    }
+
+    const auto interval = range.interval.value_or(1);
+    if (interval == 0 || range.min > range.max || (range.max - range.min) % interval != 0)
+    {
+        throw std::runtime_error(fmt::format("{}: respawn range {} to {} in intervals of {} is not a whole number of intervals", context, range.min, range.max, interval));
+    }
+
+    return RespawnData{ .Min = range.min, .Max = range.max, .Interval = interval };
+}
+
 } // namespace
 
 auto convertAttributes(const shared::MobAttributes& source, const std::string_view context) -> MobAttributesOverrides
@@ -228,7 +251,11 @@ auto convertAttributes(const shared::MobAttributes& source, const std::string_vi
 
     if (source.spawn)
     {
-        attributes.Respawn = source.spawn->respawn;
+        if (source.spawn->respawn)
+        {
+            attributes.Respawn = convertRespawn(*source.spawn->respawn, context);
+        }
+
         if (source.spawn->type)
         {
             attributes.SpawnType = yaml::resolveFlags(source.spawn->type);

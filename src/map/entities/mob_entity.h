@@ -53,6 +53,16 @@ struct SpawnWindow
     uint8 despawnHour;
 };
 
+// Respawn rolled in whole intervals from min to max, both included.
+struct RespawnRange
+{
+    timer::duration min;
+    timer::duration max;
+    timer::duration interval;
+
+    auto roll() const -> timer::duration;
+};
+
 enum SPECIALFLAG
 {
     SPECIALFLAG_NONE   = 0x0,
@@ -94,6 +104,12 @@ public:
     // Optional per-mob spawn window; overrides the SPAWNTYPE time flags when set.
     auto spawnWindow() const -> const Maybe<SpawnWindow>&;
     void setSpawnWindow(uint8 spawnHour, uint8 despawnHour);
+
+    auto respawnRange() const -> const RespawnRange&;
+    void setRespawnRange(const RespawnRange& range);
+
+    // A fixed respawn from a script replaces any range from data.
+    void setRespawnTime(timer::duration respawnTime);
 
     auto TrySpawn() -> bool;
 
@@ -160,7 +176,6 @@ public:
 
     bool            m_AllowRespawn; // If true, this mob or another mob in the same slot is allowed to spawn
     bool            m_CanSpawn;     // If true, it can currently spawn (usually based on time of day or weather)
-    timer::duration m_RespawnTime;  // respawn time
     timer::duration m_DropItemTime; // time until monster death animation
 
     timer::duration   m_FishingRespawnDuration{}; // Armed when a timed NM is landed
@@ -259,6 +274,7 @@ private:
     static constexpr float                roam_home_distance{ 60.f };
     SpawnSlot*                            spawnSlot = nullptr;
     Maybe<SpawnWindow>                    spawnWindow_;
+    RespawnRange                          respawnRange_{ .min = 5min, .max = 5min, .interval = 1s };
     std::vector<const RoamRegion*>        roamRegions_;           // areas it may spawn in, owned by the zone
     const RoamRegion*                     roamRegion_{ nullptr }; // the one picked for this life
     std::vector<position_t>               patrolRoute_;           // waypoints it loops while roaming, empty for a free roamer
