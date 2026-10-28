@@ -570,7 +570,10 @@ templates:
         base_damage_multiplier: 150
         sight_range:             30
       spawn:
-        respawn: 10800
+        type: [window_closed]
+        respawn: # 3 to 6 hours
+          min: 10800
+          max: 21600
       stats:
         hp: 10000
     loot:

@@ -1426,7 +1426,10 @@ templates:
         aggressive: true
         links:      true
       spawn:
-        type: [scripted]
+        type: [window_open]
+        respawn: # 21 hours to 21 hours 10 minutes
+          min: 75600
+          max: 76200
       stats:
         hp: 3340
     loot:
@@ -1915,7 +1918,10 @@ templates:
       behaviors:
         links: true
       spawn:
-        type: [scripted]
+        type: [window_open]
+        respawn: # 60 to 70 minutes
+          min: 3600
+          max: 4200
       stats:
         hp: 2920
     loot:

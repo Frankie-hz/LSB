@@ -3317,7 +3317,10 @@ templates:
         animation_sub:   8
         hitbox:          6
       spawn:
-        respawn: 7200
+        type: [window_open]
+        respawn: # 120 to 140 minutes
+          min: 7200
+          max: 8400
     loot:
       drops:
         - chance: uncommon

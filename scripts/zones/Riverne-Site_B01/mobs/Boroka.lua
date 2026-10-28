@@ -78,8 +78,4 @@ entity.onMobWeaponSkill = function(mob, target, skill, action)
     end
 end
 
-entity.onMobDeath = function(mob, player, optParams)
-    mob:setRespawnTime(math.randomInt(75600, 86400)) -- 21-24 hour respawn
-end
-
 return entity

@@ -10,10 +10,6 @@ mixins = { require('scripts/mixins/job_special') }
 ---@type TMobEntity
 local entity = {}
 
-entity.onMobInitialize = function(mob)
-    mob:setRespawnTime(math.randomInt(900, 10800))
-end
-
 entity.onMobRoam = function(mob)
     local mobId = mob:getID()
     local hpp = mob:getHPP()
@@ -83,8 +79,6 @@ entity.onMobDespawn = function(mob)
             DespawnMob(i)
         end
     end
-
-    mob:setRespawnTime(math.randomInt(14400, 18000)) -- 4 to 5 hours
 end
 
 return entity

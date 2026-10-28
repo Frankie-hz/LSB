@@ -1130,7 +1130,10 @@ templates:
         entity_flags: 129
         hitbox:        35
       spawn:
-        respawn: 3600
+        type: [window_open]
+        respawn: # 15 to 60 minutes
+          min:  900
+          max: 3600
       stats:
         hp: 420
       mob_mods:

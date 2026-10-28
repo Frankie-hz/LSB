@@ -857,7 +857,11 @@ templates:
         aggressive: true
         links:      true
       spawn:
-        type: [scripted]
+        type: [window_open]
+        respawn: # 120 to 150 minutes in 5 minute intervals
+          min:      7200
+          max:      9000
+          interval:  300
       stats:
         hp: 4500
         mp: 4500

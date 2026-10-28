@@ -34,8 +34,6 @@ entity.onMobInitialize = function(mob)
     mob:addImmunity(xi.immunity.TERROR)
 
     mob:setMobMod(xi.mobMod.AOE_HIT_ALL, 1)
-
-    mob:setRespawnTime(math.randomInt(144, 240) * 1800) -- 3 to 5 days in 30 minute windows
 end
 
 entity.onMobSpawn = function(mob)
@@ -217,10 +215,6 @@ entity.onMobDisengage = function(mob)
 
     mob:setMobMod(xi.mobMod.NO_MOVE, 0)
     mob:setAnimationSub(0)
-end
-
-entity.onMobDespawn = function(mob)
-    mob:setRespawnTime(math.randomInt(144, 240) * 1800) -- 3 to 5 days in 30 minute windows
 end
 
 return entity

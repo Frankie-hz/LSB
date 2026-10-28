@@ -6,8 +6,6 @@
 local entity = {}
 
 entity.onMobInitialize = function(mob)
-    mob:setRespawnTime(math.randomInt(259200, 432000))
-
     mob:addImmunity(xi.immunity.LIGHT_SLEEP)
     mob:addImmunity(xi.immunity.DARK_SLEEP)
     mob:addImmunity(xi.immunity.SILENCE)
@@ -40,10 +38,6 @@ entity.onMobFight = function(mob, target)
             mob:setMobMod(xi.mobMod.NO_MOVE, 0)
         end
     end
-end
-
-entity.onMobDespawn = function(mob)
-    mob:setRespawnTime(math.randomInt(259200, 432000)) -- 3 to 5 days
 end
 
 return entity

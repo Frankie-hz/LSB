@@ -82,8 +82,4 @@ entity.onMobDisengage = function(mob)
     mob:setMod(xi.mod.TRIPLE_ATTACK, 0)
 end
 
-entity.onMobDespawn = function(mob)
-    mob:setRespawnTime(math.randomInt(75600, 86400)) -- 21 to 24 hours
-end
-
 return entity

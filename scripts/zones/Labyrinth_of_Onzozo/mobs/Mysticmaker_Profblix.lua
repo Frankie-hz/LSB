@@ -8,8 +8,6 @@ mixins = { require('scripts/mixins/job_special') }
 local entity = {}
 
 entity.onMobInitialize = function(mob)
-    mob:setRespawnTime(math.randomInt(24, 30) * 300)
-
     mob:addImmunity(xi.immunity.STUN)
     mob:addImmunity(xi.immunity.TERROR)
     mob:addImmunity(xi.immunity.PLAGUE)
@@ -31,10 +29,6 @@ entity.onMobDeath = function(mob, player, optParams)
     xi.regime.checkRegime(player, mob, 771, 2, xi.regime.type.GROUNDS)
     xi.regime.checkRegime(player, mob, 772, 2, xi.regime.type.GROUNDS)
     xi.regime.checkRegime(player, mob, 774, 2, xi.regime.type.GROUNDS)
-end
-
-entity.onMobDespawn = function(mob)
-    mob:setRespawnTime(math.randomInt(24, 30) * 300) -- 2 to 2.5 hours in 5 minute windows
 end
 
 return entity

@@ -656,7 +656,10 @@ templates:
       behaviors:
         links: true
       spawn:
-        respawn: 3600
+        type: [window_closed]
+        respawn: # 1 to 2 hours
+          min: 3600
+          max: 7200
       stats:
         hp: 17000
       mob_mods:

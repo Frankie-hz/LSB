@@ -9,8 +9,6 @@ local entity = {}
 
 entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
-
-    mob:setRespawnTime(math.randomInt(900, 10800))
 end
 
 entity.onAdditionalEffect = function(mob, target, damage)
@@ -23,10 +21,6 @@ entity.onAdditionalEffect = function(mob, target, damage)
     }
 
     return xi.combat.action.executeAddEffectEnfeeblement(mob, target, pTable)
-end
-
-entity.onMobDespawn = function(mob)
-    mob:setRespawnTime(math.randomInt(216000, 259200)) -- 60 to 72 hours
 end
 
 return entity

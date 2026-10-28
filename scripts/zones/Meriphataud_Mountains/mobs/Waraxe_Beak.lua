@@ -12,7 +12,6 @@ mixins =
 local entity = {}
 
 entity.onMobInitialize = function(mob)
-    mob:setRespawnTime(math.randomInt(75600, 86400)) -- 21 to 24 hours
     mob:setMobMod(xi.mobMod.HP_STANDBACK, -1)
     mob:setMobMod(xi.mobMod.ALWAYS_AGGRO, 1)
     mob:addImmunity(xi.immunity.DARK_SLEEP)
@@ -32,10 +31,6 @@ end
 
 entity.onMobWeaponSkill = function(mob, target, skill)
     return xi.mix.cockatrice.onMobWeaponSkill(mob, target, skill)
-end
-
-entity.onMobDespawn = function(mob)
-    mob:setRespawnTime(math.randomInt(75600, 86400)) -- 21 to 24 hours
 end
 
 return entity

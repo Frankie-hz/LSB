@@ -14,8 +14,4 @@ entity.onMobDeath = function(mob, player, optParams)
     xi.hunts.checkHunt(mob, player, 320)
 end
 
-entity.onMobDespawn = function(mob)
-    mob:setRespawnTime(math.randomInt(7200, 9000)) -- 2 to 2.5 hours
-end
-
 return entity

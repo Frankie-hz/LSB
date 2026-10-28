@@ -3712,7 +3712,10 @@ templates:
       behaviors:
         aggressive: true
       spawn:
-        respawn: 7200
+        type: [window_open]
+        respawn: # 120 to 130 minutes
+          min: 7200
+          max: 7800
       stats:
         hp: 8500
     loot:

@@ -615,7 +615,10 @@ templates:
         aggressive: true
         links:      true
       spawn:
-        type: [scripted]
+        type: [window_open]
+        respawn: # 90 to 120 minutes
+          min: 5400
+          max: 7200
       stats:
         hp: 4400
       mob_mods:

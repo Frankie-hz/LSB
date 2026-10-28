@@ -6,7 +6,7 @@
 --
 -- Source: https://forum.square-enix.com/ffxi/threads/38100
 --
--- Satiator uses the four-hour value from its zone data. Its change date is unverified.
+-- Satiator uses the four-hour value its zone data used to hold. Its change date is unverified.
 --
 -- Each window is set when the zone loads. A restart starts it over.
 -- Base spawns Juggler Hecatomb, Manipulator and Atkorkamuy at load. This
@@ -51,8 +51,8 @@ local feiyinID    = zones[xi.zone.FEIYIN]
 -- Simple timed NMs
 -- Each override registers the window during initialize. The boot spawn pass
 -- skips a mob with a pending respawn, so the NM stays down.
--- This table handles normal and scripted spawn types only. The engine blocks
--- lottery and windowed mobs after initialize.
+-- This table handles normal, scripted, window_open and window_closed spawn
+-- types only. The engine blocks lottery mobs after initialize.
 -----------------------------------
 local timedNMs =
 {

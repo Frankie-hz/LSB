@@ -58,7 +58,10 @@ templates:
       behaviors:
         aggressive: true
       spawn:
-        respawn: 1800
+        type: [window_closed]
+        respawn: # 30 to 180 minutes
+          min:  1800
+          max: 10800
     loot:
       drops:
         - chance: common

@@ -8,7 +8,6 @@ mixins = { require('scripts/mixins/job_special') }
 local entity = {}
 
 entity.onMobInitialize = function(mob)
-    mob:setRespawnTime(math.randomInt(900, 10800))
     mob:addImmunity(xi.immunity.DARK_SLEEP)
     mob:addImmunity(xi.immunity.LIGHT_SLEEP)
     mob:addImmunity(xi.immunity.TERROR)
@@ -34,10 +33,6 @@ entity.onMobFight = function(mob, target)
         wait = 10,
     }
     utils.drawIn(target, drawInTable)
-end
-
-entity.onMobDespawn = function(mob)
-    mob:setRespawnTime(math.randomInt(75600, 86400)) -- 21-24 hours
 end
 
 return entity

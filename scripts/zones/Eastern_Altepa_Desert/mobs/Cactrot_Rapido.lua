@@ -115,7 +115,6 @@ local pathNodes =
 }
 
 entity.onMobInitialize = function(mob)
-    mob:setRespawnTime(math.randomInt(172800, 259200)) -- When server restarts, reset timer
     mob:addImmunity(xi.immunity.BIND)
     mob:addImmunity(xi.immunity.DARK_SLEEP)
     mob:addImmunity(xi.immunity.STUN)
@@ -134,10 +133,6 @@ end
 
 entity.onMobEngage = function(mob, target)
     mob:setAnimationSub(0)
-end
-
-entity.onMobDespawn = function(mob)
-    mob:setRespawnTime(math.randomInt(172800, 259200)) -- 2 to 3 days
 end
 
 return entity

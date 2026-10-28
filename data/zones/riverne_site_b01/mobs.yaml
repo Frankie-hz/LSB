@@ -233,7 +233,10 @@ templates:
         aggressive:     true
         true_detection: true
       spawn:
-        respawn: 86400
+        type: [window_open]
+        respawn: # 21 to 24 hours
+          min: 75600
+          max: 86400
       stats:
         hp: 9000
     loot:

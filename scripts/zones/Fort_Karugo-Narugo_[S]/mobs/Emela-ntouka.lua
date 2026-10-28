@@ -25,8 +25,6 @@ entity.onMobSpawn = function(mob)
             mob:setLocalVar('reuseMobskill', 0)
         end
     end)
-
-    mob:setRespawnTime(0)
 end
 
 entity.onMobDeath = function(mob, player, optParams)
@@ -35,9 +33,6 @@ end
 
 entity.onMobDespawn = function(mob)
     mob:removeListener('DOUBLE_BLOCKHEAD')
-
-    -- Do not respawn for 3-4 hours
-    mob:setRespawnTime(math.randomInt(10800, 14400))
     mob:resetLocalVars()
 end
 
