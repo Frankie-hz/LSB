@@ -1768,9 +1768,9 @@ auto InstantiateAlly(const uint32 groupid, const xi::ZoneId zoneID, CInstance* i
         PMob->name.insert(0, rset->get<std::string>("name"));
         PMob->packetName.insert(0, rset->get<std::string>("packet_name"));
 
-        PMob->m_RespawnTime = std::chrono::seconds(rset->get<uint32>("respawntime"));
-        PMob->m_SpawnType   = rset->get<xi::SpawnType>("spawntype");
-        PMob->m_DropID      = rset->get<uint32>("dropid");
+        PMob->setRespawnTime(std::chrono::seconds(rset->get<uint32>("respawntime")));
+        PMob->m_SpawnType = rset->get<xi::SpawnType>("spawntype");
+        PMob->m_DropID    = rset->get<uint32>("dropid");
 
         PMob->HPmodifier = rset->get<uint32>("HP");
         PMob->MPmodifier = rset->get<uint32>("MP");
@@ -1923,9 +1923,9 @@ auto InstantiateDynamicMob(const uint32 groupid, const xi::ZoneId groupZoneId, c
         PMob->name.insert(0, rset->get<std::string>("name"));
         PMob->packetName.insert(0, rset->get<std::string>("packet_name"));
 
-        PMob->m_RespawnTime = std::chrono::seconds(rset->get<uint32>("respawntime"));
-        PMob->m_SpawnType   = rset->get<xi::SpawnType>("spawntype");
-        PMob->m_DropID      = rset->get<uint32>("dropid");
+        PMob->setRespawnTime(std::chrono::seconds(rset->get<uint32>("respawntime")));
+        PMob->m_SpawnType = rset->get<xi::SpawnType>("spawntype");
+        PMob->m_DropID    = rset->get<uint32>("dropid");
 
         PMob->HPmodifier = rset->get<uint32>("HP");
         PMob->MPmodifier = rset->get<uint32>("MP");

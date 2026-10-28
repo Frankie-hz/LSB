@@ -336,8 +336,20 @@ void InsertMobs(CZone* PZone, const xi::ZoneId zoneId, const xi::data::Mobs& mob
             PMob->HPmodifier = attributes.Stats.HP;
             PMob->MPmodifier = attributes.Stats.MP;
 
-            PMob->m_RespawnTime = std::chrono::seconds(attributes.Respawn.value_or(0));
-            PMob->m_SpawnType   = attributes.SpawnType.value_or(xi::SpawnType::Normal);
+            if (attributes.Respawn)
+            {
+                PMob->setRespawnRange(RespawnRange{
+                    .min      = std::chrono::seconds(attributes.Respawn->Min),
+                    .max      = std::chrono::seconds(attributes.Respawn->Max),
+                    .interval = std::chrono::seconds(attributes.Respawn->Interval),
+                });
+            }
+            else
+            {
+                PMob->setRespawnTime(0s);
+            }
+
+            PMob->m_SpawnType = attributes.SpawnType.value_or(xi::SpawnType::Normal);
 
             if (attributes.SpawnWindow)
             {
@@ -833,7 +845,7 @@ auto LoadMOBList(Scheduler& scheduler, const std::vector<xi::ZoneId>& zoneIds, c
                     // Skip mobs already registered via setRespawnTime in onMobInitialize - let SpawnHandler handle them
                     if (PZone->spawnHandler().isRegistered(PMob))
                     {
-                        if (PMob->m_SpawnType == xi::SpawnType::Scripted && PMob->m_RespawnTime > 0s)
+                        if ((PMob->m_SpawnType == xi::SpawnType::Scripted || PMob->m_SpawnType == xi::SpawnType::Windowed) && PMob->respawnRange().min > 0s)
                         {
                             PMob->m_AllowRespawn = true;
                         }
@@ -847,8 +859,8 @@ auto LoadMOBList(Scheduler& scheduler, const std::vector<xi::ZoneId>& zoneIds, c
                     }
                     else
                     {
-                        // If the mob is a scripted spawn and it has a respawn time defined when the mob initializes then allow it to respawn
-                        if (PMob->m_SpawnType == xi::SpawnType::Scripted && PMob->m_RespawnTime > 0s)
+                        // If the mob is a scripted or windowed spawn and it has a respawn time defined when the mob initializes then allow it to respawn
+                        if ((PMob->m_SpawnType == xi::SpawnType::Scripted || PMob->m_SpawnType == xi::SpawnType::Windowed) && PMob->respawnRange().min > 0s)
                         {
                             PMob->m_AllowRespawn = true;
                         }
@@ -856,7 +868,24 @@ auto LoadMOBList(Scheduler& scheduler, const std::vector<xi::ZoneId>& zoneIds, c
                         // Condition-based mobs (time/weather) register with 0s so they spawn when conditions are met
                         const bool isConditionBased = (PMob->m_SpawnType & (xi::SpawnType::AtNight | xi::SpawnType::AtEvening | xi::SpawnType::Weather | xi::SpawnType::Fog)) != xi::SpawnType::Normal ||
                                                       PMob->spawnWindow().has_value();
-                        PZone->spawnHandler().registerForRespawn(PMob, isConditionBased ? std::make_optional(0s) : std::nullopt);
+                        const auto respawnTime      = [&]() -> Maybe<timer::duration>
+                        {
+                            if (isConditionBased)
+                            {
+                                return 0s;
+                            }
+
+                            // A windowed mob's respawn window opens when its zone loads, anything else rolls a full respawn.
+                            if (PMob->m_SpawnType == xi::SpawnType::Windowed)
+                            {
+                                const auto range = PMob->respawnRange();
+                                return range.roll() - range.min;
+                            }
+
+                            return std::nullopt;
+                        }();
+
+                        PZone->spawnHandler().registerForRespawn(PMob, respawnTime);
                     }
                 });
         });

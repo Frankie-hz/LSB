@@ -2386,7 +2386,7 @@ auto SpawnMob(uint32 mobid, const sol::object& arg2, const sol::object& arg3) ->
 
         if (arg3.is<uint32>())
         {
-            PMob->m_RespawnTime  = std::chrono::seconds(arg3.as<uint32>());
+            PMob->setRespawnTime(std::chrono::seconds(arg3.as<uint32>()));
             PMob->m_AllowRespawn = true;
         }
         else
@@ -5737,7 +5737,7 @@ auto GetMobRespawnTime(uint32 mobid) -> uint32
 
     if (PMob != nullptr)
     {
-        return static_cast<uint32>(timer::count_seconds(PMob->m_RespawnTime));
+        return static_cast<uint32>(timer::count_seconds(PMob->respawnRange().min));
     }
 
     ShowError("luautils::GetMobAction: mob <%u> was not found", mobid);
@@ -6481,7 +6481,7 @@ auto GenerateDynamicEntity(CZone* PZone, CInstance* PInstance, sol::table table)
                             PZone->getName().c_str());
             }
 
-            PMob->m_RespawnTime  = std::chrono::seconds(respawn);
+            PMob->setRespawnTime(std::chrono::seconds(respawn));
             PMob->m_AllowRespawn = true;
         }
         else

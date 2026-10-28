@@ -69,6 +69,14 @@ struct StatRanksData
     xi::StatRank Acc{ xi::StatRank::A };
 };
 
+// A fixed respawn has Min equal to Max.
+struct RespawnData
+{
+    uint32 Min{};
+    uint32 Max{};
+    uint32 Interval{ 1 };
+};
+
 struct MobAttributesData
 {
     // Absent means nothing in the chain set them, so the entity keeps its own default.
@@ -82,7 +90,7 @@ struct MobAttributesData
     std::optional<uint8>                   ModelSize{};
     std::optional<uint8>                   Hitbox{};
     std::optional<xi::Behavior>            Behavior{};
-    std::optional<uint32>                  Respawn{};
+    std::optional<RespawnData>             Respawn{};
     std::optional<xi::SpawnType>           SpawnType{};
     std::optional<std::pair<uint8, uint8>> SpawnWindow{};
     std::optional<xi::Immunity>            Immune{};
@@ -134,7 +142,7 @@ struct MobAttributesOverrides
     std::optional<uint8>                   ModelSize;
     std::optional<uint8>                   Hitbox;
     std::optional<xi::Behavior>            Behavior;
-    std::optional<uint32>                  Respawn;
+    std::optional<RespawnData>             Respawn;
     std::optional<xi::SpawnType>           SpawnType;
     std::optional<std::pair<uint8, uint8>> SpawnWindow;
     std::optional<xi::Immunity>            Immune;

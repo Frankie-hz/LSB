@@ -15,5 +15,5 @@ values:
   fog:        0x08 # 02:00-07:00
   moonphase:  0x10
   lottery:    0x20
-  windowed:   0x40
-  scripted:   0x80 # scripted spawn
+  windowed:   0x40 # respawn window opens when its zone loads
+  scripted:   0x80 # spawned by a script, or held for a full respawn when its zone loads

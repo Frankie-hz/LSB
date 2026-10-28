@@ -105,7 +105,7 @@ auto SpawnHandler::getSpawnSlot(uint32_t slotId) const -> SpawnSlot*
     return it != spawnSlots_.end() ? it->second.get() : nullptr;
 }
 
-// Register a given mob for respawn at its default respawn timer.
+// Register a given mob for respawn at a fresh roll of its respawn range.
 // Respawn timer can optionally be overriden for deaggro/scripting purposes.
 void SpawnHandler::registerForRespawn(CMobEntity* PMob, const Maybe<timer::duration> respawnTime)
 {
@@ -114,7 +114,16 @@ void SpawnHandler::registerForRespawn(CMobEntity* PMob, const Maybe<timer::durat
         return;
     }
 
-    const timer::duration   duration  = respawnTime.value_or(PMob->m_RespawnTime);
+    const auto duration = [&]() -> timer::duration
+    {
+        if (respawnTime)
+        {
+            return *respawnTime;
+        }
+
+        return PMob->respawnRange().roll();
+    }();
+
     const timer::time_point respawnAt = timer::now() + duration;
 
     if (auto slot = PMob->GetSpawnSlot())

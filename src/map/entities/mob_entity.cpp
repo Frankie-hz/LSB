@@ -97,7 +97,6 @@ constexpr timer::duration SPECIAL_DROP_COOLDOWN = 5min; // 5 minutes between spe
 CMobEntity::CMobEntity()
 : m_AllowRespawn(false)
 , m_CanSpawn(false)
-, m_RespawnTime(5min)
 , m_DropItemTime(0)
 , m_DropID(0)
 , m_minLevel(1)
@@ -247,6 +246,33 @@ auto CMobEntity::spawnWindow() const -> const Maybe<SpawnWindow>&
 void CMobEntity::setSpawnWindow(uint8 spawnHour, uint8 despawnHour)
 {
     spawnWindow_ = SpawnWindow{ spawnHour, despawnHour };
+}
+
+auto RespawnRange::roll() const -> timer::duration
+{
+    // A fixed respawn must not draw, or every death would shift seeded RNG streams.
+    if (max <= min)
+    {
+        return min;
+    }
+
+    const auto intervals = (max - min) / interval;
+    return min + interval * xirand::GetRandomNumber<int64>(0, intervals + 1);
+}
+
+auto CMobEntity::respawnRange() const -> const RespawnRange&
+{
+    return respawnRange_;
+}
+
+void CMobEntity::setRespawnRange(const RespawnRange& range)
+{
+    respawnRange_ = range;
+}
+
+void CMobEntity::setRespawnTime(const timer::duration respawnTime)
+{
+    respawnRange_ = RespawnRange{ .min = respawnTime, .max = respawnTime, .interval = 1s };
 }
 
 auto CMobEntity::TrySpawn() -> bool
