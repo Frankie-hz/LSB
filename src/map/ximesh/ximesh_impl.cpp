@@ -206,7 +206,7 @@ auto rayIntersectTriangle(const Vector3& v1, const Vector3& v2, const Vector3& v
 
     if (a > -kRayTriEpsilon && a < kRayTriEpsilon)
     {
-        return std::nullopt;
+        return {};
     }
 
     const auto f = 1.0f / a;
@@ -215,7 +215,7 @@ auto rayIntersectTriangle(const Vector3& v1, const Vector3& v2, const Vector3& v
 
     if (u < 0.0f || u > 1.0f)
     {
-        return std::nullopt;
+        return {};
     }
 
     const auto q = s.crossProduct(edge1);
@@ -223,7 +223,7 @@ auto rayIntersectTriangle(const Vector3& v1, const Vector3& v2, const Vector3& v
 
     if (v < 0.0f || u + v > 1.0f)
     {
-        return std::nullopt;
+        return {};
     }
 
     const auto t = f * edge2.dotProduct(q);
@@ -233,7 +233,7 @@ auto rayIntersectTriangle(const Vector3& v1, const Vector3& v2, const Vector3& v
         return Vector3(rayOrigin + rayVector * t);
     }
 
-    return std::nullopt;
+    return {};
 }
 
 } // namespace
@@ -340,7 +340,7 @@ auto XiMeshImpl::load(const std::string& filename) -> bool
             metaOffset + metaBytes > buf.size())
         {
             ShowErrorFmt("XiMeshImpl: Block OOB at offset 0x{:X} (bufSize={})", fileOffset, buf.size());
-            return std::nullopt;
+            return {};
         }
 
         block.vertices.resize(vertexCount * 3);
@@ -395,7 +395,7 @@ auto XiMeshImpl::load(const std::string& filename) -> bool
         if (fileOffset + 4 + kTransformBytes > buf.size())
         {
             ShowErrorFmt("XiMeshImpl: Placement OOB at offset 0x{:X} (bufSize={})", fileOffset, buf.size());
-            return std::nullopt;
+            return {};
         }
 
         std::memcpy(placement.rotation.data(), buf.data() + fileOffset + 4, kTransformBytes);
@@ -509,13 +509,13 @@ auto XiMeshImpl::query(const float x, const float y, const float z) const -> May
     {
         if (cellX < 0 || cellX >= header_.gridWidth || cellZ < 0 || cellZ >= header_.gridHeight)
         {
-            return std::nullopt;
+            return {};
         }
 
         const auto& cell = cells_[static_cast<uint32>(cellZ) * header_.gridWidth + cellX];
         if (cell.count == 0)
         {
-            return std::nullopt;
+            return {};
         }
 
         Maybe<CellHit> best;

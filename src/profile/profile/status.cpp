@@ -47,7 +47,7 @@ auto openStatusFromWire(const uint8 openStat) -> Maybe<OpenStatus>
         case OpenStatus::Invisible:
             return status;
         default:
-            return std::nullopt;
+            return {};
     }
 }
 
@@ -71,7 +71,7 @@ auto changeMyStatus(const Context& context, const std::span<const uint8> body) -
     const auto request = parse<ChangeMyStatus>(body);
     if (!request)
     {
-        return std::nullopt;
+        return {};
     }
 
     const auto current = context.presence.status(context.accountId);

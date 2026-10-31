@@ -7627,7 +7627,7 @@ void removeCharFromZone(CCharEntity* PChar)
         PChar->loc.zone->nominateManager().onCharLeavingZone(PChar);
     }
 
-    PChar->WideScanTarget = std::nullopt;
+    PChar->WideScanTarget = {};
 
     if (PChar->animation == xi::Animation::Attack)
     {

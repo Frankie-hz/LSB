@@ -1235,14 +1235,14 @@ auto SetupExperiencePoints() -> Maybe<ExperiencePointsTable>
     if (!detail::findGlobalLuaFunction("xi.experiencePoints.calculate").valid())
     {
         ShowError("xi.experiencePoints.calculate function is not valid; experience points will not be calculated!");
-        return std::nullopt;
+        return {};
     }
 
     const sol::table baseTable = lua["xi"]["data"]["experiencePoints"]["baseTable"];
     if (!baseTable.valid())
     {
         ShowError("xi.data.experiencePoints.baseTable is not valid; experience points will not be calculated!");
-        return std::nullopt;
+        return {};
     }
 
     ExperiencePointsTable expTable{};
@@ -1252,7 +1252,7 @@ auto SetupExperiencePoints() -> Maybe<ExperiencePointsTable>
         if (!row.valid() || row.size() != 20)
         {
             ShowError("xi.data.experiencePoints.baseTable is missing a valid row for level difference %d.", dLevel);
-            return std::nullopt;
+            return {};
         }
 
         for (uint32 y = 0; y < 20; ++y)
@@ -1274,7 +1274,7 @@ auto CalculateExperiencePoints(CCharEntity* PMember, CMobEntity* PMob, const Cal
     const auto result = callGlobal<sol::table>("xi.experiencePoints.calculate", PMember, PMob, data);
     if (!result.valid())
     {
-        return std::nullopt;
+        return {};
     }
 
     CalcExpResult calcResult{};
@@ -1387,7 +1387,7 @@ void PopulateIDLookups(const xi::ZoneId zoneId, const std::string& zoneName, con
             else
             {
                 ShowError(fmt::format("GetFirstID({}) in zone {}: Returning nil", name, zoneName));
-                return std::nullopt;
+                return {};
             }
         });
 
@@ -4691,7 +4691,7 @@ auto OnMobSkillReadyTime(CBattleEntity* PTarget, CBaseEntity* PMob, CMobSkill* P
     auto onMobSkillReadyTime = lua["xi"]["zones"][zone]["mobs"][name]["onMobSkillReadyTime"];
     if (!onMobSkillReadyTime.valid())
     {
-        return std::nullopt;
+        return {};
     }
 
     auto result = onMobSkillReadyTime(PTarget, PMob, PMobSkill);
@@ -4699,7 +4699,7 @@ auto OnMobSkillReadyTime(CBattleEntity* PTarget, CBaseEntity* PMob, CMobSkill* P
     {
         sol::error err = result;
         ShowError("luautils::onMobSkillReadyTime: %s", err.what());
-        return std::nullopt;
+        return {};
     }
 
     if (result.get_type(0) == sol::type::number)
@@ -4707,7 +4707,7 @@ auto OnMobSkillReadyTime(CBattleEntity* PTarget, CBaseEntity* PMob, CMobSkill* P
         return std::chrono::milliseconds(result.template get<uint16>(0));
     }
 
-    return std::nullopt;
+    return {};
 }
 
 // onMobSkillFinalize always executes once per uninterrupted mobskill use, independently of any target being found.

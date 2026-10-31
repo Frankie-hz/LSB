@@ -41,7 +41,7 @@ class SpawnSlot
 public:
     void AddMob(CMobEntity* mob, uint8 spawnChance, timer::duration cooldown);
     void RemoveMob(const CMobEntity* mob);
-    auto TrySpawn(Maybe<uint32> specificMobId = std::nullopt) -> bool;
+    auto TrySpawn(Maybe<uint32> specificMobId = {}) -> bool;
     auto IsEmpty() const -> bool;
     auto GetEntries() const -> const std::vector<SpawnSlotEntry>&;
     void OnKill(const CMobEntity* mob);

@@ -141,8 +141,8 @@ auto Dataset::decode(const std::string_view text) -> Records
             .size          = species.size,
             .look          = species.look,
             .ecosystem     = yaml::resolveEnum(species.ecosystem),
-            .mobSpecies    = species.mob_species,
-            .statRanks     = species.stat_ranks.transform(
+            .mobSpecies    = toMaybe(species.mob_species),
+            .statRanks     = toMaybe(species.stat_ranks.transform(
                 [](const xi::data::shared::StatRanks& ranks) -> std::array<xi::StatRank, 7>
                 {
                     return {
@@ -154,12 +154,12 @@ auto Dataset::decode(const std::string_view text) -> Records
                         yaml::resolveEnum(ranks.mnd),
                         yaml::resolveEnum(ranks.chr),
                     };
-                }),
+                })),
             .hpScale        = species.hp_scale.value_or(kDefaultHPScale),
-            .speed          = species.speed,
-            .animationSpeed = species.animation_speed,
-            .hitbox         = species.hitbox,
-            .stanceSpecies  = species.stance_species,
+            .speed          = toMaybe(species.speed),
+            .animationSpeed = toMaybe(species.animation_speed),
+            .hitbox         = toMaybe(species.hitbox),
+            .stanceSpecies  = toMaybe(species.stance_species),
             .mods           = yaml::resolveKeys(species.mods),
         };
 
@@ -172,12 +172,12 @@ auto Dataset::decode(const std::string_view text) -> Records
                     .mobSkillId  = skill.mob_skill_id,
                     .unlockLevel = skill.unlock_level,
                     .tpCost      = skill.tp_cost,
-                    .readyTime   = skill.ready_time.transform(
+                    .readyTime   = toMaybe(skill.ready_time.transform(
                         [](const uint16 ms) -> timer::duration
                         {
                             return std::chrono::milliseconds(ms);
-                        }),
-                    .enabled = skill.enabled,
+                        })),
+                    .enabled     = skill.enabled,
                 });
             }
         }

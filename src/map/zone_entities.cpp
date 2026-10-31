@@ -603,7 +603,7 @@ void CZoneEntities::DecreaseZoneCounter(CCharEntity* PChar)
         }
         if (PCurrentMob->battleTarget() == PChar)
         {
-            PCurrentMob->setBattleTarget(std::nullopt);
+            PCurrentMob->setBattleTarget({});
         }
     }
 

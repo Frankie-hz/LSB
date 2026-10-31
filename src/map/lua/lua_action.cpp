@@ -113,7 +113,7 @@ auto CLuaAction::getMsg(const uint32 actionTargetId) const -> Maybe<MsgBasic>
         return it->results[0].messageID;
     }
 
-    return std::nullopt;
+    return {};
 }
 
 auto CLuaAction::getAnimation(const uint32 actionTargetId) const -> Maybe<ActionAnimation>
@@ -123,7 +123,7 @@ auto CLuaAction::getAnimation(const uint32 actionTargetId) const -> Maybe<Action
         return it->results[0].animation;
     }
 
-    return std::nullopt;
+    return {};
 }
 
 void CLuaAction::setAnimation(const uint32 actionTargetId, const ActionAnimation animation) const

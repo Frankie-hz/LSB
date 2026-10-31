@@ -595,7 +595,7 @@ public:
         {
             co_return std::move(std::get<0>(result));
         }
-        co_return std::nullopt;
+        co_return Maybe<T>{};
     }
 
     // blockOnMainThread

@@ -40,7 +40,7 @@ auto fromBytes(const std::span<const uint8> bytes) -> Maybe<T>
 {
     if (bytes.size() != sizeof(T))
     {
-        return std::nullopt;
+        return {};
     }
 
     auto value = T{};

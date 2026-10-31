@@ -210,7 +210,7 @@ auto ProfileSession::handle(const ProfRequest request, const std::span<const uin
             return unimplemented(request, ProfError::NotFound);
         default:
             ShowWarningFmt("{} unhandled request {:#06x}", context_.peer, static_cast<uint16>(request));
-            return std::nullopt;
+            return {};
     }
 }
 
@@ -227,7 +227,7 @@ auto ProfileSession::read(const std::size_t size) -> Task<Maybe<std::vector<uint
     const auto result = co_await Scheduler::withTimeout(asio::async_read(stream_, asio::buffer(buffer), asio::as_tuple(asio::use_awaitable)), kRequestDeadline);
     if (!result || std::get<0>(*result))
     {
-        co_return std::nullopt;
+        co_return Maybe<std::vector<uint8>>{};
     }
 
     co_return buffer;

@@ -695,7 +695,7 @@ auto lookupIdByName(const std::string_view name) -> Maybe<SpellID>
     const auto entry = byName.find(std::string{ name });
     if (entry == byName.end())
     {
-        return std::nullopt;
+        return {};
     }
 
     return entry->second;

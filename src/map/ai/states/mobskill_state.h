@@ -29,7 +29,7 @@ class CBattleEntity;
 class CMobSkillState : public CState
 {
 public:
-    CMobSkillState(xi::Badge<CState>, CBattleEntity* PEntity, const EntityId& target, uint16 wsid, Maybe<timer::duration> castTimeOverride, Maybe<uint16> tpCostOverride = std::nullopt);
+    CMobSkillState(xi::Badge<CState>, CBattleEntity* PEntity, const EntityId& target, uint16 wsid, Maybe<timer::duration> castTimeOverride, Maybe<uint16> tpCostOverride = {});
 
     auto init() -> StateErrorOr<void> override;
 

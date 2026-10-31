@@ -765,7 +765,7 @@ auto MapNetworking::compressPacket(uint8* buff, size_t buffsize) -> Maybe<size_t
     // handle compression error
     if (result == -1)
     {
-        return std::nullopt;
+        return {};
     }
 
     auto packetSize = static_cast<size_t>(result);

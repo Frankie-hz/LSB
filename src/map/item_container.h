@@ -85,7 +85,7 @@ public:
     auto InsertItem(std::unique_ptr<CItem> PItem) -> uint8;
     auto InsertItem(std::unique_ptr<CItem> PItem, uint8 slotID) -> uint8;
     auto RemoveItem(uint8 slotID) -> std::unique_ptr<CItem>;
-    auto MoveItemTo(uint8 fromSlot, CItemContainer& dst, Maybe<uint8> dstSlot = std::nullopt) -> uint8;
+    auto MoveItemTo(uint8 fromSlot, CItemContainer& dst, Maybe<uint8> dstSlot = {}) -> uint8;
 
     uint32            SortingPacket; // number of sort requests per clock
     timer::time_point LastSortingTime;

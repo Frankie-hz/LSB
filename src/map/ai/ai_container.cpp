@@ -262,7 +262,7 @@ auto CAIContainer::Internal_Disengage() const -> bool
     auto* entity = dynamic_cast<CBattleEntity*>(PEntity);
     if (entity)
     {
-        entity->setBattleTarget(std::nullopt);
+        entity->setBattleTarget({});
         return true;
     }
     return false;
@@ -472,7 +472,7 @@ void CAIContainer::Reset()
     if (auto* battle = dynamic_cast<CBattleEntity*>(PEntity); battle && battle->animation == xi::Animation::Attack)
     {
         battle->animation = xi::Animation::None;
-        battle->setBattleTarget(std::nullopt);
+        battle->setBattleTarget({});
         battle->updatemask |= UPDATE_HP;
     }
 }

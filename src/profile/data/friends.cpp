@@ -60,7 +60,7 @@ auto pendingEntry(const uint32 accountId, const uint32 otherAccountId) -> Maybe<
     const auto rset = run("SELECT pending FROM accounts_friends WHERE accid = ? AND blacklist = 0 AND friend_accid = ?", accountId, otherAccountId);
     if (!rset->next())
     {
-        return std::nullopt;
+        return {};
     }
 
     return rset->get<bool>("pending");
@@ -211,7 +211,7 @@ auto store(const uint32 accountId, const StoreFriendListHead& head, const std::s
 
     if (!committed)
     {
-        return std::nullopt;
+        return {};
     }
 
     auto result = StoreResult{};
@@ -225,7 +225,7 @@ auto blocks(const uint32 accountId, const uint32 otherAccountId) -> Maybe<bool>
     const auto rset = db::preparedStmt("SELECT list_index FROM accounts_friends WHERE accid = ? AND blacklist = 1 AND friend_accid = ?", accountId, otherAccountId);
     if (!rset)
     {
-        return std::nullopt;
+        return {};
     }
 
     return rset->next();

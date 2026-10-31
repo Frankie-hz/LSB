@@ -281,7 +281,7 @@ auto IrcSession::readLine() -> Task<Maybe<std::string>>
         const auto [ec, length] = co_await asio::async_read_until(stream_, asio::dynamic_buffer(input_, kLineLimit), '\n', asio::as_tuple(asio::use_awaitable));
         if (ec)
         {
-            co_return std::nullopt;
+            co_return Maybe<std::string>{};
         }
 
         auto line = input_.substr(0, length);

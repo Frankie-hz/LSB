@@ -59,7 +59,7 @@ auto storeFriendList(Context& context, const std::span<const uint8> body) -> May
     constexpr auto fixedSize = sizeof(StoreFriendListHead) + sizeof(ProfTrailer);
     if (body.size() < fixedSize || (body.size() - fixedSize) % sizeof(FriendInfo) != 0)
     {
-        return std::nullopt;
+        return {};
     }
 
     const auto head    = fromBytes<StoreFriendListHead>(body.first(sizeof(StoreFriendListHead)));
@@ -67,7 +67,7 @@ auto storeFriendList(Context& context, const std::span<const uint8> body) -> May
     const auto count   = (body.size() - fixedSize) / sizeof(FriendInfo);
     if (!head || !trailer || head->count != count || !hasTrailingChecksum(body))
     {
-        return std::nullopt;
+        return {};
     }
 
     auto entries = std::vector<FriendInfo>(count);

@@ -139,11 +139,11 @@ auto DetourNavMesh::lookupPoly(const std::array<float, 3>& pos, const float* ext
     if (dtStatusFailed(status))
     {
         ShowError("DetourNavMesh::lookupPoly findNearestPoly failed (%u): %s", zoneID_, detourStatusString(status));
-        return std::nullopt;
+        return {};
     }
     if (!navMesh_->isValidPolyRef(hit.ref))
     {
-        return std::nullopt;
+        return {};
     }
     return hit;
 }
@@ -328,7 +328,7 @@ auto DetourNavMesh::findPath(const position_t& start, const position_t& end, con
         std::isnan(end.x) || std::isnan(end.y) || std::isnan(end.z))
     {
         ShowWarning("DetourNavMesh::findPath NaN position detected (%u)", zoneID_);
-        return std::nullopt;
+        return {};
     }
 
     DebugNavmesh("DetourNavMesh::findPath (%f, %f, %f) -> (%f, %f, %f) (zone: %u) (kMaxNavPolys: %u)",
@@ -346,14 +346,14 @@ auto DetourNavMesh::findPath(const position_t& start, const position_t& end, con
     if (!startPoly)
     {
         DebugNavmesh("DetourNavMesh::findPath start has no poly within extents: (%f, %f, %f) (%u)", start.x, start.y, start.z, zoneID_);
-        return std::nullopt;
+        return {};
     }
 
     const auto endPoly = lookupPoly(toDetour(end), polyPickExt, filter);
     if (!endPoly)
     {
         DebugNavmesh("DetourNavMesh::findPath end has no poly within extents: (%f, %f, %f) (%u)", end.x, end.y, end.z, zoneID_);
-        return std::nullopt;
+        return {};
     }
 
     // Build a poly corridor from start to end
@@ -364,7 +364,7 @@ auto DetourNavMesh::findPath(const position_t& start, const position_t& end, con
     {
         ShowError("DetourNavMesh::findPath findPath error (%u)", zoneID_);
         ShowError(detourStatusString(status));
-        return std::nullopt;
+        return {};
     }
 
     const bool detourPartial = (status & DT_PARTIAL_RESULT) != 0;
@@ -379,7 +379,7 @@ auto DetourNavMesh::findPath(const position_t& start, const position_t& end, con
                   end.y,
                   end.z,
                   zoneID_);
-        return std::nullopt;
+        return {};
     }
 
     // Straighten the corridor into waypoints, through portals shrunk for the body when it has one.
@@ -398,7 +398,7 @@ auto DetourNavMesh::findPath(const position_t& start, const position_t& end, con
         {
             ShowError("DetourNavMesh::findPath findStraightPath error (%u)", zoneID_);
             ShowError(detourStatusString(status));
-            return std::nullopt;
+            return {};
         }
     }
 
@@ -426,7 +426,7 @@ auto DetourNavMesh::findPath(const position_t& start, const position_t& end, con
     // straightPathCount == 1: only the start position was produced - no usable path
     if (straightPathCount <= 1)
     {
-        return std::nullopt;
+        return {};
     }
 
     // TODO: Detect local minima and re-try pathing with a larger buffer.
@@ -458,7 +458,7 @@ auto DetourNavMesh::findRandomPosition(const position_t& start, float maxRadius)
     if (!startPoly)
     {
         DebugNavmesh("DetourNavMesh::findRandomPosition start has no poly within extents: (%f, %f, %f) (%u)", start.x, start.y, start.z, zoneID_);
-        return std::nullopt;
+        return {};
     }
 
     dtPolyRef  randomRef = 0;
@@ -474,7 +474,7 @@ auto DetourNavMesh::findRandomPosition(const position_t& start, float maxRadius)
     if (dtStatusFailed(status))
     {
         ShowError("DetourNavMesh::findRandomPosition error (%u): %s", zoneID_, detourStatusString(status));
-        return std::nullopt;
+        return {};
     }
 
     return fromDetour(randomPt);
@@ -497,7 +497,7 @@ auto DetourNavMesh::findClosestValidPoint(const position_t& position) const -> M
     const auto hit = lookupPoly(toDetour(position), largePolyPickExt, makeFilter(AvoidLinks::No));
     if (!hit)
     {
-        return std::nullopt;
+        return {};
     }
 
     return fromDetour(hit->nearest.data());
@@ -520,7 +520,7 @@ auto DetourNavMesh::findFurthestValidPoint(const position_t& startPosition, cons
     const auto startPoly = lookupPoly(toDetour(startPosition), largePolyPickExt, filter);
     if (!startPoly)
     {
-        return std::nullopt;
+        return {};
     }
 
     const auto targetPos = toDetour(endPosition);
@@ -533,7 +533,7 @@ auto DetourNavMesh::findFurthestValidPoint(const position_t& startPosition, cons
 
     if (dtStatusFailed(status))
     {
-        return std::nullopt;
+        return {};
     }
 
     return fromDetour(result);

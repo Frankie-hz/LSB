@@ -104,7 +104,7 @@ auto Dataset::decode(const std::string_view text) -> Records
             .NameVis         = static_cast<xi::NameVis>(source.render.name_vis.value_or(0)),
             .EntityFlags     = static_cast<xi::EntityFlags>(source.render.entity_flags.value_or(kDefaultEntityFlags)),
             .NamePrefix      = source.render.name_prefix.value_or(0),
-            .DoorId          = source.render.door_id,
+            .DoorId          = toMaybe(source.render.door_id),
             .ModelSize       = source.render.model_size.value_or(0),
             .ModelHitboxSize = source.render.hitbox.value_or(0),
             .Speed           = source.speed.value_or(kDefaultSpeed),

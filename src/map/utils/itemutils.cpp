@@ -147,7 +147,7 @@ auto lookupIdByName(const std::string_view name) -> Maybe<uint16>
     const auto entry = byName.find(std::string{ name });
     if (entry == byName.end())
     {
-        return std::nullopt;
+        return {};
     }
 
     return entry->second;
@@ -628,7 +628,7 @@ auto TranslateItemName(GP_CLI_COMMAND_TRANSLATE_INDEX fromLang, GP_CLI_COMMAND_T
     const auto  it      = fromMap.find(lookupName);
     if (it == fromMap.end())
     {
-        return std::nullopt;
+        return {};
     }
 
     return it->second;

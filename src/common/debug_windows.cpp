@@ -113,7 +113,7 @@ auto writeMiniDump(PEXCEPTION_POINTERS info) -> Maybe<std::string>
     const auto hFile = CreateFileA(path, GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
     if (hFile == INVALID_HANDLE_VALUE)
     {
-        return std::nullopt;
+        return {};
     }
 
     MINIDUMP_EXCEPTION_INFORMATION mei{};
@@ -127,7 +127,7 @@ auto writeMiniDump(PEXCEPTION_POINTERS info) -> Maybe<std::string>
     CloseHandle(hFile);
     if (!ok)
     {
-        return std::nullopt;
+        return {};
     }
 
     return std::string(path);
@@ -146,7 +146,7 @@ auto WINAPI unhandledExceptionFilter(PEXCEPTION_POINTERS info) -> LONG
     {
         // Write the minidump first (it snapshots all threads) when opted in, then capture the
         // main thread's stack for the tombstone (nullopt when the fault is on the main thread).
-        const auto dumpPath  = minidumpEnabled.load(std::memory_order_acquire) ? writeMiniDump(info) : std::nullopt;
+        const auto dumpPath  = minidumpEnabled.load(std::memory_order_acquire) ? writeMiniDump(info) : Maybe<std::string>{};
         const auto mainTrace = debug::captureMainThreadTrace();
 
         // The filter runs on the faulting thread's stack, so an ordinary unwind here
@@ -203,7 +203,7 @@ auto debug::executablePath() -> Maybe<std::string>
     const auto len = GetModuleFileNameA(nullptr, buf, static_cast<DWORD>(sizeof(buf)));
     if (len == 0)
     {
-        return std::nullopt;
+        return {};
     }
 
     return std::string(buf, len);
@@ -214,7 +214,7 @@ auto debug::commandLine() -> Maybe<std::string>
     const auto cmd = GetCommandLineA();
     if (cmd == nullptr)
     {
-        return std::nullopt;
+        return {};
     }
 
     return std::string(cmd);
@@ -224,7 +224,7 @@ auto debug::coreDumpHint() -> Maybe<std::string>
 {
     // Windows has no core dump; the minidump is written by the SEH filter and its path
     // is reported directly (see unhandledExceptionFilter).
-    return std::nullopt;
+    return {};
 }
 
 void debug::registerMainThread()
@@ -240,12 +240,12 @@ auto debug::captureMainThreadTrace() -> Maybe<cpptrace::stacktrace>
 {
     if (mainThreadHandle == nullptr || GetCurrentThreadId() == mainThreadId)
     {
-        return std::nullopt;
+        return {};
     }
 
     if (SuspendThread(mainThreadHandle) == static_cast<DWORD>(-1))
     {
-        return std::nullopt;
+        return {};
     }
 
     std::vector<cpptrace::frame_ptr> frames;
@@ -289,7 +289,7 @@ auto debug::captureMainThreadTrace() -> Maybe<cpptrace::stacktrace>
     auto stack = raw.resolve();
     if (stack.empty())
     {
-        return std::nullopt;
+        return {};
     }
 
     return stack;

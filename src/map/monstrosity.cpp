@@ -645,7 +645,7 @@ auto changeSpecies(CCharEntity* PChar, const uint16 speciesCode) -> Maybe<bool>
     // Picking the current species again would only strip buffs.
     if (speciesCode == PChar->m_PMonstrosity->Species)
     {
-        return std::nullopt;
+        return {};
     }
 
     const auto previousId = PChar->m_PMonstrosity->MonstrosityId;
@@ -653,17 +653,17 @@ auto changeSpecies(CCharEntity* PChar, const uint16 speciesCode) -> Maybe<bool>
     const auto* species = findSpecies(speciesCode);
     if (species == nullptr)
     {
-        return std::nullopt;
+        return {};
     }
 
     if (PChar->m_PMonstrosity->levels[species->monstrosityId] == 0)
     {
-        return std::nullopt;
+        return {};
     }
 
     if (speciesCode >= kVariantSpeciesBase && !isVariantUnlocked(*PChar->m_PMonstrosity, speciesCode - kVariantSpeciesBase))
     {
-        return std::nullopt;
+        return {};
     }
 
     delSpeciesMods(PChar);

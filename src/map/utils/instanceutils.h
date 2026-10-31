@@ -47,10 +47,10 @@ struct InstanceData_t
     float         start_y;
     float         start_z;
     uint16        start_rot;
-    Maybe<uint16> music_day{ std::nullopt };
-    Maybe<uint16> music_night{ std::nullopt };
-    Maybe<uint16> battlesolo{ std::nullopt };
-    Maybe<uint16> battlemulti{ std::nullopt };
+    Maybe<uint16> music_day{};
+    Maybe<uint16> music_night{};
+    Maybe<uint16> battlesolo{};
+    Maybe<uint16> battlemulti{};
     std::string   filename;
 
     InstanceData_t()

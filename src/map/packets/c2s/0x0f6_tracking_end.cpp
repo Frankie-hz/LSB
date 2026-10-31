@@ -33,5 +33,5 @@ auto GP_CLI_COMMAND_TRACKING_END::validate(MapSession* PSession, const CCharEnti
 
 void GP_CLI_COMMAND_TRACKING_END::process(MapSession* PSession, CCharEntity* PChar) const
 {
-    PChar->WideScanTarget = std::nullopt;
+    PChar->WideScanTarget = {};
 }

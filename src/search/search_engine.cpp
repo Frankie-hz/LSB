@@ -73,7 +73,7 @@ void SearchEngine::onAHCleanup(std::vector<std::string>& inputs) const
 
 void SearchEngine::onExpireAll(std::vector<std::string>& inputs) const
 {
-    expireAH(std::nullopt);
+    expireAH({});
 }
 
 void SearchEngine::expireAH(const Maybe<uint16> days) const

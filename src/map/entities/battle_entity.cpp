@@ -2325,7 +2325,7 @@ void CBattleEntity::Die()
     {
         PAI->EventHandler.triggerListener("DEATH", this);
     }
-    setBattleTarget(std::nullopt);
+    setBattleTarget({});
 }
 
 void CBattleEntity::processActionEffectFlags(const action_t& action) const
@@ -3590,7 +3590,7 @@ void CBattleEntity::OnDisengage(CAttackState& s)
 {
     TracyZoneScopedN("CBattleEntity::OnDisengage");
 
-    setBattleTarget(std::nullopt);
+    setBattleTarget({});
     if (animation == xi::Animation::Attack)
     {
         animation = xi::Animation::None;

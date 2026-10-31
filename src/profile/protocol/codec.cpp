@@ -153,7 +153,7 @@ auto base64Decode(const std::string_view text) -> Maybe<std::vector<uint8>>
     auto bytes = std::vector<uint8>(standard.size() / 4 * 3);
     if (EVP_DecodeBlock(bytes.data(), reinterpret_cast<const unsigned char*>(standard.data()), static_cast<int>(standard.size())) < 0)
     {
-        return std::nullopt;
+        return {};
     }
 
     return bytes;

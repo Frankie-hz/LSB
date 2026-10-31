@@ -38,5 +38,5 @@ auto CharacterCache::getCharacterIPP(uint32 charId) -> Maybe<IPP>
         return it->second;
     }
 
-    return std::nullopt;
+    return {};
 }

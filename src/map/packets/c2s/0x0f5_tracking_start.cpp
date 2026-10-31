@@ -38,7 +38,7 @@ void GP_CLI_COMMAND_TRACKING_START::process(MapSession* PSession, CCharEntity* P
     if (target == nullptr)
     {
         // Target not found
-        PChar->WideScanTarget = std::nullopt;
+        PChar->WideScanTarget = {};
         return;
     }
 

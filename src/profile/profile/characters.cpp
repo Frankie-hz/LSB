@@ -101,7 +101,7 @@ auto searchPolId(const std::span<const uint8> body) -> Maybe<ProfileAnswer>
     const auto request = parse<SearchPolId>(body);
     if (!request)
     {
-        return std::nullopt;
+        return {};
     }
 
     auto answer = SearchPolIdAns{};

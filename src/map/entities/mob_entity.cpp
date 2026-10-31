@@ -586,7 +586,7 @@ auto CMobEntity::getfTPModifierOverride(uint16 skillId) -> Maybe<std::array<floa
         return it->second;
     }
 
-    return std::nullopt;
+    return {};
 }
 
 void CMobEntity::setfTPModifierOverride(uint16 skillId, float ftp1, float ftp2, float ftp3)

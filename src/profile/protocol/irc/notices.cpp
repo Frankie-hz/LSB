@@ -48,7 +48,7 @@ auto decodeHeader(const std::string_view name) -> Maybe<sqPolMessageHeader>
     const auto bytes = base64Decode(name);
     if (!bytes)
     {
-        return std::nullopt;
+        return {};
     }
 
     return fromBytes<sqPolMessageHeader>(*bytes);
@@ -142,7 +142,7 @@ auto parseMessageName(const std::string_view name) -> Maybe<MessageName>
     const auto header = decodeHeader(name);
     if (!header)
     {
-        return std::nullopt;
+        return {};
     }
 
     const auto sender    = header->SenderPolId ^ kMessagePolIdMask;
@@ -152,7 +152,7 @@ auto parseMessageName(const std::string_view name) -> Maybe<MessageName>
     // POL ids are account ids, and clients can't forge online notices
     if (sender > 0xFFFFFFFF || recipient > 0xFFFFFFFF || !isClientMessage(type) || header->bPolproRequest != 0)
     {
-        return std::nullopt;
+        return {};
     }
 
     return MessageName{

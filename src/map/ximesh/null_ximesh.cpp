@@ -23,7 +23,7 @@
 
 auto NullXiMesh::query(float, float, float) const -> Maybe<CellHit>
 {
-    return std::nullopt;
+    return {};
 }
 
 auto NullXiMesh::getTerrainAt(float, float, float) const -> xi::TerrainType
@@ -43,7 +43,7 @@ auto NullXiMesh::rayIntersect(const Vector3&, const Vector3&, IgnoreTransparentB
 
 auto NullXiMesh::getPositionInfo(const Vector3&, YOffsets, IgnoreTransparentBarriers) const -> Maybe<RayHitInfo>
 {
-    return std::nullopt;
+    return {};
 }
 
 auto NullXiMesh::blocks() const -> const std::vector<MeshBlock>&

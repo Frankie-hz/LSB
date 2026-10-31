@@ -1446,7 +1446,7 @@ void DetachPet(CBattleEntity* PMaster)
             if ((state && state->GetAbility()->getID() == ABILITY_LEAVE) || PChar->isDead())
             {
                 PMob->PEnmityContainer->Clear();
-                PMob->setBattleTarget(std::nullopt);
+                PMob->setBattleTarget({});
                 PMob->m_OwnerID.clean();
                 PMob->updatemask |= UPDATE_STATUS;
             }

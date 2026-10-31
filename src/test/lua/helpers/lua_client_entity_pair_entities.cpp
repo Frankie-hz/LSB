@@ -60,7 +60,7 @@ auto CLuaClientEntityPairEntities::get(const sol::object& entityQuery) const -> 
             if (!entity)
             {
                 TestError("Entity with ID {} not found", entityId);
-                return std::nullopt;
+                return {};
             }
 
             return CLuaTestEntity(parent_->engine()->scheduler(), entity);
@@ -74,7 +74,7 @@ auto CLuaClientEntityPairEntities::get(const sol::object& entityQuery) const -> 
             if (!zone)
             {
                 TestError("Current zone not found");
-                return std::nullopt;
+                return {};
             }
 
             const auto results = zone->queryEntitiesByName(entityName);
@@ -82,7 +82,7 @@ auto CLuaClientEntityPairEntities::get(const sol::object& entityQuery) const -> 
             if (results.empty())
             {
                 TestError("Entity '{}' not found in current zone", entityName);
-                return std::nullopt;
+                return {};
             }
 
             return CLuaTestEntity(parent_->engine()->scheduler(), results[0]);
@@ -103,12 +103,12 @@ auto CLuaClientEntityPairEntities::get(const sol::object& entityQuery) const -> 
                 }
             }
 
-            return std::nullopt;
+            return {};
         }
         default:
         {
             TestError("Invalid entity query type - expected ID (number), name (string), or entity object");
-            return std::nullopt;
+            return {};
         }
     }
 }

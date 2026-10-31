@@ -160,7 +160,7 @@ auto ProfileEngine::authenticate(profile::Stream& stream) -> Task<Maybe<profile:
     const auto result = co_await Scheduler::withTimeout(asio::async_read(stream, asio::buffer(hello), asio::as_tuple(asio::use_awaitable)), kHandshakeDeadline);
     if (!result || std::get<0>(*result))
     {
-        co_return std::nullopt;
+        co_return Maybe<profile::accounts::Credential>{};
     }
 
     auto credential = profile::accounts::Credential{};
@@ -170,7 +170,7 @@ auto ProfileEngine::authenticate(profile::Stream& stream) -> Task<Maybe<profile:
     const auto fresh = profile::accounts::freshness(credential);
     if (!fresh || (!*fresh && !presence_.isOnline(credential.accountId)))
     {
-        co_return std::nullopt;
+        co_return Maybe<profile::accounts::Credential>{};
     }
 
     co_return credential;

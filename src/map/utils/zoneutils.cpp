@@ -138,7 +138,7 @@ auto buildDropList(const xi::ZoneId zoneId, const std::string& templateName, con
 
 auto buildSpellList(const xi::ZoneId zoneId, const std::string& templateName, const std::vector<std::string>& spells) -> CMobSpellList*
 {
-    CMobSpellList spellList(std::nullopt);
+    CMobSpellList spellList({});
 
     for (const auto& name : spells)
     {
@@ -856,7 +856,7 @@ auto LoadMOBList(Scheduler& scheduler, const std::vector<xi::ZoneId>& zoneIds, c
                         // Condition-based mobs (time/weather) register with 0s so they spawn when conditions are met
                         const bool isConditionBased = (PMob->m_SpawnType & (xi::SpawnType::AtNight | xi::SpawnType::AtEvening | xi::SpawnType::Weather | xi::SpawnType::Fog)) != xi::SpawnType::Normal ||
                                                       PMob->spawnWindow().has_value();
-                        PZone->spawnHandler().registerForRespawn(PMob, isConditionBased ? std::make_optional(0s) : std::nullopt);
+                        PZone->spawnHandler().registerForRespawn(PMob, isConditionBased ? Maybe<timer::duration>(0s) : Maybe<timer::duration>{});
                     }
                 });
         });

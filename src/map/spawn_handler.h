@@ -68,7 +68,7 @@ public:
     auto getSpawnSlot(uint32_t slotId) const -> SpawnSlot*;
 
     void Tick(timer::time_point now);
-    void registerForRespawn(CMobEntity* PMob, Maybe<timer::duration> respawnTime = std::nullopt);
+    void registerForRespawn(CMobEntity* PMob, Maybe<timer::duration> respawnTime = {});
     void unregister(CMobEntity* PMob);
     auto isRegistered(CMobEntity* PMob) const -> bool;
     auto getRemainingRespawnTime(CMobEntity* PMob) const -> Maybe<timer::duration>;

@@ -78,7 +78,7 @@ auto spawnWindowOf(const CMobEntity* PMob) -> Maybe<SpawnWindow>
         return SpawnWindow{ 18, 6 };
     }
 
-    return std::nullopt;
+    return {};
 }
 
 } // namespace
@@ -123,7 +123,7 @@ void SpawnHandler::registerForRespawn(CMobEntity* PMob, const Maybe<timer::durat
         // Only a non-zero timer (deaggro/scripting) pins the respawn to this mob; otherwise the slot re-rolls.
         const auto specificMobId   = (respawnTime.has_value() && *respawnTime > timer::duration::zero())
                                          ? Maybe<uint32>(PMob->id)
-                                         : std::nullopt;
+                                         : Maybe<uint32>{};
         pendingSlotRespawns_[slot] = { respawnAt, specificMobId };
     }
     else
@@ -168,7 +168,7 @@ auto SpawnHandler::getRemainingRespawnTime(CMobEntity* PMob) const -> Maybe<time
 {
     if (!PMob)
     {
-        return std::nullopt;
+        return {};
     }
 
     const auto now = timer::now();
@@ -190,7 +190,7 @@ auto SpawnHandler::getRemainingRespawnTime(CMobEntity* PMob) const -> Maybe<time
         }
     }
 
-    return std::nullopt;
+    return {};
 }
 
 // Every 30 seconds, attempt to spawn any mob pending respawn.

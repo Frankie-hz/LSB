@@ -674,7 +674,7 @@ auto auth_session::validatePassword(std::string username, std::string password) 
         // It's a BCrypt hash, so we can validate it.
         if (!BCrypt::validatePassword(password, passHash))
         {
-            return std::nullopt;
+            return {};
         }
     }
     else
@@ -686,14 +686,14 @@ auto auth_session::validatePassword(std::string username, std::string password) 
         {
             if (rset->get<std::string>(0) != passHash)
             {
-                return std::nullopt;
+                return {};
             }
 
             passHash = BCrypt::generateHash(password);
             db::preparedStmt("UPDATE accounts SET accounts.password = ? WHERE accounts.login = ?", passHash, username);
             if (!BCrypt::validatePassword(password, passHash))
             {
-                return std::nullopt;
+                return {};
             }
         }
     }

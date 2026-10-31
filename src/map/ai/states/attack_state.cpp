@@ -58,7 +58,7 @@ auto CAttackState::init() -> StateErrorOr<void>
 
     if (!m_PEntity->GetBattleTarget() || m_errorMsg)
     {
-        m_PEntity->setBattleTarget(std::nullopt);
+        m_PEntity->setBattleTarget({});
         return refuseWithErrorMsg();
     }
 

@@ -65,7 +65,7 @@ auto NavPathBuilder::findPath(const position_t& start, const position_t& end, co
 
     if (!result)
     {
-        return std::nullopt;
+        return {};
     }
 
     // Close any end-gap on complete paths, since the wider 30f search may beat findPath's 2.5f result.
@@ -128,7 +128,7 @@ auto NavPathBuilder::findRoamTurnPoints(const position_t& start, float maxRadius
         if (!candidate)
         {
             // Hard navmesh failure - bail rather than return a partial turn list.
-            return std::nullopt;
+            return {};
         }
 
         if (isWithinDistance(start, *candidate, maxRadius, true))

@@ -228,7 +228,7 @@ public:
     // Reject if the player is in any of the specified states
     auto blockedBy(magic_enum::containers::bitset<BlockedState> states) -> PacketValidator&;
     // Character must be in a valid event state, with optional eventId check.
-    auto isInEvent(Maybe<uint16_t> eventId = std::nullopt) -> PacketValidator&;
+    auto isInEvent(Maybe<uint16_t> eventId = {}) -> PacketValidator&;
     // Character must have necessary rank in the linkshell in the given slot
     auto hasLinkshellRank(uint8_t slot, LSTYPE rank) -> PacketValidator&;
     // Character zone must allow specified flag. GMs can bypass this check.

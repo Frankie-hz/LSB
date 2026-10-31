@@ -247,7 +247,7 @@ auto CTreasurePool::addItem(uint16 ItemID, CBaseEntity* PEntity) -> uint8
 
     if (SlotID == 10)
     {
-        m_PoolItems[FreeSlotID].TimeStamp = std::nullopt;
+        m_PoolItems[FreeSlotID].TimeStamp = {};
         checkTreasureItem(timer::now(), FreeSlotID);
     }
 
@@ -568,7 +568,7 @@ void CTreasurePool::treasureWon(CCharEntity* winner, uint8 SlotID)
         return;
     }
 
-    m_PoolItems[SlotID].TimeStamp = std::nullopt;
+    m_PoolItems[SlotID].TimeStamp = {};
 
     for (const auto& member : m_Members)
     {
@@ -588,7 +588,7 @@ void CTreasurePool::treasureError(CCharEntity* winner, uint8 SlotID)
         return;
     }
 
-    m_PoolItems[SlotID].TimeStamp = std::nullopt;
+    m_PoolItems[SlotID].TimeStamp = {};
 
     for (const auto& member : m_Members)
     {
@@ -608,7 +608,7 @@ void CTreasurePool::treasureLost(uint8 SlotID)
         return;
     }
 
-    m_PoolItems[SlotID].TimeStamp = std::nullopt;
+    m_PoolItems[SlotID].TimeStamp = {};
 
     for (const auto& member : m_Members)
     {

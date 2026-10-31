@@ -55,7 +55,7 @@ auto parse(const std::span<const uint8> body) -> Maybe<T>
     {
         if (!hasTrailingChecksum(body))
         {
-            return std::nullopt;
+            return {};
         }
     }
 

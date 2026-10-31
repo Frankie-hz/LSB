@@ -146,7 +146,7 @@ void TestCollector::loadTestFile(const std::filesystem::path& filePath)
 
         // Create a suite for this file with a single failing test to track the loading error
         auto& failedSuite = currentSuite_->addChildSuite(filePath.stem().string());
-        failedSuite.addTestCase("File Loading", std::nullopt);
+        failedSuite.addTestCase("File Loading", {});
 
         // Report it immediately as a failure
         reporters_.onSuiteStart(failedSuite);
@@ -201,7 +201,7 @@ void TestCollector::registerTestFramework()
                 ShowErrorFmt("Failed to execute describe block '{}': {}", name, err.what());
 
                 // Create a failing test for the describe block error
-                newSuite.addTestCase("Describe Setup", std::nullopt);
+                newSuite.addTestCase("Describe Setup", {});
             }
 
             // Restore previous environment and suite

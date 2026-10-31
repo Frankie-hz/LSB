@@ -35,6 +35,18 @@
 template <typename T>
 using Maybe = std::optional<T>;
 
+// Libraries such as argparse and glaze hand back std::optional, which doesn't convert to Maybe by itself
+template <typename T>
+auto toMaybe(std::optional<T> value) -> Maybe<T>
+{
+    if (!value)
+    {
+        return {};
+    }
+
+    return std::move(*value);
+}
+
 // TODO: Rename to apply() once we're using xi:: namespace, because otherwise we'll collide with std
 template <typename T, typename F>
 void applyTo(const Maybe<T>& maybe, F fn)

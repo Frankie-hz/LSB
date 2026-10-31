@@ -211,10 +211,10 @@ auto CLuaClientEntityPair::getItemInvSlot(const uint16 itemId, const uint8 quant
 
     if (slotId != 0)
     {
-        return std::make_optional(slotId);
+        return slotId;
     }
 
-    return std::nullopt;
+    return {};
 }
 
 /************************************************************************

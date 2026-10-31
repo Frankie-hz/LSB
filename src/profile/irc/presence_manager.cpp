@@ -104,7 +104,7 @@ auto PresenceManager::status(const uint32 accountId) const -> Maybe<Status>
         return online->second.status;
     }
 
-    return std::nullopt;
+    return {};
 }
 
 void PresenceManager::refreshCredentials() const
@@ -191,7 +191,7 @@ void PresenceManager::hide(const uint32 accountId, const uint32 otherAccountId)
     {
         if (listing.isBlack == 0 && listing.PolId == accountId)
         {
-            notify(accountId, otherAccountId, listing.Num, false, std::nullopt);
+            notify(accountId, otherAccountId, listing.Num, false, {});
         }
     }
 }
@@ -230,7 +230,7 @@ auto PresenceManager::playing(const uint32 accountId) const -> Maybe<uint32>
         return accounts::playing(accountId);
     }
 
-    return std::nullopt;
+    return {};
 }
 
 void PresenceManager::notify(const uint32 subjectAccountId, const uint32 recipientAccountId, const uint8 listIndex, const bool visible, const Maybe<uint32> character)

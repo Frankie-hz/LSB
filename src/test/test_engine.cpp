@@ -381,7 +381,7 @@ auto TestEngine::runBeforeHooks(const HookContext& context, const std::string& t
 
     if (context.beforeEachHooks.empty())
     {
-        return std::nullopt;
+        return {};
     }
 
     DebugTest("========= SETUP =========");
@@ -407,7 +407,7 @@ auto TestEngine::runBeforeHooks(const HookContext& context, const std::string& t
     }
 
     DebugTest("======= END SETUP =======");
-    return std::nullopt;
+    return {};
 }
 
 void TestEngine::runAfterHooks(const HookContext& context, const std::string& testName) const

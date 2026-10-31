@@ -66,7 +66,7 @@ auto messageName(const std::string& path) -> Maybe<std::string>
 {
     if (!path.starts_with(mailbox))
     {
-        return std::nullopt;
+        return {};
     }
 
     return path.substr(mailbox.size());
@@ -190,7 +190,7 @@ auto list(const uint32 accountId, const std::string_view directory, const uint16
 
     if (!rset)
     {
-        return std::nullopt;
+        return {};
     }
 
     auto entries = std::vector<ProfFileInfo>{};

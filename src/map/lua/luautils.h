@@ -262,7 +262,7 @@ struct CalcExpResult
 auto SetupExperiencePoints() -> Maybe<ExperiencePointsTable>; // Validate functions and set up the base experience points table.
 auto CalculateExperiencePoints(CCharEntity* PMember, CMobEntity* PMob, const CalcExpInput& input) -> Maybe<CalcExpResult>;
 
-void PopulateIDLookupsByFilename(Maybe<std::string> maybeFilename = std::nullopt);
+void PopulateIDLookupsByFilename(Maybe<std::string> maybeFilename = {});
 
 // Records the zone loader already parsed, so the id lookups do not read the files a second time.
 // An optional record set is either there or it is not; the lookups only want the pointer.
@@ -291,7 +291,7 @@ struct ZoneEntityRecords
     const xi::data::Mobs* Mobs{};
 };
 
-void PopulateIDLookupsByZone(Maybe<xi::ZoneId> maybeZoneId = std::nullopt, const ZoneEntityRecords& preloaded = {});
+void PopulateIDLookupsByZone(Maybe<xi::ZoneId> maybeZoneId = {}, const ZoneEntityRecords& preloaded = {});
 
 void SendEntityVisualPacket(uint32 npcId, const char* command);
 void InitInteractionGlobal();

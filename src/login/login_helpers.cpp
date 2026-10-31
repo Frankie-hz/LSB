@@ -304,7 +304,7 @@ auto validateCharacterName(const std::string& name) -> Maybe<std::string>
         return "Name matched the character name filter.";
     }
 
-    return std::nullopt;
+    return {};
 }
 
 auto characterCreationError(const uint32 accountID, const std::string& name) -> Maybe<uint16>
@@ -326,7 +326,7 @@ auto characterCreationError(const uint32 accountID, const std::string& name) -> 
         return loginErrors::errorCode::FAILED_TO_REGISTER_WITH_THE_NAME_SERVER;
     }
 
-    return std::nullopt;
+    return {};
 }
 
 namespace
@@ -337,13 +337,13 @@ auto parseFriendPass(const std::string& friendPass) -> Maybe<uint32>
 {
     if (friendPass.size() != 10 || friendPass.find_first_not_of("0123456789") != std::string::npos)
     {
-        return std::nullopt;
+        return {};
     }
 
     const auto value = std::stoull(friendPass);
     if (value == 0 || value > std::numeric_limits<uint32>::max())
     {
-        return std::nullopt;
+        return {};
     }
 
     return static_cast<uint32>(value);
@@ -376,7 +376,7 @@ auto friendPassError(const uint32 accountID, const std::string& friendPass) -> M
         return loginErrors::errorCode::WORLD_PASS_EXPIRED;
     }
 
-    return std::nullopt;
+    return {};
 }
 
 void useFriendPass(const uint32 charID, const std::string& friendPass)

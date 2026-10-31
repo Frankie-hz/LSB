@@ -49,7 +49,7 @@ auto readFile(const Context& context, const std::span<const uint8> body) -> Mayb
     const auto request = parse<ProfFileRequest>(body);
     if (!request)
     {
-        return std::nullopt;
+        return {};
     }
 
     const auto& head = request->head;
@@ -87,13 +87,13 @@ auto writeFile(Context& context, const std::span<const uint8> body) -> Maybe<Pro
 {
     if (body.size() < sizeof(ProfFileHead) + sizeof(uint32) || !hasTrailingChecksum(body))
     {
-        return std::nullopt;
+        return {};
     }
 
     const auto head = fromBytes<ProfFileHead>(body.first(sizeof(ProfFileHead)));
     if (!head)
     {
-        return std::nullopt;
+        return {};
     }
 
     const auto path = asStringFromUntrustedSource(head->path, sizeof(head->path));
@@ -122,7 +122,7 @@ auto deleteFile(const Context& context, const std::span<const uint8> body) -> Ma
     const auto head = fromBytes<ProfFileHead>(body);
     if (!head || !hasTrailingChecksum(body))
     {
-        return std::nullopt;
+        return {};
     }
 
     if (!isOwnFile(*head, context.accountId) || !files::erase(context.accountId, asStringFromUntrustedSource(head->path, sizeof(head->path))))
@@ -139,7 +139,7 @@ auto getFileList(const Context& context, const std::span<const uint8> body) -> M
     const auto request = parse<ProfFileRequest>(body);
     if (!request)
     {
-        return std::nullopt;
+        return {};
     }
 
     const auto& head = request->head;

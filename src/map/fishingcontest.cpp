@@ -438,7 +438,7 @@ auto WriteContestEntryData(FishingContestEntry* entry) -> bool
         {
             return rset->get<uint32>("charid");
         }
-        return std::nullopt;
+        return {};
     }();
     if (!maybeCharId)
     {

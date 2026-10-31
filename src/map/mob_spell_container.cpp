@@ -141,7 +141,7 @@ auto CMobSpellContainer::GetAvailable(SpellID spellId) -> Maybe<SpellID>
 
     bool isNotInRecast = !m_PMob->PRecastContainer->Has(xi::RecastType::Magic, static_cast<xi::Recast>(spellId));
 
-    return (isNotInRecast && enoughMP) ? Maybe<SpellID>(spellId) : std::nullopt;
+    return (isNotInRecast && enoughMP) ? Maybe<SpellID>(spellId) : Maybe<SpellID>{};
 }
 
 // Used in Gambits to see if the Trust can cast the spell
@@ -186,7 +186,7 @@ auto CMobSpellContainer::GetBestAvailable(SPELLFAMILY family) -> Maybe<SpellID>
 
     // Assume the highest ID is the best (back of the vector)
     // TODO: These will need to be organised by family, then merged
-    return (!matches.empty()) ? Maybe<SpellID>{ matches.back() } : std::nullopt;
+    return (!matches.empty()) ? Maybe<SpellID>{ matches.back() } : Maybe<SpellID>{};
 }
 
 auto CMobSpellContainer::GetBestIndiSpell(CBattleEntity* PTarget) -> Maybe<SpellID>
@@ -212,7 +212,7 @@ auto CMobSpellContainer::GetBestIndiSpell(CBattleEntity* PTarget) -> Maybe<Spell
     auto magicHitRate   = float(totalMacc - tMaeva) / 10;
     bool mAccBuffNeeded = magicHitRate < 10 ? true : false;
 
-    Maybe<SpellID> choice    = std::nullopt;
+    Maybe<SpellID> choice    = {};
     Maybe<SpellID> subChoice = SpellID::Indi_Regen;
 
     switch (mJob)
@@ -279,7 +279,7 @@ auto CMobSpellContainer::GetBestIndiSpell(CBattleEntity* PTarget) -> Maybe<Spell
 
     if (PTarget->GetMLevel() < 20)
     {
-        choice = std::nullopt;
+        choice = {};
     }
     else if (PTarget->GetMLevel() < 93)
     {
@@ -296,7 +296,7 @@ auto CMobSpellContainer::GetBestIndiSpell(CBattleEntity* PTarget) -> Maybe<Spell
 auto CMobSpellContainer::GetBestEntrustedSpell(CBattleEntity* PTarget) -> Maybe<SpellID>
 {
     auto           mastersJob = PTarget->GetMJob();
-    Maybe<SpellID> choice     = std::nullopt;
+    Maybe<SpellID> choice     = {};
 
     switch (mastersJob)
     {
@@ -355,7 +355,7 @@ auto CMobSpellContainer::GetBestAgainstTargetWeakness(CBattleEntity* PTarget, Sp
     // clang-format on
 
     std::size_t    weakestIndex     = std::ranges::distance(resistances.begin(), std::ranges::min_element(resistances));
-    Maybe<SpellID> choice           = std::nullopt;
+    Maybe<SpellID> choice           = {};
     auto           Weakness_Element = weakestIndex + 1;
     if (spell::GetSpell(spellId) != nullptr)
     {
@@ -432,7 +432,7 @@ auto CMobSpellContainer::EnSpellAgainstTargetWeakness(CBattleEntity* PTarget) ->
     std::size_t weakestIndex = std::ranges::distance(resistances.begin(), std::ranges::min_element(resistances));
 
     // TODO: Figure this out properly:
-    Maybe<SpellID> choice = std::nullopt;
+    Maybe<SpellID> choice = {};
     switch (weakestIndex + 1) // Adjust to ignore ELEMENT_NONE
     {
         case ELEMENT_FIRE:
@@ -489,7 +489,7 @@ auto CMobSpellContainer::StormDayAgainstTargetWeakness(CBattleEntity* PTarget) -
     std::size_t weakestIndex = std::ranges::distance(resistances.begin(), std::ranges::min_element(resistances));
 
     // TODO: Figure this out properly:
-    Maybe<SpellID> choice = std::nullopt;
+    Maybe<SpellID> choice = {};
     switch (weakestIndex + 1) // Adjust to ignore ELEMENT_NONE
     {
         case ELEMENT_FIRE:
@@ -556,7 +556,7 @@ auto CMobSpellContainer::HelixAgainstTargetWeakness(CBattleEntity* PTarget) -> M
     std::size_t weakestIndex = std::ranges::distance(resistances.begin(), std::ranges::min_element(resistances));
 
     // TODO: Figure this out properly:
-    Maybe<SpellID> choice = std::nullopt;
+    Maybe<SpellID> choice = {};
     switch (weakestIndex + 1) // Adjust to ignore ELEMENT_NONE
     {
         case ELEMENT_FIRE:
@@ -605,7 +605,7 @@ auto CMobSpellContainer::HelixAgainstTargetWeakness(CBattleEntity* PTarget) -> M
 
 auto CMobSpellContainer::GetStormDay() -> Maybe<SpellID>
 {
-    Maybe<SpellID> choice    = std::nullopt;
+    Maybe<SpellID> choice    = {};
     std::size_t    dotwIndex = battleutils::GetDayElement();
     switch (dotwIndex)
     {
@@ -655,7 +655,7 @@ auto CMobSpellContainer::GetStormDay() -> Maybe<SpellID>
 
 auto CMobSpellContainer::GetHelixDay() -> Maybe<SpellID>
 {
-    Maybe<SpellID> choice    = std::nullopt;
+    Maybe<SpellID> choice    = {};
     std::size_t    dotwIndex = battleutils::GetDayElement();
     switch (dotwIndex)
     {

@@ -251,7 +251,7 @@ auto CAutomatonController::TryShieldBash() -> bool
     if (m_shieldbashCooldown > 0s && PState && PState->CanInterrupt() &&
         m_Tick > m_LastShieldBashTime + (m_shieldbashCooldown - std::chrono::seconds(PAutomaton->getMod(xi::Mod::AUTO_SHIELD_BASH_DELAY))))
     {
-        return MobSkill(PTarget->entityId(), m_ShieldBashAbility, std::nullopt);
+        return MobSkill(PTarget->entityId(), m_ShieldBashAbility, {});
     }
 
     return false;
@@ -1639,7 +1639,7 @@ auto CAutomatonController::TryTPMove() -> bool
 
         if (PWSkill)
         {
-            return MobSkill(PTarget->entityId(), PWSkill->getID(), std::nullopt);
+            return MobSkill(PTarget->entityId(), PWSkill->getID(), {});
         }
     }
     return false;
@@ -1656,7 +1656,7 @@ auto CAutomatonController::TryRangedAttack() -> bool // TODO: Find the animation
 
         if (m_rangedCooldown > 0s && m_Tick > m_LastRangedTime + std::max(attackTime, minDelay))
         {
-            return MobSkill(PTarget->entityId(), m_RangedAbility, std::nullopt);
+            return MobSkill(PTarget->entityId(), m_RangedAbility, {});
         }
     }
 

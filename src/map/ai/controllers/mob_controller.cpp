@@ -545,7 +545,7 @@ auto CMobController::TrySpecialSkill() -> bool
         return false;
     }
 
-    if (!MobSkill(PAbilityTarget->entityId(), PSpecialSkill->getID(), std::nullopt))
+    if (!MobSkill(PAbilityTarget->entityId(), PSpecialSkill->getID(), {}))
     {
         return false;
     }
@@ -806,7 +806,7 @@ auto CMobController::TryDeaggro() -> bool
         }
         else
         {
-            PMob->setBattleTarget(std::nullopt);
+            PMob->setBattleTarget({});
         }
 
         return TryDeaggro();
@@ -1261,7 +1261,7 @@ void CMobController::Move()
         if (const CMobSkill* teleportBegin = battleutils::GetMobSkill(PMob->getMobMod(xi::MobMod::TeleportStart)))
         {
             m_LastSpecialTime = m_Tick;
-            MobSkill(PMob->entityId(), teleportBegin->getID(), std::nullopt);
+            MobSkill(PMob->entityId(), teleportBegin->getID(), {});
         }
     }
 
@@ -1323,7 +1323,7 @@ void CMobController::Move()
         {
             if (currentDistance <= teleportBegin->getDistance())
             {
-                MobSkill(PMob->entityId(), teleportBegin->getID(), std::nullopt);
+                MobSkill(PMob->entityId(), teleportBegin->getID(), {});
                 m_LastSpecialTime = m_Tick;
             }
         }

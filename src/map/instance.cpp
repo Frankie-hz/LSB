@@ -115,10 +115,10 @@ void CInstance::LoadInstance()
         m_entryloc.y                      = rset->get<float>("start_y");
         m_entryloc.z                      = rset->get<float>("start_z");
         m_entryloc.rotation               = rset->get<uint8>("start_rot");
-        m_zone_music_override.m_songDay   = !rset->isNull("music_day") ? Maybe<uint16>(rset->get<uint16>("music_day")) : std::nullopt;
-        m_zone_music_override.m_songNight = !rset->isNull("music_night") ? Maybe<uint16>(rset->get<uint16>("music_night")) : std::nullopt;
-        m_zone_music_override.m_bSongS    = !rset->isNull("battlesolo") ? Maybe<uint16>(rset->get<uint16>("battlesolo")) : std::nullopt;
-        m_zone_music_override.m_bSongM    = !rset->isNull("battlemulti") ? Maybe<uint16>(rset->get<uint16>("battlemulti")) : std::nullopt;
+        m_zone_music_override.m_songDay   = !rset->isNull("music_day") ? Maybe<uint16>(rset->get<uint16>("music_day")) : Maybe<uint16>{};
+        m_zone_music_override.m_songNight = !rset->isNull("music_night") ? Maybe<uint16>(rset->get<uint16>("music_night")) : Maybe<uint16>{};
+        m_zone_music_override.m_bSongS    = !rset->isNull("battlesolo") ? Maybe<uint16>(rset->get<uint16>("battlesolo")) : Maybe<uint16>{};
+        m_zone_music_override.m_bSongM    = !rset->isNull("battlemulti") ? Maybe<uint16>(rset->get<uint16>("battlemulti")) : Maybe<uint16>{};
 
         // Add to Lua cache
         // TODO: This will happen more often than needed, but not so often that it's a performance concern

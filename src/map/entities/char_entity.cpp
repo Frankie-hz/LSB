@@ -201,7 +201,7 @@ CCharEntity::CCharEntity()
     m_weaknessLvl        = 0;
     m_hasArise           = false;
     m_LevelRestriction   = 0;
-    servmesLastOffset_   = std::nullopt;
+    servmesLastOffset_   = {};
     m_AHHistoryTimestamp = timer::time_point::min();
     m_DeathTimestamp     = timer::time_point::min();
 
@@ -218,7 +218,7 @@ CCharEntity::CCharEntity()
 
     BazaarID.clean();
 
-    WideScanTarget = std::nullopt;
+    WideScanTarget = {};
 
     TradePending.clean();
     InvitePending.clean();
@@ -1048,12 +1048,12 @@ auto CCharEntity::equipLocation(const uint8 equipSlot) const -> Maybe<ItemLocati
     if (equipSlot >= EquipSlotCount)
     {
         ShowWarningFmt("equipLocation: slot {} out of range", equipSlot);
-        return std::nullopt;
+        return {};
     }
 
     if (!equipped_[equipSlot])
     {
-        return std::nullopt;
+        return {};
     }
 
     return ItemLocation{

@@ -89,13 +89,13 @@ auto fromBytes(const std::span<const uint8> message) -> Maybe<T>
 {
     if (message.empty())
     {
-        return std::nullopt;
+        return {};
     }
 
     auto object = T{};
     if (glz::read_cbor(object, message))
     {
-        return std::nullopt;
+        return {};
     }
 
     return object;
@@ -106,13 +106,13 @@ auto fromBytesWithHeader(const std::span<const uint8> message) -> Maybe<T>
 {
     if (message.empty())
     {
-        return std::nullopt;
+        return {};
     }
 
     const auto type = static_cast<MessageType>(message[0]);
     if (type != EnumTypeV<T>)
     {
-        return std::nullopt;
+        return {};
     }
 
     return fromBytes<T>(message.subspan(1));

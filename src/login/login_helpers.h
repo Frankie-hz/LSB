@@ -135,7 +135,7 @@ inline auto jsonGet(const json& jsonInput, const std::string& key) -> Maybe<T>
 {
     if (!jsonInput.contains(key))
     {
-        return std::nullopt;
+        return {};
     }
 
     // Check types first, boolean can match a number
@@ -143,14 +143,14 @@ inline auto jsonGet(const json& jsonInput, const std::string& key) -> Maybe<T>
     {
         if (!jsonInput[key].is_string())
         {
-            return std::nullopt;
+            return {};
         }
     }
     else if constexpr (std::is_same_v<T, bool>)
     {
         if (!jsonInput[key].is_boolean())
         {
-            return std::nullopt;
+            return {};
         }
     }
     else if constexpr (std::is_floating_point<T>::value)
@@ -164,7 +164,7 @@ inline auto jsonGet(const json& jsonInput, const std::string& key) -> Maybe<T>
     {
         if (!jsonInput[key].is_number_integer())
         {
-            return std::nullopt;
+            return {};
         }
     }
     else if constexpr (std::is_unsigned<T>::value)
@@ -188,17 +188,17 @@ inline auto jsonGet(const json& jsonInput, const std::string& key) -> Maybe<std:
 {
     if (!jsonInput.contains(key))
     {
-        return std::nullopt;
+        return {};
     }
 
     if (!jsonInput[key].is_array())
     {
-        return std::nullopt;
+        return {};
     }
 
     if (jsonInput[key].size() != size)
     {
-        return std::nullopt;
+        return {};
     }
 
     for (uint32_t i = 0; i < size; i++)
@@ -215,7 +215,7 @@ inline auto jsonGet(const json& jsonInput, const std::string& key) -> Maybe<std:
         {
             if (!jsonInput[key][i].is_number_unsigned())
             {
-                return std::nullopt;
+                return {};
             }
         }
         else

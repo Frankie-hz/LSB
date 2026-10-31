@@ -23,7 +23,7 @@
 
 auto NullNavMesh::findPath(const position_t&, const position_t&, float, AvoidLinks) -> Maybe<PathResult>
 {
-    return std::nullopt;
+    return {};
 }
 
 auto NullNavMesh::findRandomPosition(const position_t& start, float) const -> Maybe<position_t>
@@ -38,12 +38,12 @@ auto NullNavMesh::validPosition(const position_t&) const -> bool
 
 auto NullNavMesh::findClosestValidPoint(const position_t&) const -> Maybe<position_t>
 {
-    return std::nullopt;
+    return {};
 }
 
 auto NullNavMesh::findFurthestValidPoint(const position_t&, const position_t&) const -> Maybe<position_t>
 {
-    return std::nullopt;
+    return {};
 }
 
 auto NullNavMesh::snapToValidPosition(position_t&) const -> void

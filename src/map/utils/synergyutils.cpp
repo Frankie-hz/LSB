@@ -101,7 +101,7 @@ auto GetSynergyRecipeByID(uint32 id) -> Maybe<SynergyRecipe>
         return *it;
     }
 
-    return std::nullopt;
+    return {};
 }
 
 auto GetSynergyRecipeByIngredients(uint16 ingredient1, uint16 ingredient2, uint16 ingredient3, uint16 ingredient4, uint16 ingredient5, uint16 ingredient6, uint16 ingredient7, uint16 ingredient8) -> Maybe<SynergyRecipe>
@@ -121,7 +121,7 @@ auto GetSynergyRecipeByIngredients(uint16 ingredient1, uint16 ingredient2, uint1
             return recipe;
         }
     }
-    return std::nullopt;
+    return {};
 }
 
 } // namespace synergyutils

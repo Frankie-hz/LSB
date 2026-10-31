@@ -304,13 +304,13 @@ auto RoamRegion::acceptPoint(const position_t& point, const NavMesh* navMesh) co
     const auto snapped = navMesh->findClosestValidPoint(point);
     if (!snapped)
     {
-        return std::nullopt;
+        return {};
     }
 
     // it landed too far from where we asked, or the snap carried it out of the region
     if (std::abs(snapped->x - point.x) > kSnapTolerance || std::abs(snapped->z - point.z) > kSnapTolerance || !contains(snapped->x, snapped->z))
     {
-        return std::nullopt;
+        return {};
     }
 
     return snapped;
@@ -322,7 +322,7 @@ auto RoamRegion::randomPoint(const NavMesh* navMesh, const uint8 attempts) const
 
     if (triangles_.empty())
     {
-        return std::nullopt;
+        return {};
     }
 
     // sample until one of them survives the mesh check
@@ -334,7 +334,7 @@ auto RoamRegion::randomPoint(const NavMesh* navMesh, const uint8 attempts) const
         }
     }
 
-    return std::nullopt;
+    return {};
 }
 
 auto RoamRegion::randomPointAt(const position_t& from, float distance, const NavMesh* navMesh) const -> Maybe<position_t>
@@ -343,7 +343,7 @@ auto RoamRegion::randomPointAt(const position_t& from, float distance, const Nav
 
     if (triangles_.empty())
     {
-        return std::nullopt;
+        return {};
     }
 
     for (uint8 attempt = 0; attempt < kSampleAttempts; ++attempt)
@@ -388,5 +388,5 @@ auto RoamRegion::randomPointAt(const position_t& from, float distance, const Nav
         return reached;
     }
 
-    return std::nullopt;
+    return {};
 }

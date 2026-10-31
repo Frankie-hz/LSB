@@ -115,12 +115,12 @@ void GP_CLI_COMMAND_POS::process(MapSession* PSession, CCharEntity* PChar) const
 
                 if (PWideScanEntity->status == xi::Status::Disappear)
                 {
-                    PChar->WideScanTarget = std::nullopt;
+                    PChar->WideScanTarget = {};
                 }
             }
             else
             {
-                PChar->WideScanTarget = std::nullopt;
+                PChar->WideScanTarget = {};
             }
         });
 }

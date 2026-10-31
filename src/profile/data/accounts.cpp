@@ -41,7 +41,7 @@ auto freshness(const Credential& credential) -> Maybe<bool>
                                        hash);
     if (!rset || !rset->next())
     {
-        return std::nullopt;
+        return {};
     }
 
     return rset->get<bool>("fresh");
@@ -92,7 +92,7 @@ auto openStatus(const uint32 accountId) -> Maybe<OpenStatus>
     const auto rset = db::preparedStmt("SELECT open_status FROM accounts_profile WHERE accid = ?", accountId);
     if (!rset)
     {
-        return std::nullopt;
+        return {};
     }
 
     if (!rset->next())
@@ -141,7 +141,7 @@ auto playing(const uint32 accountId) -> Maybe<uint32>
     const auto rset = db::preparedStmt("SELECT charid FROM accounts_sessions WHERE accid = ?", accountId);
     if (!rset || !rset->next())
     {
-        return std::nullopt;
+        return {};
     }
 
     return rset->get<uint32>("charid");
@@ -155,7 +155,7 @@ auto characterOwner(const uint32 characterId) -> Maybe<Owner>
                                        characterId);
     if (!rset || !rset->next())
     {
-        return std::nullopt;
+        return {};
     }
 
     return Owner{

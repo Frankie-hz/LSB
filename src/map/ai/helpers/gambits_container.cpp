@@ -322,7 +322,7 @@ auto CGambitsContainer::Tick(timer::time_point tick) -> Task<void>
         // This prevents attempting to cast multiple spells in the same tick (which doesn't work)
         // and ensures all actions are available before starting.
         std::vector<bool>           canExecute(gambit.actions.size(), true);
-        std::vector<Maybe<SpellID>> resolvedSpells(gambit.actions.size(), std::nullopt);
+        std::vector<Maybe<SpellID>> resolvedSpells(gambit.actions.size());
 
         // Helper to resolve a spell action to a valid SpellID if possible.
         auto ResolveMA = [&](const Action_t& action, CBattleEntity* resolvedTarget) -> Maybe<SpellID>
@@ -338,7 +338,7 @@ auto CGambitsContainer::Tick(timer::time_point tick) -> Task<void>
             else if (action.select == G_SELECT::LOWEST)
             {
                 // Not implemented yet: treat as unavailable
-                return std::nullopt;
+                return {};
             }
             else if (action.select == G_SELECT::BEST_INDI)
             {
@@ -419,7 +419,7 @@ auto CGambitsContainer::Tick(timer::time_point tick) -> Task<void>
                 CStatusEffect* PSCEffect = resolvedTarget->StatusEffectContainer->GetStatusEffect(xi::StatusEffect::Skillchain, 0);
                 if (PSCEffect == nullptr)
                 {
-                    return std::nullopt;
+                    return {};
                 }
 
                 std::list<xi::SkillchainType> resonanceProperties;
@@ -450,7 +450,7 @@ auto CGambitsContainer::Tick(timer::time_point tick) -> Task<void>
                 return spell_id;
             }
 
-            return std::nullopt;
+            return {};
         };
 
         // First pass: validate availability and prevent executing multiple spells in the same tick.
@@ -935,7 +935,7 @@ auto CGambitsContainer::Tick(timer::time_point tick) -> Task<void>
             {
                 if (action.select == G_SELECT::SPECIFIC)
                 {
-                    controller->MobSkill(target->entityId(), action.select_arg, std::nullopt);
+                    controller->MobSkill(target->entityId(), action.select_arg, {});
                     executedAnyAction = true;
                 }
             }
@@ -1818,7 +1818,7 @@ auto CGambitsContainer::TryTrustSkill() -> bool
             {
                 target = POwner->GetBattleTarget();
             }
-            controller->MobSkill(target->entityId(), chosen_skill->skill_id, std::nullopt);
+            controller->MobSkill(target->entityId(), chosen_skill->skill_id, {});
         }
         return true;
     }

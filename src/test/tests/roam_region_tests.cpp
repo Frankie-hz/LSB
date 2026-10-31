@@ -58,7 +58,7 @@ public:
 
     auto findPath(const position_t&, const position_t&, float, AvoidLinks) -> Maybe<PathResult> override
     {
-        return std::nullopt;
+        return {};
     }
 
     auto findRandomPosition(const position_t& start, float) const -> Maybe<position_t> override

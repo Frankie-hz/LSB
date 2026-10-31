@@ -78,7 +78,7 @@ auto IPCServer::getIPPForCharId(uint32 charId) -> Maybe<IPP>
         return ipp;
     }
 
-    return std::nullopt;
+    return {};
 }
 
 auto IPCServer::getIPPForCharName(const std::string& charName) -> Maybe<IPP>
@@ -97,7 +97,7 @@ auto IPCServer::getIPPForCharName(const std::string& charName) -> Maybe<IPP>
         return IPP(ip, port);
     }
 
-    return std::nullopt;
+    return {};
 }
 
 auto IPCServer::getIPPForZoneId(const xi::ZoneId zoneId) -> Maybe<IPP>
@@ -112,7 +112,7 @@ auto IPCServer::getIPPForZoneId(const xi::ZoneId zoneId) -> Maybe<IPP>
         return it->second.ipp;
     }
 
-    return std::nullopt;
+    return {};
 }
 
 auto IPCServer::getIPPsForParty(uint32 partyId) -> std::vector<IPP>

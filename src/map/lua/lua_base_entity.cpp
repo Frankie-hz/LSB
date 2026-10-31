@@ -8984,7 +8984,7 @@ auto CLuaBaseEntity::getEminenceProgress(uint16 recordID) -> Maybe<uint32>
     if (m_PBaseEntity->objtype != TYPE_PC)
     {
         ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->getName());
-        return std::nullopt;
+        return {};
     }
 
     auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
@@ -8995,7 +8995,7 @@ auto CLuaBaseEntity::getEminenceProgress(uint16 recordID) -> Maybe<uint32>
     }
 
     // TODO: Verify that 0-return is acceptable in previous nil-cases (Its not)
-    return std::nullopt;
+    return {};
 }
 
 /************************************************************************
@@ -9113,7 +9113,7 @@ auto CLuaBaseEntity::getUnityRank(const sol::object& unityObj) -> Maybe<uint8>
     if (m_PBaseEntity->objtype != TYPE_PC)
     {
         ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->getName());
-        return std::nullopt;
+        return {};
     }
 
     auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
@@ -9124,7 +9124,7 @@ auto CLuaBaseEntity::getUnityRank(const sol::object& unityObj) -> Maybe<uint8>
         return roeutils::RoeSystem.unityLeaderRank[unity - 1];
     }
 
-    return std::nullopt;
+    return {};
 }
 
 /************************************************************************
@@ -17365,7 +17365,7 @@ auto CLuaBaseEntity::getAutomatonFrame() const -> Maybe<xi::AutomatonFrame>
             return frame;
         }
 
-        return std::nullopt;
+        return {};
     }
 
     if (m_PBaseEntity->objtype == TYPE_PET && static_cast<CPetEntity*>(m_PBaseEntity)->getPetType() == PET_TYPE::AUTOMATON)
@@ -17374,7 +17374,7 @@ auto CLuaBaseEntity::getAutomatonFrame() const -> Maybe<xi::AutomatonFrame>
     }
 
     ShowWarning("CLuaBaseEntity::getAutomatonFrame() - Entity is not a PC or an Automaton.");
-    return std::nullopt;
+    return {};
 }
 
 /************************************************************************
@@ -17416,7 +17416,7 @@ auto CLuaBaseEntity::getAutomatonHead() const -> Maybe<xi::AutomatonHead>
             return head;
         }
 
-        return std::nullopt;
+        return {};
     }
 
     if (m_PBaseEntity->objtype == TYPE_PET && static_cast<CPetEntity*>(m_PBaseEntity)->getPetType() == PET_TYPE::AUTOMATON)
@@ -17425,7 +17425,7 @@ auto CLuaBaseEntity::getAutomatonHead() const -> Maybe<xi::AutomatonHead>
     }
 
     ShowWarning("CLuaBaseEntity::getAutomatonHead() - Entity is not a PC or an Automaton.");
-    return std::nullopt;
+    return {};
 }
 
 /************************************************************************
@@ -19548,7 +19548,7 @@ void CLuaBaseEntity::useMobAbility(sol::variadic_args va)
         targetId                       = PLuaBaseEntity ? EntityId(PLuaBaseEntity->m_PBaseEntity) : EntityId{};
     }
 
-    Maybe<timer::duration> castTimeOverride = std::nullopt;
+    Maybe<timer::duration> castTimeOverride = {};
     if (va.size() >= 3)
     {
         if (va.get_type(2) == sol::type::number)

@@ -31,7 +31,7 @@ auto LineOfSightCache::get(const Vector3& src, const Vector3& dst, uint16 zoneId
         {
             if (now >= entries_[i].expiry)
             {
-                return std::nullopt;
+                return {};
             }
 
             const bool result = entries_[i].result;
@@ -40,7 +40,7 @@ auto LineOfSightCache::get(const Vector3& src, const Vector3& dst, uint16 zoneId
         }
     }
 
-    return std::nullopt;
+    return {};
 }
 
 void LineOfSightCache::put(const Vector3& src, const Vector3& dst, uint16 zoneId, bool result, timer::time_point now)

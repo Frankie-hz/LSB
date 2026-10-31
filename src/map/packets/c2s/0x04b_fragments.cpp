@@ -58,7 +58,7 @@ void GP_CLI_COMMAND_FRAGMENTS::process(MapSession* PSession, CCharEntity* PChar)
         const auto sndLength = msgSize - this->offset > 236 ? 236 : (msgSize - this->offset);
         if (this->offset + sndLength >= msgSize)
         {
-            PChar->servmesLastOffset_ = std::nullopt;
+            PChar->servmesLastOffset_ = {};
         }
     }
     else if (msgType == 2) // Fish Ranking Packet

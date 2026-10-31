@@ -60,11 +60,11 @@ public:
     {
         try
         {
-            return args_->present(arg_name);
+            return toMaybe(args_->present(arg_name));
         }
         catch (const std::exception&)
         {
-            return std::nullopt;
+            return {};
         }
     }
 
