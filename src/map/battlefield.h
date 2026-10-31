@@ -33,7 +33,7 @@
 #include <common/types/fn.h>
 #include <common/types/hash_map.h>
 
-#include "sol/sol.hpp"
+#include "common/lua.h"
 
 enum BCRULES : uint8
 {

@@ -24,7 +24,7 @@
 #include "test_matcher.h"
 #include "test_suite.h"
 
-#include <sol/sol.hpp>
+#include "common/lua.h"
 
 #include <common/types/maybe.h>
 

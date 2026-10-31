@@ -26,8 +26,8 @@
 
 #include <common/types/maybe.h>
 
+#include "common/lua.h"
 #include <cstddef>
-#include <sol/sol.hpp>
 
 namespace Exdata
 {

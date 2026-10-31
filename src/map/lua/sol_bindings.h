@@ -21,7 +21,7 @@
 
 #pragma once
 
-#include "sol/sol.hpp"
+#include "common/lua.h"
 
 // sol changes this behavior to return 0 rather than truncating
 // we rely on that, so change it back

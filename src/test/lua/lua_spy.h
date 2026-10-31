@@ -23,7 +23,7 @@
 
 #include "common/macros.h"
 
-#include <sol/sol.hpp>
+#include "common/lua.h"
 #include <string>
 
 class CLuaSpy

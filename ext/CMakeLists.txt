@@ -107,6 +107,19 @@ CPMAddPackage(
     SYSTEM ON
 ) # defines: expected-lite
 
+# TODO: std::optional<T&> lands in C++26. Remove this once all compilers for all platforms implement.
+CPMAddPackage(
+    NAME tl-optional
+    GITHUB_REPOSITORY TartanLlama/optional
+    GIT_TAG v1.1.0
+    DOWNLOAD_ONLY ON
+) # defines: tl::optional (aliased to Maybe, see src/common/types/maybe.h)
+if(tl-optional_ADDED) # its own CMake adds CTest, CPack and install rules
+    add_library(tl_optional INTERFACE)
+    add_library(tl::optional ALIAS tl_optional)
+    target_include_directories(tl_optional SYSTEM INTERFACE ${tl-optional_SOURCE_DIR}/include/)
+endif()
+
 CPMAddPackage(
     NAME cpp-httplib
     GITHUB_REPOSITORY yhirose/cpp-httplib
@@ -262,6 +275,7 @@ target_link_libraries(xi_ext_shared INTERFACE
     argparse
     efsw
     expected-lite
+    tl::optional
     pcg-cpp
     asio
     glaze::glaze

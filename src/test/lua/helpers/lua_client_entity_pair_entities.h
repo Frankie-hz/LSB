@@ -23,7 +23,7 @@
 
 #include <common/types/maybe.h>
 
-#include <sol/sol.hpp>
+#include "common/lua.h"
 
 class CLuaTestEntity;
 class CLuaClientEntityPair;

@@ -24,8 +24,8 @@
 #include "common/cbasetypes.h"
 #include "packets/basic.h"
 
+#include "common/lua.h"
 #include <memory>
-#include <sol/sol.hpp>
 
 enum class PacketC2S : uint16_t;
 class CLuaClientEntityPair;

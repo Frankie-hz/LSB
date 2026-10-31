@@ -22,8 +22,8 @@
 #pragma once
 
 #include "common/cbasetypes.h"
+#include "common/lua.h"
 #include <optional>
-#include <sol/sol.hpp>
 #include <tuple>
 
 class CLuaClientEntityPair;

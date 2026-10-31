@@ -23,8 +23,8 @@
 
 #include "ability.h"
 #include "common/cbasetypes.h"
+#include "common/lua.h"
 #include "sol/forward.hpp"
-#include <sol/sol.hpp>
 
 enum class SpellID : uint16;
 class CLuaClientEntityPair;

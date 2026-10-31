@@ -22,6 +22,7 @@
 #pragma once
 
 #include <optional>
+#include <tl/optional.hpp>
 
 // namespace xi
 // {
@@ -30,10 +31,9 @@
 // Maybe<T>
 //
 
-// TODO: Replace with a third-party optional impl which supports reference types, until the STL
-//     : supports them.
+// TODO: Replace with std::optional once all compilers for all platforms implement C++26 optional<T&>.
 template <typename T>
-using Maybe = std::optional<T>;
+using Maybe = tl::optional<T>;
 
 // Libraries such as argparse and glaze hand back std::optional, which doesn't convert to Maybe by itself
 template <typename T>

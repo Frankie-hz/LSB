@@ -27,9 +27,9 @@
 
 #include <common/types/hash_map.h>
 
+#include "common/lua.h"
 #include <algorithm>
 #include <format>
-#include <sol/sol.hpp>
 
 namespace
 {

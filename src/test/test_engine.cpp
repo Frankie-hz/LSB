@@ -33,7 +33,6 @@
 
 #include <chrono>
 #include <format>
-#include <sol/sol.hpp>
 #include <utility>
 
 #if defined(__SANITIZE_ADDRESS__)

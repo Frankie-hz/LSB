@@ -51,12 +51,10 @@
 #include <type_traits>
 #include <vector>
 
-#include "common/lua.h"
-
 // Sol compilation definitions are in the base CMakeLists file
 // SOL_ALL_SAFETIES_ON = 1
 // SOL_NO_CHECK_NUMBER_PRECISION = 1
-#include "sol/sol.hpp"
+#include "common/lua.h"
 #include "sol_bindings.h"
 
 #include "common/xi.h"

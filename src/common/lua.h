@@ -21,7 +21,63 @@
 
 #pragma once
 
+#include <common/types/maybe.h>
 #include <sol/sol.hpp>
+
+// sol only knows its own and std's optional, so Maybe needs these to reach Lua as nil or its value
+namespace tl
+{
+
+template <typename T, typename Handler>
+auto sol_lua_check(sol::types<optional<T>>, lua_State* L, int index, Handler&& handler, sol::stack::record& tracking) -> bool
+{
+    const auto type = sol::type_of(L, index);
+    if (type == sol::type::none)
+    {
+        tracking.use(0);
+        return true;
+    }
+
+    if (type == sol::type::lua_nil)
+    {
+        tracking.use(1);
+        return true;
+    }
+
+    return sol::stack::check<T>(L, index, std::forward<Handler>(handler), tracking);
+}
+
+template <typename T>
+auto sol_lua_get(sol::types<optional<T>>, lua_State* L, int index, sol::stack::record& tracking) -> optional<T>
+{
+    auto value = sol::stack::check_get<T>(L, index, &sol::no_panic, tracking);
+    if (!value)
+    {
+        return {};
+    }
+
+    return std::move(*value);
+}
+
+// A value of the wrong type reads as empty, the same as sol does for std::optional
+template <typename T, typename Handler>
+auto sol_lua_check_get(sol::types<optional<T>>, lua_State* L, int index, Handler&&, sol::stack::record& tracking) -> sol::optional<optional<T>>
+{
+    return sol_lua_get(sol::types<optional<T>>{}, L, index, tracking);
+}
+
+template <typename T>
+auto sol_lua_push(sol::types<optional<T>>, lua_State* L, const optional<T>& value) -> int
+{
+    if (!value)
+    {
+        return sol::stack::push(L, sol::lua_nil);
+    }
+
+    return sol::stack::push(L, *value);
+}
+
+} // namespace tl
 
 extern sol::state& lua;
 

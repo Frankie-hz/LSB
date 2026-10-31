@@ -21,8 +21,8 @@
 
 #pragma once
 
+#include "common/lua.h"
 #include "test_case.h"
-#include <sol/sol.hpp>
 #include <string>
 
 class TestSuite

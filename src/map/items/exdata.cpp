@@ -25,9 +25,9 @@
 #include "item_equipment.h"
 #include "item_weapon.h"
 
+#include "common/lua.h"
 #include "items.h"
 #include "utils/fishingutils.h"
-#include <sol/sol.hpp>
 
 namespace Exdata
 {

@@ -21,9 +21,9 @@
 
 #pragma once
 
+#include "common/lua.h"
 #include "common/macros.h"
 #include <memory>
-#include <sol/sol.hpp>
 #include <string>
 #include <vector>
 
