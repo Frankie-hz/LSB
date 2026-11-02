@@ -717,6 +717,8 @@ public:
     timer::time_point m_LastSynthTime{};
     timer::time_point m_LastRangedAttackTime{};
 
+    Maybe<timer::time_point> m_MaybeLastSynthEndTime;
+
     void flushEquipChanges();
     void resyncEquipment();
     auto inventorySyncState() -> InventorySyncState&;
