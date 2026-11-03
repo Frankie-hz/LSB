@@ -66,4 +66,64 @@ describe('Level Sync', function()
             assert(sync:getDuration() == 30000, string.format('expected a 30 second countdown, duration=%d', sync:getDuration()))
         end
     end)
+
+    describe('kill credit during the removal countdown', function()
+        ---@type CClientEntityPair
+        local leader
+
+        ---@type CClientEntityPair
+        local target
+
+        ---@type CTestEntity
+        local mob
+
+        before_each(function()
+            leader       = xi.test.world:spawnPlayer({ job = xi.job.WAR, level = 75, zone = xi.zone.WEST_RONFAURE })
+            target       = xi.test.world:spawnPlayer({ job = xi.job.WAR, level = 20, zone = xi.zone.WEST_RONFAURE })
+            local member = xi.test.world:spawnPlayer({ job = xi.job.WAR, level = 75, zone = xi.zone.WEST_RONFAURE })
+
+            for _, player in ipairs({ target, member }) do
+                leader.actions:inviteToParty(player)
+                player.actions:acceptPartyInvite()
+            end
+
+            leader.actions:setLevelSync(target)
+
+            -- Worth EXP at the sync level and at the leader's own level
+            mob = leader.entities:get('Wild_Rabbit')
+            mob:setLevelRange(75, 75)
+            mob:respawn()
+
+            for _, player in ipairs({ leader, target }) do
+                player.entities:moveTo(mob)
+                player:setUnkillable(true)
+            end
+
+            mob:updateEnmityFromDamage(leader, 1)
+            assert(leader:checkKillCredit(mob), 'expected credit with the designee in range')
+        end)
+
+        it('is withheld once the designee has left the party', function()
+            target.actions:leaveParty()
+
+            leader.assert:hasEffect(xi.effect.LEVEL_SYNC)
+            assert(not leader:checkKillCredit(mob), 'expected no credit while still synced')
+
+            xi.test.world:skipTime(31)
+
+            leader.assert.no:hasEffect(xi.effect.LEVEL_SYNC)
+            assert(leader:checkKillCredit(mob), 'expected credit once the sync has ended')
+        end)
+
+        it('is withheld when another map process removes the sync with the designee out of range', function()
+            target:setPos(mob:getXPos() + 300, mob:getYPos(), mob:getZPos())
+            assert(not leader:checkKillCredit(mob), 'expected no credit with the designee out of range')
+
+            xi.test.world:removeLevelSyncFromOtherProcess(leader)
+            xi.test.world:tick()
+
+            leader.assert:hasEffect(xi.effect.LEVEL_SYNC)
+            assert(not leader:checkKillCredit(mob), 'expected no credit while still synced')
+        end)
+    end)
 end)

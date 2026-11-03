@@ -98,6 +98,7 @@ public:
     void DisableSync();
     void SetSyncTarget(const std::string& MemberName, MsgStd message);
     void RefreshSync();
+    auto IsExpBlockedBySync(const CCharEntity* PChar, const CBattleEntity* PMob, float range) const -> bool;
     void SetPartyNumber(uint8 number);
     auto HasOnlyOneMember() const -> bool;
     auto IsFull() const -> bool;
@@ -130,10 +131,12 @@ private:
     CBattleEntity* m_PSyncTarget;    // the CBattleEntity the party is being synced to
     CBattleEntity* m_PQuarterMaster; // the assigned Quartermaster
 
+    uint32 m_RemovedSyncTargetId{ 0 }; // designee of the sync whose removal countdown started last
+
     bool m_EffectsChanged;
     bool m_FormedByTrusts{ false };
 
-    void StartSyncRemoval(MsgStd message);
+    void StartSyncRemoval(uint32 designeeId, MsgStd message);
     void SetLeader(const std::string& MemberName);          // set party leader
     void SetQuarterMaster(const std::string& MemberName);   // set Quartermaster
     auto RemovePartyLeader(CBattleEntity* PEntity) -> bool; // attempt to remove the leader of the party. Returns false if party is disbanded or otherwise invalid.

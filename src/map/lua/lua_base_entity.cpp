@@ -12408,17 +12408,7 @@ auto CLuaBaseEntity::checkKillCredit(CLuaBaseEntity* PLuaBaseEntity, const sol::
 
     if (charutils::CheckMob(PMob->m_HiPCLvl, PMob) > EMobDifficulty::TooWeak && distance(PMob->loc.p, PChar->loc.p) < range && !PMob->GetCallForHelpFlag())
     {
-        if (PChar->PParty && PChar->PParty->GetSyncTarget())
-        {
-            if (distance(PMob->loc.p, PChar->PParty->GetSyncTarget()->loc.p) < range && PChar->PParty->GetSyncTarget()->health.hp)
-            {
-                credit = true;
-            }
-        }
-        else
-        {
-            credit = true;
-        }
+        credit = !PChar->PParty || !PChar->PParty->IsExpBlockedBySync(PChar, PMob, range);
     }
 
     return credit;

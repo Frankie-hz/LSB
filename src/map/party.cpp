@@ -1169,7 +1169,7 @@ void CParty::SetSyncTarget(const std::string& MemberName, MsgStd message)
         {
             if (m_PSyncTarget != nullptr)
             {
-                StartSyncRemoval(message);
+                StartSyncRemoval(m_PSyncTarget->id, message);
             }
             m_PSyncTarget = nullptr;
             db::preparedStmt("UPDATE accounts_parties SET partyflag = partyflag & ~? WHERE partyid = ? AND partyflag & ?",
@@ -1180,7 +1180,7 @@ void CParty::SetSyncTarget(const std::string& MemberName, MsgStd message)
     }
 }
 
-void CParty::StartSyncRemoval(const MsgStd message)
+void CParty::StartSyncRemoval(const uint32 designeeId, const MsgStd message)
 {
     for (auto* PEntity : members)
     {
@@ -1198,6 +1198,36 @@ void CParty::StartSyncRemoval(const MsgStd message)
             PSync->SetDuration(30s);
         }
     }
+
+    m_RemovedSyncTargetId = designeeId;
+}
+
+auto CParty::IsExpBlockedBySync(const CCharEntity* PChar, const CBattleEntity* PMob, const float range) const -> bool
+{
+    // Members stay synced through the removal countdown, so the designee they were synced to still gates EXP
+    const auto isSynced = m_PSyncTarget != nullptr || PChar->StatusEffectContainer->HasStatusEffect(xi::StatusEffect::LevelSync);
+    if (!isSynced)
+    {
+        return false;
+    }
+
+    const auto* PDesignee = [&]() -> const CBattleEntity*
+    {
+        if (m_PSyncTarget != nullptr)
+        {
+            return m_PSyncTarget;
+        }
+
+        return zoneutils::GetChar(m_RemovedSyncTargetId);
+    }();
+
+    const auto isEligible = PDesignee != nullptr &&
+                            PDesignee->PParty == this &&
+                            PDesignee->getZone() == PMob->getZone() &&
+                            PDesignee->health.hp > 0 &&
+                            distance(PMob->loc.p, PDesignee->loc.p) < range;
+
+    return !isEligible;
 }
 
 // FIXME: add case for "" membername
@@ -1423,7 +1453,7 @@ auto CParty::IsFormedByTrusts() const -> bool
 
 void CParty::RefreshFlags(std::vector<partyInfo_t>& info)
 {
-    const auto wasSynced = m_PSyncTarget != nullptr;
+    const auto* PPreviousSyncTarget = m_PSyncTarget;
 
     // Clear pointers in case they no longer exist on this instance
     m_PLeader        = nullptr;
@@ -1508,9 +1538,9 @@ void CParty::RefreshFlags(std::vector<partyInfo_t>& info)
                                               });
 
     // A process that does not hold the designee can only clear the sync flag in the database
-    if (wasSynced && isListed && m_PSyncTarget == nullptr)
+    if (PPreviousSyncTarget != nullptr && isListed && m_PSyncTarget == nullptr)
     {
-        StartSyncRemoval(MsgStd::LevelSyncRemoveLeftParty);
+        StartSyncRemoval(PPreviousSyncTarget->id, MsgStd::LevelSyncRemoveLeftParty);
     }
 }
 

@@ -4607,28 +4607,22 @@ void DistributeExperiencePoints(CCharEntity* PChar, CMobEntity* PMob)
     uint8      maxlevel = GetExpLevel(PChar);
     xi::Region region   = PChar->loc.zone->GetRegionID();
 
-    if (PChar->PParty)
+    if (PChar->PParty && PChar->PParty->IsExpBlockedBySync(PChar, PMob, 100.0f))
     {
-        if (PChar->PParty->GetSyncTarget())
-        {
-            if (distance(PMob->loc.p, PChar->PParty->GetSyncTarget()->loc.p) >= 100 || PChar->PParty->GetSyncTarget()->health.hp == 0)
+        // clang-format off
+            PChar->ForParty([&PMob](CBattleEntity* PMember)
             {
-                // clang-format off
-                    PChar->ForParty([&PMob](CBattleEntity* PMember)
+                if (PMember->getZone() == PMob->getZone() && distance(PMember->loc.p, PMob->loc.p) < 100)
+                {
+                    if (CCharEntity* PChar = dynamic_cast<CCharEntity*>(PMember))
                     {
-                        if (PMember->getZone() == PMob->getZone() && distance(PMember->loc.p, PMob->loc.p) < 100)
-                        {
-                            if (CCharEntity* PChar = dynamic_cast<CCharEntity*>(PMember))
-                            {
-                                PChar->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PChar, PChar, 0, 0, MsgBasic::LevelSyncNoExp);
-                            }
-                        }
-                    });
-                // clang-format on
+                        PChar->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PChar, PChar, 0, 0, MsgBasic::LevelSyncNoExp);
+                    }
+                }
+            });
+        // clang-format on
 
-                return;
-            }
-        }
+        return;
     }
 
     // clang-format off
