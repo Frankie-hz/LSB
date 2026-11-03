@@ -42,4 +42,28 @@ describe('Level Sync', function()
         assert(target:getMainLvl() == 22, string.format('expected target to reach 22, level=%d', target:getMainLvl()))
         assert(member:getMainLvl() == 22, string.format('expected member to follow the sync to 22, level=%d', member:getMainLvl()))
     end)
+
+    it('starts the removal countdown when another map process removes it', function()
+        local leader = xi.test.world:spawnPlayer({ job = xi.job.WAR, level = 75, zone = xi.zone.SOUTHERN_SAN_DORIA })
+        local target = xi.test.world:spawnPlayer({ job = xi.job.WAR, level = 20, zone = xi.zone.SOUTHERN_SAN_DORIA })
+
+        leader.actions:inviteToParty(target)
+        target.actions:acceptPartyInvite()
+        leader.actions:setLevelSync(target)
+
+        for _, member in ipairs({ leader, target }) do
+            local sync = member:getStatusEffect(xi.effect.LEVEL_SYNC)
+            assert(sync, 'Level Sync was not applied')
+            assert(sync:getDuration() == 0, string.format('expected an open ended sync, duration=%d', sync:getDuration()))
+        end
+
+        xi.test.world:removeLevelSyncFromOtherProcess(leader)
+        xi.test.world:tick()
+
+        for _, member in ipairs({ leader, target }) do
+            local sync = member:getStatusEffect(xi.effect.LEVEL_SYNC)
+            assert(sync, 'Level Sync should last until the countdown ends')
+            assert(sync:getDuration() == 30000, string.format('expected a 30 second countdown, duration=%d', sync:getDuration()))
+        end
+    end)
 end)

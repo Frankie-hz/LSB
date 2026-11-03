@@ -133,6 +133,7 @@ private:
     bool m_EffectsChanged;
     bool m_FormedByTrusts{ false };
 
+    void StartSyncRemoval(MsgStd message);
     void SetLeader(const std::string& MemberName);          // set party leader
     void SetQuarterMaster(const std::string& MemberName);   // set Quartermaster
     auto RemovePartyLeader(CBattleEntity* PEntity) -> bool; // attempt to remove the leader of the party. Returns false if party is disbanded or otherwise invalid.

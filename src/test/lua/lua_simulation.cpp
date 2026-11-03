@@ -39,6 +39,7 @@
 #include "map/map_constants.h"
 #include "map/map_engine.h"
 #include "map/map_networking.h"
+#include "map/party.h"
 #include "map/spawn_slot.h"
 #include "map/time_server.h"
 #include "map/utils/zoneutils.h"
@@ -64,6 +65,40 @@ void applySetting(const std::string& key, const settings::SettingsVariant& value
                     const auto parts                                              = split(key, ".");
                     lua["xi"]["settings"][to_lower(parts[0])][to_upper(parts[1])] = held;
                 });
+}
+
+void clearPartyFlagFromOtherProcess(CLuaBaseEntity* player, const uint16 flag)
+{
+    if (!player)
+    {
+        TestError("clearPartyFlagFromOtherProcess: Invalid player");
+        return;
+    }
+
+    const auto* PChar = dynamic_cast<CCharEntity*>(player->GetBaseEntity());
+    if (!PChar || !PChar->PParty)
+    {
+        TestError("clearPartyFlagFromOtherProcess: Player is not in a party");
+        return;
+    }
+
+    const auto partyId = PChar->PParty->GetPartyID();
+    DebugTestFmt("Clearing flag {} of party {} from another process", flag, partyId);
+
+    const auto rset = db::preparedStmt("UPDATE accounts_parties SET partyflag = partyflag & ~? WHERE partyid = ? AND partyflag & ?",
+                                       flag,
+                                       partyId,
+                                       flag);
+    if (!rset)
+    {
+        TestError("clearPartyFlagFromOtherProcess: Unable to clear the flag");
+        return;
+    }
+
+    for (auto* PMember : PChar->PParty->members)
+    {
+        static_cast<CCharEntity*>(PMember)->ReloadPartyInc();
+    }
 }
 
 auto durationToVanaTime = [](const uint8 vanaHour, const uint8 vanaMinute) -> earth_time::duration
@@ -751,6 +786,18 @@ void CLuaSimulation::setSlotChance(CLuaBaseEntity& entity, const uint8 chance) c
     PMob->GetSpawnSlot()->SetChance(PMob, chance);
 }
 
+/************************************************************************
+ *  Function: removeLevelSyncFromOtherProcess()
+ *  Purpose : Removes a party's Level Sync the way a map process that does not hold the designee does.
+ *  Example : xi.test.world:removeLevelSyncFromOtherProcess(leader)
+ *  Notes   : Only the cleared database flag and the party reload reach this process.
+ ************************************************************************/
+
+void CLuaSimulation::removeLevelSyncFromOtherProcess(CLuaBaseEntity* player) const
+{
+    clearPartyFlagFromOtherProcess(player, PARTY_SYNC);
+}
+
 void CLuaSimulation::Register()
 {
     SOL_USERTYPE("CSimulation", CLuaSimulation);
@@ -770,4 +817,5 @@ void CLuaSimulation::Register()
     SOL_REGISTER("spawnPlayer", CLuaSimulation::spawnPlayer);
     SOL_REGISTER("getSpawnSlot", CLuaSimulation::getSpawnSlot);
     SOL_REGISTER("setSlotChance", CLuaSimulation::setSlotChance);
+    SOL_REGISTER("removeLevelSyncFromOtherProcess", CLuaSimulation::removeLevelSyncFromOtherProcess);
 };

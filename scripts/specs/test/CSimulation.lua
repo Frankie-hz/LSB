@@ -104,3 +104,9 @@ end
 ---@return nil
 function CSimulation:setSlotChance(entity, chance)
 end
+
+---Remove a party's Level Sync the way a map process that does not hold the designee does
+---@param player CBaseEntity Any member of the party
+---@return nil
+function CSimulation:removeLevelSyncFromOtherProcess(player)
+end

@@ -1158,32 +1158,33 @@ void CParty::SetSyncTarget(const std::string& MemberName, MsgStd message)
         {
             if (m_PSyncTarget != nullptr)
             {
-                // disable level sync
-                for (auto& i : members)
-                {
-                    auto* member = dynamic_cast<CCharEntity*>(i);
-                    if (!member)
-                    {
-                        continue;
-                    }
-
-                    if (member->status != xi::Status::Disappear)
-                    {
-                        CStatusEffect* sync = member->StatusEffectContainer->GetStatusEffect(xi::StatusEffect::LevelSync);
-                        if (sync && sync->GetDuration() == 0s)
-                        {
-                            member->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(member, member, 0, 30, message);
-                            sync->SetStartTime(timer::now());
-                            sync->SetDuration(30s);
-                        }
-                    }
-                }
+                StartSyncRemoval(message);
             }
             m_PSyncTarget = nullptr;
             db::preparedStmt("UPDATE accounts_parties SET partyflag = partyflag & ~? WHERE partyid = ? AND partyflag & ?",
                              PARTY_SYNC,
                              m_PartyID,
                              PARTY_SYNC);
+        }
+    }
+}
+
+void CParty::StartSyncRemoval(const MsgStd message)
+{
+    for (auto* PEntity : members)
+    {
+        auto* PMember = dynamic_cast<CCharEntity*>(PEntity);
+        if (!PMember || PMember->status == xi::Status::Disappear)
+        {
+            continue;
+        }
+
+        auto* PSync = PMember->StatusEffectContainer->GetStatusEffect(xi::StatusEffect::LevelSync);
+        if (PSync && PSync->GetDuration() == 0s)
+        {
+            PMember->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PMember, PMember, 0, 30, message);
+            PSync->SetStartTime(timer::now());
+            PSync->SetDuration(30s);
         }
     }
 }
@@ -1411,6 +1412,8 @@ auto CParty::IsFormedByTrusts() const -> bool
 
 void CParty::RefreshFlags(std::vector<partyInfo_t>& info)
 {
+    const auto wasSynced = m_PSyncTarget != nullptr;
+
     // Clear pointers in case they no longer exist on this instance
     m_PLeader        = nullptr;
     m_PQuarterMaster = nullptr;
@@ -1485,6 +1488,18 @@ void CParty::RefreshFlags(std::vector<partyInfo_t>& info)
                 }
             }
         }
+    }
+
+    // No rows at all means the party id is stale after a leader change, not that the sync was removed
+    const auto isListed = std::ranges::any_of(info, [this](const auto& memberinfo)
+                                              {
+                                                  return memberinfo.partyid == m_PartyID;
+                                              });
+
+    // A process that does not hold the designee can only clear the sync flag in the database
+    if (wasSynced && isListed && m_PSyncTarget == nullptr)
+    {
+        StartSyncRemoval(MsgStd::LevelSyncRemoveLeftParty);
     }
 }
 
