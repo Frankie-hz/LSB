@@ -1102,6 +1102,17 @@ void CParty::SetSyncTarget(const std::string& MemberName, MsgStd message)
 
     if (settings::get<bool>("map.LEVEL_SYNC_ENABLE"))
     {
+        // A named designee missing from this process is in another area
+        if (!MemberName.empty() && PEntity == nullptr)
+        {
+            if (auto* PLeader = dynamic_cast<CCharEntity*>(GetLeader()))
+            {
+                PLeader->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PLeader, PLeader, 0, 0, MsgStd::LevelSyncDesigneeInOtherArea);
+            }
+
+            return;
+        }
+
         if (auto* PChar = dynamic_cast<CCharEntity*>(PEntity); PChar && GetLeader() != nullptr)
         {
             // enable level sync
