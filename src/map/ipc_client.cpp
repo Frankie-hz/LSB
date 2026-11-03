@@ -521,6 +521,12 @@ void IPCClient::handleMessage_PartyInviteResponse(const IPP& ipp, const ipc::Par
         }
         else
         {
+            // The database can hold the inviter's party before this process has loaded it, such as right after zoning in
+            if (PInviter->PParty == nullptr)
+            {
+                charutils::ReloadParty(PInviter);
+            }
+
             // both party leaders?
             const auto rset = db::preparedStmt("SELECT * FROM accounts_parties WHERE partyid <> 0 AND "
                                                "((charid = ? OR charid = ?) AND partyflag & ?)",
