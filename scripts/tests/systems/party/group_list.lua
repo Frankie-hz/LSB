@@ -14,6 +14,26 @@ describe('Party list packets', function()
         return numbers
     end
 
+    local function leadersInTable(player)
+        local leaders = 0
+        local found   = false
+        for _, packet in pairs(player.packets:getIncoming()) do
+            if packet.type == 0x0C8 then
+                found   = true
+                leaders = 0
+                for slot = 0, 19 do
+                    local offset = 0x08 + slot * 0x0C
+                    if readU32(packet.data, offset) ~= 0 and bit.band(packet.data[offset + 0x06], 0x04) ~= 0 then
+                        leaders = leaders + 1
+                    end
+                end
+            end
+        end
+
+        assert(found, 'expected a party table packet')
+        return leaders
+    end
+
     local function formParty(leader, ...)
         for _, member in ipairs({ ... }) do
             leader.actions:inviteToParty(member)
@@ -46,5 +66,27 @@ describe('Party list packets', function()
         assert(forMember[member:getID()] == 0, string.format('the member should see themselves as 0, got %s', tostring(forMember[member:getID()])))
         assert(forMember[leader:getID()] == 1, 'the member should see the leader as 1')
         assert(forMember[faraway:getID()] == 0, 'a member in another zone has no number')
+    end)
+
+    it('restores a leader when a party is left without one', function()
+        local first  = xi.test.world:spawnPlayer({ zone = xi.zone.WEST_RONFAURE })
+        local second = xi.test.world:spawnPlayer({ zone = xi.zone.WEST_RONFAURE })
+        local third  = xi.test.world:spawnPlayer({ zone = xi.zone.WEST_RONFAURE })
+
+        formParty(first, second, third)
+        xi.test.world:tick()
+
+        for _, player in ipairs({ first, second, third }) do
+            player.packets:clear()
+        end
+
+        xi.test.world:removePartyLeaderFromOtherProcess(second)
+        xi.test.world:tick()
+
+        local leader = second:getPartyLeader()
+        assert(leader, 'the party should have a leader again')
+        assert(leader:getID() == first:getID(), 'the oldest member should take the lead')
+        assert(leadersInTable(second) == 1, 'the party table should mark one leader')
+        assert(third:getPartyLeader():getID() == first:getID(), 'every member should agree on the leader')
     end)
 end)

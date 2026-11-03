@@ -46,6 +46,7 @@
 #include "packets/s2c/0x0dd_group_list.h"
 
 #include <array>
+#include <ranges>
 
 // should have brace-or-equal initializers when MSVC supports it
 struct CParty::partyInfo_t
@@ -618,7 +619,7 @@ auto CParty::GetPartyInfo() const -> std::vector<CParty::partyInfo_t>
 
     const auto rset = db::preparedStmt("SELECT chars.charid, partyid, allianceid, charname, partyflag, pos_zone, pos_prevzone FROM accounts_parties "
                                        "LEFT JOIN chars ON accounts_parties.charid = chars.charid WHERE "
-                                       "(allianceid <> 0 AND allianceid = ?) OR partyid = ? ORDER BY partyflag & ?, timestamp",
+                                       "(allianceid <> 0 AND allianceid = ?) OR partyid = ? ORDER BY partyflag & ?, timestamp, chars.charid",
                                        m_PAlliance ? m_PAlliance->m_AllianceID : 0,
                                        m_PartyID,
                                        PARTY_SECOND | PARTY_THIRD);
@@ -908,7 +909,7 @@ void CParty::ReloadParty()
         return;
     }
 
-    auto info = GetPartyInfo();
+    auto info = LoadPartyInfo();
 
     // alliance
     if (this->m_PAlliance != nullptr)
@@ -1006,7 +1007,7 @@ void CParty::ReloadPartyMembers(CCharEntity* PChar)
     PChar->ReloadPartyDec();
     PChar->pushPacket<GP_SERV_COMMAND_GROUP_TBL>(this);
 
-    auto info = GetPartyInfo();
+    auto info = LoadPartyInfo();
     RefreshFlags(info);
     auto numbering = GroupListNumbering{ PChar, m_PartyNumber };
     for (auto&& memberinfo : info)
@@ -1023,6 +1024,81 @@ void CParty::ReloadPartyMembers(CCharEntity* PChar)
             PChar->pushPacket<GP_SERV_COMMAND_GROUP_LIST>(memberinfo.id, memberinfo.name, memberinfo.flags, 0, zoneid);
         }
     }
+}
+
+auto CParty::LoadPartyInfo() -> std::vector<partyInfo_t>
+{
+    auto info = GetPartyInfo();
+
+    const auto restoreLeader = [&info](CParty* PParty)
+    {
+        auto rows = info | std::views::filter([PParty](const auto& memberinfo)
+                                              {
+                                                  return memberinfo.partyid == PParty->m_PartyID;
+                                              });
+
+        const auto hasLeader = std::ranges::any_of(rows, [](const auto& memberinfo)
+                                                   {
+                                                       return (memberinfo.flags & PARTY_LEADER) != 0;
+                                                   });
+
+        if (std::ranges::empty(rows) || hasLeader)
+        {
+            return false;
+        }
+
+        // Every process picks the same oldest row, so concurrent reloads agree on the new leader
+        PParty->SetLeader(rows.front().name);
+        return true;
+    };
+
+    const auto restored = [&]()
+    {
+        if (m_PAlliance == nullptr)
+        {
+            return restoreLeader(this);
+        }
+
+        auto anyRestored = false;
+        for (auto* PParty : m_PAlliance->partyList)
+        {
+            anyRestored = restoreLeader(PParty) || anyRestored;
+        }
+
+        return anyRestored;
+    }();
+
+    if (!restored)
+    {
+        return info;
+    }
+
+    info = GetPartyInfo();
+
+    // Only announce a leader that landed, a reload that restores nothing must not trigger another reload
+    const auto leaderLanded = std::ranges::any_of(info, [this](const auto& memberinfo)
+                                                  {
+                                                      return memberinfo.partyid == m_PartyID && (memberinfo.flags & PARTY_LEADER) != 0;
+                                                  });
+    if (leaderLanded)
+    {
+        ShowWarningFmt("CParty::LoadPartyInfo() - Party {} had no leader, restored one.", m_PartyID);
+
+        if (m_PAlliance)
+        {
+            message::send(ipc::AllianceReload{
+                .allianceId = m_PAlliance->m_AllianceID,
+            });
+        }
+        else
+        {
+            message::send(ipc::PartyReload{
+                .partyId = m_PartyID,
+            });
+        }
+    }
+
+    return info;
 }
 
 // update treasure pool for specified character

@@ -798,6 +798,18 @@ void CLuaSimulation::removeLevelSyncFromOtherProcess(CLuaBaseEntity* player) con
     clearPartyFlagFromOtherProcess(player, PARTY_SYNC);
 }
 
+/************************************************************************
+ *  Function: removePartyLeaderFromOtherProcess()
+ *  Purpose : Leaves a party without a leader, as session cleanup does when it cascades away the leader's row.
+ *  Example : xi.test.world:removePartyLeaderFromOtherProcess(member)
+ *  Notes   : Only the cleared database flag and the party reload reach this process.
+ ************************************************************************/
+
+void CLuaSimulation::removePartyLeaderFromOtherProcess(CLuaBaseEntity* player) const
+{
+    clearPartyFlagFromOtherProcess(player, PARTY_LEADER);
+}
+
 void CLuaSimulation::Register()
 {
     SOL_USERTYPE("CSimulation", CLuaSimulation);
@@ -818,4 +830,5 @@ void CLuaSimulation::Register()
     SOL_REGISTER("getSpawnSlot", CLuaSimulation::getSpawnSlot);
     SOL_REGISTER("setSlotChance", CLuaSimulation::setSlotChance);
     SOL_REGISTER("removeLevelSyncFromOtherProcess", CLuaSimulation::removeLevelSyncFromOtherProcess);
+    SOL_REGISTER("removePartyLeaderFromOtherProcess", CLuaSimulation::removePartyLeaderFromOtherProcess);
 };

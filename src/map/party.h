@@ -141,5 +141,6 @@ private:
     void SetQuarterMaster(const std::string& MemberName);   // set Quartermaster
     auto RemovePartyLeader(CBattleEntity* PEntity) -> bool; // attempt to remove the leader of the party. Returns false if party is disbanded or otherwise invalid.
     auto GetPartyInfo() const -> std::vector<partyInfo_t>;
+    auto LoadPartyInfo() -> std::vector<partyInfo_t>; // GetPartyInfo, after restoring a leader lost to session cleanup
     void RefreshFlags(std::vector<partyInfo_t>&);
 };

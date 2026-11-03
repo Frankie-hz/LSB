@@ -82,6 +82,7 @@ public:
     auto getSpawnSlot(xi::ZoneId zoneId, uint32 slotId) const -> sol::table;
     void setSlotChance(CLuaBaseEntity& entity, uint8 chance) const;
     void removeLevelSyncFromOtherProcess(CLuaBaseEntity* player) const;
+    void removePartyLeaderFromOtherProcess(CLuaBaseEntity* player) const;
 
     static void Register();
 

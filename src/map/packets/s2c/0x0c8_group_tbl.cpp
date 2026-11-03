@@ -48,7 +48,7 @@ GP_SERV_COMMAND_GROUP_TBL::GP_SERV_COMMAND_GROUP_TBL(CParty* PParty, const bool 
                                            "FROM accounts_parties "
                                            "LEFT JOIN chars ON accounts_parties.charid = chars.charid WHERE "
                                            "IF (allianceid <> 0, allianceid = ?, partyid = ?) "
-                                           "ORDER BY partyflag & ?, timestamp",
+                                           "ORDER BY partyflag & ?, timestamp, chars.charid",
                                            allianceid,
                                            PParty->GetPartyID(),
                                            PARTY_SECOND | PARTY_THIRD);

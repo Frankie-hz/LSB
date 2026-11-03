@@ -110,3 +110,9 @@ end
 ---@return nil
 function CSimulation:removeLevelSyncFromOtherProcess(player)
 end
+
+---Leave a party without a leader, as session cleanup does when it cascades away the leader's row
+---@param player CBaseEntity Any member of the party
+---@return nil
+function CSimulation:removePartyLeaderFromOtherProcess(player)
+end
