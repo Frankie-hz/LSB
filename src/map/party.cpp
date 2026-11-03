@@ -45,6 +45,8 @@
 #include "packets/s2c/0x0c8_group_tbl.h"
 #include "packets/s2c/0x0dd_group_list.h"
 
+#include <array>
+
 // should have brace-or-equal initializers when MSVC supports it
 struct CParty::partyInfo_t
 {
@@ -56,6 +58,58 @@ struct CParty::partyInfo_t
     xi::ZoneId  zone       = {};
     xi::ZoneId  prev_zone  = {};
 };
+
+namespace
+{
+
+// Retail numbers same-zone members per recipient: the recipient is 0, their party counts up from 1, other alliance parties from 10 and 20
+class GroupListNumbering
+{
+public:
+    GroupListNumbering(const CCharEntity* PRecipient, const uint8 recipientParty)
+    : m_PRecipient(PRecipient)
+    , m_RecipientParty(recipientParty)
+    {
+    }
+
+    auto next(const CCharEntity* PMember, const uint8 party) -> uint8
+    {
+        if (PMember == m_PRecipient || PMember->getZone() != m_PRecipient->getZone())
+        {
+            return 0;
+        }
+
+        if (party == m_RecipientParty)
+        {
+            return nextTrust();
+        }
+
+        const auto otherParty = [&]() -> uint8
+        {
+            if (party < m_RecipientParty)
+            {
+                return party + 1;
+            }
+
+            return party;
+        }();
+
+        return static_cast<uint8>(otherParty * 10 + m_OtherPartyCounts[party]++);
+    }
+
+    auto nextTrust() -> uint8
+    {
+        return ++m_RecipientPartyCount;
+    }
+
+private:
+    const CCharEntity*   m_PRecipient;
+    uint8                m_RecipientParty;
+    uint8                m_RecipientPartyCount{ 0 };
+    std::array<uint8, 4> m_OtherPartyCounts{};
+};
+
+} // namespace
 
 // Constructor
 CParty::CParty(CBattleEntity* PEntity)
@@ -866,30 +920,24 @@ void CParty::ReloadParty()
             {
                 CCharEntity* PChar = (CCharEntity*)member;
                 PChar->ReloadPartyDec();
-                uint16 alliance = 0;
                 PChar->pushPacket<GP_SERV_COMMAND_GROUP_TBL>(party);
                 // auto effects = std::make_unique<GP_SERV_COMMAND_GROUP_EFFECTS>();
-                uint8 j = 0;
+                auto numbering = GroupListNumbering{ PChar, party->m_PartyNumber };
                 for (auto&& memberinfo : info)
                 {
-                    if ((memberinfo.flags & (PARTY_SECOND | PARTY_THIRD)) != alliance)
-                    {
-                        alliance = memberinfo.flags & (PARTY_SECOND | PARTY_THIRD);
-                        j        = 0;
-                    }
                     auto* PPartyMember = zoneutils::GetChar(memberinfo.id);
                     if (PPartyMember)
                     {
-                        PChar->pushPacket<GP_SERV_COMMAND_GROUP_LIST>(PPartyMember, j, memberinfo.flags, PChar->getZone());
+                        const auto memberNumber = numbering.next(PPartyMember, static_cast<uint8>(memberinfo.flags & (PARTY_SECOND | PARTY_THIRD)));
+                        PChar->pushPacket<GP_SERV_COMMAND_GROUP_LIST>(PPartyMember, memberNumber, memberinfo.flags, PChar->getZone());
                         // if (memberinfo.partyid == party->GetPartyID() && PPartyMember != PChar)
                         //    effects->AddMemberEffects(PChar);
                     }
                     else
                     {
                         const auto zoneid = memberinfo.zone == xi::ZoneId::Unknown ? memberinfo.prev_zone : memberinfo.zone;
-                        PChar->pushPacket<GP_SERV_COMMAND_GROUP_LIST>(memberinfo.id, memberinfo.name, memberinfo.flags, j, zoneid);
+                        PChar->pushPacket<GP_SERV_COMMAND_GROUP_LIST>(memberinfo.id, memberinfo.name, memberinfo.flags, 0, zoneid);
                     }
-                    j++;
                 }
                 // PChar->pushPacket(effects.release());
             }
@@ -917,13 +965,13 @@ void CParty::ReloadParty()
             PChar->ReloadPartyDec();
             PChar->pushPacket<GP_SERV_COMMAND_GROUP_TBL>(this, PLeader && PChar->getZone() == PLeader->getZone());
             // auto effects = std::make_unique<GP_SERV_COMMAND_GROUP_EFFECTS>();
-            uint8 j = 0;
+            auto numbering = GroupListNumbering{ PChar, m_PartyNumber };
             for (auto&& memberinfo : info)
             {
                 auto* PPartyMember = zoneutils::GetChar(memberinfo.id);
                 if (PPartyMember)
                 {
-                    PChar->pushPacket<GP_SERV_COMMAND_GROUP_LIST>(PPartyMember, j, memberinfo.flags, PChar->getZone());
+                    PChar->pushPacket<GP_SERV_COMMAND_GROUP_LIST>(PPartyMember, numbering.next(PPartyMember, m_PartyNumber), memberinfo.flags, PChar->getZone());
 
                     // Inject the party leader's trusts into the party list
                     CBattleEntity* PLeader = GetLeader();
@@ -931,18 +979,16 @@ void CParty::ReloadParty()
                     {
                         for (auto* PTrust : ((CCharEntity*)PLeader)->PTrusts)
                         {
-                            j++;
                             // trusts don't persist over zonelines, so we know their zone has be the same as the leader.
-                            PChar->pushPacket<GP_SERV_COMMAND_GROUP_LIST>(PTrust, j);
+                            PChar->pushPacket<GP_SERV_COMMAND_GROUP_LIST>(PTrust, numbering.nextTrust());
                         }
                     }
                 }
                 else
                 {
                     const auto zoneid = memberinfo.zone == xi::ZoneId::Unknown ? memberinfo.prev_zone : memberinfo.zone;
-                    PChar->pushPacket<GP_SERV_COMMAND_GROUP_LIST>(memberinfo.id, memberinfo.name, memberinfo.flags, j, zoneid);
+                    PChar->pushPacket<GP_SERV_COMMAND_GROUP_LIST>(memberinfo.id, memberinfo.name, memberinfo.flags, 0, zoneid);
                 }
-                j++;
             }
         }
     }
@@ -960,29 +1006,22 @@ void CParty::ReloadPartyMembers(CCharEntity* PChar)
     PChar->ReloadPartyDec();
     PChar->pushPacket<GP_SERV_COMMAND_GROUP_TBL>(this);
 
-    int alliance = 0;
-
     auto info = GetPartyInfo();
     RefreshFlags(info);
-    uint8 j = 0;
+    auto numbering = GroupListNumbering{ PChar, m_PartyNumber };
     for (auto&& memberinfo : info)
     {
-        if ((memberinfo.flags & (PARTY_SECOND | PARTY_THIRD)) != alliance)
-        {
-            alliance = memberinfo.flags & (PARTY_SECOND | PARTY_THIRD);
-            j        = 0;
-        }
         CCharEntity* PPartyMember = zoneutils::GetChar(memberinfo.id);
         if (PPartyMember)
         {
-            PChar->pushPacket<GP_SERV_COMMAND_GROUP_LIST>(PPartyMember, j, memberinfo.flags, PChar->getZone());
+            const auto memberNumber = numbering.next(PPartyMember, static_cast<uint8>(memberinfo.flags & (PARTY_SECOND | PARTY_THIRD)));
+            PChar->pushPacket<GP_SERV_COMMAND_GROUP_LIST>(PPartyMember, memberNumber, memberinfo.flags, PChar->getZone());
         }
         else
         {
             const auto zoneid = memberinfo.zone == xi::ZoneId::Unknown ? memberinfo.prev_zone : memberinfo.zone;
-            PChar->pushPacket<GP_SERV_COMMAND_GROUP_LIST>(memberinfo.id, memberinfo.name, memberinfo.flags, j, zoneid);
+            PChar->pushPacket<GP_SERV_COMMAND_GROUP_LIST>(memberinfo.id, memberinfo.name, memberinfo.flags, 0, zoneid);
         }
-        j++;
     }
 }
 
