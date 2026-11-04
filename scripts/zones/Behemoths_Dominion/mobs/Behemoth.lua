@@ -3,6 +3,28 @@
 --  HNM: Behemoth
 -----------------------------------
 mixins = { require('scripts/mixins/rage') }
+
+mixinOptions =
+{
+    -- Damage is its melee against its pre-rage damage, with anything before 3 hidden by the damage floor.
+    -- DEF, ACC and EVA match the default table.
+    -- Capture needed
+    rage =
+    {
+        [ 0] = { damage =  100, defp =   60, acc =  60, eva = 10 },
+        [ 1] = { damage =  100, defp =  100, acc =  80, eva = 10 },
+        [ 2] = { damage =  100, defp =  115, acc = 110, eva = 15 },
+        [ 3] = { damage =  210, defp =  200, acc = 150, eva = 30 },
+        [ 4] = { damage =  210, defp = 1700, acc = 150, eva = 30 },
+        [ 5] = { damage =  260, defp = 1700, acc = 150, eva = 35 },
+        [ 6] = { damage =  390, defp = 1700, acc = 150, eva = 35 },
+        [ 7] = { damage =  620, defp = 1700, acc = 150, eva = 35 },
+        [ 8] = { damage = 1030, defp = 1700, acc = 150, eva = 35 },
+        [ 9] = { damage = 1450, defp = 1700, acc = 150, eva = 35 },
+        [10] = { damage = 1950, defp = 1700, acc = 150, eva = 35 },
+        [11] = { damage = 2330, defp = 1700, acc = 150, eva = 35 },
+    },
+}
 -----------------------------------
 ---@type TMobEntity
 local entity = {}

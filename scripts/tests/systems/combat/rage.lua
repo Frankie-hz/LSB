@@ -136,4 +136,22 @@ describe('Rage', function()
             assert(mob:getMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER) == multiplierBefore, 'damage was not restored')
         end)
     end)
+
+    describe('with a mob schedule', function()
+        before_each(function()
+            engageMob(xi.zone.BEHEMOTHS_DOMINION, 'Behemoth')
+        end)
+
+        it('uses the table from its script', function()
+            advanceMinutes(timerMinutes)
+
+            local multiplierAtTimer = mob:getMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER)
+
+            assert(multiplierAtTimer == 100, 'damage did not use the mob table')
+
+            advanceMinutes(3)
+
+            assert(mob:getMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER) > multiplierAtTimer, 'damage did not ramp from the mob table')
+        end)
+    end)
 end)
