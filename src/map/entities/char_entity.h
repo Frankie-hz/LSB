@@ -33,6 +33,7 @@
 #include "items/transaction.h"
 #include "moghouse_container.h"
 #include "monstrosity.h"
+#include "packet_capture.h"
 #include <common/macros.h>
 
 #include <common/cbasetypes.h>
@@ -720,6 +721,7 @@ public:
     void flushEquipChanges();
     void resyncEquipment();
     auto inventorySyncState() -> InventorySyncState&;
+    auto packetCapture() -> PacketCapture&;
 
     CHAR_SUBSTATE m_Substate;
 
@@ -887,6 +889,7 @@ private:
     bool m_reloadParty;
 
     InventorySyncState inventorySyncState_;
+    PacketCapture      packetCapture_;
 
     mutable HashMap<std::string, std::pair<int32, uint32>> charVarCache;
     std::unordered_set<std::string>                        charVarChanges;
