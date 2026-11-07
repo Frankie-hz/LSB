@@ -409,6 +409,11 @@ void CCharEntity::pushPacket(std::unique_ptr<CBasicPacket>&& packet)
 
     moduleutils::OnPushPacket(this, packet);
 
+    if (packetCapture_.isActive())
+    {
+        packetCapture_.recordOutgoing(*packet);
+    }
+
     if (packet->getType() == 0x5B)
     {
         if (packet->ref<uint32>(0x10) == this->id)
@@ -1322,6 +1327,11 @@ void CCharEntity::resyncEquipment()
 auto CCharEntity::inventorySyncState() -> InventorySyncState&
 {
     return inventorySyncState_;
+}
+
+auto CCharEntity::packetCapture() -> PacketCapture&
+{
+    return packetCapture_;
 }
 
 void CCharEntity::addTrait(CTrait* PTrait)

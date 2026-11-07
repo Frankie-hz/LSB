@@ -68,5 +68,5 @@ xi.settings.logging =
     SQL_SLOW_QUERY_WARNING_TIME = 100,  -- uint (milliseconds).
     SQL_SLOW_QUERY_ERROR_TIME   = 250,  -- uint (milliseconds).
 
-    PACKET_CAPTURE_DIR = './log/packets', -- Output folder for the packetcap module (modules/tools/packetcap)
+    PACKET_CAPTURE_DIR = './log/packets', -- Output folder for packet captures, enabled per character with charvar PacketCap = 1
 }

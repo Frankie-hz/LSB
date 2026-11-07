@@ -377,6 +377,11 @@ void PacketSystem::dispatch(uint16 packetId, MapSession* PSession, CCharEntity* 
     LogWith({ "char", { { "id", PChar->id }, { "name", PChar->getName() } } },
             { "packet", { { "id", packetId } } });
 
+    if (PChar->packetCapture().isActive())
+    {
+        PChar->packetCapture().recordIncoming(data);
+    }
+
     if (const auto handler = packetHandlers_[packetId])
     {
         if (rateLimiter_.isLimited(PChar, packetId))

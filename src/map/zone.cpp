@@ -1141,6 +1141,11 @@ void CZone::CharZoneIn(CCharEntity* PChar)
 {
     TracyZoneScoped;
 
+    if (PChar->getCharVar("PacketCap") == 1)
+    {
+        PChar->packetCapture().start(PChar->id, PChar->getName());
+    }
+
     PChar->loc.zone        = this;
     PChar->loc.destination = xi::ZoneId::Unknown;
     PChar->clearTriggerAreas();
@@ -1368,6 +1373,11 @@ void CZone::CharZoneOut(CCharEntity* PChar)
     }
 
     charutils::WriteHistory(PChar);
+
+    if (PChar->packetCapture().isActive())
+    {
+        PChar->packetCapture().stop();
+    }
 }
 
 auto CZone::GetZoneEntities() -> CZoneEntities*
